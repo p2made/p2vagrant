@@ -2,7 +2,6 @@
 
 sudo apt-get update
 sudo apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
-sudo add-apt-repository ppa:ondrej/php
 
 # language bug workaround
 sudo apt-get install -y language-pack-en-base
