@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DBHOST=localhost
+RTPASSWD=password
 DBNAME=mydb
 DBUSER=myuser
 DBPASSWD=password
@@ -8,8 +9,8 @@ DBPASSWD=password
 # Install MySQL
 apt-get update
 
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $DBPASSWD"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DBPASSWD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $RTPASSWD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $RTPASSWD"
 
 apt-get -y install mysql-server
 
