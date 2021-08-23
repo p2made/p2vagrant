@@ -63,6 +63,7 @@ Vagrant.configure("2") do |config|
 
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/provision.sh"
+	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 
 end
 ```
