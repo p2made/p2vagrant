@@ -68,12 +68,12 @@ Vagrant.configure("2") do |config|
 	config.vm.network "private_network", ip: "192.168.88.188"
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/components/apache.sh"
+	config.vm.provision :shell, path: "provision/provision.sh"
 
 end
 ```
 
-`provision/components/apache.sh`:
+`provision/provision.sh`:
 
 ```
 #!/bin/bash
@@ -126,7 +126,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/components/apache.sh"
+	config.vm.provision :shell, path: "provision/provision.sh"
 
 end
 ```
