@@ -326,6 +326,7 @@ Create `provision/scripts/mysql.sh`:
 #!/bin/bash
 
 DBHOST=localhost
+RTPASSWD=password
 DBNAME=mydb
 DBUSER=myuser
 DBPASSWD=password
@@ -333,8 +334,8 @@ DBPASSWD=password
 # Install MySQL
 apt-get update
 
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $DBPASSWD"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DBPASSWD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $RTPASSWD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $RTPASSWD"
 
 apt-get -y install mysql-server
 
@@ -351,9 +352,15 @@ sudo sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d
 sudo service mysql restart
 ```
 
-In order to use MySQL in PHP, we also can't forget the PHP MySQL extension, so add `php7.4-mysql` to the long `sudo apt-get` install line in `php.sh`.
+Customise `RTPASSWD`, `DBNAME`, `DBUSER`, & `DBPASSWD` to suit yourself.
 
-Run `vagrant provision` again and while Vagrant is doing it's thing create a `db.php` file in your html folder:
+Run:
+
+```
+vagrant provision
+```
+
+Create `synced/html/db.php`:
 
 ```
 <?php
@@ -366,7 +373,9 @@ if (!$conn) {
 echo "Connected!";
 ```
 
-Visit [http://192.168.88.188/db.php](http://192.168.88.188/db.php) and if all went well you should be seeing the "*Connected!*" message.
+Peplace `localhost`, `myuser`, `password`, `mydb` with the values used in `db.php`.
+
+* Visit [http://192.168.88.188/db.php](http://192.168.88.188/db.php) and if all went well you should be seeing the "*Connected!*" message.
 
 
 
