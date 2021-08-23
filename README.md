@@ -18,8 +18,8 @@ vagrant up
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
 1. [Create the Virtual Machine](#step_01)
-2. [Install Apache](#step_02)
-2. [Synced Folder](#step_03)
+2. [Set VM to use Alternative Repository](#step_02)
+2. [Install Apache, MySQL, & PHP 8](#step_03)
 4. [Install PHP](#step_04)
 
 * [Vagrant Commands](#commands)
@@ -84,7 +84,24 @@ vagrant provision
 ```
 
 
-### <a id="step_02"></a> 2. Install Apache
+### <a id="step_03"></a> 3. Install Apache, MySQL, & PHP 8
+
+`provision/provision.sh`:
+
+```
+#!/bin/bash
+
+apt-get update
+apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
+add-apt-repository ppa:ondrej/php
+
+apt-get update
+apt-get install -y apache2 mysql-server php8.0 php8.0-mysql
+#sudo service apache2 restart
+systemctl reload apache2
+```
+
+
 
 `Vagrantfile`:
 
@@ -112,15 +129,6 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-`provision/provision.sh`:
-
-```
-#!/bin/bash
-
-apt-get update
-apt-get install -y apache2
-```
-
 Run (see [commands](#commands)):
 
 ```
@@ -138,6 +146,8 @@ vagrant up
 * You should see the Apache default page of your VM.
 
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
+
+
 
 ### <a id="step_03"></a> 3. Synced Folder
 
@@ -229,8 +239,6 @@ vagrant provision
 Now we can install the rest of our LAMP stack.
 
 ```
-apt-get update
-apt-get install -y apache2 mysql-server php8.0 php8.0-mysql
 ```
 
 
