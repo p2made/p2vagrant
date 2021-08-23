@@ -411,8 +411,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-
-PhpMyAdmin could always come in handy on a LAMP development environment, so create another script file called `phpmyadmin.sh` and add it to your `Vagrantfile`:
+Create `provision/scripts/mysql.sh`:
 
 ```
 #!/bin/bash
@@ -431,7 +430,13 @@ sudo phpenmod mbstring
 sudo systemctl restart apache2
 ```
 
-You've guessed it, run vagrant provision and visit [http://192.168.88.188/phpmyadmin/](http://192.168.88.188/phpmyadmin/), log in with myuser/password and there we go... easy as pie.
+Run:
+
+```
+vagrant provision
+```
+
+* Visit [http://192.168.88.188/phpmyadmin/](http://192.168.88.188/phpmyadmin/), log in with myuser/password.
 
 
 
