@@ -18,6 +18,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/scripts/repo.sh"
+	config.vm.provision :shell, path: "provision/scripts/prevision.sh"
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/php.sh"
 end
