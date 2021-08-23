@@ -22,6 +22,7 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 2. [Install Apache](#step_03)
 4. [Synced Folder](#step_04)
 4. [Install PHP 8.0](#step_05)
+4. [Level Up PHP](#step_06)
 
 * [Vagrant Commands](#commands)
 
@@ -198,7 +199,7 @@ Run:
 vagrant reload
 ```
 
-Let Vagrant do it's things, refresh the page and ... there it is! You are now looking at the page you just created.
+* When finished, refresh the page.
 
 ### <a id="step_05"></a> 5. Install PHP 8.0
 
@@ -255,24 +256,36 @@ Run:
 ```
 vagrant provision
 ```
-Once Vagrant is finished, visit [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php), which should successfully display the PHP info page! Easy, right?
 
+* When finished, r* When finished, refresh the page.
+visit [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php), which should successfully display the PHP info page.
 
+### <a id="step_06"></a> 6. Level Up PHP
 
-
-
-One thing you'll probably do in any new PHP setup is level up the max. memory usage, post size, and upload size. Again, we don't want to do it manually, we want it to be configured correctly from the moment we clone our project and start up our VM. To do this, add these lines before `sudo service apache2 restart` in `php.sh`:
+`provision/scripts/php.sh`:
 
 ```
-sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/7.4/apache2/php.ini
-sed -i 's/post_max_size = .*/post_max_size = 64M/' /etc/php/7.4/apache2/php.ini
-sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' /etc/php/7.4/apache2/php.ini
-sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/7.4/apache2/php.ini
+#!/bin/bash
+
+sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
+sudo apt-get update
+sudo apt-get install -y php8.0 php8.0-mysql
+
+sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/8.0/apache2/php.ini
+sed -i 's/post_max_size = .*/post_max_size = 64M/' /etc/php/8.0/apache2/php.ini
+sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' /etc/php/8.0/apache2/php.ini
+sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/8.0/apache2/php.ini
+
+sudo service apache2 restart
 ```
 
-I guess this speaks for itself, what this does is find certain lines in `php.ini` and replace them with the values we want.
+Run:
 
-Run `vagrant provision` again and check your `phpinfo.php` file. Search for any of the 4 directives and you'll see that the PHP settings have successfully been changed!
+```
+vagrant provision
+```
+
+Refresh [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php).
 
 
 
