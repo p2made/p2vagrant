@@ -45,6 +45,45 @@ Run:
 vagrant up
 ```
 
+### <a id="step_02"></a> 2. Set VM to use Alternative Repository
+
+A repository by Ondřej Surý ([https://launchpad.net/~ondrej/+archive/ubuntu/php/](https://launchpad.net/~ondrej/+archive/ubuntu/php/)) that allows us to install newer versions of PHP on the LTS versions of Ubuntu.
+
+To get the Ondřej repository setup we need to run the commands below to install the prerequisite packages and then add the repository.
+
+`Vagrantfile`:
+
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+	config.vm.box = "hashicorp/bionic64"
+
+	# Execute shell script(s)
+	config.vm.provision :shell, path: "provision/provision.sh"
+
+end
+```
+
+Create `provision/provision.sh`:
+
+```
+#!/bin/bash
+
+apt-get update
+apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
+add-apt-repository ppa:ondrej/php
+```
+
+Run:
+
+```
+vagrant provision
+```
+
+
 ### <a id="step_02"></a> 2. Install Apache
 
 `Vagrantfile`:
@@ -185,6 +224,14 @@ Run:
 vagrant provision
 ```
 
+### 2. Install Apache, MySQL, and PHP 8
+
+Now we can install the rest of our LAMP stack.
+
+```
+apt-get update
+apt-get install -y apache2 mysql-server php8.0 php8.0-mysql
+```
 
 
 
