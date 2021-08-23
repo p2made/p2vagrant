@@ -18,10 +18,10 @@ vagrant up
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
 1. [Create the Virtual Machine](#step_01)
-2. [Set VM to use Alternative Repository](#step_02)
+2. [Pre-Provisioning](#step_02)
 2. [Install Apache](#step_03)
 4. [Synced Folder](#step_04)
-4. [Install PHP](#step_05)
+4. [Install PHP 8.1](#step_05)
 
 * [Vagrant Commands](#commands)
 
@@ -46,7 +46,7 @@ Run:
 vagrant up
 ```
 
-### <a id="step_02"></a> 2. Set VM to use Alternative Repository
+### <a id="step_02"></a> 2. Pre-Provisioning
 
 A repository by Ondřej Surý ([https://launchpad.net/~ondrej/+archive/ubuntu/php/](https://launchpad.net/~ondrej/+archive/ubuntu/php/)) that allows us to install newer versions of PHP on the LTS versions of Ubuntu.
 
@@ -63,26 +63,25 @@ Vagrant.configure("2") do |config|
 	config.vm.box = "hashicorp/bionic64"
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/scripts/repo.sh"
+	config.vm.provision :shell, path: "provision/scripts/prevision.sh"
 
 end
 ```
 
-Create `provision/scripts/repo.sh`:
+Create `provision/scripts/prevision.sh`:
 
 ```
 #!/bin/bash
 
-apt-get update
-apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
-add-apt-repository ppa:ondrej/php
-add-apt-repository ppa:ondrej/apache2
+sudo apt-get update
+sudo apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
+sudo add-apt-repository ppa:ondrej/php
 
 # language bug workaround
-apt-get install -y language-pack-en-base
-export LC_ALL=en_AU.UTF-8
-export LANG=en_AU.UTF-8
-apt-get install -y software-properties-common
+sudo apt-get install -y language-pack-en-base
+sudo export LC_ALL=en_AU.UTF-8
+sudo export LANG=en_AU.UTF-8
+sudo apt-get install -y software-properties-common
 ```
 
 Run (see [commands](#commands)):
@@ -114,7 +113,7 @@ Vagrant.configure("2") do |config|
 	config.vm.network "private_network", ip: "192.168.88.188"
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/scripts/repo.sh"
+	config.vm.provision :shell, path: "provision/scripts/prevision.sh"
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 end
 ```
@@ -124,8 +123,10 @@ Create `provision/scripts/apache.sh`:
 ```
 #!/bin/bash
 
-apt-get update
-apt-get install -y apache2
+sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/apache2
+
+sudo apt-get update
+sudo apt-get install -y apache2
 ```
 
 Run:
@@ -171,7 +172,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/scripts/repo.sh"
+	config.vm.provision :shell, path: "provision/scripts/prevision.sh"
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 end
 ```
@@ -199,20 +200,45 @@ vagrant reload
 
 Let Vagrant do it's things, refresh the page and ... there it is! You are now looking at the page you just created.
 
-### <a id="step_05"></a> 5. Install PHP
+### <a id="step_05"></a> 5. Install PHP 8.1
 
-`provision/provision.sh`:
+`Vagrantfile`:
+
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+	config.vm.box = "hashicorp/bionic64"
+
+	# Give our VM a name so we immediately know which box this is when opening VirtualBox, and spice up our VM's resources
+	config.vm.provider "virtualbox" do |v|
+		v.name = "My Amazing Test Project"
+		v.memory = 4096
+		v.cpus = 1
+	end
+
+	# Choose a custom IP so this doesn't collide with other Vagrant boxes
+	config.vm.network "private_network", ip: "192.168.88.188"
+
+	# Set a synced folder
+	config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Execute shell script(s)
+	config.vm.provision :shell, path: "provision/scripts/prevision.sh"
+	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/php.sh"
+end
+```
+
+Create `provision/scripts/php.sh`:
 
 ```
 #!/bin/bash
 
-apt-get update
-apt-get install -y apache2
-
-sudo apt-get install software-properties-common
 sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 sudo apt-get update
-sudo apt-get install -y php7.4 php7.4-bcmath php7.4-bz2 php7.4-cli php7.4-curl php7.4-intl php7.4-json php7.4-mbstring php7.4-opcache php7.4-soap php7.4-xml php7.4-xsl php7.4-zip libapache2-mod-php7.4
+sudo apt-get install -y php8.1 php8.1-mysql
 
 sudo service apache2 restart
 ```
