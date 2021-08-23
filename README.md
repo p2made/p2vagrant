@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Create `provision/provision.sh`:
+Create `provision/scripts/repo.sh`:
 
 ```
 #!/bin/bash
@@ -91,7 +91,24 @@ vagrant provision
 ```
 
 
-### <a id="step_03"></a> 3. Install Apache, MySQL, & PHP 8
+### <a id="step_03"></a> 3. Install Apache
+
+`Vagrantfile`:
+
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+	config.vm.box = "hashicorp/bionic64"
+
+	# Execute shell script(s)
+	config.vm.provision :shell, path: "provision/scripts/repo.sh"
+	config.vm.provision :shell, path: "provision/scripts/repo.sh"
+
+end
+```
 
 `provision/provision.sh`:
 
