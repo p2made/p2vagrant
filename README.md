@@ -22,8 +22,13 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 Vagrantfile:
 
 ```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
 Vagrant.configure("2") do |config|
+
 	config.vm.box = "hashicorp/bionic64"
+
 end
 ```
 
