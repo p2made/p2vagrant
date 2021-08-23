@@ -19,10 +19,11 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 
 1. [Create the Virtual Machine](#step_01)
 2. [Pre-Provisioning](#step_02)
-2. [Install Apache](#step_03)
+3. [Install Apache](#step_03)
 4. [Synced Folder](#step_04)
-4. [Install PHP 8.0](#step_05)
-4. [Level Up PHP](#step_06)
+5. [Install PHP 8.0](#step_05)
+6. [Level Up PHP](#step_06)
+7. [Install MySQL](#step_07)
 
 * [Vagrant Commands](#commands)
 
@@ -286,6 +287,56 @@ vagrant provision
 ```
 
 Refresh [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php).
+
+### <a id="step_07"></a> 7. Install MySQL
+
+Create `provision/scripts/mysql.sh`:
+
+```
+#!/bin/bash
+
+DBHOST=localhost
+DBNAME=mydb
+DBUSER=myuser
+DBPASSWD=password
+
+# Install MySQL
+apt-get update
+
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $DBPASSWD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DBPASSWD"
+
+apt-get -y install mysql-server
+
+# Create the database and grant privileges
+CMD="mysql -uroot -p$DBPASSWD -e"
+
+$CMD "CREATE DATABASE IF NOT EXISTS $DBNAME"
+$CMD "GRANT ALL PRIVILEGES ON $DBNAME.* TO '$DBUSER'@'%' IDENTIFIED BY '$DBPASSWD';"
+$CMD "FLUSH PRIVILEGES;"
+
+# Allow remote access to the database
+sudo sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+
+sudo service mysql restart
+```
+
+In order to use MySQL in PHP, we also can't forget the PHP MySQL extension, so add `php7.4-mysql` to the long `sudo apt-get` install line in `php.sh`.
+
+Run `vagrant provision` again and while Vagrant is doing it's thing create a `db.php` file in your html folder:
+
+```
+<?php
+$conn = mysqli_connect("localhost", "myuser", "password", "mydb");
+
+if (!$conn) {
+	die("Error: " . mysqli_connect_error());
+}
+
+echo "Connected!";
+```
+
+Visit [http://192.168.88.188/db.php](http://192.168.88.188/db.php) and if all went well you should be seeing the "*Connected!*" message.
 
 
 
