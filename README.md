@@ -24,7 +24,7 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 
 ### <a id="step_1"></a> 1. Creating the Virtual Machine
 
-Vagrantfile:
+`Vagrantfile`:
 
 ```
 # -*- mode: ruby -*-
@@ -45,9 +45,12 @@ vagrant up
 
 ### <a id="step_2"></a> 2. Install Apache
 
-Vagrantfile:
+`Vagrantfile`:
 
 ```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
 Vagrant.configure("2") do |config|
 
 	config.vm.box = "hashicorp/bionic64"
@@ -93,7 +96,42 @@ vagrant up
 * When finished, visit [http://192.168.88.188/](http://192.168.88.188/).
 * You should see the Apache default page of your VM.
 
-The page you're looking at is a simple `index.html` file that's located within our VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
+The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
+
+#### 2.1 Synced Folder
+
+`Vagrantfile`:
+
+```
+Vagrant.configure("2") do |config|
+
+	config.vm.box = "hashicorp/bionic64"
+
+	# Give our VM a name so we immediately know which box this is when opening VirtualBox, and spice up our VM's resources
+	config.vm.provider "virtualbox" do |v|
+		v.name = "My Amazing Test Project"
+		v.memory = 4096
+		v.cpus = 1
+	end
+
+	# Choose a custom IP so this doesn't collide with other Vagrant boxes
+	config.vm.network "private_network", ip: "192.168.88.188"
+
+	# Set a synced folder
+	config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Execute shell script(s)
+	config.vm.provision :shell, path: "provision/components/apache.sh"
+
+end
+```
+
+What this does is link our whole project folder to the `/var/www/` directory on our VM. Now create a `html` directory and put an `index.html` file in there:
+
+
+
+
+
 
 
 
@@ -109,4 +147,7 @@ Command | Result
 `vagrant provision` | Re-runs your configured provisioners, so only used if you've changed any of them, or added new ones to the `Vagrantfile`.
 `vagrant reload --provision` | Re-runs your `Vagrantfile` **and** your provisioners, so used if there were changes in both files.
 `vagrant destroy` | Destroys the Vagrant box specified by the `Vagrantfile ` in the current directory.
+
+```
+```
 
