@@ -387,6 +387,7 @@ Peplace `localhost`, `myuser`, `password`, `mydb` with the values used in `db.ph
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+
 	config.vm.box = "hashicorp/bionic64"
 
 	# Give our VM a name so we immediately know which box this is when opening VirtualBox, and spice up our VM's resources
@@ -408,6 +409,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/php.sh"
 	config.vm.provision :shell, path: "provision/scripts/mysql.sh"
 	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh"
+
 end
 ```
 
