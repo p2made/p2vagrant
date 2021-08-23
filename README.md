@@ -21,6 +21,7 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 2. [Set VM to use Alternative Repository](#step_02)
 2. [Install Apache](#step_03)
 4. [Synced Folder](#step_04)
+4. [Install PHP](#step_05)
 
 * [Vagrant Commands](#commands)
 
@@ -197,6 +198,37 @@ vagrant reload
 ```
 
 Let Vagrant do it's things, refresh the page and ... there it is! You are now looking at the page you just created.
+
+### <a id="step_05"></a> 5. Install PHP
+
+`provision/provision.sh`:
+
+```
+#!/bin/bash
+
+apt-get update
+apt-get install -y apache2
+
+sudo apt-get install software-properties-common
+sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
+sudo apt-get update
+sudo apt-get install -y php7.4 php7.4-bcmath php7.4-bz2 php7.4-cli php7.4-curl php7.4-intl php7.4-json php7.4-mbstring php7.4-opcache php7.4-soap php7.4-xml php7.4-xsl php7.4-zip libapache2-mod-php7.4
+
+sudo service apache2 restart
+```
+
+Create `synced/html/phpinfo.php`:
+
+```
+<?php
+phpinfo();
+```
+
+Run:
+
+```
+vagrant provision
+```
 
 
 
