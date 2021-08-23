@@ -77,7 +77,7 @@ apt-get install -y lsb-release ca-certificates apt-transport-https software-prop
 add-apt-repository ppa:ondrej/php
 ```
 
-Run:
+Run (see [commands](#commands)):
 
 ```
 vagrant provision
@@ -100,6 +100,16 @@ apt-get install -y apache2 mysql-server php8.0 php8.0-mysql
 #sudo service apache2 restart
 systemctl reload apache2
 ```
+
+Run:
+
+```
+vagrant provision
+```
+
+
+
+
 
 
 
@@ -129,7 +139,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Run (see [commands](#commands)):
+Run:
 
 ```
 vagrant reload --provision
