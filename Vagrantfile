@@ -23,5 +23,6 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/php.sh"
 	config.vm.provision :shell, path: "provision/scripts/mysql.sh"
+	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh"
 
 end
