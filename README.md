@@ -103,6 +103,9 @@ The page is a simple `index.html` located within your VM in the `/var/www/html` 
 `Vagrantfile`:
 
 ```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
 Vagrant.configure("2") do |config|
 
 	config.vm.box = "hashicorp/bionic64"
