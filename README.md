@@ -24,6 +24,7 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 5. [Install PHP 8.0](#step_05)
 6. [Level Up PHP](#step_06)
 7. [Install MySQL](#step_07)
+8. [Install phpMyAdmin](#step_08)
 
 * [Vagrant Commands](#commands)
 
@@ -376,6 +377,61 @@ echo "Connected!";
 Peplace `localhost`, `myuser`, `password`, `mydb` with the values used in `db.php`.
 
 * Visit [http://192.168.88.188/db.php](http://192.168.88.188/db.php) and if all went well you should be seeing the "*Connected!*" message.
+
+### <a id="step_08"></a> 8. Install phpMyAdmin
+
+`Vagrantfile`:
+
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+	config.vm.box = "hashicorp/bionic64"
+
+	# Give our VM a name so we immediately know which box this is when opening VirtualBox, and spice up our VM's resources
+	config.vm.provider "virtualbox" do |v|
+		v.name = "My Amazing Test Project"
+		v.memory = 4096
+		v.cpus = 1
+	end
+
+	# Choose a custom IP so this doesn't collide with other Vagrant boxes
+	config.vm.network "private_network", ip: "192.168.88.188"
+
+	# Set a synced folder
+	config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Execute shell script(s)
+	config.vm.provision :shell, path: "provision/scripts/prevision.sh"
+	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/php.sh"
+	config.vm.provision :shell, path: "provision/scripts/mysql.sh"
+	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh"
+end
+```
+
+
+PhpMyAdmin could always come in handy on a LAMP development environment, so create another script file called `phpmyadmin.sh` and add it to your `Vagrantfile`:
+
+```
+#!/bin/bash
+
+sudo apt-get update
+
+debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
+debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $DBPASSWD"
+debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $DBPASSWD"
+debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $DBPASSWD"
+debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none"
+
+sudo apt-get install -y phpmyadmin php-mbstring php-gettext
+
+sudo phpenmod mbstring
+sudo systemctl restart apache2
+```
+
+You've guessed it, run vagrant provision and visit [http://192.168.88.188/phpmyadmin/](http://192.168.88.188/phpmyadmin/), log in with myuser/password and there we go... easy as pie.
 
 
 
