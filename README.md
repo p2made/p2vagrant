@@ -20,6 +20,7 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 1. [Create the Virtual Machine](#step_01)
 2. [Set VM to use Alternative Repository](#step_02)
 2. [Install Apache](#step_03)
+4. [Synced Folder](#step_04)
 
 * [Vagrant Commands](#commands)
 
@@ -103,7 +104,7 @@ Vagrant.configure("2") do |config|
 
 	# Give our VM a name so we immediately know which box this is when opening VirtualBox, and spice up our VM's resources
 	config.vm.provider "virtualbox" do |v|
-		v.name = "Our amazing test project"
+		v.name = "My Amazing Test Project"
 		v.memory = 4096
 		v.cpus = 1
 	end
@@ -143,6 +144,59 @@ vagrant up
 * You should see the Apache default page of your VM.
 
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
+
+### <a id="step_04"></a> 4. Synced Folder
+
+`Vagrantfile`:
+
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+	config.vm.box = "hashicorp/bionic64"
+
+	# Give our VM a name so we immediately know which box this is when opening VirtualBox, and spice up our VM's resources
+	config.vm.provider "virtualbox" do |v|
+		v.name = "My Amazing Test Project"
+		v.memory = 4096
+		v.cpus = 1
+	end
+
+	# Choose a custom IP so this doesn't collide with other Vagrant boxes
+	config.vm.network "private_network", ip: "192.168.88.188"
+
+	# Set a synced folder
+	config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Execute shell script(s)
+	config.vm.provision :shell, path: "provision/scripts/repo.sh"
+	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+end
+```
+
+What this does is link our whole project folder to the `/var/www/` directory on our VM. Replace `"."` with `"path/to/folder"` if you want to sync to another folder.
+
+Create `synced/html/index.html`:
+
+```
+<html>
+<head>
+	<title>Wassup</title>
+</head>
+<body>
+	<p>How cool is this?</p>
+</body>
+</html>
+```
+
+Run:
+
+```
+vagrant reload
+```
+
+Let Vagrant do it's things, refresh the page and ... there it is! You are now looking at the page you just created.
 
 
 
