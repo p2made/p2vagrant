@@ -21,7 +21,7 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 2. [Pre-Provisioning](#step_02)
 2. [Install Apache](#step_03)
 4. [Synced Folder](#step_04)
-4. [Install PHP 8.1](#step_05)
+4. [Install PHP 8.0](#step_05)
 
 * [Vagrant Commands](#commands)
 
@@ -200,7 +200,7 @@ vagrant reload
 
 Let Vagrant do it's things, refresh the page and ... there it is! You are now looking at the page you just created.
 
-### <a id="step_05"></a> 5. Install PHP 8.1
+### <a id="step_05"></a> 5. Install PHP 8.0
 
 `Vagrantfile`:
 
@@ -238,7 +238,7 @@ Create `provision/scripts/php.sh`:
 
 sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 sudo apt-get update
-sudo apt-get install -y php8.1 php8.1-mysql
+sudo apt-get install -y php8.0 php8.0-mysql
 
 sudo service apache2 restart
 ```
