@@ -15,6 +15,9 @@ Vagrant.configure("2") do |config|
 	# Choose a custom IP so this doesn't collide with other Vagrant boxes
 	config.vm.network "private_network", ip: "192.168.88.188"
 
+    # Set a synced folder
+    config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
+
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/components/apache.sh"
 
