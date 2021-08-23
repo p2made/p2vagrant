@@ -255,37 +255,11 @@ Run:
 ```
 vagrant provision
 ```
-
-
-## Installing PHP
-
-Time to install PHP and include some generally-used PHP libraries. Create a new `php.sh` file, don't forget adding it to your `Vagrantfile`:
-
-```
-#!/bin/bash
-
-sudo apt-get install software-properties-common
-sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
-sudo apt-get update
-sudo apt-get install -y php7.4 php7.4-bcmath php7.4-bz2 php7.4-cli php7.4-curl php7.4-intl php7.4-json php7.4-mbstring php7.4-opcache php7.4-soap php7.4-xml php7.4-xsl php7.4-zip libapache2-mod-php7.4
-
-sudo service apache2 restart
-```
-
-Also add a `phpinfo.php` file to your html directory:
-
-```
-<?php
-phpinfo();
-```
-
-Run:
-
-```
-vagrant provision
-```
-
 Once Vagrant is finished, visit [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php), which should successfully display the PHP info page! Easy, right?
+
+
+
+
 
 One thing you'll probably do in any new PHP setup is level up the max. memory usage, post size, and upload size. Again, we don't want to do it manually, we want it to be configured correctly from the moment we clone our project and start up our VM. To do this, add these lines before `sudo service apache2 restart` in `php.sh`:
 
