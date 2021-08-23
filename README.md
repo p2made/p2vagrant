@@ -129,8 +129,28 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-What this does is link our whole project folder to the `/var/www/` directory on our VM. Now create a `html` directory and put an `index.html` file in there:
+What this does is link our whole project folder to the `/var/www/` directory on our VM. Replace `"."` with `"path/to/folder"` if you want to sync to another folder.
 
+Create `synced/html/index.html`:
+
+```
+<html>
+<head>
+	<title>Wassup</title>
+</head>
+<body>
+	<p>How cool is this?</p>
+</body>
+</html>
+```
+
+Run:
+
+```
+vagrant reload
+```
+
+Let Vagrant do it's things, refresh the page and ... there it is! You are now looking at the page you just created.
 
 
 
