@@ -21,4 +21,5 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/prevision.sh"
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/php.sh"
+	config.vm.provision :shell, path: "provision/scripts/mysql.sh"
 end
