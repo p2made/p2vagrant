@@ -49,6 +49,7 @@ Vagrantfile:
 
 ```
 Vagrant.configure("2") do |config|
+
 	config.vm.box = "hashicorp/bionic64"
 
 	# Give our VM a name so we immediately know which box this is when opening VirtualBox, and spice up our VM's resources
@@ -63,6 +64,7 @@ Vagrant.configure("2") do |config|
 
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/components/apache.sh"
+
 end
 ```
 
@@ -88,6 +90,9 @@ vagrant destroy
 vagrant up
 ```
 
+Let Vagrant do its magic, and once it's finished, visit [http://192.168.88.188/](http://192.168.88.188/). Boom! You're now looking at the Apache default page of your VM, which means it's up and running!
+
+The page you're looking at is a simple `index.html` file that's located within our VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
 
 
