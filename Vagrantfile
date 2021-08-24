@@ -1,13 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Give our VM a name so we immediately know which box this is when opening VirtualBox
+# Variables
 PROJECT_NAME        = "Amazing Test Project"
-# Spice up our VM's resources
 MEMORY              = 4096
 CPUS                = 1
-# Choose a custom IP so this doesn't collide with other Vagrant boxes
 IP                  = "192.168.88.188"
+HOST_FOLDER         = "."
+REMOTE_FOLDER       = "/var/www"
 
 Vagrant.configure("2") do |config|
 
@@ -20,6 +20,9 @@ Vagrant.configure("2") do |config|
 	end
 
 	config.vm.network "private_network", ip: IP
+
+	# Set a synced folder
+	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/components/apache.sh"
