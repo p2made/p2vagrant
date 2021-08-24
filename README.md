@@ -72,4 +72,3 @@ Command | Result
 `vagrant reload --provision` | Re-runs your `Vagrantfile` **and** your provisioners, so used if there were changes in both files.
 `vagrant destroy` | Destroys the Vagrant box specified by the `Vagrantfile ` in the current directory.
 `vagrant ssh` | SSH into the Vagrant box.
-
