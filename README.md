@@ -165,7 +165,7 @@ Vagrant.configure("2") do |config|
 
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/components/apache.sh"
-    config.vm.provision :shell, path: "provision/components/php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/components/php.sh", :args => [PHP_VERSION]
 
 end
 ```
