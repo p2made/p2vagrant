@@ -216,63 +216,80 @@ vagrant provision
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Variables
+PROJECT_NAME        = "Amazing Test Project"
+MEMORY              = 4096
+CPUS                = 1
+IP                  = "192.168.88.188"
+HOST_FOLDER         = "."
+REMOTE_FOLDER       = "/var/www"
+PHP_VERSION         = "8.0"
+MYSQL_VERSION       = "8.0"
+RT_PASSWORD         = "password"
+DB_USERNAME         = "user"
+DB_PASSWORD         = "password"
+DB_NAME             = "db"
+DB_NAME_TEST        = "db_test"
+
 Vagrant.configure("2") do |config|
+
 	config.vm.box = "hashicorp/bionic64"
 
-	# Give our VM a name so we immediately know which box this is when opening VirtualBox, and spice up our VM's resources
 	config.vm.provider "virtualbox" do |v|
-		v.name = "My Amazing Test Project"
-		v.memory = 4096
-		v.cpus = 1
+		v.name = PROJECT_NAME
+		v.memory = MEMORY
+		v.cpus = CPUS
 	end
 
-	# Choose a custom IP so this doesn't collide with other Vagrant boxes
-	config.vm.network "private_network", ip: "192.168.88.188"
+	config.vm.network "private_network", ip: IP
 
 	# Set a synced folder
-	config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
+	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/components/prevision.sh"
 	config.vm.provision :shell, path: "provision/components/apache.sh"
-	config.vm.provision :shell, path: "provision/components/php.sh"
-	config.vm.provision :shell, path: "provision/components/mysql.sh"
+	config.vm.provision :shell, path: "provision/components/php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/components/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+
 end
 ```
+
+Customise `RT_PASSWORD`, `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, & `DB_NAME_TEST` to suit yourself.
 
 Create `provision/components/mysql.sh`:
 
 ```
 #!/bin/bash
 
-DBHOST=localhost
-RTPASSWD=password
-DBNAME=mydb
-DBUSER=myuser
-DBPASSWD=password
+# MYSQL_VERSION    $1
+# RT_PASSWORD      $2
+# DB_USERNAME      $3
+# DB_PASSWORD      $4
+# DB_NAME          $5
+# DB_NAME_TEST     $6
 
 # Install MySQL
 apt-get update
 
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $RTPASSWD"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $RTPASSWD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $2"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $2"
 
-apt-get -y install mysql-server
+apt-get -y install mysql-server-$1
 
 # Create the database and grant privileges
-CMD="mysql -uroot -p$DBPASSWD -e"
+CMD="sudo mysql -uroot -p$2 -e"
 
-$CMD "CREATE DATABASE IF NOT EXISTS $DBNAME"
-$CMD "GRANT ALL PRIVILEGES ON $DBNAME.* TO '$DBUSER'@'%' IDENTIFIED BY '$DBPASSWD';"
+$CMD "CREATE DATABASE IF NOT EXISTS $5"
+$CMD "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%' IDENTIFIED BY '$4';"
+$CMD "CREATE DATABASE IF NOT EXISTS $6"
+$CMD "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%' IDENTIFIED BY '$4';"
 $CMD "FLUSH PRIVILEGES;"
 
-# Allow remote access to the database
-sudo sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
 
-sudo service mysql restart
+service mysql restart
 ```
-
-Customise `RTPASSWD`, `DBNAME`, `DBUSER`, & `DBPASSWD` to suit yourself.
 
 Run:
 
@@ -284,7 +301,7 @@ Create `synced/html/db.php`:
 
 ```
 <?php
-$conn = mysqli_connect("localhost", "myuser", "password", "mydb");
+$conn = mysqli_connect("localhost", "user", "password", "db");
 
 if (!$conn) {
 	die("Error: " . mysqli_connect_error());
@@ -293,7 +310,7 @@ if (!$conn) {
 echo "Connected!";
 ```
 
-Peplace `localhost`, `myuser`, `password`, `mydb` with the values used in `db.php`.
+Peplace `localhost`, `user`, `password`, `db` with the values used in `Vagrantfile`.
 
 * Visit [http://192.168.88.188/db.php](http://192.168.88.188/db.php) and if all went well you should be seeing the "*Connected!*" message.
 
