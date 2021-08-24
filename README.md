@@ -20,6 +20,7 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 1. [Create the Virtual Machine](#step_01)
 2. [Install Apache](#step_02)
 3. [Install PHP 8.0](#step_03)
+4. [Install MySQL](#step_04)
 
 * [Vagrant Commands](#commands)
 
@@ -205,7 +206,96 @@ vagrant provision
 
 * When finished, [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php), which should successfully display the PHP info page.
 
+--
 
+### <a id="step_04"></a> 4. Install MySQL
+
+`Vagrantfile`:
+
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+	config.vm.box = "hashicorp/bionic64"
+
+	# Give our VM a name so we immediately know which box this is when opening VirtualBox, and spice up our VM's resources
+	config.vm.provider "virtualbox" do |v|
+		v.name = "My Amazing Test Project"
+		v.memory = 4096
+		v.cpus = 1
+	end
+
+	# Choose a custom IP so this doesn't collide with other Vagrant boxes
+	config.vm.network "private_network", ip: "192.168.88.188"
+
+	# Set a synced folder
+	config.vm.synced_folder ".", "/var/www", create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Execute shell script(s)
+	config.vm.provision :shell, path: "provision/components/prevision.sh"
+	config.vm.provision :shell, path: "provision/components/apache.sh"
+	config.vm.provision :shell, path: "provision/components/php.sh"
+	config.vm.provision :shell, path: "provision/components/mysql.sh"
+end
+```
+
+Create `provision/components/mysql.sh`:
+
+```
+#!/bin/bash
+
+DBHOST=localhost
+RTPASSWD=password
+DBNAME=mydb
+DBUSER=myuser
+DBPASSWD=password
+
+# Install MySQL
+apt-get update
+
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $RTPASSWD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $RTPASSWD"
+
+apt-get -y install mysql-server
+
+# Create the database and grant privileges
+CMD="mysql -uroot -p$DBPASSWD -e"
+
+$CMD "CREATE DATABASE IF NOT EXISTS $DBNAME"
+$CMD "GRANT ALL PRIVILEGES ON $DBNAME.* TO '$DBUSER'@'%' IDENTIFIED BY '$DBPASSWD';"
+$CMD "FLUSH PRIVILEGES;"
+
+# Allow remote access to the database
+sudo sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+
+sudo service mysql restart
+```
+
+Customise `RTPASSWD`, `DBNAME`, `DBUSER`, & `DBPASSWD` to suit yourself.
+
+Run:
+
+```
+vagrant provision
+```
+
+Create `synced/html/db.php`:
+
+```
+<?php
+$conn = mysqli_connect("localhost", "myuser", "password", "mydb");
+
+if (!$conn) {
+	die("Error: " . mysqli_connect_error());
+}
+
+echo "Connected!";
+```
+
+Peplace `localhost`, `myuser`, `password`, `mydb` with the values used in `db.php`.
+
+* Visit [http://192.168.88.188/db.php](http://192.168.88.188/db.php) and if all went well you should be seeing the "*Connected!*" message.
 
 
 
