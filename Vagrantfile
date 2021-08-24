@@ -22,6 +22,6 @@ Vagrant.configure("2") do |config|
 	config.vm.network "private_network", ip: IP
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/components/apache.sh"
 
 end
