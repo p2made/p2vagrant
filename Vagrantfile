@@ -15,6 +15,7 @@ DB_USERNAME         = "user"
 DB_PASSWORD         = "password"
 DB_NAME             = "db"
 DB_NAME_TEST        = "db_test"
+PHPMYADMIN_VERSION  = "5.1.1"
 
 Vagrant.configure("2") do |config|
 
