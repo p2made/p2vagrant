@@ -13,7 +13,7 @@ apt-get update
 debconf-set-selections <<< "mysql-server mysql-server/root_password password $2"
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $2"
 
-apt-get -y install mysql-server-$1
+apt-get -y install mysql-server
 
 # Create the database and grant privileges
 CMD="sudo mysql -uroot -p$2 -e"
