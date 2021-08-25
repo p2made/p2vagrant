@@ -5,7 +5,7 @@
 PROJECT_NAME        = "Amazing Test Project"
 MEMORY              = 4096
 CPUS                = 1
-IP                  = "192.168.88.188"
+VM_IP               = "192.168.88.188"
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 PHP_VERSION         = "8.0"
@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
 		v.cpus = CPUS
 	end
 
-	config.vm.network "private_network", ip: IP
+	config.vm.network "private_network", ip: VM_IP
 
 	# Set a synced folder
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
