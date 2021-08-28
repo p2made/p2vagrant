@@ -3,7 +3,7 @@
 apt-get update
 apt-get install -y apache2
 
-yes | cp /var/www/provision/apache/vhosts/* /etc/apache2/sites-available/
+yes | cp /var/www/provision/apache/vhosts/local.conf /etc/apache2/sites-available/
 yes | cp /var/www/provision/apache/ssl/* /etc/apache2/sites-available/
 
 a2ensite local.conf
