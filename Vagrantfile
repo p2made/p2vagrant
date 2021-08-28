@@ -40,4 +40,13 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
+	# Execute shell script(s)
+#	config.vm.provision :shell, path: "provision/components/ssl.sh", :args => [HOST_0, HOST_1, HOST_2, HOST_3, HOST_4]
+#	config.vm.provision :shell, path: "provision/components/apache.sh"
+#	config.vm.provision :shell, path: "provision/components/php.sh", :args => [PHP_VERSION]
+#	config.vm.provision :shell, path: "provision/components/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+#	config.vm.provision :shell, path: "provision/components/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
+#	config.vm.provision :shell, path: "provision/components/composer.sh", :args => [COMPOSER_VERSION]
+#	config.vm.provision :shell, path: "provision/components/profile.sh"
+
 end
