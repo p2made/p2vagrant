@@ -13,4 +13,3 @@ if [ ! -f /var/www/provision/config/ssl/local.key ]; then
     -subj "/CN=$1" \
     -addext "subjectAltName=DNS:$1,DNS:$2,DNS:$3,DNS:$4,DNS:$5,DNS:*.$1,DNS:*.$2,DNS:*.$3,DNS:*.$4,DNS:*.$5,IP:10.0.0.1"
 fi
-

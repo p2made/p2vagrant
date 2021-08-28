@@ -1,3 +1,12 @@
+# 2. Generate SSL
+
+--
+
+* Start using variables so all the customisation is in one place.
+
+`Vagrantfile`:
+
+```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -42,11 +51,36 @@ Vagrant.configure("2") do |config|
 
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/scripts/ssl.sh", :args => [HOST_0, HOST_1, HOST_2, HOST_3, HOST_4]
-	config.vm.provision :shell, path: "provision/scripts/apache.sh"
-	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
-	config.vm.provision :shell, path: "provision/scripts/composer.sh", :args => [COMPOSER_VERSION]
-#	config.vm.provision :shell, path: "provision/scripts/profile.sh"
 
 end
+```
+
+Create `provision/scripts/apache.sh`:
+
+```
+#!/bin/bash
+
+sed -i.bak 's/^[^#]*BBB/#&/' /etc/ssl/openssl.cnf
+
+if [ ! -f /var/www/provision/config/ssl/local.key ]; then
+  openssl req -x509 \
+    -newkey rsa:4096 \
+    -sha256 \
+    -days 730 \
+    -nodes \
+    -keyout /var/www/provision/config/ssl/local.key \
+    -out /var/www/provision/config/ssl/local.crt \
+    -subj "/CN=$1" \
+    -addext "subjectAltName=DNS:$1,DNS:$2,DNS:$3,DNS:$4,DNS:$5,DNS:*.$1,DNS:*.$2,DNS:*.$3,DNS:*.$4,DNS:*.$5,IP:10.0.0.1"
+fi
+```
+
+Run:
+
+```
+vagrant reload --provision
+```
+
+--
+* [Install Apache](./03_Install_Apache.md)
+* [Back to Steps](./00_Steps.md)

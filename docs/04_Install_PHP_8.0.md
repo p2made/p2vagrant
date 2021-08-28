@@ -1,3 +1,11 @@
+
+# 4. Install PHP 8.0
+
+--
+
+`Vagrantfile`:
+
+```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -44,9 +52,46 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/ssl.sh", :args => [HOST_0, HOST_1, HOST_2, HOST_3, HOST_4]
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
-	config.vm.provision :shell, path: "provision/scripts/composer.sh", :args => [COMPOSER_VERSION]
-#	config.vm.provision :shell, path: "provision/scripts/profile.sh"
 
 end
+```
+
+Create `provision/scripts/php.sh`:
+
+```
+#!/bin/bash
+
+apt-get install software-properties-common
+LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
+
+apt-get update
+apt-get install -y php$1 php$1-mysql
+
+sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/$1/apache2/php.ini
+sed -i 's/post_max_size = .*/post_max_size = 64M/' /etc/php/$1/apache2/php.ini
+sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' /etc/php/$1/apache2/php.ini
+sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/$1/apache2/php.ini
+sed -i 's/display_errors = .*/display_errors = on/' /etc/php/$1/apache2/php.ini
+sed -i 's/display_startup_errors = .*/display_startup_errors = on/' /etc/php/$1/apache2/php.ini
+
+service apache2 restart
+```
+
+Create `HOST_FOLDER/html/phpinfo.php`:
+
+```
+<?php
+phpinfo();
+```
+
+Run:
+
+```
+vagrant provision
+```
+
+* When finished, [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php), which should successfully display the PHP info page.
+
+--
+* [Install MySQL](./05_Install_MySQL.md)
+* [Back to Steps](./00_Steps.md)

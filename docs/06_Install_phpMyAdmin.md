@@ -1,3 +1,10 @@
+# 6. Install phpMyAdmin
+
+--
+
+`Vagrantfile`:
+
+```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -46,7 +53,49 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
-	config.vm.provision :shell, path: "provision/scripts/composer.sh", :args => [COMPOSER_VERSION]
-#	config.vm.provision :shell, path: "provision/scripts/profile.sh"
 
 end
+```
+
+Create `provision/scripts/phpmyadmin.sh`:
+
+```
+#!/bin/bash
+
+apt-get update
+apt-get install -y unzip
+
+debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
+debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $2"
+debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $2"
+debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $2"
+debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none"
+
+apt-get install -y phpmyadmin
+
+rm -rf /usr/share/phpmyadmin
+
+cd /tmp
+wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
+unzip phpMyAdmin-$1-all-languages.zip
+rm phpMyAdmin-$1-all-languages.zip
+sudo mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
+
+sudo chown -R www-data:www-data $3/html/phpmyadmin
+sudo chmod -R 755 $3/html/phpmyadmin
+
+phpenmod mbstring
+systemctl restart apache2
+```
+
+Run:
+
+```
+vagrant provision
+```
+
+* Visit [http://192.168.88.188/phpmyadmin/](http://192.168.88.188/phpmyadmin/), log in with user/password.
+
+--
+* [Install phpMyAdmin](./06_Install_phpMyAdmin.md)
+* [Back to Steps](./00_Steps.md)

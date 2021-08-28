@@ -1,8 +1,16 @@
+
+# 3. Install Apache
+
+--
+
+Vagrantfile:
+
+```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 # Variables
-PROJECT_NAME        = "Awesome Test Project"
+PROJECT_NAME        = "Test Project"
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.98.99"
@@ -43,10 +51,65 @@ Vagrant.configure("2") do |config|
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/scripts/ssl.sh", :args => [HOST_0, HOST_1, HOST_2, HOST_3, HOST_4]
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
-	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
-	config.vm.provision :shell, path: "provision/scripts/composer.sh", :args => [COMPOSER_VERSION]
-#	config.vm.provision :shell, path: "provision/scripts/profile.sh"
 
 end
+```
+
+Create `provision/scripts/apache.sh`:
+
+```
+#!/bin/bash
+
+apt-get update
+apt-get install -y apache2
+
+yes | cp /var/www/provision/apache/vhosts/* /etc/apache2/sites-available/
+yes | cp /var/www/provision/apache/ssl/* /etc/apache2/sites-available/
+
+a2ensite local.conf
+a2dissite 000-default
+
+a2enmod rewrite
+sudo service apache2 restart
+
+#rm -rf /var/www/html
+
+sudo a2enmod ssl
+sudo service apache2 restart
+```
+
+Create `HOST_FOLDER/html/index.html`:
+
+```
+<html>
+<head>
+	<title>Awesome Test Project</title>
+</head>
+<body>
+	<p><b>Shaka Bom!<b/></p>
+	<p>How cool is this?</p>
+</body>
+</html>
+```
+
+Run:
+
+```
+vagrant reload --provision
+```
+
+*But*, that name is more completely applied if the Vagrant box is destroyed & created again:
+
+```
+vagrant destroy
+vagrant up
+```
+
+* When finished, visit [http://192.168.88.188/](http://192.168.88.188/).
+* You should see the Apache default page of your VM.
+
+The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
+
+--
+* [Install PHP 8.0](./04_Install_PHP_8.0.md)
+* [Back to Steps](./00_Steps.md)
