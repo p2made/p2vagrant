@@ -1,3 +1,12 @@
+# 10. Configure Profile
+
+--
+
+Chances are you'll need to compile some assets so having Yarn installed on your VM can always come in handy. Create a `yarn.sh` file and add it to your Vagrantfile :
+
+Vagrantfile:
+
+```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -40,8 +49,28 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
+	config.vm.provision :shell, path: "provision/scripts/sites.sh"
 	config.vm.provision :shell, path: "provision/scripts/composer.sh", :args => [COMPOSER_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/yarn.sh"
 	config.vm.provision :shell, path: "provision/scripts/profile.sh"
 
 end
+```
+
+Create `provision/scripts/yarn.sh`:
+
+```
+#!/bin/bash
+
+grep -qxF 'cd /var/www' /home/vagrant/.profile || echo 'cd /var/www' >> /home/vagrant/.profile
+```
+
+Run:
+
+```
+vagrant provision
+```
+
+--
+* [Back to Steps](../Steps_Taken.md)
+* ***END***

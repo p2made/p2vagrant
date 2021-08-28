@@ -1,8 +1,8 @@
-# 1. Create the VM
+# 1. Creating the Virtual Machine
 
 --
 
-`Vagrantfile`:
+Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -22,5 +22,5 @@ vagrant up
 ```
 
 --
-* [Generate SSL](./02_Generate_SSL.md)
-* [Back to Steps](./00_Steps.md)
+* [Back to Steps](../Steps_Taken.md)
+* [Installing Apache](./02_Apache.md)
