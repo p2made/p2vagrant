@@ -7,12 +7,12 @@ openssl req -x509 \
   -sha256 \
   -days 3650 \
   -nodes \
-  -keyout /var/www/provision/apache/ssl/_hostname_.key \
-  -out /var/www/provision/apache/ssl/_hostname_.crt \
+  -keyout /var/www/provision/ssl/_hostname_.key \
+  -out /var/www/provision/ssl/_hostname_.crt \
   -subj "/CN=_hostname_"
 
-yes | cp /var/www/provision/apache/vhosts/_hostname_.conf /etc/apache2/sites-available/
-yes | cp /var/www/provision/apache/ssl/_hostname_.* /etc/apache2/sites-available/
+yes | cp /var/www/provision/vhosts/_hostname_.conf /etc/apache2/sites-available/
+yes | cp /var/www/provision/ssl/_hostname_.* /etc/apache2/sites-available/
 
 a2ensite _hostname_.conf
 

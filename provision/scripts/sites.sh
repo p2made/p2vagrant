@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yes | cp /var/www/provision/apache/vhosts/* /etc/apache2/sites-available/
+yes | cp /var/www/provision/vhosts/* /etc/apache2/sites-available/
 
 a2ensite example.tld.conf
 a2ensite example1.tld.conf
