@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Replace the blocks below wth ones customised for your own hosts
+
 openssl genrsa \
   -out /var/www/provision/ssl/example.tld.key \
   2048
