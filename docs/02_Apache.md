@@ -91,5 +91,5 @@ vagrant up
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
 --
-* [Back to Steps](../Steps_Taken.md)
+* [Back to Steps](./00_Steps.md)
 * [Installing PHP 8.0](./03_PHP.md)

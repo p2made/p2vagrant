@@ -110,5 +110,5 @@ Item | Value
 `SSH Port` | 2222
 
 --
-* [Back to Steps](../Steps_Taken.md)
+* [Back to Steps](./00_Steps.md)
 * [Setting up Domain Name(s)](./06_Domain_Names.md)

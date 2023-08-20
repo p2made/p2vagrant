@@ -85,5 +85,5 @@ vagrant provision
 * When finished, [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php), which should successfully display the PHP info page.
 
 --
-* [Back to Steps](../Steps_Taken.md)
+* [Back to Steps](./00_Steps.md)
 * [Installing MySQL](./04_MySQL.md)

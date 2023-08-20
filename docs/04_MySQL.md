@@ -110,5 +110,5 @@ Peplace `localhost`, `user`, `password`, `db` with the values used in `Vagrantfi
 * Visit [http://192.168.88.188/db.php](http://192.168.88.188/db.php) and if all went well you should be seeing the "*Connected!*" message.
 
 --
-* [Back to Steps](../Steps_Taken.md)
+* [Back to Steps](./00_Steps.md)
 * [Installing phpMyAdmin](./05_phpMyAdmin.md)

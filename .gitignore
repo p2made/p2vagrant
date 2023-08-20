@@ -4,5 +4,8 @@
 # Mac DS_Store Files
 .DS_Store
 
+# .vagrant
+/.vagrant
+
 # z_gitignore folder
 /z_gitignore

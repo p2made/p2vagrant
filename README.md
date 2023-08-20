@@ -7,23 +7,17 @@ My Vagrant on macOS journey.
 To use this at the stage of development that you find it...
 
 1. Either open the project in Github Desktop or download & unpack the zip file.
-2. In Terminal cd into the project directory & run...
+2. In Terminal `cd` into the project directory & run...
 
 ```
 vagrant up
 ```
 
+**But you almost certainly DO NOT want to do that.**
+
 ## Steps Taken
 
-Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
-
-1. [Create the Virtual Machine](#step_01)
-2. [Install Apache](#step_02)
-3. [Install PHP 8.0](#step_03)
-4. [Install MySQL](#step_04)
-5. [Install phpMyAdmin](#step_05)
-
-* [Vagrant Commands](#commands)
+If you want to see all the steps taken to create this VM, [here they are](./docs/00_Steps.md).
 
 --
 
