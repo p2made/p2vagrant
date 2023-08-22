@@ -37,7 +37,7 @@ Add an additional block for each subdomain:
 </VirtualHost>
 ```
 
-Vagrantfile:
+### Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -110,7 +110,7 @@ sudo service apache2 restart
 
 With a `a2ensite` entry for each `.conf` file.
 
-Run:
+### Run:
 
 ```
 vagrant provision

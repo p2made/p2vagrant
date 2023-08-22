@@ -2,7 +2,7 @@
 
 --
 
-Vagrantfile:
+### Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -65,7 +65,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 apt-get update && sudo apt-get install -y yarn
 ```
 
-Run:
+### Run:
 
 ```
 vagrant provision

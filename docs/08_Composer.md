@@ -2,7 +2,7 @@
 
 --
 
-Vagrantfile:
+### Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -66,7 +66,7 @@ mv composer.phar /usr/local/bin/composer
 sudo composer self-update $1
 ```
 
-Run:
+### Run:
 
 ```
 vagrant provision

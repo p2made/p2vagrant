@@ -9,7 +9,7 @@ VM_IP               = "192.168.98.99"
 TLD                 = "tld"
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
-PHP_VERSION         = "8.0"
+PHP_VERSION         = "8.2"
 PHPMYADMIN_VERSION  = "5.1.1"
 MYSQL_VERSION       = "5.7"
 COMPOSER_VERSION    = "2.1.6"
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
 
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
-#	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 #	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 #	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
 #	config.vm.provision :shell, path: "provision/scripts/composer.sh", :args => [COMPOSER_VERSION]

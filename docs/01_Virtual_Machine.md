@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Run:
+### Run:
 
 ```
 vagrant up

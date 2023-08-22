@@ -2,7 +2,7 @@
 
 --
 
-Vagrantfile:
+### Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Create `provision/scripts/apache.sh`:
+**Create** `provision/scripts/apache.sh`:
 
 ```
 #!/bin/bash
@@ -59,7 +59,7 @@ apt-get update
 apt-get install -y apache2
 ```
 
-Create `HOST_FOLDER/html/index.html`:
+**Create** `HOST_FOLDER/html/index.html`:
 
 ```
 <html>
@@ -73,7 +73,7 @@ Create `HOST_FOLDER/html/index.html`:
 </html>
 ```
 
-Run:
+### Run:
 
 ```
 vagrant reload --provision

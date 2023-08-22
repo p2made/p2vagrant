@@ -2,7 +2,7 @@
 
 --
 
-Vagrantfile:
+### Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -72,7 +72,7 @@ if [ ! -f /var/www/provision/apache/ssl/local.key ]; then
 fi
 ```
 
-Run:
+### Run:
 
 ```
 vagrant destroy

@@ -2,7 +2,7 @@
 
 --
 
-Vagrantfile:
+### Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -86,7 +86,7 @@ grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRIC
 service mysql restart
 ```
 
-Run:
+### Run:
 
 ```
 vagrant provision
@@ -107,7 +107,7 @@ echo "Connected!";
 
 Peplace `localhost`, `user`, `password`, `db` with the values used in `Vagrantfile`.
 
-* Visit [http://192.168.88.188/db.php](http://192.168.88.188/db.php) and if all went well you should be seeing the "*Connected!*" message.
+* Visit [http://192.168.98.99/db.php](http://192.168.98.99/db.php) and if all went well you should be seeing the "*Connected!*" message.
 
 --
 * [Back to Steps](./00_Steps.md)

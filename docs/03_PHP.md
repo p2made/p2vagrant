@@ -2,7 +2,7 @@
 
 --
 
-Vagrantfile:
+### Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -16,7 +16,7 @@ VM_IP               = "192.168.98.99"
 TLD                 = "tld"
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
-PHP_VERSION         = "8.0"
+PHP_VERSION         = "8.2"
 PHPMYADMIN_VERSION  = "5.1.1"
 MYSQL_VERSION       = "5.7"
 COMPOSER_VERSION    = "2.1.6"
@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Create `provision/scripts/php.sh`:
+**Create** `provision/scripts/php.sh`:
 
 ```
 #!/bin/bash
@@ -69,20 +69,20 @@ sed -i 's/display_startup_errors = .*/display_startup_errors = on/' /etc/php/$1/
 service apache2 restart
 ```
 
-Create `HOST_FOLDER/html/phpinfo.php`:
+**Create** `HOST_FOLDER/html/phpinfo.php`:
 
 ```
 <?php
 phpinfo();
 ```
 
-Run:
+### Run:
 
 ```
 vagrant provision
 ```
 
-* When finished, [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php), which should successfully display the PHP info page.
+* When finished, [http://192.168.98.99/phpinfo.php](http://192.168.98.99/phpinfo.php), which should successfully display the PHP info page.
 
 --
 * [Back to Steps](./00_Steps.md)

@@ -2,7 +2,7 @@
 
 --
 
-Vagrantfile:
+### Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -63,7 +63,7 @@ Create `provision/scripts/profile.sh`:
 grep -qxF 'cd /var/www' /home/vagrant/.profile || echo 'cd /var/www' >> /home/vagrant/.profile
 ```
 
-Run:
+### Run:
 
 ```
 vagrant provision

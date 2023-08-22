@@ -2,7 +2,7 @@
 
 --
 
-Vagrantfile:
+### Vagrantfile:
 
 ```
 # -*- mode: ruby -*-
@@ -87,13 +87,13 @@ phpenmod mbstring
 systemctl restart apache2
 ```
 
-Run:
+### Run:
 
 ```
 vagrant provision
 ```
 
-* Visit [http://192.168.88.188/phpmyadmin/](http://192.168.88.188/phpmyadmin/), log in with user/password.
+* Visit [http://192.168.98.99/phpmyadmin/](http://192.168.98.99/phpmyadmin/), log in with user/password.
 
 ### Accessing the Database from Outside the VM
 
