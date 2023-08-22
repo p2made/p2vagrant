@@ -86,7 +86,7 @@ vagrant destroy
 vagrant up
 ```
 
-* When finished, visit [http://192.168.88.188/](http://192.168.88.188/).
+* When finished, visit [http://192.168.98.99/](http://192.168.98.99/).
 * You should see the Apache default page of your VM.
 
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
