@@ -30,10 +30,11 @@ Vagrant.configure("2") do |config|
 
 	config.vm.box = "hashicorp/bionic64"
 
-	config.vm.provider "virtualbox" do |v|
-		v.name = PROJECT_NAME
+	config.vm.provider "vmware_desktop" do |v|
+#		v.name   = PROJECT_NAME
 		v.memory = MEMORY
-		v.cpus = CPUS
+		v.cpus   = CPUS
+		v.gui    = true
 	end
 
 	config.vm.network "private_network", ip: VM_IP
