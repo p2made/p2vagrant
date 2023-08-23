@@ -66,21 +66,7 @@ vagrant up
 * When finished, visit [http://192.168.98.99/](http://192.168.98.99/).
 * You should see the Apache default page of your VM.
 
---
-
-* [01 Virtual Machine](./01_Virtual_Machine.md)
-* [**Back to Steps**](../README.md)
-* [03 PHP](./03_PHP.md)
-
-
--- -- ^-- -- ^ -- -- ^-- -- ^ -- -- ^-- --
-
-
-# 2. Installing Apache
-
---
-
-**Create** `HOST_FOLDER/html/index.html`:
+**Edit** `HOST_FOLDER/html/index.html`:
 
 ```
 <html>
@@ -96,3 +82,7 @@ vagrant up
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
 --
+
+* [01 Virtual Machine](./01_Virtual_Machine.md)
+* [**Back to Steps**](../README.md)
+* [03 PHP](./03_PHP.md)
