@@ -1,4 +1,3 @@
-# 10 Profile
 
 --
 
@@ -69,6 +68,4 @@ vagrant reload --provision
 ```
 
 --
-* [previous](./previous.md)
-* [Back to Steps](../README.md)
-* [next](./next.md)
+

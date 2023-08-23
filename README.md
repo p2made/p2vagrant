@@ -34,7 +34,6 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 9. [Installing Yarn](./docs/09_Yarn.md)
 10. [Configure Profile](./docs/10_Profile.md)
 
-
 * [Vagrant Commands](./docs/Commands.md)
 
 

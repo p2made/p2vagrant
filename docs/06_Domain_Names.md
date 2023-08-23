@@ -1,4 +1,3 @@
-# 06 Domain_Names
 
 --
 
@@ -69,6 +68,4 @@ vagrant reload --provision
 ```
 
 --
-* [previous](./previous.md)
-* [Back to Steps](../README.md)
-* [next](./next.md)
+
