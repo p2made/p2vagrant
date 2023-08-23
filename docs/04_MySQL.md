@@ -72,3 +72,7 @@ vagrant reload --provision
 * [**Back to Steps**](../README.md)
 * [05 phpMyAdmin](./05_phpMyAdmin.md)
 
+
+-- -- ^-- -- ^ -- -- ^-- -- ^ -- -- ^-- --
+
+
