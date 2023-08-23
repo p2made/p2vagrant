@@ -1,4 +1,4 @@
-# 3. Installing PHP 8.0
+# 3. Installing PHP 8.2
 
 --
 

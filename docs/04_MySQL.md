@@ -49,9 +49,9 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Customise `RT_PASSWORD`, `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, & `DB_NAME_TEST` to suit yourself.
+**Customise** `RT_PASSWORD`, `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, & `DB_NAME_TEST` to suit yourself.
 
-Create `provision/scripts/mysql.sh`:
+**Create** `provision/scripts/mysql.sh`:
 
 ```
 #!/bin/bash
@@ -92,7 +92,7 @@ service mysql restart
 vagrant provision
 ```
 
-Create `HOST_FOLDER/html/db.php`:
+**Create** `HOST_FOLDER/html/db.php`:
 
 ```
 <?php
