@@ -10,8 +10,8 @@ TLD                 = "tld"
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 PHP_VERSION         = "8.2"
-PHPMYADMIN_VERSION  = "5.1.1"
-MYSQL_VERSION       = "5.7"
+PHPMYADMIN_VERSION  = "5.2.1"
+MYSQL_VERSION       = "8.1"
 COMPOSER_VERSION    = "2.1.6"
 RT_PASSWORD         = "password"
 DB_USERNAME         = "user"
@@ -38,8 +38,8 @@ Vagrant.configure("2") do |config|
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-#	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-#	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
+	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
 #	config.vm.provision :shell, path: "provision/scripts/composer.sh", :args => [COMPOSER_VERSION]
 #	config.vm.provision :shell, path: "provision/scripts/yarn.sh"
 #	config.vm.provision :shell, path: "provision/scripts/profile.sh"
