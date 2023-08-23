@@ -88,7 +88,7 @@ vagrant up
 	<title>Awesome Test Project</title>
 </head>
 <body>
-	<p><b>Shaka Bom!<b/></p>
+	<p><b>Shaka Bom!</b></p>
 	<p>How cool is this?</p>
 </body>
 </html>
