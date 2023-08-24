@@ -1,4 +1,4 @@
-# 04 MySQL
+# 04 Installing MySQL
 
 --
 
@@ -12,16 +12,14 @@
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.98.99"
-TLD                 = "tld"
 HOST_FOLDER         = "./public"
 REMOTE_FOLDER       = "/var/www"
 PHP_VERSION         = "8.2"
-PHPMYADMIN_VERSION  = "5.2.1"
 MYSQL_VERSION       = "8.1"
 COMPOSER_VERSION    = "2.1.6"
-RT_PASSWORD         = "password"
-DB_USERNAME         = "user"
-DB_PASSWORD         = "password"
+RT_PASSWORD         = "rt_password"
+DB_USERNAME         = "db_user"
+DB_PASSWORD         = "db_password"
 DB_NAME             = "db"
 DB_NAME_TEST        = "db_test"
 
@@ -44,27 +42,81 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
-	config.vm.provision :shell, path: "provision/scripts/composer.sh", :args => [COMPOSER_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/yarn.sh"
-	config.vm.provision :shell, path: "provision/scripts/profile.sh"
-
-	config.vm.provision :shell, path: "provision/scripts/sites.sh"
 
 end
 ```
 
-**Create** `provision/scripts/somefile.sh`:
+**Customise**
+
+* `RT_PASSWORD`
+* `DB_USERNAME`
+* `DB_PASSWORD`
+* `DB_NAME`
+* `DB_NAME_TEST`
+
+**Create** `provision/scripts/mysql.sh`:
 
 ```
-somefile
+#!/bin/bash
+
+# MYSQL_VERSION    $1
+# RT_PASSWORD      $2
+# DB_USERNAME      $3
+# DB_PASSWORD      $4
+# DB_NAME          $5
+# DB_NAME_TEST     $6
+
+# Install MySQL
+apt-get update
+
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $2"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $2"
+
+apt-get -y install mysql-server
+
+# Create the database and grant privileges
+CMD="sudo mysql -uroot -p$2 -e"
+
+$CMD "CREATE DATABASE IF NOT EXISTS $5"
+$CMD "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%' IDENTIFIED BY '$4';"
+$CMD "CREATE DATABASE IF NOT EXISTS $6"
+$CMD "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%' IDENTIFIED BY '$4';"
+$CMD "FLUSH PRIVILEGES;"
+
+sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
+
+service mysql restart
 ```
 
 ### Run:
 
 ```
+vagrant provision
+```
+
+or
+
+```
 vagrant reload --provision
 ```
+
+**Create** `HOST_FOLDER/html/db.php`:
+
+```
+<?php
+$conn = mysqli_connect("localhost", "db_user", "db_password", "db");
+
+if (!$conn) {
+	die("Error: " . mysqli_connect_error());
+}
+
+echo "Connected!";
+```
+
+Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vagrantfile`.
+
+* Visit [http://192.168.98.99/db.php](http://192.168.98.99/db.php) and if all went well you should be seeing the "*Connected!*" message.
 
 --
 
@@ -76,3 +128,10 @@ vagrant reload --provision
 -- -- ^-- -- ^ -- -- ^-- -- ^ -- -- ^-- --
 
 
+# 4. Installing MySQL
+
+--
+
+
+
+--
