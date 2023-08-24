@@ -72,6 +72,12 @@ phpinfo();
 vagrant provision
 ```
 
+or
+
+```
+vagrant reload --provision
+```
+
 * When finished, [http://192.168.98.99/phpinfo.php](http://192.168.98.99/phpinfo.php), which should successfully display the PHP info page.
 
 --
