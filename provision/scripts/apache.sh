@@ -3,6 +3,8 @@
 apt-get update
 apt-get install -y apache2
 
+#yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
+#yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
 yes | cp ./provision/vhosts/local.conf /etc/apache2/sites-available/
 yes | cp ./provision/ssl/* /etc/apache2/sites-available/
 
