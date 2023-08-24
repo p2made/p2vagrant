@@ -34,6 +34,6 @@ Vagrant.configure("2") do |config|
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	#config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
