@@ -123,15 +123,3 @@ Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vag
 * [03 PHP](./03_PHP.md)
 * [**Back to Steps**](../README.md)
 * [05 phpMyAdmin](./05_phpMyAdmin.md)
-
-
--- -- ^-- -- ^ -- -- ^-- -- ^ -- -- ^-- --
-
-
-# 4. Installing MySQL
-
---
-
-
-
---
