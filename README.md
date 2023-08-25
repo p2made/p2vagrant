@@ -23,7 +23,7 @@ If you want to see all the steps taken to create this VM, [here they are](./docs
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
-1. [Creating the Virtual Machine](./docs/01_Virtual_Machine.md)
+1. [Create the Virtual Machine](./docs/01_Virtual_Machine.md)
 2. [Installing Apache](./docs/02_Apache.md)
 3. [Installing PHP](./docs/03_PHP.md)
 4. [Installing MySQL](./docs/04_MySQL.md)
@@ -39,29 +39,6 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 
 
 
-
---
-
-### <a id="step_01"></a> 1. Create the Virtual Machine
-
-`Vagrantfile`:
-
-```
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-Vagrant.configure("2") do |config|
-
-	config.vm.box = "hashicorp/bionic64"
-
-end
-```
-
-Run:
-
-```
-vagrant up
-```
 
 --
 
