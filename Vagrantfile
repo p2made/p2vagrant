@@ -5,7 +5,7 @@
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.98.99"
-HOST_FOLDER         = "./public"
+HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
