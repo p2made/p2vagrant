@@ -49,9 +49,6 @@ apt-get install -y apache2
 
 ### Run:
 
-
-### Run:
-
 ```
 vagrant reload --provision
 ```
