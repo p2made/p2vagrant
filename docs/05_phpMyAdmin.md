@@ -16,12 +16,12 @@ HOST_FOLDER         = "./public"
 REMOTE_FOLDER       = "/var/www"
 PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
-COMPOSER_VERSION    = "2.1.6"
 RT_PASSWORD         = "rt_password"
 DB_USERNAME         = "db_user"
 DB_PASSWORD         = "db_password"
 DB_NAME             = "db"
 DB_NAME_TEST        = "db_test"
+PHPMYADMIN_VERSION  = "5.2.1"
 
 Vagrant.configure("2") do |config|
 
