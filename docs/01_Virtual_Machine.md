@@ -2,11 +2,9 @@
 
 --
 
-First you must...
+First you must download & install the [VMware Fusion 2023 Tech Preview](https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-TP2023) - most recent as of [2023-07-13](https://blogs.vmware.com/teamfusion/2023/07/vmware-fusion-2023-tech-preview.html).
 
-* [Download and install the Fusion 2023 Tech Preview](https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-TP2023) - most recent as at 2023-08-24.
-
-That installs `VMware Fusion Tech Preview` in your `Applications` folder. Rename it to `VMware Fusion` (I don't know wht that's necessary, but I read that it is, & it is).
+That installs `VMware Fusion Tech Preview` in your `Applications` folder. Rename it to `VMware Fusion` (I don't know why that's necessary, but I read that it is, & it find that is).
 
 --
 
