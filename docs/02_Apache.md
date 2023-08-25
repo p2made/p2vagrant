@@ -63,7 +63,7 @@ vagrant up
 * When finished, visit [http://192.168.98.99/](http://192.168.98.99/).
 * You should see the Apache default page of your VM.
 
-**Edit** `HOST_FOLDER/html/index.html`:
+**Optionally** edit `HOST_FOLDER/html/index.html`:
 
 ```
 <html>
