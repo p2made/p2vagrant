@@ -93,7 +93,7 @@ vagrant up
 
 --
 
-<!-- Install PHP 8.2 -->
+<!-- 04 Install PHP 8.2 -->
 | [03 Install Apache](./03_Install_Apache.md)
 | [**Back to Steps**](../README.md)
 | [05 Install MySQL](./05_Install_MySQL.md)
