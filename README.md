@@ -23,21 +23,21 @@ If you want to see all the steps taken to create this VM, [here they are](./docs
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
-1. [Create the Virtual Machine](./docs/01_Virtual_Machine.md)
-2. [Install Apache](./docs/02_Apache.md)
-3. [Install PHP](./docs/03_PHP.md)
-4. [Install MySQL](./docs/04_MySQL.md)
-5. [Install phpMyAdmin](./docs/05_phpMyAdmin.md)
-6. [Set up Domain Name(s)](./docs/06_Domain_Names.md)
-7. [Install SSL Certificates & Keys](./docs/07_SSL.md)
-8. [Install Composer](./docs/08_Composer.md)
-9. [Install Yarn](./docs/09_Yarn.md)
-10. [Configure Profile](./docs/10_Profile.md)
-11. zongo
-12. zongo
-13. zongo
-14. zongo
-15. zongo
+1. zongo
+2. zongo
+3. zongo
+4. zongo
+5. zongo
+6. [Create the Virtual Machine](./docs/01_Virtual_Machine.md)
+7. [Install Apache](./docs/02_Apache.md)
+8. [Install PHP](./docs/03_PHP.md)
+9. [Install MySQL](./docs/04_MySQL.md)
+10. [Install phpMyAdmin](./docs/05_phpMyAdmin.md)
+11. [Set up Domain Name(s)](./docs/06_Domain_Names.md)
+12. [Install SSL Certificates & Keys](./docs/07_SSL.md)
+13. [Install Composer](./docs/08_Composer.md)
+14. [Install Yarn](./docs/09_Yarn.md)
+15. [Configure Profile](./docs/10_Profile.md)
 
 * [Vagrant Commands](./docs/Commands.md)
 
