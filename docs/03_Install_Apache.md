@@ -91,4 +91,4 @@ The page is a simple `index.html` located within your VM in the `/var/www/html` 
 
 * [01 Virtual Machine](./01_Virtual_Machine.md)
 * [**Back to Steps**](../README.md)
-* [03 PHP](./03_PHP.md)
+* [03 Install PHP](./04_Install_PHP.md)
