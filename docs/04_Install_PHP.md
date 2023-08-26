@@ -4,6 +4,8 @@
 
 ### `Vagrantfile`:
 
+Here I've started to group variables.
+
 ```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
