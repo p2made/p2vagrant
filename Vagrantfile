@@ -11,13 +11,6 @@
 	REMOTE_FOLDER       = "/var/www"
 	# Versions
 	PHP_VERSION         = "8.2"
-	MYSQL_VERSION       = "8.1"
-	# Database
-	RT_PASSWORD         = "example_rt_password"
-	DB_USERNAME         = "example_db_user"
-	DB_PASSWORD         = "example_db_password"
-	DB_NAME             = "example_db"
-	DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
@@ -37,6 +30,5 @@ Vagrant.configure("2") do |config|
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
