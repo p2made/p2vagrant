@@ -38,6 +38,14 @@ end
 vagrant up
 ```
 
+All good? Save the moment with a snapshot...
+
+```
+vagrant halt
+vagrant snapshot push
+vagrant up
+```
+
 That's it!
 
 --
