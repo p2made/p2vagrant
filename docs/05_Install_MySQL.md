@@ -1,4 +1,4 @@
-# 04 Installing MySQL
+# 04 Install MySQL 8.1
 
 --
 
@@ -120,6 +120,8 @@ Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vag
 
 --
 
-* [03 PHP](./03_PHP.md)
-* [**Back to Steps**](../README.md)
-* [05 phpMyAdmin](./05_phpMyAdmin.md)
+<!-- Install MySQL 8.1 -->
+| [04 Install PHP](./04_Install_PHP.md)
+| [**Back to Steps**](../README.md)
+| [06 Install phpMyAdmin](./06_Install_phpMyAdmin.md)
+|
