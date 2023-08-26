@@ -32,4 +32,4 @@ That's it!
 --
 
 * [**Back to Steps**](../README.md)
-* [_next_](./_next_.md)
+* [02 Create the Virtual Machine](./02_Virtual_Machine.md)
