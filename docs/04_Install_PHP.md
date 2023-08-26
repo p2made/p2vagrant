@@ -1,4 +1,4 @@
-# 03 Install PHP 8.2
+# 04 Install PHP 8.2
 
 --
 
@@ -82,6 +82,14 @@ vagrant reload --provision
 ```
 
 * When finished, [http://192.168.98.99/phpinfo.php](http://192.168.98.99/phpinfo.php), which should successfully display the PHP info page.
+
+All good? Save the moment with a snapshot...
+
+```
+vagrant halt
+vagrant snapshot push
+vagrant up
+```
 
 --
 
