@@ -23,7 +23,11 @@ If you want to see all the steps taken to create this VM, [here they are](./docs
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
-All versions of `Vagrantfile` are in `/provision/Vagrantfiles` as `Vagrantfile_nn`, where `nn` is the step that Vagrantfile is for.
+All versions of `Vagrantfile` are in `/Vagrantfiles` as `Vagrantfile_nn`, where `nn` is the step that Vagrantfile is for. You can restore any version of `Vagrantfile` with...
+
+```
+cp ./Vagrantfiles/Vagrantfile_nn ./Vagrantfile
+``` 
 
 All files you are directed to create are in...
 
