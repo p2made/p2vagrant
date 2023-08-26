@@ -4,7 +4,7 @@
 
 ### `Vagrantfile`:
 
-Here I've started to group variables.
+Here I've started to group variables for easier following.
 
 ```
 # -*- mode: ruby -*-
