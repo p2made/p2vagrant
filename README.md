@@ -23,6 +23,19 @@ If you want to see all the steps taken to create this VM, [here they are](./docs
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
+All versions of `Vagrantfile` are in `/provision/Vagrantfiles` as `Vagrantfile_nn`, where `nn` is the step that Vagrantfile is for.
+
+All files you are directed to create are in...
+
+```
+/provision
+	/html
+	/scripts
+	/ssl
+	/templates
+	/vhosts
+```
+
 01. [Install Software](./docs/01_Install_Software.md)
 02. [Create Virtual Machine](./docs/02_Create_Virtual_Machine.md)
 03. [Install Apache](./docs/03_Install_Apache.md)
