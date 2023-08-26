@@ -9,6 +9,8 @@
 	# Folders
 	HOST_FOLDER         = "./shared"
 	REMOTE_FOLDER       = "/var/www"
+	# Versions
+	PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 
@@ -27,5 +29,6 @@ Vagrant.configure("2") do |config|
 
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 
 end
