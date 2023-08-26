@@ -123,6 +123,16 @@ Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vag
 
 --
 
+All good? Save the moment with a snapshot...
+
+```
+vagrant halt
+vagrant snapshot push
+vagrant up
+```
+
+--
+
 <!-- Install MySQL 8.1 -->
 | [04 Install PHP](./04_Install_PHP.md)
 | [**Back to Steps**](../README.md)
