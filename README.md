@@ -25,11 +25,11 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 
 1. [Install Software](./docs/01_Install_Software.md)
 2. [Create the Virtual Machine](./docs/02_Virtual_Machine.md)
-3. [_title_](./docs/_file_.md)
+3. [Install Apache](./docs/03_Install_Apache.md)
 4. [_title_](./docs/_file_.md)
 5. [_title_](./docs/_file_.md)
 6. 
-7. [Install Apache](./docs/02_Apache.md)
+7. 
 8. [Install PHP](./docs/03_PHP.md)
 9. [Install MySQL](./docs/04_MySQL.md)
 10. [Install phpMyAdmin](./docs/05_phpMyAdmin.md)
