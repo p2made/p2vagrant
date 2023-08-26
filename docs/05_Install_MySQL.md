@@ -9,19 +9,22 @@
 # vi: set ft=ruby :
 
 # Variables
-MEMORY              = 4096
-CPUS                = 1
-VM_IP               = "192.168.98.99"
-HOST_FOLDER         = "./public"
-REMOTE_FOLDER       = "/var/www"
-PHP_VERSION         = "8.2"
-MYSQL_VERSION       = "8.1"
-COMPOSER_VERSION    = "2.1.6"
-RT_PASSWORD         = "rt_password"
-DB_USERNAME         = "db_user"
-DB_PASSWORD         = "db_password"
-DB_NAME             = "db"
-DB_NAME_TEST        = "db_test"
+	# Machine
+	MEMORY              = 4096
+	CPUS                = 1
+	VM_IP               = "192.168.98.99"
+	# Folders
+	HOST_FOLDER         = "./public"
+	REMOTE_FOLDER       = "/var/www"
+	# Versions
+	PHP_VERSION         = "8.2"
+	MYSQL_VERSION       = "8.1"
+	# Database
+	RT_PASSWORD         = "example_rt_password"
+	DB_USERNAME         = "example_db_user"
+	DB_PASSWORD         = "example_db_password"
+	DB_NAME             = "example_db"
+	DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
