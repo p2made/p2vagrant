@@ -5,7 +5,7 @@
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.98.99"
-HOST_FOLDER         = "./public"
+HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
 
 Vagrant.configure("2") do |config|
