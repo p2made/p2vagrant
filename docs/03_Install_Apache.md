@@ -45,6 +45,15 @@ LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/apache2
 
 apt-get update
 apt-get install -y apache2
+
+a2ensite local.conf
+a2dissite 000-default
+
+a2enmod rewrite
+sudo service apache2 restart
+
+sudo a2enmod ssl
+sudo service apache2 restart
 ```
 
 ### Run:
