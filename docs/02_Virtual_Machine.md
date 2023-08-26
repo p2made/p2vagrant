@@ -1,12 +1,4 @@
-# 01 Creating the Virtual Machine
-
---
-
-First you must download & install the [VMware Fusion 2023 Tech Preview](https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-TP2023) - most recent as of [2023-07-13](https://blogs.vmware.com/teamfusion/2023/07/vmware-fusion-2023-tech-preview.html).
-
-* That installs `VMware Fusion Tech Preview` in your `Applications` folder.
-* Rename it to `VMware Fusion`
-* (I don't know why that's necessary, but I read that it is, & it find that is).
+# 02 Create the Virtual Machine
 
 --
 
