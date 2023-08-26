@@ -2,11 +2,15 @@
 # vi: set ft=ruby :
 
 # Variables
-MEMORY              = 4096
-CPUS                = 1
-VM_IP               = "192.168.98.99"
-HOST_FOLDER         = "./shared"
-REMOTE_FOLDER       = "/var/www"
+	# Machine
+	MEMORY              = 4096
+	CPUS                = 1
+	VM_IP               = "192.168.98.99"
+	# Folders
+	HOST_FOLDER         = "./public"
+	REMOTE_FOLDER       = "/var/www"
+	# Versions
+	PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 
@@ -25,5 +29,6 @@ Vagrant.configure("2") do |config|
 
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 
 end

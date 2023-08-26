@@ -1,4 +1,4 @@
-# 02 Installing Apache
+# 02 Install Apache
 
 --
 
@@ -89,6 +89,8 @@ The page is a simple `index.html` located within your VM in the `/var/www/html` 
 
 --
 
-* [02 Create the Virtual Machine](./01_Virtual_Machine.md)
-* [**Back to Steps**](../README.md)
-* [03 Install PHP](./04_Install_PHP.md)
+<!-- Install Apache -->
+| [02 Create Virtual Machine](./01_Virtual_Machine.md)
+| [**Back to Steps**](../README.md)
+| [04 Install PHP](./04_Install_PHP.md)
+|

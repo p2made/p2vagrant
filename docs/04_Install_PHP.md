@@ -1,4 +1,4 @@
-# 03 Installing PHP 8.2
+# 03 Install PHP 8.2
 
 --
 
@@ -9,12 +9,15 @@
 # vi: set ft=ruby :
 
 # Variables
-MEMORY              = 4096
-CPUS                = 1
-VM_IP               = "192.168.98.99"
-HOST_FOLDER         = "./public"
-REMOTE_FOLDER       = "/var/www"
-PHP_VERSION         = "8.2"
+	# Machine
+	MEMORY              = 4096
+	CPUS                = 1
+	VM_IP               = "192.168.98.99"
+	# Folders
+	HOST_FOLDER         = "./public"
+	REMOTE_FOLDER       = "/var/www"
+	# Versions
+	PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 
@@ -82,6 +85,8 @@ vagrant reload --provision
 
 --
 
-* [02 Apache](./02_Apache.md)
-* [**Back to Steps**](../README.md)
-* [04 MySQL](./04_MySQL.md)
+<!-- Install PHP 8.2 -->
+| [03 Install Apache](./03_Install_Apache.md)
+| [**Back to Steps**](../README.md)
+| [05 Install MySQL](./05_Install_MySQL.md)
+|

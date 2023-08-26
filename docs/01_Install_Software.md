@@ -31,6 +31,8 @@ That's it!
 
 --
 
--- -- |
-[**Back to Steps**](../README.md) |
-[02 Create the Virtual Machine](./02_Virtual_Machine.md)
+<!-- Install Software -->
+| - - - -
+| [**Back to Steps**](../README.md)
+| [02 Create Virtual Machine](./02_Create_Virtual_Machine.md)
+|

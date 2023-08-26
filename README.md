@@ -23,21 +23,17 @@ If you want to see all the steps taken to create this VM, [here they are](./docs
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
-1. [Install Software](./docs/01_Install_Software.md)
-2. [Create the Virtual Machine](./docs/02_Virtual_Machine.md)
-3. [Install Apache](./docs/03_Install_Apache.md)
-4. [_title_](./docs/_file_.md)
-5. [_title_](./docs/_file_.md)
-6. 
-7. 
-8. [Install PHP](./docs/03_PHP.md)
-9. [Install MySQL](./docs/04_MySQL.md)
-10. [Install phpMyAdmin](./docs/05_phpMyAdmin.md)
-11. [Set up Domain Name(s)](./docs/06_Domain_Names.md)
-12. [Install SSL Certificates & Keys](./docs/07_SSL.md)
-13. [Install Composer](./docs/08_Composer.md)
-14. [Install Yarn](./docs/09_Yarn.md)
-15. [Configure Profile](./docs/10_Profile.md)
+01. [Install Software](./docs/01_Install_Software.md)
+02. [Create Virtual Machine](./docs/02_Create_Virtual_Machine.md)
+03. [Install Apache](./docs/03_Install_Apache.md)
+04. [Install PHP](./docs/04_Install_PHP.md)
+05. [Install MySQL](./docs/05_Install_MySQL.md)
+06. [Install phpMyAdmin](./docs/06_Install_phpMyAdmin.md)
+07. [Domain Names](./docs/07_Domain_Names.md)
+08. [SSL](./docs/08_SSL.md)
+09. [Install Composer](./docs/09_Install_Composer.md)
+10. [Install Yarn](./docs/10_Install_Yarn.md)
+11. [Profile](./docs/11_Profile.md)
 
 * [Vagrant Commands](./docs/Commands.md)
 
