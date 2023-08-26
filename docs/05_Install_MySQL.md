@@ -121,8 +121,6 @@ Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vag
 
 * Visit [http://192.168.98.99/db.php](http://192.168.98.99/db.php) and if all went well you should be seeing the "*Connected!*" message.
 
---
-
 All good? Save the moment with a snapshot...
 
 ```
