@@ -23,11 +23,11 @@ If you want to see all the steps taken to create this VM, [here they are](./docs
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
-1. zongo
-2. zongo
-3. zongo
-4. zongo
-5. zongo
+1. [_title_](./docs/_file_.md)
+2. [_title_](./docs/_file_.md)
+3. [_title_](./docs/_file_.md)
+4. [_title_](./docs/_file_.md)
+5. [_title_](./docs/_file_.md)
 6. [Create the Virtual Machine](./docs/01_Virtual_Machine.md)
 7. [Install Apache](./docs/02_Apache.md)
 8. [Install PHP](./docs/03_PHP.md)
