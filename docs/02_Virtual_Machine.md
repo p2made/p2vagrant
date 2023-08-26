@@ -38,6 +38,8 @@ end
 vagrant up
 ```
 
+That's it!
+
 --
 
 * [01 Install Software](./01_Install_Software.md)
