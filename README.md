@@ -1,4 +1,4 @@
-# P2Vagrant
+# P2Vagrant (Apple Silicon)
 
 My Vagrant on macOS - now also Apple Silicon - journey.
 

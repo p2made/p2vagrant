@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 04 Install PHP 8.2
+
 apt-get install software-properties-common
 LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 03 Install Apache
+
 LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/apache2
 
 apt-get update

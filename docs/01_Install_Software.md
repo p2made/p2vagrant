@@ -27,6 +27,22 @@ brew install --cask vagrant
 brew install --cask vagrant-vmware-utility
 ```
 
+### Check `vagrant` status
+
+```
+vagrant global-status
+```
+
+For result something like...
+
+```
+id       name   provider state  directory                           
+--------------------------------------------------------------------
+There are no active Vagrant environments on this computer! Or,
+you haven't destroyed and recreated Vagrant environments that were
+started with an older version of Vagrant.
+```
+
 That's it!
 
 --
