@@ -1,39 +1,32 @@
-# 3. Installing PHP 8.0
+# 04 Install PHP 8.2
 
 --
 
-Vagrantfile:
+### `Vagrantfile`:
 
 ```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 # Variables
-PROJECT_NAME        = "Awesome Test Project"
-MEMORY              = 4096
-CPUS                = 1
-VM_IP               = "192.168.98.99"
-TLD                 = "tld"
-HOST_FOLDER         = "."
-REMOTE_FOLDER       = "/var/www"
-PHP_VERSION         = "8.0"
-PHPMYADMIN_VERSION  = "5.1.1"
-MYSQL_VERSION       = "5.7"
-COMPOSER_VERSION    = "2.1.6"
-RT_PASSWORD         = "password"
-DB_USERNAME         = "user"
-DB_PASSWORD         = "password"
-DB_NAME             = "db"
-DB_NAME_TEST        = "db_test"
+	# Machine
+	MEMORY              = 4096
+	CPUS                = 1
+	VM_IP               = "192.168.98.99"
+	# Folders
+	HOST_FOLDER         = "./shared"
+	REMOTE_FOLDER       = "/var/www"
+	# Versions
+	PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 
-	config.vm.box = "hashicorp/bionic64"
+	config.vm.box = "bento/ubuntu-20.04-arm64"
 
-	config.vm.provider "virtualbox" do |v|
-		v.name = PROJECT_NAME
+	config.vm.provider "vmware_desktop" do |v|
 		v.memory = MEMORY
-		v.cpus = CPUS
+		v.cpus   = CPUS
+		v.gui    = true
 	end
 
 	config.vm.network "private_network", ip: VM_IP
@@ -48,7 +41,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Create `provision/scripts/php.sh`:
+**Create** `provision/scripts/php.sh`:
 
 ```
 #!/bin/bash
@@ -69,21 +62,39 @@ sed -i 's/display_startup_errors = .*/display_startup_errors = on/' /etc/php/$1/
 service apache2 restart
 ```
 
-Create `HOST_FOLDER/html/phpinfo.php`:
+**Create** `HOST_FOLDER/html/phpinfo.php`:
 
 ```
 <?php
 phpinfo();
 ```
 
-Run:
+### Run:
 
 ```
 vagrant provision
 ```
 
-* When finished, [http://192.168.88.188/phpinfo.php](http://192.168.88.188/phpinfo.php), which should successfully display the PHP info page.
+or
+
+```
+vagrant reload --provision
+```
+
+* When finished, [http://192.168.98.99/phpinfo.php](http://192.168.98.99/phpinfo.php), which should successfully display the PHP info page.
+
+All good? Save the moment with a snapshot...
+
+```
+vagrant halt
+vagrant snapshot push
+vagrant up
+```
 
 --
-* [Back to Steps](./00_Steps.md)
-* [Installing MySQL](./04_MySQL.md)
+
+<!-- 04 Install PHP 8.2 -->
+| [03 Install Apache](./03_Install_Apache.md)
+| [**Back to Steps**](../README.md)
+| [05 Install MySQL](./05_Install_MySQL.md)
+|

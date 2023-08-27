@@ -13,7 +13,7 @@
 	REMOTE_FOLDER       = "/var/www"
 	# Versions
 	PHP_VERSION         = "8.2"
-	MYSQL_VERSION       = "8.0"
+	MYSQL_VERSION       = "8.1"
 	# Database
 	RT_PASSWORD         = "example_rt_password"
 	DB_USERNAME         = "example_db_user"

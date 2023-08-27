@@ -1,39 +1,39 @@
-# 4. Installing MySQL
+# 05 Install MySQL 8.1
 
 --
 
-Vagrantfile:
+### `Vagrantfile`:
 
 ```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 # Variables
-PROJECT_NAME        = "Awesome Test Project"
-MEMORY              = 4096
-CPUS                = 1
-VM_IP               = "192.168.98.99"
-TLD                 = "tld"
-HOST_FOLDER         = "."
-REMOTE_FOLDER       = "/var/www"
-PHP_VERSION         = "8.0"
-PHPMYADMIN_VERSION  = "5.1.1"
-MYSQL_VERSION       = "5.7"
-COMPOSER_VERSION    = "2.1.6"
-RT_PASSWORD         = "password"
-DB_USERNAME         = "user"
-DB_PASSWORD         = "password"
-DB_NAME             = "db"
-DB_NAME_TEST        = "db_test"
+	# Machine
+	MEMORY              = 4096
+	CPUS                = 1
+	VM_IP               = "192.168.98.99"
+	# Folders
+	HOST_FOLDER         = "./shared"
+	REMOTE_FOLDER       = "/var/www"
+	# Versions
+	PHP_VERSION         = "8.2"
+	MYSQL_VERSION       = "8.1"
+	# Database
+	RT_PASSWORD         = "example_rt_password"
+	DB_USERNAME         = "example_db_user"
+	DB_PASSWORD         = "example_db_password"
+	DB_NAME             = "example_db"
+	DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
-	config.vm.box = "hashicorp/bionic64"
+	config.vm.box = "bento/ubuntu-20.04-arm64"
 
-	config.vm.provider "virtualbox" do |v|
-		v.name = PROJECT_NAME
+	config.vm.provider "vmware_desktop" do |v|
 		v.memory = MEMORY
-		v.cpus = CPUS
+		v.cpus   = CPUS
+		v.gui    = true
 	end
 
 	config.vm.network "private_network", ip: VM_IP
@@ -49,9 +49,15 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Customise `RT_PASSWORD`, `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, & `DB_NAME_TEST` to suit yourself.
+**Customise**
 
-Create `provision/scripts/mysql.sh`:
+* `RT_PASSWORD`
+* `DB_USERNAME`
+* `DB_PASSWORD`
+* `DB_NAME`
+* `DB_NAME_TEST`
+
+**Create** `provision/scripts/mysql.sh`:
 
 ```
 #!/bin/bash
@@ -86,17 +92,23 @@ grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRIC
 service mysql restart
 ```
 
-Run:
+### Run:
 
 ```
 vagrant provision
 ```
 
-Create `HOST_FOLDER/html/db.php`:
+or
+
+```
+vagrant reload --provision
+```
+
+**Create** `HOST_FOLDER/html/db.php`:
 
 ```
 <?php
-$conn = mysqli_connect("localhost", "user", "password", "db");
+$conn = mysqli_connect("localhost", "db_user", "db_password", "db");
 
 if (!$conn) {
 	die("Error: " . mysqli_connect_error());
@@ -105,10 +117,22 @@ if (!$conn) {
 echo "Connected!";
 ```
 
-Peplace `localhost`, `user`, `password`, `db` with the values used in `Vagrantfile`.
+Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vagrantfile`.
 
-* Visit [http://192.168.88.188/db.php](http://192.168.88.188/db.php) and if all went well you should be seeing the "*Connected!*" message.
+* Visit [http://192.168.98.99/db.php](http://192.168.98.99/db.php) and if all went well you should be seeing the "*Connected!*" message.
+
+All good? Save the moment with a snapshot...
+
+```
+vagrant halt
+vagrant snapshot push
+vagrant up
+```
 
 --
-* [Back to Steps](./00_Steps.md)
-* [Installing phpMyAdmin](./05_phpMyAdmin.md)
+
+<!-- Install MySQL 8.1 -->
+| [04 Install PHP](./04_Install_PHP.md)
+| [**Back to Steps**](../README.md)
+| [06 Install phpMyAdmin](./06_Install_phpMyAdmin.md)
+|

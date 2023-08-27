@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# MYSQL_VERSION    $1
-# RT_PASSWORD      $2
-# DB_USERNAME      $3
-# DB_PASSWORD      $4
-# DB_NAME          $5
-# DB_NAME_TEST     $6
+#MYSQL_VERSION   = $1
+#RT_PASSWORD     = $2
+#DB_USERNAME     = $3
+#DB_PASSWORD     = $4
+#DB_NAME         = $5
+#DB_NAME_TEST    = $6
 
 # Install MySQL
 apt-get update
@@ -19,9 +19,9 @@ apt-get -y install mysql-server
 CMD="sudo mysql -uroot -p$2 -e"
 
 $CMD "CREATE DATABASE IF NOT EXISTS $5"
-$CMD "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%' IDENTIFIED BY '$4';"
 $CMD "CREATE DATABASE IF NOT EXISTS $6"
-$CMD "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%' IDENTIFIED BY '$4';"
+$CMD "CREATE USER '$3@%' IDENTIFIED BY '$4';"
+$CMD "GRANT ALL PRIVILEGES ON *.* TO '$3@%';"
 $CMD "FLUSH PRIVILEGES;"
 
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf

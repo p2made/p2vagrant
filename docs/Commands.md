@@ -11,5 +11,5 @@ Command | Result
 `vagrant ssh` | SSH into the Vagrant box.
 
 --
-* [Back to Steps](./00_Steps.md)
+
 * [Back to README](../README.md)
