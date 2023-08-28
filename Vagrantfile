@@ -1,4 +1,4 @@
-# 05 Install MySQL 8.1
+# 04 Install PHP 8.2
 
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
@@ -13,13 +13,6 @@
 	REMOTE_FOLDER       = "/var/www"
 	# Versions
 	PHP_VERSION         = "8.2"
-	MYSQL_VERSION       = "8.1"
-	# Database
-	RT_PASSWORD         = "Pa$$w0rd0ne"
-	DB_USERNAME         = "fredspotty"
-	DB_PASSWORD         = "Pa$$w0rdTw0"
-	DB_NAME             = "example_db"
-	DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
@@ -39,6 +32,5 @@ Vagrant.configure("2") do |config|
 	# Execute shell script(s)
 	config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
