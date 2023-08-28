@@ -45,12 +45,15 @@ All files you are directed to create are in...
 03. [Install Apache](./docs/03_Install_Apache.md)
 04. [Install PHP](./docs/04_Install_PHP.md)
 05. [Install MySQL](./docs/05_Install_MySQL.md)
+
+<!--
 06. [Install phpMyAdmin](./docs/06_Install_phpMyAdmin.md)
 07. [Domain Names](./docs/07_Domain_Names.md)
 08. [SSL](./docs/08_SSL.md)
 09. [Install Composer](./docs/09_Install_Composer.md)
 10. [Install Yarn](./docs/10_Install_Yarn.md)
 11. [Profile](./docs/11_Profile.md)
+ -->
 
 * [Vagrant Commands](./docs/Commands.md)
 
