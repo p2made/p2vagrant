@@ -1,7 +1,7 @@
-# 02 Create the Virtual Machine
-
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+
+# 02 Create the Virtual Machine
 
 # Variables
 MEMORY              = 4096
