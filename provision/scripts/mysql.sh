@@ -20,9 +20,9 @@ apt-get -y install mysql-server
 # Create the database and grant privileges
 #CMD="sudo mysql -uroot -p$2 -e"
 
-#$CMD "CREATE DATABASE IF NOT EXISTS $5"
-#$CMD "CREATE DATABASE IF NOT EXISTS $6"
-#$CMD "CREATE USER '$3@%' IDENTIFIED BY '$4';"
+#$CMD "CREATE DATABASE IF NOT EXISTS $5;"
+#$CMD "CREATE DATABASE IF NOT EXISTS $6;"
+#$CMD "CREATE USER '$3'@'%' IDENTIFIED BY '$4';"
 #$CMD "GRANT ALL PRIVILEGES ON *.* TO '$3@%';"
 #$CMD "FLUSH PRIVILEGES;"
 

@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provider "vmware_desktop" do |v|
 		v.memory = MEMORY
 		v.cpus   = CPUS
-		v.gui    = true
+		v.gui    = false
 	end
 
 	config.vm.network "private_network", ip: VM_IP
