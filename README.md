@@ -15,11 +15,7 @@ vagrant up
 
 **But you almost certainly DO NOT want to do that.**
 
-## Steps Taken
-
-If you want to see all the steps taken to create this VM, [here they are](./docs/00_Steps.md).
-
-# <a id="steps"></a> Steps Taken to build this macOS/Ubuntu VM
+# <a id="steps"></a> Steps Taken to build this M2/Ubuntu VM
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
