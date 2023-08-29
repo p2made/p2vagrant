@@ -2,7 +2,7 @@
 
 --
 
-### `Vagrantfile`:
+## `Vagrantfile`:
 
 * `v.gui` needs to be set to `true`.
 * `v.memory` & `v.cpus` might as well be set now.
@@ -32,21 +32,21 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-### Run:
+## Create the VM
 
 ```
 vagrant up
 ```
 
-All good? Save the moment with a snapshot...
+## All good?
+
+Save the moment with a snapshot...
 
 ```
 vagrant halt
 vagrant snapshot push
 vagrant up
 ```
-
-That's it!
 
 --
 

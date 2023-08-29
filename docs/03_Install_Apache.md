@@ -2,7 +2,7 @@
 
 --
 
-### `Vagrantfile`:
+## `Vagrantfile`:
 
 Here I've started to group variables for easier following.
 
@@ -60,7 +60,7 @@ sudo a2enmod ssl
 sudo service apache2 restart
 ```
 
-### Run:
+## Run Provisioning
 
 ```
 vagrant reload --provision
@@ -91,7 +91,9 @@ vagrant up
 ```
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
-All good? Save the moment with a snapshot...
+## All good?
+
+Save the moment with a snapshot...
 
 ```
 vagrant halt
