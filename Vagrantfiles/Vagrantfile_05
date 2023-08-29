@@ -18,8 +18,8 @@
 	RT_PASSWORD         = "Pa$$w0rd0ne"
 	DB_USERNAME         = "fredspotty"
 	DB_PASSWORD         = "Pa$$w0rdTw0"
-	DB_NAME             = "example_db"
-	DB_NAME_TEST        = "example_db_test"
+	DB_NAME             = "db"
+	DB_NAME_TEST        = "db_test"
 
 Vagrant.configure("2") do |config|
 
