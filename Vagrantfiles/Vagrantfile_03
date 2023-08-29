@@ -1,7 +1,7 @@
-# 03 Install Apache
-
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+
+# 03 Install Apache
 
 # Variables
 	# Machine
