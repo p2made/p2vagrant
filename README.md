@@ -1,21 +1,6 @@
 # P2Vagrant (Apple Silicon)
 
-My Vagrant on macOS - now also Apple Silicon - journey.
-
---
-
-To use this at the stage of development that you find it...
-
-1. Either open the project in Github Desktop or download & unpack the zip file.
-2. In Terminal `cd` into the project directory & run...
-
-```
-vagrant up
-```
-
-**But you almost certainly DO NOT want to do that.**
-
-# <a id="steps"></a> Steps Taken to build this M2/Ubuntu VM
+## <a id="steps"></a> Steps Taken to build this M2/Ubuntu VM
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
