@@ -20,9 +20,9 @@
 	PHP_VERSION         = "8.2"
 	MYSQL_VERSION       = "8.1"
 	# Database
-	RT_PASSWORD         = "example_rt_password"
-	DB_USERNAME         = "example_db_user"
-	DB_PASSWORD         = "example_db_password"
+	RT_PASSWORD         = "Pa$$w0rd0ne"
+	DB_USERNAME         = "fredspotty"
+	DB_PASSWORD         = "Pa$$w0rdTw0"
 	DB_NAME             = "db"
 	DB_NAME_TEST        = "db_test"
 
