@@ -27,7 +27,13 @@ brew install --cask vagrant
 brew install --cask vagrant-vmware-utility
 ```
 
-### Check `vagrant` status
+### 02a Optionally install Vagrant Manager
+
+```
+brew install --cask vagrant-manager
+```
+
+## 03 Check `vagrant` status
 
 ```
 vagrant global-status
