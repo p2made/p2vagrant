@@ -17,16 +17,16 @@ debconf-set-selections <<< "mysql-server mysql-server/root_password_again passwo
 
 apt-get -y install mysql-server
 
-# Create the database and grant privileges
-#CMD="sudo mysql -uroot -p$2 -e"
+# Create the databases, create user, & grant privileges
+CMD = "sudo mysql -uroot -p$2 -e"
 
-#$CMD "CREATE DATABASE IF NOT EXISTS $5;"
-#$CMD "CREATE DATABASE IF NOT EXISTS $6;"
-#$CMD "CREATE USER '$3'@'%' IDENTIFIED BY '$4';"
-#$CMD "GRANT ALL PRIVILEGES ON *.* TO '$3@%';"
-#$CMD "FLUSH PRIVILEGES;"
+$CMD "CREATE DATABASE IF NOT EXISTS $5;"
+$CMD "CREATE DATABASE IF NOT EXISTS $6;"
+$CMD "CREATE USER '$3'@'%' IDENTIFIED BY '$4';"
+$CMD "GRANT ALL PRIVILEGES ON *.* TO '$3@%';"
+$CMD "FLUSH PRIVILEGES;"
 
-#sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
-#grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
+sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
 
 service mysql restart
