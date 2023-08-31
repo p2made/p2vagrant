@@ -58,16 +58,12 @@ Vagrant.configure("2") do |config|
 	end
 
 	# Configure network...
-	puts "¡¡¡ Configuring network..."
 	config.vm.network "private_network", ip: VM_IP
 
 	# Set a synced folder
-	puts "¡¡¡ Setting synced folder..."
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
-	puts "¡¡¡ Provisioning..."
-
 	if INSTALL_APACHE = true
 		config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	end
@@ -78,8 +74,4 @@ Vagrant.configure("2") do |config|
 		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 	end
 
-	puts "¡¡¡ Provisioning Complete !!!"
-
 end
-
-puts "¡¡¡ Configuring Virtual Machine Complete !!!"
