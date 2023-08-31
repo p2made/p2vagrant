@@ -5,7 +5,7 @@
 
 INSTALL_APACHE      = true
 INSTALL_PHP         = true
-INSTALL_MYSQL       = true
+INSTALL_MYSQL       = false
 
 # Machine Variables
 MEMORY              = 4096
