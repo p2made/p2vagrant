@@ -64,13 +64,13 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
-	if INSTALL_APACHE = true
+	if INSTALL_APACHE
 		config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	end
-	if INSTALL_PHP = true
+	if INSTALL_PHP
 		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 	end
-	if INSTALL_PHP = true
+	if INSTALL_PHP
 		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 	end
 
