@@ -19,6 +19,16 @@ debconf-set-selections <<< "mysql-server mysql-server/root_password_again passwo
 apt-get -y install mysql-server
 
 # Create the databases, create user, & grant privileges
+CMD = "sudo mysql -uroot -p$2 -e"
+
+sudo mysql -uroot -p$2 -e "CREATE USER '$3'@'%' IDENTIFIED BY '$4';"
+sudo mysql -uroot -p$2 -e "CREATE DATABASE IF NOT EXISTS $5"
+sudo mysql -uroot -p$2 -e "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%'"
+sudo mysql -uroot -p$2 -e "CREATE DATABASE IF NOT EXISTS $6"
+sudo mysql -uroot -p$2 -e "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%'"
+
+
+
 CMD="sudo mysql -uroot -p$2 -e"
 
 $CMD "CREATE USER '$3'@'%' IDENTIFIED BY '$4';"
