@@ -11,6 +11,7 @@ echo "#####            ¡¡¡ Installing Apache !!!            #####"
 echo "#####                                                 #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+
 apt-get update
 apt-get install -y apache2
 
@@ -18,6 +19,7 @@ apt-get install -y apache2
 #yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
 
 echo "¡¡¡ Configuring Apache..."
+
 a2ensite local.conf
 a2dissite 000-default
 
@@ -28,4 +30,5 @@ sudo service apache2 restart
 
 sudo a2enmod ssl
 sudo service apache2 restart
+
 echo "¡¡¡ Apache Installation Complete !!!"
