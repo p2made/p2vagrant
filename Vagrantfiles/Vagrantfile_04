@@ -32,7 +32,11 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/scripts/apache.sh"
-	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
+	if INSTALL_APACHE = true
+		config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	end
+	if INSTALL_PHP = true
+		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
+	end
 
 end
