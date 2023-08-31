@@ -5,7 +5,7 @@
 
 INSTALL_APACHE      = true
 INSTALL_PHP         = true
-INSTALL_MYSQL       = false
+INSTALL_MYSQL       = true
 
 # Machine Variables
 MEMORY              = 4096
@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provider "vmware_desktop" do |v|
 		v.memory = MEMORY
 		v.cpus   = CPUS
-		v.gui    = GUI
+		v.gui    = true
 	end
 
 	config.vm.network "private_network", ip: VM_IP
