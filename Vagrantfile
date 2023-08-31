@@ -65,12 +65,15 @@ Vagrant.configure("2") do |config|
 
 	# Execute shell script(s)
 	if INSTALL_APACHE
+		puts "¡¡¡ Installing Apache..."
 		config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	end
 	if INSTALL_PHP
+		puts "¡¡¡ Installing Apache..."
 		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 	end
-	if INSTALL_PHP
+	if INSTALL_MYSQL
+		puts "¡¡¡ Installing Apache..."
 		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 	end
 
