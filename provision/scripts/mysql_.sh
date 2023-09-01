@@ -27,23 +27,26 @@ sudo mysql -uroot -p$2 -e "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%'"
 sudo mysql -uroot -p$2 -e "CREATE DATABASE IF NOT EXISTS $6"
 sudo mysql -uroot -p$2 -e "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%'"
 
+sudo mysql -uroot -p$2 -e "CREATE USER `$3`@`%` IDENTIFIED BY `$4`;"
+sudo mysql -uroot -p$2 -e "CREATE DATABASE IF NOT EXISTS $5"
+sudo mysql -uroot -p$2 -e "GRANT ALL PRIVILEGES ON $5.* TO `$3`@`%`"
+sudo mysql -uroot -p$2 -e "CREATE DATABASE IF NOT EXISTS $6"
+sudo mysql -uroot -p$2 -e "GRANT ALL PRIVILEGES ON $6.* TO `$3`@`%`"
 
 
 CMD="sudo mysql -uroot -p$2 -e"
 
 $CMD "CREATE USER '$3'@'%' IDENTIFIED BY '$4';"
-$CMD "CREATE DATABASE IF NOT EXISTS $5;"
-$CMD "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%' IDENTIFIED BY '$4';"
+$CMD "CREATE DATABASE IF NOT EXISTS $5"
+$CMD "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%'"
 $CMD "CREATE DATABASE IF NOT EXISTS $6"
-$CMD "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%' IDENTIFIED BY '$4';"
-$CMD "FLUSH PRIVILEGES;"
+$CMD "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%'"
 
-$CMD "CREATE USER `$3`@% IDENTIFIED BY `$4`;"
-$CMD "CREATE DATABASE IF NOT EXISTS `$5`;"
-$CMD "GRANT ALL PRIVILEGES ON `$5`.* TO `$3`@%;"
-$CMD "CREATE DATABASE IF NOT EXISTS `$6`;"
-$CMD "GRANT ALL PRIVILEGES ON `$6`.* TO `$3`@%;"
-$CMD "FLUSH PRIVILEGES;"
+$CMD "CREATE USER `$3`@`%` IDENTIFIED BY `$4`;"
+$CMD "CREATE DATABASE IF NOT EXISTS $5"
+$CMD "GRANT ALL PRIVILEGES ON $5.* TO `$3`@`%`"
+$CMD "CREATE DATABASE IF NOT EXISTS $6"
+$CMD "GRANT ALL PRIVILEGES ON $6.* TO `$3`@`%`"
 
 
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
