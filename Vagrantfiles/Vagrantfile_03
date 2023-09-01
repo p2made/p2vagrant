@@ -40,19 +40,9 @@ Vagrant.configure("2") do |config|
 	end
 
 	# Configure network...
-	puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-	puts "#####                                                                   #####"
-	puts "#####             ¡¡¡ Configuring network...                            #####"
-	puts "#####                                                                   #####"
-	puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 	config.vm.network "private_network", ip: VM_IP
 
 	# Set a synced folder
-	puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-	puts "#####                                                                   #####"
-	puts "#####             ¡¡¡ Setting synced folder...                          #####"
-	puts "#####                                                                   #####"
-	puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
