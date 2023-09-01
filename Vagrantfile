@@ -3,8 +3,8 @@
 
 # 05 Install MySQL 8.1
 
-INSTALL_APACHE      = false
-INSTALL_PHP         = false
+INSTALL_APACHE      = true
+INSTALL_PHP         = true
 INSTALL_MYSQL       = false
 
 # Machine Variables
@@ -28,8 +28,8 @@ puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##
 puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 puts "##### #####                                                                   ##### #####"
 puts "##### #####           Virtual Machine, with...                          ##### #####"
-puts "##### #####               INSTALL_APACHE      = false                   ##### #####"
-puts "##### #####               INSTALL_PHP         = false                   ##### #####"
+puts "##### #####               INSTALL_APACHE      = true                    ##### #####"
+puts "##### #####               INSTALL_PHP         = true                    ##### #####"
 puts "##### #####               INSTALL_MYSQL       = false                   ##### #####"
 puts "##### #####               MEMORY              = 4096                    ##### #####"
 puts "##### #####               CPUS                = 1                       ##### #####"
