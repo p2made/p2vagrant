@@ -88,6 +88,7 @@ Vagrant.configure("2") do |config|
 		puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 		config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	end
+
 	if INSTALL_PHP
 		puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 		puts "#####                                                                   #####"
@@ -96,6 +97,7 @@ Vagrant.configure("2") do |config|
 		puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 	end
+
 	if INSTALL_MYSQL
 		puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 		puts "#####                                                                   #####"
@@ -110,6 +112,7 @@ Vagrant.configure("2") do |config|
 	puts "#####             ¡¡¡ Provisioning Complete !!!                         #####"
 	puts "#####                                                                   #####"
 	puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+
 end
 
 puts "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
