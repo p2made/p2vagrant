@@ -25,7 +25,6 @@ a2ensite local.conf
 a2dissite 000-default
 
 a2enmod rewrite
-sudo service apache2 restart
 
 #rm -rf /var/www/html
 
