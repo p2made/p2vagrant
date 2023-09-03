@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# 06 Install phpMyAdmin
+
 INSTALL_APACHE      = false
 INSTALL_PHP         = false
 INSTALL_MYSQL       = false
