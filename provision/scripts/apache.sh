@@ -10,6 +10,9 @@ echo "#####                                                 #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 
+apt-get update
+apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
+
 LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/apache2
 
 apt-get update
