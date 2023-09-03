@@ -1,6 +1,6 @@
 # P2Vagrant (Apple Silicon)
 
-## <a id="steps"></a> Steps Taken to build this M2/Ubuntu VM
+## <a id="steps"></a> Steps Taken to build this macOS/M2/Ubuntu VM
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
@@ -28,6 +28,8 @@ All files you are directed to create are in...
 
 <!--
 05. [Install MySQL](./docs/05_Install_MySQL.md)
+
+<!--
 06. [Install phpMyAdmin](./docs/06_Install_phpMyAdmin.md)
 07. [Domain Names](./docs/07_Domain_Names.md)
 08. [SSL](./docs/08_SSL.md)

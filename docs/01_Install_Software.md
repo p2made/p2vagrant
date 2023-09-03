@@ -15,27 +15,29 @@ The instructions given assume the use of [Homebrew](https://brew.sh). If you don
 * Rename it to `VMware Fusion`
 * (I don't know why that's necessary, but I read that it is, & it find that is).
 
-## Install Vagrant & VMware Utility
+`VMware Fusion` needs to be running when you run `vagrant up`, or any other Vagrant command that starts a VM. Nothing needs to be set up in `VMware Fusion`.
+
+## 02 Install Vagrant & VMware Utility
 
 ```
 brew install --cask vagrant
 brew install --cask vagrant-vmware-utility
 ```
 
-### Optionally install Vagrant Manager
+### 02a Optionally install Vagrant Manager
 
 ```
 brew install --cask vagrant-manager
 ```
 
-## Install Vagrant Plugins
+## 03 Install Vagrant Plugins
 
 ```
 vagrant plugin install vagrant-share
 vagrant plugin install vagrant-vmware-desktop
 ```
 
-## Check `vagrant` status
+## 04 Check `vagrant` status
 
 ```
 vagrant global-status
