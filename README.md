@@ -25,6 +25,8 @@ All files you are directed to create are in...
 02. [Create Virtual Machine](./docs/02_Create_Virtual_Machine.md)
 03. [Install Apache](./docs/03_Install_Apache.md)
 04. [Install PHP](./docs/04_Install_PHP.md)
+
+<!--
 05. [Install MySQL](./docs/05_Install_MySQL.md)
 
 <!--
