@@ -3,9 +3,9 @@
 
 # 06 Install phpMyAdmin
 
-INSTALL_APACHE      = true
-INSTALL_PHP         = true
-INSTALL_MYSQL       = true
+INSTALL_APACHE      = false
+INSTALL_PHP         = false
+INSTALL_MYSQL       = false
 INSTALL_PHPMYADMIN  = true
 
 # Machine Variables
