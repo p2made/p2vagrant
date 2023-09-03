@@ -9,23 +9,23 @@
 apt-get update
 apt-get install -y unzip
 
-debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
-debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $2"
-debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $2"
-debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $2"
-debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none"
+#debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
+#debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $2"
+#debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $2"
+#debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $2"
+#debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none"
 
-apt-get install -y phpmyadmin
+#apt-get install -y phpmyadmin
 
-rm -rf /usr/share/phpmyadmin
+#rm -rf /usr/share/phpmyadmin
 
-#cd /tmp
-#wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
-#unzip phpMyAdmin-$1-all-languages.zip
-#rm phpMyAdmin-$1-all-languages.zip
-#sudo mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
+cd /tmp
+wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
+unzip phpMyAdmin-$1-all-languages.zip
+rm phpMyAdmin-$1-all-languages.zip
+sudo mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
 
-#sudo chmod -R 755 $3/html/phpmyadmin
+sudo chmod -R 755 $3/html/phpmyadmin
 
-#phpenmod mbstring
-#systemctl restart apache2
+phpenmod mbstring
+systemctl restart apache2
