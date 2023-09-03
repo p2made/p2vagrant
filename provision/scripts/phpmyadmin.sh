@@ -2,9 +2,9 @@
 
 # 06 Install phpMyAdmin
 
-#PHPMYADMIN_VERSION  = $1
-#DB_PASSWORD         = $2
-#REMOTE_FOLDER       = $3
+#PHPMYADMIN_VERSION  = $1 = "5.2.1"
+#DB_PASSWORD         = $2 = "Pa$$w0rdTw0"
+#REMOTE_FOLDER       = $3 = "/var/www"
 
 apt-get update
 apt-get install -y unzip
