@@ -33,13 +33,13 @@ Vagrant.configure("2") do |config|
 	config.vm.provider "vmware_fusion" do |v|
 		v.memory = MEMORY
 		v.cpus   = CPUS
-		v.gui    = true
+#		v.gui    = true
 	end
 
 	# Configure SSH...
 	config.ssh.username = 'root'
-	config.ssh.password = SSH_PASSWORD
-	config.ssh.insert_key = 'true'
+#	config.ssh.password = SSH_PASSWORD
+#	config.ssh.insert_key = 'true'
 
 	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
