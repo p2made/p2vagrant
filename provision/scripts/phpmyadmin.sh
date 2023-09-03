@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# 06 Install MySQL 8.1
+
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo "#####                                                 #####"
+echo "#####            ¡¡¡ Installing MySQL !!!             #####"
+echo "#####                                                 #####"
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+
+
 apt-get update
 apt-get install -y unzip
 
