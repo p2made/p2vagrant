@@ -2,7 +2,7 @@
 
 # 04 Install PHP 8.2
 
-#PHP_VERSION     = $1
+#PHP_VERSION     = $1 = 8.2
 
 apt-get install software-properties-common
 
