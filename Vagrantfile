@@ -5,12 +5,13 @@
 
 INSTALL_APACHE      = false
 INSTALL_PHP         = false
-INSTALL_MYSQL       = true
+INSTALL_MYSQL       = false
 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.98.99"
+SSH_PASSWORD        = 'vagrant'
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
@@ -28,11 +29,17 @@ Vagrant.configure("2") do |config|
 
 	config.vm.box = "bento/ubuntu-20.04-arm64"
 
-	config.vm.provider "vmware_desktop" do |v|
+#	config.vm.provider "vmware_desktop" do |v|
+	config.vm.provider "vmware_fusion" do |v|
 		v.memory = MEMORY
 		v.cpus   = CPUS
 		v.gui    = true
 	end
+
+	# Configure SSH...
+	config.ssh.username = 'root'
+	config.ssh.password = SSH_PASSWORD
+	config.ssh.insert_key = 'true'
 
 	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
