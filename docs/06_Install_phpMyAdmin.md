@@ -1,4 +1,4 @@
-# 05 Installing phpMyAdmin
+# 05 Install phpMyAdmin
 
 --
 
