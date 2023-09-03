@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 06 Install MySQL 8.1
+# 06 Install phpMyAdmin
 
 apt-get update
 apt-get install -y unzip
