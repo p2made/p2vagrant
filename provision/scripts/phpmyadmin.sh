@@ -16,16 +16,15 @@ debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $2"
 debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $2"
 debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none"
 
-rm -rf /usr/share/phpmyadmin
-
 cd /tmp
 wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
 unzip phpMyAdmin-$1-all-languages.zip
 rm phpMyAdmin-$1-all-languages.zip
 sudo mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
 
-#sudo chown -R www-data:www-data $3/html/phpmyadmin
 sudo chmod -R 755 $3/html/phpmyadmin
+
+rm -rf /usr/share/phpmyadmin
 
 phpenmod mbstring
 systemctl restart apache2
