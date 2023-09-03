@@ -3,8 +3,8 @@
 
 # 05 Install MySQL 8.1
 
-INSTALL_APACHE      = false
-INSTALL_PHP         = false
+INSTALL_APACHE      = true
+INSTALL_PHP         = true
 INSTALL_MYSQL       = true
 
 # Machine Variables
