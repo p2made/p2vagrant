@@ -2,6 +2,10 @@
 
 # 06 Install phpMyAdmin
 
+#PHPMYADMIN_VERSION = $1
+#DB_PASSWORD        = $2
+#REMOTE_FOLDER      = $3
+
 apt-get update
 apt-get install -y unzip
 apt-get install -y phpmyadmin
