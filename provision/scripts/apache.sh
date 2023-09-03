@@ -2,12 +2,6 @@
 
 # 03 Install Apache
 
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "#####                                                 #####"
-echo "#####            ¡¡¡ Installing Apache !!!            #####"
-echo "#####                                                 #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-
 apt-get update
 apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
 
