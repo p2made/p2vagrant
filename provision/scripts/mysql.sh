@@ -2,12 +2,12 @@
 
 # 05 Install MySQL 8.1
 
-#MYSQL_VERSION   = $1
-#RT_PASSWORD     = $2
-#DB_USERNAME     = $3
-#DB_PASSWORD     = $4
-#DB_NAME         = $5
-#DB_NAME_TEST    = $6
+#MYSQL_VERSION   = $1 = 8.1
+#RT_PASSWORD     = $2 = "Pa$$w0rd0ne"
+#DB_USERNAME     = $3 = "fredspotty"
+#DB_PASSWORD     = $4 = "Pa$$w0rdTw0"
+#DB_NAME         = $5 = "example_db"
+#DB_NAME_TEST    = $6 = "example_db_test"
 
 # Install MySQL
 apt-get update
