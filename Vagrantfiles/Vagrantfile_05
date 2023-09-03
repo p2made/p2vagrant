@@ -5,12 +5,13 @@
 
 INSTALL_APACHE      = false
 INSTALL_PHP         = false
-INSTALL_MYSQL       = true
+INSTALL_MYSQL       = false
 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.98.99"
+SSH_PASSWORD        = 'vagrant'
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
