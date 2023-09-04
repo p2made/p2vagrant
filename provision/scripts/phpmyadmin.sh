@@ -15,9 +15,9 @@ apt-get install -y unzip
 #debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $2"
 #debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none"
 
-apt-get install -y phpmyadmin
+#apt-get install -y phpmyadmin
 
-rm -rf /usr/share/phpmyadmin
+#rm -rf /usr/share/phpmyadmin
 
 cd /tmp
 wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
