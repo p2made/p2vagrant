@@ -3,7 +3,8 @@
 
 # 01 Create the Virtual Machine
 
-UPGRADE             = true
+UPGRADE_BOX         = true
+INSTALL_UTILITIES   = true
 
 # Machine Variables
 MEMORY              = 4096
@@ -24,7 +25,10 @@ Vagrant.configure("2") do |config|
 	config.vm.network "private_network", ip: VM_IP
 
 	# Execute shell script(s)
-	if UPGRADE
+	if UPGRADE_BOX
 		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	end
+	if INSTALL_UTILITIES
+		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
 	end
 end
