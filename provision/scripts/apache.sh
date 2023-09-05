@@ -14,8 +14,9 @@ a2ensite local.conf
 a2dissite 000-default
 
 a2enmod rewrite
+a2enmod ssl
 
 #rm -rf /var/www/html
 
-sudo a2enmod ssl
-sudo service apache2 restart
+#service apache2 restart
+systemctl restart apache2
