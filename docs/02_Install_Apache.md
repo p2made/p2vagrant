@@ -2,7 +2,7 @@
 
 --
 
-### `Vagrantfile`:
+## 01 Update `Vagrantfile`
 
 Here I've started to group variables for easier following.
 
@@ -12,12 +12,15 @@ Here I've started to group variables for easier following.
 
 # 02 Install Apache
 
+UPGRADE_BOX         = false
+INSTALL_UTILITIES   = false
 INSTALL_APACHE      = true
 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.42.254"
+VM_IP               = "192.168.42.100"
+
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
@@ -39,6 +42,12 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
+	if UPGRADE_BOX
+		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	end
+	if INSTALL_UTILITIES
+		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	end
 	if INSTALL_APACHE
 		config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	end
@@ -79,7 +88,7 @@ vagrant destroy
 vagrant up
 ```
 
-* When finished, visit [http://192.168.42.254/](http://192.168.42.254/).
+* When finished, visit [http://192.168.42.100/](http://192.168.42.100/).
 * You should see the Apache default page of your VM.
 
 **Optionally** edit `HOST_FOLDER/html/index.html`:

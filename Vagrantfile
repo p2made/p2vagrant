@@ -8,7 +8,7 @@ UPGRADE             = true
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.42.254"
+VM_IP               = "192.168.42.100"
 
 Vagrant.configure("2") do |config|
 

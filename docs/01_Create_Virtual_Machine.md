@@ -53,7 +53,7 @@ you haven't destroyed and recreated Vagrant environments that were
 started with an older version of Vagrant.
 ```
 
-## 04 Create `Vagrantfile `
+## 04 Create `Vagrantfile`
 
 * `v.gui` needs to be set to `true`.
 * `v.memory` & `v.cpus` might as well be set now.
@@ -70,7 +70,7 @@ UPGRADE             = true
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.42.254"
+VM_IP               = "192.168.42.100"
 
 Vagrant.configure("2") do |config|
 
