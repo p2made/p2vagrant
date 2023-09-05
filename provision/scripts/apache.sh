@@ -2,9 +2,9 @@
 
 # 03 Install Apache
 
-apt update
-apt -y upgrade
-apt autoremove
+apt-get update
+apt-get -y upgrade
+apt-get autoremove
 
 apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
 
