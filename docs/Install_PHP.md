@@ -2,7 +2,7 @@
 
 --
 
-## 01 Update `Vagrantfile`
+## Update `Vagrantfile`
 
 ```
 # -*- mode: ruby -*-
@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-**Create** `provision/scripts/php.sh`:
+## Create `provision/scripts/php.sh`:
 
 ```
 #!/bin/bash
@@ -92,14 +92,14 @@ php -v
 php -m
 ```
 
-**Create** `HOST_FOLDER/html/phpinfo.php`:
+## Create `HOST_FOLDER/html/phpinfo.php`:
 
 ```
 <?php
 phpinfo();
 ```
 
-### Run:
+## Run:
 
 ```
 vagrant provision
@@ -113,7 +113,9 @@ vagrant reload --provision
 
 * When finished, [http://192.168.42.100/phpinfo.php](http://192.168.42.100/phpinfo.php), which should successfully display the PHP info page.
 
-All good? Save the moment with a snapshot...
+## All good?
+
+Save the moment with a snapshot...
 
 ```
 vagrant halt
