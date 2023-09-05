@@ -65,10 +65,12 @@ started with an older version of Vagrant.
 
 # 01 Create the Virtual Machine
 
+UPGRADE             = true
+
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.42.255"
+VM_IP               = "192.168.42.254"
 
 Vagrant.configure("2") do |config|
 
@@ -83,16 +85,34 @@ Vagrant.configure("2") do |config|
 	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
 
+	# Execute shell script(s)
+	if UPGRADE
+		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	end
 end
 ```
 
-## 05 Launch the VM
+## 05 Create `upgrade.sh`
+
+```
+#!/bin/bash
+
+apt-get update
+apt-get -y upgrade
+apt-get autoremove
+
+[ -f /var/run/reboot-required ] &amp;&amp; reboot -f
+
+cat /etc/os-release
+```
+
+## 06 Launch the VM
 
 ```
 vagrant up
 ```
 
-## 06 All good?
+## 07 All good?
 
 Save the moment with a snapshot...
 
