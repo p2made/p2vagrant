@@ -10,6 +10,8 @@
 
 # 05 Install phpMyAdmin
 
+UPGRADE_BOX         = false
+INSTALL_UTILITIES   = false
 INSTALL_APACHE      = false
 INSTALL_PHP         = false
 INSTALL_MYSQL       = false
@@ -19,13 +21,17 @@ INSTALL_PHPMYADMIN  = true
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.42.100"
+SSH_PASSWORD        = 'vagrant'
+
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
+
 # Software Versions
 PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
 PHPMYADMIN_VERSION  = "5.2.1"
+
 # Database Variables
 RT_PASSWORD         = "Pa$$w0rd0ne"
 DB_USERNAME         = "fredspotty"
@@ -49,13 +55,19 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
-	if INSTALL_APACHE = true
+	if UPGRADE_BOX
+		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	end
+	if INSTALL_UTILITIES
+		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	end
+	if INSTALL_APACHE
 		config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	end
-	if INSTALL_PHP = true
+	if INSTALL_PHP
 		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 	end
-	if INSTALL_MYSQL = true
+	if INSTALL_MYSQL
 		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 	end
 	if INSTALL_PHPMYADMIN = true

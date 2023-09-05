@@ -3,7 +3,7 @@
 # 05 Install phpMyAdmin
 
 #PHPMYADMIN_VERSION  = $1 = "5.2.1"
-#DB_PASSWORD         = $2 = "Pa$$w0rdTw0"
+#PMA_PASSWORD        = $2 = "Pa$$w0rdPM4"
 #REMOTE_FOLDER       = $3 = "/var/www"
 
 apt-get update
@@ -25,7 +25,6 @@ unzip phpMyAdmin-$1-all-languages.zip
 rm phpMyAdmin-$1-all-languages.zip
 mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
 
-chown -R www-data:www-data $3/html/phpmyadmin
 chmod -R 755 $3/html/phpmyadmin
 
 phpenmod mbstring

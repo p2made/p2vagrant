@@ -1,13 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 04 Install MySQL 8.1
+# 05 Install phpMyAdmin
 
 UPGRADE_BOX         = false
 INSTALL_UTILITIES   = false
 INSTALL_APACHE      = false
 INSTALL_PHP         = false
-INSTALL_MYSQL       = true
+INSTALL_MYSQL       = false
+INSTALL_PHPMYADMIN  = true
 
 # Machine Variables
 MEMORY              = 4096
@@ -22,6 +23,7 @@ REMOTE_FOLDER       = "/var/www"
 # Software Versions
 PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
+PHPMYADMIN_VERSION  = "5.2.1"
 
 # Database Variables
 RT_PASSWORD         = "Pa$$w0rd0ne"
@@ -40,7 +42,6 @@ Vagrant.configure("2") do |config|
 		v.gui    = true
 	end
 
-	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
 
 	# Set a synced folder
@@ -61,6 +62,9 @@ Vagrant.configure("2") do |config|
 	end
 	if INSTALL_MYSQL
 		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	end
+	if INSTALL_PHPMYADMIN = true
+		config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
 	end
 
 end
