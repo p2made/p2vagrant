@@ -12,6 +12,10 @@ MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.42.100"
 
+# Folders
+HOST_FOLDER         = "./shared"
+REMOTE_FOLDER       = "/var/www"
+
 # Software Versions
 PHP_VERSION         = "8.2"
 
