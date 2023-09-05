@@ -58,27 +58,33 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-**Create** `provision/scripts/apache.sh`:
+## 02 Create `provision/scripts/apache.sh`:
 
 ```
 #!/bin/bash
+
+# 02 Install Apache
 
 LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/apache2
 
 apt-get update
 apt-get install -y apache2
 
+yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
+yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
+
 a2ensite local.conf
 a2dissite 000-default
 
 a2enmod rewrite
-sudo service apache2 restart
+
+#rm -rf /var/www/html
 
 sudo a2enmod ssl
 sudo service apache2 restart
 ```
 
-### Run:
+## 03 Run:
 
 ```
 vagrant reload --provision
@@ -94,7 +100,7 @@ vagrant up
 * When finished, visit [http://192.168.42.100/](http://192.168.42.100/).
 * You should see the Apache default page of your VM.
 
-**Optionally** edit `HOST_FOLDER/html/index.html`:
+### 03a **Optionally** edit `HOST_FOLDER/html/index.html`:
 
 ```
 <html>
@@ -109,7 +115,9 @@ vagrant up
 ```
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
-All good? Save the moment with a snapshot...
+## 04 All good?
+
+Save the moment with a snapshot...
 
 ```
 vagrant halt
