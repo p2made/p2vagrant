@@ -21,7 +21,7 @@ All files you are directed to create are in...
 	/vhosts
 ```
 
-01. [Create Virtual Machine](./docs/01_Create_Virtual_Machine.md)
+01. [Create Virtual Machine](./docs/Create_Virtual_Machine.md)
 
 <!--
 03. [Install Apache](./docs/03_Install_Apache.md)
