@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 02 Install PHP 8.2
+# 03 Install PHP 8.2
 
 #PHP_VERSION         = $1 = 8.2
 

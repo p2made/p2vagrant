@@ -1,14 +1,14 @@
-# 02 Install PHP 8.2
+# 03 Install PHP 8.2
 
 --
 
-### `Vagrantfile`:
+## 01 Update `Vagrantfile`
 
 ```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 02 Install PHP 8.2
+# 03 Install PHP 8.2
 
 UPGRADE_BOX         = false
 INSTALL_UTILITIES   = false
@@ -65,7 +65,7 @@ end
 ```
 #!/bin/bash
 
-# 02 Install PHP 8.2
+# 03 Install PHP 8.2
 
 #PHP_VERSION         = $1 = 8.2
 
