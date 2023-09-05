@@ -3,10 +3,10 @@
 
 # 04 Install MySQL 8.1
 
-UPGRADE_BOX         = false
-INSTALL_UTILITIES   = false
-INSTALL_APACHE      = false
-INSTALL_PHP         = false
+UPGRADE_BOX         = true
+INSTALL_UTILITIES   = true
+INSTALL_APACHE      = true
+INSTALL_PHP         = true
 INSTALL_MYSQL       = true
 
 # Machine Variables

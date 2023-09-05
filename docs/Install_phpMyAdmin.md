@@ -10,11 +10,11 @@
 
 # 05 Install phpMyAdmin
 
-UPGRADE_BOX         = false
-INSTALL_UTILITIES   = false
-INSTALL_APACHE      = false
-INSTALL_PHP         = false
-INSTALL_MYSQL       = false
+UPGRADE_BOX         = true
+INSTALL_UTILITIES   = true
+INSTALL_APACHE      = true
+INSTALL_PHP         = true
+INSTALL_MYSQL       = true
 INSTALL_PHPMYADMIN  = true
 
 # Machine Variables
