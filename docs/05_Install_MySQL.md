@@ -17,7 +17,7 @@ INSTALL_MYSQL       = true
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.98.99"
+VM_IP               = "192.168.42.254"
 SSH_PASSWORD        = 'vagrant'
 # Folders
 HOST_FOLDER         = "./shared"
@@ -133,7 +133,7 @@ echo "Connected!";
 
 Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vagrantfile`.
 
-* Visit [http://192.168.98.99/db.php](http://192.168.98.99/db.php) and if all went well you should be seeing the "*Connected!*" message.
+* Visit [http://192.168.42.254/db.php](http://192.168.42.254/db.php) and if all went well you should be seeing the "*Connected!*" message.
 
 All good? Save the moment with a snapshot...
 

@@ -17,7 +17,7 @@ INSTALL_APACHE      = true
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.98.99"
+VM_IP               = "192.168.42.254"
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
@@ -79,7 +79,7 @@ vagrant destroy
 vagrant up
 ```
 
-* When finished, visit [http://192.168.98.99/](http://192.168.98.99/).
+* When finished, visit [http://192.168.42.254/](http://192.168.42.254/).
 * You should see the Apache default page of your VM.
 
 **Optionally** edit `HOST_FOLDER/html/index.html`:

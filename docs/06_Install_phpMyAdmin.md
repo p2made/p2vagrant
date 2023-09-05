@@ -18,7 +18,7 @@ INSTALL_PHPMYADMIN  = true
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.98.99"
+VM_IP               = "192.168.42.254"
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
@@ -111,7 +111,7 @@ or
 vagrant reload --provision
 ```
 
-* Visit [http://192.168.98.99/phpmyadmin/](http://192.168.98.99/phpmyadmin/), log in with user/password.
+* Visit [http://192.168.42.254/phpmyadmin/](http://192.168.42.254/phpmyadmin/), log in with user/password.
 
 ### Accessing the Database from Outside the VM
 

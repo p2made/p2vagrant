@@ -16,7 +16,7 @@ INSTALL_PHP         = true
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.98.99"
+VM_IP               = "192.168.42.254"
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
@@ -90,7 +90,7 @@ or
 vagrant reload --provision
 ```
 
-* When finished, [http://192.168.98.99/phpinfo.php](http://192.168.98.99/phpinfo.php), which should successfully display the PHP info page.
+* When finished, [http://192.168.42.254/phpinfo.php](http://192.168.42.254/phpinfo.php), which should successfully display the PHP info page.
 
 All good? Save the moment with a snapshot...
 

@@ -1,29 +1,17 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 05 Install MySQL 8.1
+# 03 Install Apache
 
 INSTALL_APACHE      = true
-INSTALL_PHP         = true
-INSTALL_MYSQL       = true
 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.98.99"
-SSH_PASSWORD        = 'vagrant'
+VM_IP               = "192.168.42.254"
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
-# Software Versions
-PHP_VERSION         = "8.2"
-MYSQL_VERSION       = "8.1"
-# Database Variables
-RT_PASSWORD         = "Pa$$w0rd0ne"
-DB_USERNAME         = "fredspotty"
-DB_PASSWORD         = "Pa$$w0rdTw0"
-DB_NAME             = "example_db"
-DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
@@ -44,12 +32,6 @@ Vagrant.configure("2") do |config|
 	# Execute shell script(s)
 	if INSTALL_APACHE
 		config.vm.provision :shell, path: "provision/scripts/apache.sh"
-	end
-	if INSTALL_PHP
-		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	end
-	if INSTALL_MYSQL
-		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 	end
 
 end
