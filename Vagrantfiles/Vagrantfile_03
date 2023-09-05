@@ -1,12 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 02 Install Apache
+# 02 Install PHP 8.2
 
 UPGRADE_BOX         = false
 INSTALL_UTILITIES   = false
-INSTALL_APACHE      = true
-INSTALL_PHP         = false
+INSTALL_APACHE      = false
+INSTALL_PHP         = true
 
 # Machine Variables
 MEMORY              = 4096

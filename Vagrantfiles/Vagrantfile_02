@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 02 Install PHP 8.2
+# 02 Install Apache
 
 UPGRADE_BOX         = true
 INSTALL_UTILITIES   = true

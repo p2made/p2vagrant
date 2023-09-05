@@ -12,8 +12,8 @@ Here I've started to group variables for easier following.
 
 # 02 Install Apache
 
-UPGRADE_BOX         = false
-INSTALL_UTILITIES   = false
+UPGRADE_BOX         = true
+INSTALL_UTILITIES   = true
 INSTALL_APACHE      = true
 
 # Machine Variables
@@ -24,6 +24,9 @@ VM_IP               = "192.168.42.100"
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
+
+# Software Versions
+PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 
