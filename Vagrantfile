@@ -1,17 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 03 Install Apache
+# 01 Create the Virtual Machine
 
-INSTALL_APACHE      = true
+UPGRADE             = true
 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.42.254"
-# Folders
-HOST_FOLDER         = "./shared"
-REMOTE_FOLDER       = "/var/www"
 
 Vagrant.configure("2") do |config|
 
@@ -26,12 +23,8 @@ Vagrant.configure("2") do |config|
 	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
 
-	# Set a synced folder
-	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
-
 	# Execute shell script(s)
-	if INSTALL_APACHE
-		config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	if UPGRADE
+		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
 	end
-
 end
