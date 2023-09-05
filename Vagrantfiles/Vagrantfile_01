@@ -4,6 +4,7 @@
 # 01 Create the Virtual Machine
 
 UPGRADE             = true
+INSTALL_UTILITIES   = true
 
 # Machine Variables
 MEMORY              = 4096
@@ -26,5 +27,8 @@ Vagrant.configure("2") do |config|
 	# Execute shell script(s)
 	if UPGRADE
 		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	end
+	if INSTALL_UTILITIES
+		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
 	end
 end
