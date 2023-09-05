@@ -1,4 +1,4 @@
-# 02 Install Apache
+# 03 Install Apache
 
 --
 
@@ -10,7 +10,7 @@ Here I've started to group variables for easier following.
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 02 Install Apache
+# 03 Install Apache
 
 UPGRADE_BOX         = false
 INSTALL_UTILITIES   = false

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 02 Install Apache
+# 03 Install Apache
 
 apt-get update
 
