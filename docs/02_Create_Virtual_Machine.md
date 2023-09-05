@@ -12,10 +12,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Variables
+# 02 Create the Virtual Machine
+
+# Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.98.99"
+VM_IP               = "192.168.42.254"
 
 Vagrant.configure("2") do |config|
 
@@ -27,6 +29,7 @@ Vagrant.configure("2") do |config|
 		v.gui    = true
 	end
 
+	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
 
 end

@@ -3,14 +3,14 @@
 
 # 05 Install MySQL 8.1
 
-INSTALL_APACHE      = false
-INSTALL_PHP         = false
+INSTALL_APACHE      = true
+INSTALL_PHP         = true
 INSTALL_MYSQL       = true
 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-VM_IP               = "192.168.98.99"
+VM_IP               = "192.168.42.254"
 SSH_PASSWORD        = 'vagrant'
 # Folders
 HOST_FOLDER         = "./shared"

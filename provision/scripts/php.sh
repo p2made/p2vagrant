@@ -2,11 +2,7 @@
 
 # 04 Install PHP 8.2
 
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "#####                                                 #####"
-echo "#####             ¡¡¡ Installing PHP !!!              #####"
-echo "#####                                                 #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+#PHP_VERSION         = $1 = 8.2
 
 apt-get install software-properties-common
 

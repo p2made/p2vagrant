@@ -10,14 +10,17 @@ Here I've started to group variables for easier following.
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Variables
-	# Machine
-	MEMORY              = 4096
-	CPUS                = 1
-	VM_IP               = "192.168.98.99"
-	# Folders
-	HOST_FOLDER         = "./shared"
-	REMOTE_FOLDER       = "/var/www"
+# 03 Install Apache
+
+INSTALL_APACHE      = true
+
+# Machine Variables
+MEMORY              = 4096
+CPUS                = 1
+VM_IP               = "192.168.42.254"
+# Folders
+HOST_FOLDER         = "./shared"
+REMOTE_FOLDER       = "/var/www"
 
 Vagrant.configure("2") do |config|
 
@@ -29,13 +32,16 @@ Vagrant.configure("2") do |config|
 		v.gui    = true
 	end
 
+	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
 
 	# Set a synced folder
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
-	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	if INSTALL_APACHE
+		config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	end
 
 end
 ```
@@ -73,7 +79,7 @@ vagrant destroy
 vagrant up
 ```
 
-* When finished, visit [http://192.168.98.99/](http://192.168.98.99/).
+* When finished, visit [http://192.168.42.254/](http://192.168.42.254/).
 * You should see the Apache default page of your VM.
 
 **Optionally** edit `HOST_FOLDER/html/index.html`:
