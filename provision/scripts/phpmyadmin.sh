@@ -23,9 +23,10 @@ cd /tmp
 wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
 unzip phpMyAdmin-$1-all-languages.zip
 rm phpMyAdmin-$1-all-languages.zip
-mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
+sudo mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
 
-chmod -R 755 $3/html/phpmyadmin
+sudo chown -R www-data:www-data $3/html/phpmyadmin
+sudo chmod -R 755 $3/html/phpmyadmin
 
 phpenmod mbstring
 

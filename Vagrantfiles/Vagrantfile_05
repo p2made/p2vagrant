@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
 		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 	end
 	if INSTALL_PHPMYADMIN = true
-		config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
+		config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, PMA_PASSWORD, REMOTE_FOLDER]
 	end
 
 end
