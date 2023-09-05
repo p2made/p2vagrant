@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 05 Install MySQL 8.1
+# 04 Install MySQL 8.1
 
 #MYSQL_VERSION       = $1 = 8.1
 #RT_PASSWORD         = $2 = "Pa$$w0rd0ne"

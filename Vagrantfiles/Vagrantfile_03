@@ -3,9 +3,9 @@
 
 # 03 Install PHP 8.2
 
-UPGRADE_BOX         = false
-INSTALL_UTILITIES   = false
-INSTALL_APACHE      = false
+UPGRADE_BOX         = true
+INSTALL_UTILITIES   = true
+INSTALL_APACHE      = true
 INSTALL_PHP         = true
 
 # Machine Variables
