@@ -2,7 +2,7 @@
 
 --
 
-## 01 Update `Vagrantfile`
+## Update `Vagrantfile`
 
 Here I've started to group variables for easier following.
 
@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-## 02 Create `provision/scripts/apache.sh`:
+## Create `provision/scripts/apache.sh`:
 
 ```
 #!/bin/bash
@@ -84,7 +84,7 @@ sudo a2enmod ssl
 sudo service apache2 restart
 ```
 
-## 03 Run:
+## Run:
 
 ```
 vagrant reload --provision
@@ -100,7 +100,7 @@ vagrant up
 * When finished, visit [http://192.168.42.100/](http://192.168.42.100/).
 * You should see the Apache default page of your VM.
 
-### 03a **Optionally** edit `HOST_FOLDER/html/index.html`:
+**Optionally** edit `HOST_FOLDER/html/index.html`:
 
 ```
 <html>
@@ -115,7 +115,7 @@ vagrant up
 ```
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
-## 04 All good?
+## All good?
 
 Save the moment with a snapshot...
 

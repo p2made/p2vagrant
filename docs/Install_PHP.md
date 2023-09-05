@@ -92,13 +92,6 @@ php -v
 php -m
 ```
 
-## Create `HOST_FOLDER/html/phpinfo.php`:
-
-```
-<?php
-phpinfo();
-```
-
 ## Run:
 
 ```
@@ -111,7 +104,18 @@ or
 vagrant reload --provision
 ```
 
-* When finished, [http://192.168.42.100/phpinfo.php](http://192.168.42.100/phpinfo.php), which should successfully display the PHP info page.
+## Create `HOST_FOLDER/html/phpinfo.php`:
+
+```
+<?php
+phpinfo();
+```
+
+## Visit:
+
+* [http://192.168.42.100/phpinfo.php](http://192.168.42.100/phpinfo.php)
+
+... which should successfully display the PHP info page.
 
 ## All good?
 
@@ -126,7 +130,7 @@ vagrant up
 --
 
 <!-- 04 Install PHP 8.2 -->
-| [03 Install Apache](./03_Install_Apache.md)
+| [02 Install Apache](./Install_Apache.md)
 | [**Back to Steps**](../README.md)
 | [05 Install MySQL](./05_Install_MySQL.md)
 |
