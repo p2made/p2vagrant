@@ -24,10 +24,10 @@ All files you are directed to create are in...
 01. [Create Virtual Machine](./docs/Create_Virtual_Machine.md)
 02. [Install Apache](./docs/Install_Apache.md)
 03. [Install PHP](./docs/Install_PHP.md)
+04. [Install MySQL](./docs/Install_MySQL.md)
 
 <!--
-05. [Install MySQL](./docs/Install_MySQL.md)
-06. [Install phpMyAdmin](./docs/06_Install_phpMyAdmin.md)
+06. [Install phpMyAdmin](./docs/Install_phpMyAdmin.md)
 07. [Domain Names](./docs/07_Domain_Names.md)
 08. [SSL](./docs/08_SSL.md)
 09. [Install Composer](./docs/09_Install_Composer.md)

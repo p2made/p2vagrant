@@ -2,7 +2,7 @@
 
 --
 
-### `Vagrantfile`:
+## Update `Vagrantfile`
 
 ```
 # -*- mode: ruby -*-
@@ -10,8 +10,10 @@
 
 # 04 Install MySQL 8.1
 
-INSTALL_APACHE      = false
-INSTALL_PHP         = false
+UPGRADE_BOX         = true
+INSTALL_UTILITIES   = true
+INSTALL_APACHE      = true
+INSTALL_PHP         = true
 INSTALL_MYSQL       = true
 
 # Machine Variables
@@ -19,12 +21,15 @@ MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.42.100"
 SSH_PASSWORD        = 'vagrant'
+
 # Folders
 HOST_FOLDER         = "./shared"
 REMOTE_FOLDER       = "/var/www"
+
 # Software Versions
 PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
+
 # Database Variables
 RT_PASSWORD         = "Pa$$w0rd0ne"
 DB_USERNAME         = "fredspotty"
@@ -49,6 +54,12 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Execute shell script(s)
+	if UPGRADE_BOX
+		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	end
+	if INSTALL_UTILITIES
+		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	end
 	if INSTALL_APACHE
 		config.vm.provision :shell, path: "provision/scripts/apache.sh"
 	end
@@ -70,26 +81,26 @@ end
 * `DB_NAME`
 * `DB_NAME_TEST`
 
-**Create** `provision/scripts/mysql.sh`:
+# Create `provision/scripts/mysql.sh`:
 
 ```
 #!/bin/bash
 
 # 04 Install MySQL 8.1
 
-#MYSQL_VERSION   = $1
-#RT_PASSWORD     = $2
-#DB_USERNAME     = $3
-#DB_PASSWORD     = $4
-#DB_NAME         = $5
-#DB_NAME_TEST    = $6
+#MYSQL_VERSION       = $1 = 8.1
+#RT_PASSWORD         = $2 = "Pa$$w0rd0ne"
+#DB_USERNAME         = $3 = "fredspotty"
+#DB_PASSWORD         = $4 = "Pa$$w0rdTw0"
+#DB_NAME             = $5 = "example_db"
+#DB_NAME_TEST        = $6 = "example_db_test"
 
 # Install MySQL
 apt-get update
 apt-get -y install mysql-server
 
-debconf-set-selections <<< "mysql-server mysql-server/root_password password Pa$$w0rd0ne"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password Pa$$w0rd0ne"
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $2"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $2"
 
 # Create the database and grant privileges
 CMD="sudo mysql -uroot -p$2 -e"
@@ -106,7 +117,7 @@ sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysq
 service mysql restart
 ```
 
-### Run:
+## Run:
 
 ```
 vagrant provision
@@ -118,7 +129,7 @@ or
 vagrant reload --provision
 ```
 
-**Create** `HOST_FOLDER/html/db.php`:
+## Create `HOST_FOLDER/html/db.php`:
 
 ```
 <?php
@@ -132,10 +143,17 @@ echo "Connected!";
 ```
 
 Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vagrantfile`.
+```
 
-* Visit [http://192.168.42.100/db.php](http://192.168.42.100/db.php) and if all went well you should be seeing the "*Connected!*" message.
+## Visit:
 
-All good? Save the moment with a snapshot...
+* [http://192.168.42.100/db.php](http://192.168.42.100/db.php)
+
+... if all went well you should be seeing the "*Connected!*" message.
+
+## All good?
+
+Save the moment with a snapshot...
 
 ```
 vagrant halt
@@ -148,5 +166,5 @@ vagrant up
 <!-- Install MySQL 8.1 -->
 | [04 Install PHP](./Install_PHP.md)
 | [**Back to Steps**](../README.md)
-| [06 Install phpMyAdmin](./06_Install_phpMyAdmin.md)
+| [06 Install phpMyAdmin](./Install_phpMyAdmin.md)
 |
