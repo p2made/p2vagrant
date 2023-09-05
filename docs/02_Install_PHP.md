@@ -1,4 +1,4 @@
-# 04 Install PHP 8.2
+# 02 Install PHP 8.2
 
 --
 
@@ -8,7 +8,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 04 Install PHP 8.2
+# 02 Install PHP 8.2
 
 INSTALL_APACHE      = true
 INSTALL_PHP         = true
