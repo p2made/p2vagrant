@@ -1,11 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 02 Install Apache
+# 03 Install PHP 8.2
 
-UPGRADE_BOX         = true
-INSTALL_UTILITIES   = true
-INSTALL_APACHE      = true
+UPGRADE_BOX         = false
+INSTALL_UTILITIES   = false
+INSTALL_APACHE      = false
+INSTALL_PHP         = true
 
 # Machine Variables
 MEMORY              = 4096
@@ -44,6 +45,9 @@ Vagrant.configure("2") do |config|
 	end
 	if INSTALL_APACHE
 		config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	end
+	if INSTALL_PHP
+		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 	end
 
 end
