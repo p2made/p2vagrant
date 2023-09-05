@@ -2,7 +2,10 @@
 
 # 03 Install Apache
 
-apt-get update
+apt update
+apt -y upgrade
+apt autoremove
+
 apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
 
 LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/apache2
@@ -22,3 +25,5 @@ a2enmod rewrite
 
 sudo a2enmod ssl
 sudo service apache2 restart
+
+
