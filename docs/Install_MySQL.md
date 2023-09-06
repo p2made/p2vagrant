@@ -164,7 +164,7 @@ vagrant up
 --
 
 <!-- Install MySQL 8.1 -->
-| [04 Install PHP](./Install_PHP.md)
+| [03 Install PHP](./Install_PHP.md)
 | [**Back to Steps**](../README.md)
-| [06 Install phpMyAdmin](./Install_phpMyAdmin.md)
+| [05 Install phpMyAdmin](./Install_phpMyAdmin.md)
 |
