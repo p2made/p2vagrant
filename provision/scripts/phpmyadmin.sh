@@ -17,13 +17,14 @@ debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multisel
 
 apt-get install -y phpmyadmin
 
-rm -rf /usr/share/phpmyadmin
+#rm -rf /usr/share/phpmyadmin
 
-cd /tmp
+#cd /tmp
 wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
-unzip phpMyAdmin-$1-all-languages.zip
-rm phpMyAdmin-$1-all-languages.zip
-sudo mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
+#unzip phpMyAdmin-$1-all-languages.zip
+#rm phpMyAdmin-$1-all-languages.zip
+sudo mv /usr/share/phpmyadmin $3/html/phpmyadmin
+#sudo mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
 
 sudo chmod -R 755 $3/html/phpmyadmin
 
