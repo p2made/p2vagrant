@@ -26,9 +26,9 @@ All files you are directed to create are in...
 03. [Install PHP](./docs/Install_PHP.md)
 04. [Install MySQL](./docs/Install_MySQL.md)
 05. [Install phpMyAdmin](./docs/Install_phpMyAdmin.md)
+06. [Domain Names](./docs/Domain_Names.md)
 
 <!--
-07. [Domain Names](./docs/07_Domain_Names.md)
 08. [SSL](./docs/08_SSL.md)
 09. [Install Composer](./docs/09_Install_Composer.md)
 10. [Install Yarn](./docs/10_Install_Yarn.md)
