@@ -20,7 +20,7 @@ apt-get install -y phpmyadmin
 #rm -rf /usr/share/phpmyadmin
 
 #cd /tmp
-wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
+#wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
 #unzip phpMyAdmin-$1-all-languages.zip
 #rm phpMyAdmin-$1-all-languages.zip
 sudo mv /usr/share/phpmyadmin $3/html/phpmyadmin
