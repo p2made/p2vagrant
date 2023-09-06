@@ -8,7 +8,7 @@ INSTALL_UTILITIES   = true
 INSTALL_APACHE      = true
 INSTALL_PHP         = true
 INSTALL_MYSQL       = true
-INSTALL_PHPMYADMIN  = true
+INSTALL_PHPMYADMIN  = false
 
 # Machine Variables
 MEMORY              = 4096
