@@ -145,6 +145,8 @@ Item | Value
 
 --
 
-* [04 MySQL](./04_MySQL.md)
-* [**Back to Steps**](../README.md)
-* [06 Domain Names](./06_Domain_Names.md)
+<!-- 03 Install PHP 8.2 -->
+| [04 Install MySQL](./Install_MySQL.md)
+| [**Back to Steps**](../README.md)
+| [06 Domain Names](./Domain_Names.md)
+|
