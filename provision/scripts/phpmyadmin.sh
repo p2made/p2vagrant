@@ -25,7 +25,6 @@ unzip phpMyAdmin-$1-all-languages.zip
 rm phpMyAdmin-$1-all-languages.zip
 sudo mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
 
-sudo chown -R www-data:www-data $3/html/phpmyadmin
 sudo chmod -R 755 $3/html/phpmyadmin
 
 phpenmod mbstring
