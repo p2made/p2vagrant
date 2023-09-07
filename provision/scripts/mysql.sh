@@ -9,7 +9,6 @@
 #DB_NAME             = $5 = "example_db"
 #DB_NAME_TEST        = $6 = "example_db_test"
 
-# Install MySQL
 apt-get update
 apt-get -y install mysql-server
 
@@ -29,5 +28,5 @@ sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysq
 #grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
 
 service mysql restart
-service apache2 restart
-#systemctl restart apache2
+systemctl restart apache2
+#service apache2 restart

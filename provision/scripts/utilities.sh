@@ -4,10 +4,4 @@
 
 apt-get update
 
-apt-get install -y apt-transport-https
-apt-get install -y ca-certificates
-apt-get install -y curl
-apt-get install -y gnupg2
-apt-get install -y lsb-release
-apt-get install -y software-properties-common
-apt-get install -y unzip
+apt-get install -y apt-transport-https bzip2 ca-certificates curl file gnupg2 libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 lsb-release mime-support software-properties-common sl-cert unzip
