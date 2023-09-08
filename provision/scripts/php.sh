@@ -7,6 +7,7 @@
 LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 
 apt-get update
+
 apt-get install -y php$1 php-common
 apt-get install -y php$1-{bcmath,bz2,cgi,cli,common,curl,dom,exif,fileinfo,filter,fpm,gd,hash,iconv,imagick,imap,intl,json,ldap,mbstring,mcrypt,mysql,mysqli,opcache,openssl,pcre,pgsql,pspell,readline,simplexml,soap,sodium,xml,xmlreader,xmlrpc,zip,zlib}
 apt-get install -y php-pear libapache2-mod-php$1

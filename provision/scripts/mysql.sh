@@ -10,6 +10,7 @@
 #DB_NAME_TEST        = $6 = "example_db_test"
 
 apt-get update
+
 apt-get -y install mysql-server
 
 debconf-set-selections <<< "mysql-server mysql-server/root_password password $2"

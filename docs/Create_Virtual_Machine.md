@@ -8,7 +8,7 @@ The instructions given assume the use of [Homebrew](https://brew.sh). If you don
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## 01 Install the VMware Fusion 2023 Tech Preview
+## Install the VMware Fusion 2023 Tech Preview
 
 * [This one](https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-TP2023) is the most recent as of [2023-07-13](https://blogs.vmware.com/teamfusion/2023/07/vmware-fusion-2023-tech-preview.html).
 * Installs `VMware Fusion Tech Preview` in your `Applications` folder.
@@ -17,27 +17,27 @@ The instructions given assume the use of [Homebrew](https://brew.sh). If you don
 
 `VMware Fusion` needs to be running when you run `vagrant up`, or any other Vagrant command that starts a VM. Nothing needs to be set up in `VMware Fusion`.
 
-## 02 Install Vagrant & VMware Utility
+## Install Vagrant & VMware Utility
 
 ```
 brew install --cask vagrant
 brew install --cask vagrant-vmware-utility
 ```
 
-### 02a Optionally install Vagrant Manager
+### Optionally install Vagrant Manager
 
 ```
 brew install --cask vagrant-manager
 ```
 
-## 03 Install Vagrant Plugins
+## Install Vagrant Plugins
 
 ```
 vagrant plugin install vagrant-share
 vagrant plugin install vagrant-vmware-desktop
 ```
 
-## 04 Check `vagrant` status
+## Check `vagrant` status
 
 ```
 vagrant global-status
@@ -53,7 +53,7 @@ you haven't destroyed and recreated Vagrant environments that were
 started with an older version of Vagrant.
 ```
 
-## 04 Create `Vagrantfile`
+## Create `Vagrantfile`
 
 * `v.gui` needs to be set to `true`.
 * `v.memory` & `v.cpus` might as well be set now.
@@ -92,14 +92,15 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-## 05 Create `upgrade.sh`
+## Create `upgrade.sh`
 
 ```
 #!/bin/bash
 
-# 01 Upgrade
+# 01a Upgrade
 
 apt-get update
+
 apt-get -y upgrade
 apt-get autoremove
 
@@ -108,13 +109,30 @@ apt-get autoremove
 cat /etc/os-release
 ```
 
-## 06 Launch the VM
+## Create `utilities.sh`
+
+```
+#!/bin/bash
+
+# 01b Install Utilities
+
+apt-add-repository ppa:fish-shell/release-3
+
+apt-get update
+
+apt-get install -y apt-transport-https bzip2 ca-certificates curl file fish gnupg2 libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 lsb-release mime-support software-properties-common unzip
+
+# Make Fish default
+chsh -s /usr/bin/fish
+```
+
+## Launch the VM
 
 ```
 vagrant up
 ```
 
-## 07 All good?
+## All good?
 
 Save the moment with a snapshot...
 

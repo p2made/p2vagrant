@@ -7,7 +7,6 @@
 #REMOTE_FOLDER       = $3 = "/var/www"
 
 apt-get update
-apt-get install -y unzip
 
 debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
 debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $2"
