@@ -2,19 +2,13 @@
 
 --
 
-## Update `Vagrantfile`
+### Update `Vagrantfile`
 
 ```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 # 04 Install MySQL 8.1
-
-UPGRADE_BOX         = true
-INSTALL_UTILITIES   = true
-INSTALL_APACHE      = true
-INSTALL_PHP         = true
-INSTALL_MYSQL       = true
 
 # Machine Variables
 MEMORY              = 4096
@@ -31,9 +25,9 @@ PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
 
 # Database Variables
-RT_PASSWORD         = "Pa$$w0rd0ne"
+RT_PASSWORD         = "Passw0rd0ne"
 DB_USERNAME         = "fredspotty"
-DB_PASSWORD         = "Pa$$w0rdTw0"
+DB_PASSWORD         = "Passw0rdTw0"
 DB_NAME             = "example_db"
 DB_NAME_TEST        = "example_db_test"
 
@@ -50,27 +44,23 @@ Vagrant.configure("2") do |config|
 	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
 
-	# Set a synced folder
+	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
-	# Execute shell script(s)
-	if UPGRADE_BOX
-		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
-	end
-	if INSTALL_UTILITIES
-		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
-	end
-	if INSTALL_APACHE
-		config.vm.provision :shell, path: "provision/scripts/apache.sh"
-	end
-	if INSTALL_PHP
-		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	end
-	if INSTALL_MYSQL
-		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	end
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
+```
+
+Copy this file...
+
+```
+cp ./Vagrantfiles/Vagrantfile_04 ./Vagrantfile
 ```
 
 **Customise**
@@ -81,7 +71,7 @@ end
 * `DB_NAME`
 * `DB_NAME_TEST`
 
-# Create `provision/scripts/mysql.sh`:
+### Create `provision/scripts/mysql.sh`:
 
 ```
 #!/bin/bash
@@ -89,14 +79,14 @@ end
 # 04 Install MySQL 8.1
 
 #MYSQL_VERSION       = $1 = 8.1
-#RT_PASSWORD         = $2 = "Pa$$w0rd0ne"
+#RT_PASSWORD         = $2 = "Passw0rd0ne"
 #DB_USERNAME         = $3 = "fredspotty"
-#DB_PASSWORD         = $4 = "Pa$$w0rdTw0"
+#DB_PASSWORD         = $4 = "Passw0rdTw0"
 #DB_NAME             = $5 = "example_db"
 #DB_NAME_TEST        = $6 = "example_db_test"
 
-# Install MySQL
 apt-get update
+
 apt-get -y install mysql-server
 
 debconf-set-selections <<< "mysql-server mysql-server/root_password password $2"
@@ -115,9 +105,11 @@ sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysq
 #grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
 
 service mysql restart
+systemctl restart apache2
+#service apache2 restart
 ```
 
-## Run:
+### Run:
 
 ```
 vagrant provision
@@ -129,7 +121,7 @@ or
 vagrant reload --provision
 ```
 
-## Create `HOST_FOLDER/html/db.php`:
+### Create `HOST_FOLDER/html/db.php`:
 
 ```
 <?php
@@ -142,16 +134,22 @@ if (!$conn) {
 echo "Connected!";
 ```
 
+Copy this file...
+
+```
+cp ./provision/html/db.html ./shared/html/db.html
+```
+
 Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vagrantfile`.
 ```
 
-## Visit:
+### Visit:
 
 * [http://192.168.42.100/db.php](http://192.168.42.100/db.php)
 
 ... if all went well you should be seeing the "*Connected!*" message.
 
-## All good?
+### All good?
 
 Save the moment with a snapshot...
 

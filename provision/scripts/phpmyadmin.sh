@@ -3,7 +3,7 @@
 # 05 Install phpMyAdmin
 
 #PHPMYADMIN_VERSION  = $1 = "5.2.1"
-#PMA_PASSWORD        = $2 = "Pa$$w0rdPM4"
+#PMA_PASSWORD        = $2 = "PM4Passw0rd"
 #REMOTE_FOLDER       = $3 = "/var/www"
 
 apt-get update

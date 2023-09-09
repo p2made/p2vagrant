@@ -2,20 +2,13 @@
 
 --
 
-### `Vagrantfile`:
+### Update `Vagrantfile`
 
 ```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 # 05 Install phpMyAdmin
-
-UPGRADE_BOX         = true
-INSTALL_UTILITIES   = true
-INSTALL_APACHE      = true
-INSTALL_PHP         = true
-INSTALL_MYSQL       = true
-INSTALL_PHPMYADMIN  = true
 
 # Machine Variables
 MEMORY              = 4096
@@ -33,11 +26,12 @@ MYSQL_VERSION       = "8.1"
 PHPMYADMIN_VERSION  = "5.2.1"
 
 # Database Variables
-RT_PASSWORD         = "Pa$$w0rd0ne"
+RT_PASSWORD         = "Passw0rd0ne"
 DB_USERNAME         = "fredspotty"
-DB_PASSWORD         = "Pa$$w0rdTw0"
+DB_PASSWORD         = "Passw0rdTw0"
 DB_NAME             = "example_db"
 DB_NAME_TEST        = "example_db_test"
+PMA_PASSWORD        = "PM4Passw0rd"
 
 Vagrant.configure("2") do |config|
 
@@ -51,33 +45,27 @@ Vagrant.configure("2") do |config|
 
 	config.vm.network "private_network", ip: VM_IP
 
-	# Set a synced folder
+	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
-	# Execute shell script(s)
-	if UPGRADE_BOX
-		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
-	end
-	if INSTALL_UTILITIES
-		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
-	end
-	if INSTALL_APACHE
-		config.vm.provision :shell, path: "provision/scripts/apache.sh"
-	end
-	if INSTALL_PHP
-		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	end
-	if INSTALL_MYSQL
-		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	end
-	if INSTALL_PHPMYADMIN = true
-		config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, DB_PASSWORD, REMOTE_FOLDER]
-	end
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, PMA_PASSWORD, REMOTE_FOLDER]
 
 end
 ```
 
-**Create** `provision/scripts/phpmyadmin.sh`:
+Copy this file...
+
+```
+cp ./Vagrantfiles/Vagrantfile_05 ./Vagrantfile
+```
+
+### Create `provision/scripts/phpmyadmin.sh`:
 
 ```
 #!/bin/bash
@@ -85,11 +73,10 @@ end
 # 05 Install phpMyAdmin
 
 #PHPMYADMIN_VERSION  = $1 = "5.2.1"
-#DB_PASSWORD         = $2 = "Pa$$w0rdTw0"
+#PMA_PASSWORD        = $2 = "PM4Passw0rd"
 #REMOTE_FOLDER       = $3 = "/var/www"
 
 apt-get update
-apt-get install -y unzip
 
 debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
 debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $2"
@@ -99,15 +86,16 @@ debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multisel
 
 apt-get install -y phpmyadmin
 
-rm -rf /usr/share/phpmyadmin
+#rm -rf /usr/share/phpmyadmin
 
-cd /tmp
-wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
-unzip phpMyAdmin-$1-all-languages.zip
-rm phpMyAdmin-$1-all-languages.zip
-mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
+#cd /tmp
+#wget https://files.phpmyadmin.net/phpMyAdmin/$1/phpMyAdmin-$1-all-languages.zip
+#unzip phpMyAdmin-$1-all-languages.zip
+#rm phpMyAdmin-$1-all-languages.zip
+sudo mv /usr/share/phpmyadmin $3/html/phpmyadmin
+#sudo mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
 
-chmod -R 755 $3/html/phpmyadmin
+sudo chmod -R 755 $3/html/phpmyadmin
 
 phpenmod mbstring
 
@@ -115,7 +103,7 @@ systemctl restart apache2
 ```
 
 
-### Run:
+#### Run:
 
 ```
 vagrant provision
@@ -129,7 +117,7 @@ vagrant reload --provision
 
 * Visit [http://192.168.42.100/phpmyadmin/](http://192.168.42.100/phpmyadmin/), log in with user/password.
 
-### Accessing the Database from Outside the VM
+#### Accessing the Database from Outside the VM
 
 To access your database with a GUI you'll need to use a SSH connection. How to set this up depends on the software you're using, but in general these are the things you'll need to configure:
 

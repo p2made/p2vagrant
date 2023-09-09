@@ -1,8 +1,13 @@
 <?php
-$conn = mysqli_connect("localhost", "fredspotty", "Pa$$w0rdTw0", "example_db");
+$host       = "localhost";
+$username   = "fredspotty";
+$password   = "Passw0rdTw0";
+$database   = "example_db";
+
+$conn = mysqli_connect($host, $username, $password, $database);
 
 if (!$conn) {
-	die("Error: " . mysqli_connect_error());
+    die("Error: " . mysqli_connect_error());
 }
 
 echo "Connected!";

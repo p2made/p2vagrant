@@ -3,12 +3,6 @@
 
 # 04 Install MySQL 8.1
 
-UPGRADE_BOX         = true
-INSTALL_UTILITIES   = true
-INSTALL_APACHE      = true
-INSTALL_PHP         = true
-INSTALL_MYSQL       = true
-
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
@@ -24,9 +18,9 @@ PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
 
 # Database Variables
-RT_PASSWORD         = "Pa$$w0rd0ne"
+RT_PASSWORD         = "Passw0rd0ne"
 DB_USERNAME         = "fredspotty"
-DB_PASSWORD         = "Pa$$w0rdTw0"
+DB_PASSWORD         = "Passw0rdTw0"
 DB_NAME             = "example_db"
 DB_NAME_TEST        = "example_db_test"
 
@@ -43,24 +37,14 @@ Vagrant.configure("2") do |config|
 	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
 
-	# Set a synced folder
+	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-	if UPGRADE_BOX
-		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
-	end
-	if INSTALL_UTILITIES
-		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
-	end
-	if INSTALL_APACHE
-		config.vm.provision :shell, path: "provision/scripts/apache.sh"
-	end
-	if INSTALL_PHP
-		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	end
-	if INSTALL_MYSQL
-		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	end
+	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end

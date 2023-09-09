@@ -1,10 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 01 Create the Virtual Machine
-
-UPGRADE_BOX         = true
-INSTALL_UTILITIES   = true
+# 01 Create Virtual Machine
 
 # Machine Variables
 MEMORY              = 4096
@@ -28,14 +25,10 @@ Vagrant.configure("2") do |config|
 	# Configure network...
 	config.vm.network "private_network", ip: VM_IP
 
-	# Set a synced folder
+	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-	if UPGRADE_BOX
-		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
-	end
-	if INSTALL_UTILITIES
-		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
-	end
+	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
 end

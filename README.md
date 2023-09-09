@@ -1,6 +1,6 @@
 # P2Vagrant (Apple Silicon)
 
-## <a id="steps"></a> Steps Taken to build this macOS/M2/Ubuntu VM
+### <a id="steps"></a> Steps Taken to build this macOS/M2/Ubuntu VM
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
