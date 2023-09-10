@@ -53,13 +53,13 @@ Item | Value
 `Password` | password given during the install
 `SSH Host` | 127.0.0.1
 `SSH User` | vagrant
-`SSH Key` | Can be found in this location in your project directory: /.vagrant/machines/default/virtualbox/private_key
+`SSH Key`  | Can be found in this location in your project directory: /.vagrant/machines/default/virtualbox/private_key
 `SSH Port` | 2222
 
 --
 
 <!-- 03 Install PHP 8.2 -->
-| [04 Install MySQL](./Install_MySQL.md)
+| [04 Install MySQL](./04_Install_MySQL.md)
 | [**Back to Steps**](../README.md)
-| [06 Domain Names](./Domain_Names.md)
+| [06 Domain Names](./06_Domain_Names.md)
 |

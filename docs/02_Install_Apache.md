@@ -137,7 +137,7 @@ vagrant up
 --
 
 <!-- 02 Install Apache -->
-| [01 Create Virtual Machine](./Create_Virtual_Machine.md)
+| [01 Create Virtual Machine](./01_Create_Virtual_Machine.md)
 | [**Back to Steps**](../README.md)
-| [03 Install PHP](./Install_PHP.md)
+| [03 Install PHP](./03_Install_PHP.md)
 |
