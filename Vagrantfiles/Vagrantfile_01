@@ -3,6 +3,9 @@
 
 # 01 Create Virtual Machine
 
+UPGRADE_BOX         = true
+INSTALL_UTILITIES   = true
+
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
@@ -29,6 +32,11 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
-	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	if INSTALL_UTILITIES
+		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	end
+	if INSTALL_APACHE
+		config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	end
+
 end

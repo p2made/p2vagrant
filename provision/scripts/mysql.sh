@@ -2,6 +2,14 @@
 
 # 04 Install MySQL 8.1
 
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo "##### #####"
+echo "##### #####       Installing MySQL"
+echo "##### #####"
+echo "##### ##### ##### ##### ##### ##### #####"
+echo "##### ##### ##### ##### ##### #####"
+
 #MYSQL_VERSION       = $1 = 8.1
 #RT_PASSWORD         = $2 = "Passw0rd0ne"
 #DB_USERNAME         = $3 = "fredspotty"
@@ -26,7 +34,7 @@ $CMD "CREATE DATABASE IF NOT EXISTS $6"
 $CMD "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%'"
 
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
-#grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
+#grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo ""sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf"
 
 service mysql restart
 systemctl restart apache2
