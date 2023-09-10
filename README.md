@@ -1,6 +1,6 @@
 # P2Vagrant (Apple Silicon)
 
-## <a id="steps"></a> Steps Taken to build this macOS/M2/Ubuntu VM
+### <a id="steps"></a> Steps Taken to build this macOS/M2/Ubuntu VM
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
@@ -8,7 +8,7 @@ All versions of `Vagrantfile` are in `/Vagrantfiles` as `Vagrantfile_nn`, where 
 
 ```
 cp ./Vagrantfiles/Vagrantfile_nn ./Vagrantfile
-``` 
+```
 
 All files you are directed to create are in...
 
@@ -21,15 +21,14 @@ All files you are directed to create are in...
 	/vhosts
 ```
 
-01. [Install Software](./docs/01_Install_Software.md)
-02. [Create Virtual Machine](./docs/02_Create_Virtual_Machine.md)
-03. [Install Apache](./docs/03_Install_Apache.md)
-04. [Install PHP](./docs/04_Install_PHP.md)
-05. [Install MySQL](./docs/05_Install_MySQL.md)
-06. [Install phpMyAdmin](./docs/06_Install_phpMyAdmin.md)
+01. [Create Virtual Machine](./docs/Create_Virtual_Machine.md)
+02. [Install Apache](./docs/Install_Apache.md)
+03. [Install PHP](./docs/Install_PHP.md)
+04. [Install MySQL](./docs/Install_MySQL.md)
+05. [Install phpMyAdmin](./docs/Install_phpMyAdmin.md)
+06. [Domain Names](./docs/Domain_Names.md)
 
 <!--
-07. [Domain Names](./docs/07_Domain_Names.md)
 08. [SSL](./docs/08_SSL.md)
 09. [Install Composer](./docs/09_Install_Composer.md)
 10. [Install Yarn](./docs/10_Install_Yarn.md)
