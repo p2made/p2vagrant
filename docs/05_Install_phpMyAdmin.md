@@ -21,6 +21,11 @@ sudo apt install -y phpmyadmin
 During the install, accept the default options & enter a password of your choosing.
 
 ```
+sudo su
+
+
+
+
 sudo rm -rf /usr/share/phpmyadmin
 cd /tmp
 wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
