@@ -8,6 +8,8 @@ MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.42.100"
 #SSH_PASSWORD        = 'vagrant'
+TIMEZONE            = Australia/Brisbane
+#TIMEZONE            = Europe/London
 
 # Folders
 HOST_FOLDER         = "."
