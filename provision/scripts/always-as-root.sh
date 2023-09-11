@@ -12,3 +12,7 @@ cat /etc/os-release
 service php8.2-fpm restart
 service apache2 restart
 service mysql restart
+
+# ---- ^ ---- ^ ---- ^ ---- ^ ---- ^ ----
+
+
