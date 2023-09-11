@@ -3,13 +3,6 @@
 
 # 05 Install phpMyAdmin
 
-UPGRADE_BOX         = true
-INSTALL_UTILITIES   = true
-INSTALL_APACHE      = true
-INSTALL_PHP         = true
-INSTALL_MYSQL       = true
-#INSTALL_PHPMYADMIN  = true
-
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
@@ -17,7 +10,7 @@ VM_IP               = "192.168.42.100"
 SSH_PASSWORD        = 'vagrant'
 
 # Folders
-HOST_FOLDER         = "./shared"
+HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
@@ -49,23 +42,11 @@ Vagrant.configure("2") do |config|
 		config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-	if UPGRADE_BOX
-		config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
-	end
-	if INSTALL_UTILITIES
-		config.vm.provision :shell, path: "provision/scripts/utilities.sh"
-	end
-	if INSTALL_APACHE
-		config.vm.provision :shell, path: "provision/scripts/apache.sh"
-	end
-	if INSTALL_PHP
-		config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
-	end
-	if INSTALL_MYSQL
-		config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	end
-#	if INSTALL_PHPMYADMIN
-#		config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, PMA_PASSWORD, REMOTE_FOLDER]
-#	end
+	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
+	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/phpmyadmin.sh", :args => [PHPMYADMIN_VERSION, PMA_PASSWORD, REMOTE_FOLDER]
 
 end

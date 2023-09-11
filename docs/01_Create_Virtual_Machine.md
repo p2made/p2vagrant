@@ -65,15 +65,13 @@ started with an older version of Vagrant.
 
 # 01 Create Virtual Machine
 
-UPGRADE_BOX         = true
-
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.42.100"
 
 # Folders
-HOST_FOLDER         = "./shared"
+HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
 Vagrant.configure("2") do |config|

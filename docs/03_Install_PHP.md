@@ -16,7 +16,7 @@ CPUS                = 1
 VM_IP               = "192.168.42.100"
 
 # Folders
-HOST_FOLDER         = "./shared"
+HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
 # Software Versions

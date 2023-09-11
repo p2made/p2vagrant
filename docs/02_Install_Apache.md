@@ -12,15 +12,13 @@ Here I've started to group variables for easier following.
 
 # 02 Install Apache
 
-UPGRADE_BOX         = true
-
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.42.100"
 
 # Folders
-HOST_FOLDER         = "./shared"
+HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
