@@ -18,7 +18,9 @@ apt-get install -y apache2 apache2-bin apache2-data apache2-utils
 
 yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
 yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
-yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
+yes | sudo cp /var/www/provision/html/index.html /var/www/html/index.htm
+
+
 
 mv phpMyAdmin-$1-all-languages $3/html/phpmyadmin
 
