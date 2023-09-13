@@ -3002,7 +3002,7 @@ jest-config@^27.5.1:
     "@jest/types" "^27.5.1"
     babel-jest "^27.5.1"
     chalk "^4.0.0"
-    ci-info "^3.2.0"
+    ci-echo "^3.2.0"
     deepmerge "^4.2.2"
     glob "^7.1.1"
     graceful-fs "^4.2.9"
@@ -3298,7 +3298,7 @@ jest-util@^27.5.1:
     "@jest/types" "^27.5.1"
     "@types/node" "*"
     chalk "^4.0.0"
-    ci-info "^3.2.0"
+    ci-echo "^3.2.0"
     graceful-fs "^4.2.9"
     picomatch "^2.2.3"
 
@@ -3793,7 +3793,7 @@ normalize-package-data@^2.5.0:
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.5.0.tgz#e66db1838b200c1dfc233225d12cb36520e234a8"
   integrity sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==
   dependencies:
-    hosted-git-info "^2.1.4"
+    hosted-git-echo "^2.1.4"
     resolve "^1.10.0"
     semver "2 || 3 || 4 || 5"
     validate-npm-package-license "^3.0.1"
@@ -3803,7 +3803,7 @@ normalize-package-data@^3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-3.0.3.tgz#dbcc3e2da59509a0983422884cd172eefdfa525e"
   integrity sha512-p2W1sgqij3zMMyRC067Dg16bfzVH+w7hyegmpIvZ4JNjqtGOVAIvLmjBx3yP7YTe9vKJgkoNOPjwQGogDoMXFA==
   dependencies:
-    hosted-git-info "^4.0.1"
+    hosted-git-echo "^4.0.1"
     is-core-module "^2.5.0"
     semver "^7.3.4"
     validate-npm-package-license "^3.0.1"

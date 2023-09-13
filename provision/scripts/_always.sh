@@ -14,7 +14,7 @@ echo "##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### #####"
 
 
-info "Restart services..."
+echo "Restart services..."
 #service php8.2-fpm restart
 #service apache2 restart
 #service mysql restart
