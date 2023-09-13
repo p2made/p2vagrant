@@ -1,18 +1,20 @@
 #!/bin/bash
 
-# 01a Upgrade
+# always at end of VM load
 
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### #####"
-echo "##### #####       Upgrading VM"
+echo "##### #####       End of VM Loading"
+echo "##### #####"
+echo "##### #####       should always run"
+echo "##### #####       should run last"
 echo "##### #####"
 echo "##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### #####"
 
-apt-get update
 
-apt-get -y upgrade
-apt-get autoremove
-
-cat /etc/os-release
+info "Restart services..."
+#service php8.2-fpm restart
+#service apache2 restart
+#service mysql restart

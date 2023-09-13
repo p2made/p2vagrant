@@ -29,8 +29,8 @@ sed -i 's/display_startup_errors = .*/display_startup_errors = on/' /etc/php/$1/
 
 a2enmod php$1
 
-#service apache2 restart
-systemctl restart apache2
+service apache2 restart
+#systemctl restart apache2
 
 php -v
 php -m

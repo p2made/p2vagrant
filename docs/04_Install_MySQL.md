@@ -16,7 +16,7 @@ CPUS                = 1
 VM_IP               = "192.168.42.100"
 SSH_PASSWORD        = 'vagrant'
 
-# Folders
+# Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
@@ -105,8 +105,8 @@ sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysq
 #grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
 
 service mysql restart
-systemctl restart apache2
-#service apache2 restart
+service apache2 restart
+#systemctl restart apache2
 ```
 
 ### Run:

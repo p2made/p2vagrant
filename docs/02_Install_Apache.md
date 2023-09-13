@@ -17,7 +17,7 @@ MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.42.100"
 
-# Folders
+# Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
@@ -77,8 +77,8 @@ a2enmod ssl
 
 #rm -rf /var/www/html
 
-systemctl restart apache2
-#service apache2 restart
+service apache2 restart
+#systemctl restart apache2
 ```
 
 ### Run:

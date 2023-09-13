@@ -6,12 +6,12 @@
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
+TIMEZONE            = "Australia/Brisbane"
+#TIMEZONE            = "Europe/London"
 VM_IP               = "192.168.42.100"
 #SSH_PASSWORD        = 'vagrant'
-TIMEZONE            = Australia/Brisbane
-#TIMEZONE            = Europe/London
 
-# Folders
+# Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 

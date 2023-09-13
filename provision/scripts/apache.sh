@@ -33,5 +33,5 @@ a2enmod ssl
 
 #rm -rf /var/www/html
 
-systemctl restart apache2
-#service apache2 restart
+service apache2 restart
+#systemctl restart apache2

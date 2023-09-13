@@ -70,7 +70,7 @@ MEMORY              = 4096
 CPUS                = 1
 VM_IP               = "192.168.42.100"
 
-# Folders
+# Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
