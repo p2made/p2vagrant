@@ -7,8 +7,10 @@ echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### #####"
 echo "##### #####       Installing PHP"
 echo "##### #####"
+echo "##### #####       should only run once"
+echo "##### #####"
 echo "##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### #####"
+echo "##### ##### ##### ##### ##### #####"\n
 
 #PHP_VERSION         = $1 = 8.2
 
@@ -32,5 +34,5 @@ a2enmod php$1
 service apache2 restart
 #systemctl restart apache2
 
-php -v
-php -m
+#php -v
+#php -m

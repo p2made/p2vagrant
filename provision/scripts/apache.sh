@@ -10,7 +10,7 @@ echo "##### #####"
 echo "##### #####       should only run once"
 echo "##### #####"
 echo "##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### #####"
+echo "##### ##### ##### ##### ##### #####"\n
 
 LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/apache2
 

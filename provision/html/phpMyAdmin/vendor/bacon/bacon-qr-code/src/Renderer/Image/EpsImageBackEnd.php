@@ -31,7 +31,7 @@ final class EpsImageBackEnd implements ImageBackEndInterface
     {
         $this->eps = "%!PS-Adobe-3.0 EPSF-3.0\n"
             . "%%Creator: BaconQrCode\n"
-            . sprintf("%%%%BoundingBox: 0 0 %d %d \n", $size, $size)
+            . sprintf("%%%%BoundingBox: 0 0 %d %d"\n, $size, $size)
             . "%%BeginProlog\n"
             . "save\n"
             . "50 dict begin\n"

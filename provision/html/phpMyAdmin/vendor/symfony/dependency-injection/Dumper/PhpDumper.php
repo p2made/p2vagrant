@@ -837,7 +837,7 @@ EOF;
             $return[] = sprintf('@deprecated %s', ($deprecation['package'] || $deprecation['version'] ? "Since {$deprecation['package']} {$deprecation['version']}: " : '').$deprecation['message']);
         }
 
-        $return = str_replace("\n     * \n", "\n     *\n", implode("\n     * ", $return));
+        $return = str_replace("\n     *"\n, "\n     *\n", implode("\n     * ", $return));
         $return = $this->container->resolveEnvPlaceholders($return);
 
         $shared = $definition->isShared() ? ' shared' : '';

@@ -800,8 +800,8 @@ class Tracking
             . "\n"
             . '# ' . __('Comment out these two lines if you do not need them.') . "\n"
             . "\n"
-            . "CREATE database IF NOT EXISTS pma_temp_db; \n"
-            . "USE pma_temp_db; \n"
+            . "CREATE database IF NOT EXISTS pma_temp_db;"\n
+            . "USE pma_temp_db;"\n
             . "\n";
 
         foreach ($entries as $entry) {

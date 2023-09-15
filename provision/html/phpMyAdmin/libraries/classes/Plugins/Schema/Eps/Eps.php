@@ -39,7 +39,7 @@ class Eps
     public function __construct()
     {
         $this->stringCommands = '';
-        $this->stringCommands .= "%!PS-Adobe-3.0 EPSF-3.0 \n";
+        $this->stringCommands .= "%!PS-Adobe-3.0 EPSF-3.0"\n;
     }
 
     /**
@@ -79,7 +79,7 @@ class Eps
      */
     public function setOrientation($orientation): void
     {
-        $this->stringCommands .= "%%PageOrder: Ascend \n";
+        $this->stringCommands .= "%%PageOrder: Ascend"\n;
         if ($orientation === 'L') {
             $orientation = 'Landscape';
             $this->stringCommands .= '%%Orientation: ' . $orientation . "\n";
@@ -88,9 +88,9 @@ class Eps
             $this->stringCommands .= '%%Orientation: ' . $orientation . "\n";
         }
 
-        $this->stringCommands .= "%%EndComments \n";
-        $this->stringCommands .= "%%Pages 1 \n";
-        $this->stringCommands .= "%%BoundingBox: 72 150 144 170 \n";
+        $this->stringCommands .= "%%EndComments"\n;
+        $this->stringCommands .= "%%Pages 1"\n;
+        $this->stringCommands .= "%%BoundingBox: 72 150 144 170"\n;
     }
 
     /**
@@ -154,10 +154,10 @@ class Eps
         $y_to = 0,
         $lineWidth = 0
     ): void {
-        $this->stringCommands .= $lineWidth . " setlinewidth  \n";
-        $this->stringCommands .= $x_from . ' ' . $y_from . " moveto \n";
-        $this->stringCommands .= $x_to . ' ' . $y_to . " lineto \n";
-        $this->stringCommands .= "stroke \n";
+        $this->stringCommands .= $lineWidth . " setlinewidth "\n;
+        $this->stringCommands .= $x_from . ' ' . $y_from . " moveto"\n;
+        $this->stringCommands .= $x_to . ' ' . $y_to . " lineto"\n;
+        $this->stringCommands .= "stroke"\n;
     }
 
     /**
@@ -178,14 +178,14 @@ class Eps
      */
     public function rect($x_from, $y_from, $x_to, $y_to, $lineWidth): void
     {
-        $this->stringCommands .= $lineWidth . " setlinewidth  \n";
-        $this->stringCommands .= "newpath \n";
-        $this->stringCommands .= $x_from . ' ' . $y_from . " moveto \n";
-        $this->stringCommands .= '0 ' . $y_to . " rlineto \n";
-        $this->stringCommands .= $x_to . " 0 rlineto \n";
-        $this->stringCommands .= '0 -' . $y_to . " rlineto \n";
-        $this->stringCommands .= "closepath \n";
-        $this->stringCommands .= "stroke \n";
+        $this->stringCommands .= $lineWidth . " setlinewidth "\n;
+        $this->stringCommands .= "newpath"\n;
+        $this->stringCommands .= $x_from . ' ' . $y_from . " moveto"\n;
+        $this->stringCommands .= '0 ' . $y_to . " rlineto"\n;
+        $this->stringCommands .= $x_to . " 0 rlineto"\n;
+        $this->stringCommands .= '0 -' . $y_to . " rlineto"\n;
+        $this->stringCommands .= "closepath"\n;
+        $this->stringCommands .= "stroke"\n;
     }
 
     /**
@@ -200,7 +200,7 @@ class Eps
      */
     public function moveTo($x, $y): void
     {
-        $this->stringCommands .= $x . ' ' . $y . " moveto \n";
+        $this->stringCommands .= $x . ' ' . $y . " moveto"\n;
     }
 
     /**
@@ -210,7 +210,7 @@ class Eps
      */
     public function show($text): void
     {
-        $this->stringCommands .= '(' . $text . ") show \n";
+        $this->stringCommands .= '(' . $text . ") show"\n;
     }
 
     /**
@@ -231,7 +231,7 @@ class Eps
      */
     public function endEpsDoc(): void
     {
-        $this->stringCommands .= "showpage \n";
+        $this->stringCommands .= "showpage"\n;
     }
 
     /**

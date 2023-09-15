@@ -8,7 +8,7 @@ echo "##### #####"
 echo "##### #####       Installing phpMyAdmin"
 echo "##### #####"
 echo "##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### #####"
+echo "##### ##### ##### ##### ##### #####"\n
 
 #PHPMYADMIN_VERSION  = $1 = "5.2.1"
 #PMA_PASSWORD        = $2 = "PM4Passw0rd"
