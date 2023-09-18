@@ -11,7 +11,7 @@ echo -e "##### #####       should always run"
 echo -e "##### #####       should run first"
 echo -e "##### #####"
 echo -e "##### ##### ##### ##### ##### ##### #####"
-echo -e "##### ##### ##### ##### ##### #####\n"
+echo -e "##### ##### ##### ##### ##### #####\n\n"
 
 echo -e "Update & upgrade..."
 apt-get -q update

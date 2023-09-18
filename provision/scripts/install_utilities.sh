@@ -10,7 +10,7 @@ echo -e "##### #####"
 echo -e "##### #####       should only run once"
 echo -e "##### #####"
 echo -e "##### ##### ##### ##### ##### ##### #####"
-echo -e "##### ##### ##### ##### ##### #####\n"
+echo -e "##### ##### ##### ##### ##### #####\n\n"
 
 # TIMEZONE            = "Australia/Brisbane"  | $1
 

@@ -9,10 +9,24 @@ CPUS                = 1
 TIMEZONE            = "Australia/Brisbane"
 #TIMEZONE            = "Europe/London"
 VM_IP               = "192.168.42.100"
+#SSH_PASSWORD        = 'vagrant'
 
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
+
+# Software Versions
+PHP_VERSION         = "8.2"
+MYSQL_VERSION       = "8.1"
+PHPMYADMIN_VERSION  = "5.2.1"
+
+# Database Variables
+RT_PASSWORD         = "Passw0rd0ne"
+DB_USERNAME         = "fredspotty"
+DB_PASSWORD         = "Passw0rdTw0"
+DB_NAME             = "example_db"
+DB_NAME_TEST        = "example_db_test"
+PMA_PASSWORD        = "PM4Passw0rd"
 
 Vagrant.configure("2") do |config|
 
@@ -30,8 +44,10 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
-	# Provisioning...
+	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/_always.sh", run: 'always'
+
+	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 
 end
