@@ -1,19 +1,18 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 02 Install Apache
+# 01 Create Virtual Machine
 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
+TIMEZONE            = "Australia/Brisbane"
+#TIMEZONE            = "Europe/London"
 VM_IP               = "192.168.42.100"
 
-# Folders
+# Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
-
-# Software Versions
-PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 
@@ -32,8 +31,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
-	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
-	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/_always.sh", run: 'always'
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 
 end

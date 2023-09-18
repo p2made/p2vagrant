@@ -13,9 +13,9 @@ vagrant ssh
 ### Run...
 
 ```
-LC_ALL=C.UTF-8 sudo add-apt-repository ppa:phpmyadmin/ppa
+LC_ALL=C.UTF-8 sudo apt-add-repository -yu ppa:phpmyadmin/ppa
 sudo apt update
-sudo apt install -y phpmyadmin
+sudo apt -qy install phpmyadmin
 ```
 
 During the install, accept the default options & enter a password of your choosing.
