@@ -87,7 +87,7 @@ cp ./Vagrantfiles/Vagrantfile_04 ./Vagrantfile
 
 apt-get update
 
-apt-get -y install mysql-server
+apt-get -qy install mysql-server
 
 debconf-set-selections <<< "mysql-server mysql-server/root_password password $2"
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $2"
@@ -102,7 +102,7 @@ $CMD "CREATE DATABASE IF NOT EXISTS $6"
 $CMD "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%'"
 
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
-#grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
+#grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo -e "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
 
 service mysql restart
 service apache2 restart
@@ -131,7 +131,7 @@ if (!$conn) {
 	die("Error: " . mysqli_connect_error());
 }
 
-echo "Connected!";
+echo -e "Connected!";
 ```
 
 Copy this file...
