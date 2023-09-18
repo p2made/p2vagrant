@@ -9,7 +9,6 @@ CPUS                = 1
 TIMEZONE            = "Australia/Brisbane"
 #TIMEZONE            = "Europe/London"
 VM_IP               = "192.168.42.100"
-#SSH_PASSWORD        = 'vagrant'
 
 # Synced Folders
 HOST_FOLDER         = "."
@@ -49,5 +48,6 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 
 end
