@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
 	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
-	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/php.sh", :args => [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
@@ -74,7 +74,7 @@ cp ./Vagrantfiles/Vagrantfile_04 ./Vagrantfile
 ### Create `provision/scripts/mysql.sh`:
 
 ```
-#!/bin/bash
+#!/bin/sh
 
 # 04 Install MySQL 8.1
 

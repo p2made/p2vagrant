@@ -105,7 +105,7 @@ cp ./Vagrantfiles/Vagrantfile_01 ./Vagrantfile
 ### Create `upgrade.sh`
 
 ```
-#!/bin/bash
+#!/bin/sh
 
 # 01a Upgrade
 
@@ -120,7 +120,7 @@ cat /etc/os-release
 ### Create `utilities.sh`
 
 ```
-#!/bin/bash
+#!/bin/sh
 
 # 01b Install Utilities
 

@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
 	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
-	config.vm.provision :shell, path: "provision/scripts/apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 
 end
 ```
@@ -57,7 +57,7 @@ cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
 ### Create `provision/scripts/apache.sh`:
 
 ```
-#!/bin/bash
+#!/bin/sh
 
 # 02 Install Apache
 
