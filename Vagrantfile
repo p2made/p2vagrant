@@ -43,11 +43,11 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
-	config.vm.provision :shell, path: "provision/scripts/_vm_start.sh", run: 'always'
+#	config.vm.provision :shell, path: "provision/scripts/_vm_start.sh", run: 'always'
 
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
 #	config.vm.provision :shell, path: "provision/scripts/composer.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
