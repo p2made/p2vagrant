@@ -14,30 +14,30 @@ echo -e "##### ##### ##### ##### #####\n\n"
 
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
 
-apt -qy install php$1
+apt-get -qy install php$1
 
-apt -qy install php$1-bcmath
-apt -qy install php$1-bz2
-apt -qy install php$1-cgi
-apt -qy install php$1-curl
-apt -qy install php$1-dom
-apt -qy install php$1-fpm
-apt -qy install php$1-gd
-apt -qy install php$1-imagick
-apt -qy install php$1-imap
-apt -qy install php$1-intl
-apt -qy install php$1-ldap
-apt -qy install php$1-mbstring
-apt -qy install php$1-mcrypt
-apt -qy install php$1-mysql
-apt -qy install php$1-pgsql
-apt -qy install php$1-pspell
-apt -qy install php$1-soap
-apt -qy install php$1-xmlrpc
-apt -qy install php$1-zip
+apt-get -qy install php$1-bcmath
+apt-get -qy install php$1-bz2
+apt-get -qy install php$1-cgi
+apt-get -qy install php$1-curl
+apt-get -qy install php$1-dom
+apt-get -qy install php$1-fpm
+apt-get -qy install php$1-gd
+apt-get -qy install php$1-imagick
+apt-get -qy install php$1-imap
+apt-get -qy install php$1-intl
+apt-get -qy install php$1-ldap
+apt-get -qy install php$1-mbstring
+apt-get -qy install php$1-mcrypt
+apt-get -qy install php$1-mysql
+apt-get -qy install php$1-pgsql
+apt-get -qy install php$1-pspell
+apt-get -qy install php$1-soap
+apt-get -qy install php$1-xmlrpc
+apt-get -qy install php$1-zip
 
-apt -qy install php-pear
-apt -qy install libapache2-mod-php$1
+apt-get -qy install php-pear
+apt-get -qy install libapache2-mod-php$1
 
 sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/$1/apache2/php.ini
 sed -i 's/post_max_size = .*/post_max_size = 64M/' /etc/php/$1/apache2/php.ini
