@@ -11,7 +11,12 @@ echo -e "##### ##### ##### ##### ##### #####"
 echo -e "##### ##### ##### ##### #####\n\n"
 
 cd /tmp
-curl -sS https://getcomposer.org/installer | php
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+php composer-setup.php
+rm composer-setup.php
+
 sudo mv composer.phar /usr/local/bin/composer
-sudo composer self-update
+composer self-update
+
 composer
