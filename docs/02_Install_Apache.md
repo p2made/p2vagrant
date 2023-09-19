@@ -57,7 +57,7 @@ cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
 ### Create `provision/scripts/apache.sh`:
 
 ```
-#!/bin/bash
+#!/bin/sh
 
 # 02 Install Apache
 

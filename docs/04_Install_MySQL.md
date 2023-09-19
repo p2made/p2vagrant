@@ -74,7 +74,7 @@ cp ./Vagrantfiles/Vagrantfile_04 ./Vagrantfile
 ### Create `provision/scripts/mysql.sh`:
 
 ```
-#!/bin/bash
+#!/bin/sh
 
 # 04 Install MySQL 8.1
 

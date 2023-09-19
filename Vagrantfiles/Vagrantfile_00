@@ -17,7 +17,7 @@ REMOTE_FOLDER       = "/var/www"
 # Software Versions
 PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
-PHPMYADMIN_VERSION  = "5.2.1"
+PMA_VERSION         = "5.2.1"
 
 # Database Variables
 RT_PASSWORD         = "Passw0rd0ne"

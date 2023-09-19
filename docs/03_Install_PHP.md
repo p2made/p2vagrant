@@ -56,7 +56,7 @@ cp ./Vagrantfiles/Vagrantfile_03 ./Vagrantfile
 ### Create `provision/scripts/php.sh`:
 
 ```
-#!/bin/bash
+#!/bin/sh
 
 # 03 Install PHP 8.2
 

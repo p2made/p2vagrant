@@ -1,16 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
 # 02 Install Apache
 
-echo -e "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo -e "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo -e "##### #####"
-echo -e "##### #####       Installing Apache"
-echo -e "##### #####"
-echo -e "##### #####       should only run once"
-echo -e "##### #####"
-echo -e "##### ##### ##### ##### ##### ##### #####"
-echo -e "##### ##### ##### ##### ##### #####\n\n"
+echo -e "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo -e "#####"
+echo -e "#####       Installing Apache"
+echo -e "#####"
+echo -e "##### ##### ##### ##### ##### #####"
+echo -e "##### ##### ##### ##### #####\n\n"
 
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
 
