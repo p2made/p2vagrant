@@ -21,20 +21,16 @@ apt-get update
 
 apt-get -qy install mysql-server
 
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $2"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $2"
-
 # Create the database and grant privileges
-CMD="sudo mysql -uroot -pPassw0rd0ne -e"
-
-$CMD "CREATE USER '$3'@'%' IDENTIFIED BY '$4';"
-$CMD "CREATE DATABASE IF NOT EXISTS $5"
-$CMD "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%'"
-$CMD "CREATE DATABASE IF NOT EXISTS $6"
-$CMD "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%'"
+echo "CREATE USER '$3'@'%' IDENTIFIED BY '$4'" | mysql
+echo "CREATE DATABASE IF NOT EXISTS $5" | mysql
+echo "CREATE DATABASE IF NOT EXISTS $6" | mysql
+echo "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%';" | mysql
+echo "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%';" | mysql
+echo "flush privileges" | mysql
 
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 cp /var/www/provision/html/db.php /var/www/html/db.php
 
-sudo dpkg -l | grep "apache2\|mysql-server-8.1\|php8.2"
+dpkg -l | grep "apache2\|mysql-server-8.1\|php8.2"
