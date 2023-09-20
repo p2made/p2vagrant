@@ -21,19 +21,12 @@ All files you are directed to create are in...
 	/vhosts
 ```
 
-01. [Create Virtual Machine](./docs/01_Create_Virtual_Machine.md)
-02. [Install Apache](./docs/02_Install_Apache.md)
-03. [Install PHP](./docs/03_Install_PHP.md)
-04. [Install MySQL](./docs/04_Install_MySQL.md)
-05. [Install phpMyAdmin](./docs/05_Install_phpMyAdmin.md)
-06. [Domain Names](./docs/06_Domain_Names.md)
-
-<!--
-08. [SSL](./docs/08_SSL.md)
-09. [Install Composer](./docs/09_Install_Composer.md)
-10. [Install Yarn](./docs/10_Install_Yarn.md)
-11. [Profile](./docs/11_Profile.md)
--->
+01. [Create Bare VM](./docs/01_Create_Bare_VM.md)
+02. [Upgrade & Install Utilities](./docs/02_Upgrade_Install_Utilities.md)
+03. [Install Apache](./docs/03_Install_Apache.md)
+04. [Install PHP (& Composer)](./docs/04_Install_PHP.md)
+05. [Install MySQL](./docs/05_Install_MySQL.md)
+06. [Install phpMyAdmin](./docs/06_Install_phpMyAdmin.md)
 
 * [Vagrant Commands](./docs/Commands.md)
 
