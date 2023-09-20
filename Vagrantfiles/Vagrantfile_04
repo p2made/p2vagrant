@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 04 Install MySQL 8.1
+# 03 Install PHP 8.2
 
 # Machine Variables
 MEMORY              = 4096
@@ -51,6 +51,5 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
-	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, RT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
