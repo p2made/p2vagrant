@@ -1,7 +1,7 @@
 # 03 Install Apache
 --
 
-### Create `provision/scripts/apache.sh`:
+### Create `provision/scripts/install_apache.sh`:
 
 ```
 #!/bin/sh
@@ -12,9 +12,13 @@ LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
 
 apt-get update
 
-apt-get -qy install apache2 apache2-bin apache2-data apache2-utils
+apt-get -qy install apache2
+apt-get -qy install apache2-bin
+apt-get -qy install apache2-data
+apt-get -qy install apache2-utils
 
 yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
+yes | cp /var/www/provision/html/index.html /var/www/html/index.htm
 yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
 
 a2ensite local.conf
@@ -22,10 +26,7 @@ a2dissite 000-default
 a2enmod rewrite
 a2enmod ssl
 
-#rm -rf /var/www/html
-
 service apache2 restart
-#systemctl restart apache2
 ```
 
 ### Update `Vagrantfile`
@@ -40,14 +41,13 @@ service apache2 restart
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
+TIMEZONE            = "Australia/Brisbane"
+#TIMEZONE            = "Europe/London"
 VM_IP               = "192.168.42.100"
 
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
-
-# Software Versions
-PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 
@@ -65,9 +65,11 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/_vm_start.sh", run: 'always'
+
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/upgrade.sh"
-	config.vm.provision :shell, path: "provision/scripts/utilities.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 
 end
@@ -113,6 +115,10 @@ vagrant up
 ```
 
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
+
+### All good?
+
+Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 

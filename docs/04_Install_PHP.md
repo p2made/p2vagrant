@@ -1,0 +1,146 @@
+# 04 Install PHP (& Composer)
+
+--
+
+### Create `provision/scripts/install_php.sh`:
+
+```
+#!/bin/sh
+
+# 04 Install PHP (& Composer)
+
+# PHP_VERSION         = "8.2"                 | $1
+
+LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
+
+apt-get -qy install php$1
+
+apt-get -qy install php$1-{bcmath,bz2,cgi,curl,dom,fpm,gd,imagick,imap,intl,ldap,mbstring,mcrypt,mysql,pgsql,pspell,soap,xmlrpc,zip}
+
+apt-get -qy install php-pear
+apt-get -qy install libapache2-mod-php$1
+
+sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/$1/apache2/php.ini
+sed -i 's/post_max_size = .*/post_max_size = 64M/' /etc/php/$1/apache2/php.ini
+sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' /etc/php/$1/apache2/php.ini
+sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/$1/apache2/php.ini
+sed -i 's/display_errors = .*/display_errors = on/' /etc/php/$1/apache2/php.ini
+sed -i 's/display_startup_errors = .*/display_startup_errors = on/' /etc/php/$1/apache2/php.ini
+
+cp /var/www/provision/html/phpinfo.php /var/www/html/phpinfo.php
+
+a2enmod php$1
+service apache2 restart
+```
+
+### Create `provision/scripts/install_composer.sh`:
+
+```
+#!/bin/sh
+
+# 03a Install Composer
+
+cd /tmp
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+php composer-setup.php
+rm composer-setup.php
+
+sudo mv composer.phar /usr/local/bin/composer
+composer self-update
+
+composer
+```
+
+### Update `Vagrantfile`
+
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# 04 Install PHP (& Composer)
+
+# Machine Variables
+MEMORY              = 4096
+CPUS                = 1
+TIMEZONE            = "Australia/Brisbane"
+#TIMEZONE            = "Europe/London"
+VM_IP               = "192.168.42.100"
+
+# Synced Folders
+HOST_FOLDER         = "."
+REMOTE_FOLDER       = "/var/www"
+
+# Software Versions
+PHP_VERSION         = "8.2"
+
+Vagrant.configure("2") do |config|
+
+	config.vm.box = "bento/ubuntu-20.04-arm64"
+
+	config.vm.provider "vmware_desktop" do |v|
+		v.memory = MEMORY
+		v.cpus   = CPUS
+		v.gui    = true
+	end
+
+	# Configure network...
+	config.vm.network "private_network", ip: VM_IP
+
+	# Set a synced folder...
+	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/_vm_start.sh", run: 'always'
+
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
+
+end
+```
+
+Or copy this file...
+
+```
+cp ./Vagrantfiles/Vagrantfile_04 ./Vagrantfile
+```
+
+### Run:
+
+```
+vagrant provision
+```
+
+or
+
+```
+vagrant reload --provision
+```
+
+`phpinfo.php` will be copied to the `html` directory.
+
+```
+<?php
+phpinfo();
+```
+
+### Visit:
+
+* [http://192.168.42.100/phpinfo.php](http://192.168.42.100/phpinfo.php)
+
+... which should successfully display the PHP info page.
+
+### All good?
+
+Save the moment with a [Snapshot](./Snapshots.md).
+
+--
+
+<!-- 04 Install PHP (& Composer) -->
+| [03 Install Apache](./03_Install_Apache.md)
+| [**Back to Steps**](../README.md)
+| [05 Install MySQL](./05_Install_MySQL.md)
+|

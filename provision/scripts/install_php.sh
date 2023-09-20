@@ -1,11 +1,11 @@
 #!/bin/sh
 
-# 03 Install PHP 8.2
+# 04 Install PHP (& Composer)
 
 echo -e "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo -e "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo -e "#####"
-echo -e "#####       Installing PHP "$1
+echo -e "#####       Installing PHP "$1" (& Composer)"
 echo -e "#####"
 echo -e "##### ##### ##### ##### ##### #####"
 echo -e "##### ##### ##### ##### #####\n\n"
@@ -16,25 +16,7 @@ LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
 
 apt-get -qy install php$1
 
-apt-get -qy install php$1-bcmath
-apt-get -qy install php$1-bz2
-apt-get -qy install php$1-cgi
-apt-get -qy install php$1-curl
-apt-get -qy install php$1-dom
-apt-get -qy install php$1-fpm
-apt-get -qy install php$1-gd
-apt-get -qy install php$1-imagick
-apt-get -qy install php$1-imap
-apt-get -qy install php$1-intl
-apt-get -qy install php$1-ldap
-apt-get -qy install php$1-mbstring
-apt-get -qy install php$1-mcrypt
-apt-get -qy install php$1-mysql
-apt-get -qy install php$1-pgsql
-apt-get -qy install php$1-pspell
-apt-get -qy install php$1-soap
-apt-get -qy install php$1-xmlrpc
-apt-get -qy install php$1-zip
+apt-get -qy install php$1-{bcmath,bz2,cgi,curl,dom,fpm,gd,imagick,imap,intl,ldap,mbstring,mcrypt,mysql,pgsql,pspell,soap,xmlrpc,zip}
 
 apt-get -qy install php-pear
 apt-get -qy install libapache2-mod-php$1

@@ -31,6 +31,12 @@ Take a Snapshot…
 
 Now you can re-launch the VM.
 
+```
+vagrant up
+```
+
+… or whatever `vagrant ...` command launches it for you.
+
 ## Restoring Snapshots
 
 First make sure your VM isn't running…
@@ -46,6 +52,12 @@ In the Snapshots window of `VMware Fusion`…
 - (I usually choose `Don't Save` because I'm backing up from a failled next step.)
 
 Now you can re-launch the VM.
+
+```
+vagrant up
+```
+
+… or whatever `vagrant ...` command launches it for you.
 
 --
 
