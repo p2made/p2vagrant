@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 00 Create bare VM
+# 01 Create Bare VM
 
 # Machine Variables
 MEMORY              = 4096
