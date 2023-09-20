@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 01 Create Virtual Machine
+# 02 Upgrade & Install Utilities
 
 # Machine Variables
 MEMORY              = 4096

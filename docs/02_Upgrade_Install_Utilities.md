@@ -1,24 +1,6 @@
-# 01 Create Bare Virtual Machine
+# 02 Upgrade & Install Utilities
 
---
-
-Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider.
-
-The instructions given assume the use of [Homebrew](https://brew.sh). If you don't have it installed, run...
-
-```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-### Install the VMware Fusion 2023 Tech Preview
-
-* [This one](https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-TP2023) is the most recent as of [2023-07-13](https://blogs.vmware.com/teamfusion/2023/07/vmware-fusion-2023-tech-preview.html).
-* Installs `VMware Fusion Tech Preview` in your `Applications` folder.
-* Rename it to `VMware Fusion` (I don't know why that's necessary, but I read that it is, & it find that is).
-* Nothing needs to be set up in `VMware Fusion`.
-* VMware Fusion needs to be running when you run `vagrant up`, or any other Vagrant command that starts a VM.
-* Technically VMware Fusion doesn't need to be running & will be lanched by vagrant when necessary. However…
-* VMware Fusion can take long enough to launch on my Mac that Vagrant times out.
+Now that there's a bare Ubuntu VM…
 
 ### Install Vagrant & VMware Utility
 
@@ -58,17 +40,45 @@ you haven't destroyed and recreated Vagrant environments that were
 started with an older version of Vagrant.
 ```
 
-### Create `Vagrantfile`
+### Create `_vm_start.sh`
 
-* `v.gui` needs to be set to `true`.
-* `v.memory` & `v.cpus` might as well be set now.
-* Same for `config.vm.network`.
+```
+#!/bin/sh
+
+# 00 Always at Start of VM Loading
+
+apt-get -q update
+apt-get -qy upgrade
+apt-get autoremove
+cat /etc/os-release
+```
+
+### Create `install_utilities.sh`
+
+```
+#!/bin/sh
+
+# 01 Install Utilities
+
+# TIMEZONE            = "Australia/Brisbane"  | $1
+
+timedatectl set-timezone $1 --no-ask-password
+
+LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
+
+apt-get -qy install apt-transport-https bzip2 ca-certificates curl expect file fish git gnupg2 gzip libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 lsb-release mime-support software-properties-common unzip
+
+chsh -s /usr/bin/fish
+echo 'cd /var/www' >> /home/vagrant/.profile
+```
+
+### Update `Vagrantfile`
 
 ```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 01 Create Bare VM
+# 02 Upgrade & Install Utilities
 
 # Machine Variables
 MEMORY              = 4096
@@ -97,13 +107,19 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/_vm_start.sh", run: 'always'
+
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+
 end
 ```
 
 Or copy this file...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_01 ./Vagrantfile
+cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
 ```
 
 ### Launch the VM
@@ -118,8 +134,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 01 Create Bare VM -->
-| - - - -
+<!-- 02 Upgrade & Install Utilities -->
+| [01 Create Bare VM](./01_Create_Bare_VM.md)
 | [**Back to Steps**](../README.md)
-| [02 Upgrade & Install Utilities](./02_Upgrade_Install_Utilities.md)
+| [03 Install Apache](./03_Install_Apache.md)
 |
