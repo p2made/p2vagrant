@@ -28,6 +28,7 @@ All files you are directed to create are in...
 05. [Install MySQL](./docs/05_Install_MySQL.md)
 06. [Install phpMyAdmin](./docs/06_Install_phpMyAdmin.md)
 
+* [Snapshots](./docs/Snapshots.md)
 * [Vagrant Commands](./docs/Commands.md)
 
 --

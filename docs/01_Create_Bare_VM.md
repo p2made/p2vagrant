@@ -81,19 +81,6 @@ VM_IP               = "192.168.42.100"
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
-# Software Versions
-PHP_VERSION         = "8.2"
-MYSQL_VERSION       = "8.1"
-PMA_VERSION         = "5.2.1"
-
-# Database Variables
-RT_PASSWORD         = "Passw0rd0ne"
-DB_USERNAME         = "fredspotty"
-DB_PASSWORD         = "Passw0rdTw0"
-DB_NAME             = "example_db"
-DB_NAME_TEST        = "example_db_test"
-PMA_PASSWORD        = "PM4Passw0rd"
-
 Vagrant.configure("2") do |config|
 
 	config.vm.box = "bento/ubuntu-20.04-arm64"
@@ -113,42 +100,10 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Copy this file...
+Or copy this file...
 
 ```
 cp ./Vagrantfiles/Vagrantfile_01 ./Vagrantfile
-```
-
-### Create `upgrade.sh`
-
-```
-#!/bin/sh
-
-# 01a Upgrade
-
-apt-get update
-
-apt-get -y upgrade
-apt-get autoremove
-
-cat /etc/os-release
-```
-
-### Create `utilities.sh`
-
-```
-#!/bin/sh
-
-# 01b Install Utilities
-
-LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
-
-apt-get update
-
-apt-get -qy install apt-transport-https bzip2 ca-certificates curl file fish gnupg2 libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.3-0 lsb-release mime-support software-properties-common unzip
-
-# Make Fish default
-chsh -s /usr/bin/fish
 ```
 
 ### Launch the VM

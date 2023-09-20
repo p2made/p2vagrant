@@ -99,7 +99,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Copy this file...
+Or copy this file...
 
 ```
 cp ./Vagrantfiles/Vagrantfile_01 ./Vagrantfile
