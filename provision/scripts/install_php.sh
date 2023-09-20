@@ -49,3 +49,4 @@ sed -i 's/display_startup_errors = .*/display_startup_errors = on/' /etc/php/$1/
 cp /var/www/provision/html/phpinfo.php /var/www/html/phpinfo.php
 
 a2enmod php$1
+service apache2 restart

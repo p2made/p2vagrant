@@ -28,4 +28,4 @@ a2dissite 000-default
 a2enmod rewrite
 a2enmod ssl
 
-systemctl restart apache2
+service apache2 restart
