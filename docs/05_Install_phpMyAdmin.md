@@ -4,13 +4,13 @@
 
 Installing phpMyAdmin using a provisioning script is failing for me, so I'm doing it manually. `Vagrantfile_05` & `provision/scripts/phpmyadmin.sh` exist in the project for preservation, but are not currently used. Lines in Vagrantfiles that relate to installing phpMyAdmin are commented out.
 
-### SSh into the VM
+#### First SSH into the VM…
 
 ```
 vagrant ssh
 ```
 
-### Run...
+#### Now run…
 
 ```
 LC_ALL=C.UTF-8 sudo apt-add-repository -yu ppa:phpmyadmin/ppa
@@ -20,22 +20,23 @@ sudo apt -qy install phpmyadmin
 
 During the install, accept the default options & enter a password of your choosing.
 
+#### Now run…
+
 ```
-sudo su
-
-
-
-
 sudo rm -rf /usr/share/phpmyadmin
+
 cd /tmp
 wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
 unzip phpMyAdmin-5.2.1-all-languages.zip
 rm phpMyAdmin-5.2.1-all-languages.zip
 sudo mv phpMyAdmin-5.2.1-all-languages /var/www/html/phpmyadmin
+
 sudo chmod -R 755 /var/www/html/phpmyadmin
 ```
 
 Permissions are fixed in the `chmod` step, so ignore the permissions failures in the `mv` step.
+
+#### Finally run…
 
 ```
 sudo phpenmod mbstring
