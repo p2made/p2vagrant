@@ -1,5 +1,7 @@
 # Vagrant Commands
 
+--
+
 Command | Result
 ------- | ------
 `vagrant up` | Starts the Vagrant box specified by the `Vagrantfile` in the current directory.

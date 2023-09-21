@@ -20,8 +20,10 @@ apt-get -qy install apache2-data
 apt-get -qy install apache2-utils
 
 yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
-yes | cp /var/www/provision/html/index.html /var/www/html/index.htm
+yes | cp /var/www/provision/html/index.htm /var/www/html/
 yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
+
+sudo chmod -R 755 /var/www/html/*
 
 a2ensite local.conf
 a2dissite 000-default

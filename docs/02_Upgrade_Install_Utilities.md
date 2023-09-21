@@ -1,5 +1,7 @@
 # 02 Upgrade & Install Utilities
 
+--
+
 Now that there's a bare Ubuntu VM…
 
 ### Install Vagrant & VMware Utility

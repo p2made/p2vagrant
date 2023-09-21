@@ -30,6 +30,8 @@ echo "flush privileges" | mysql
 
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
-cp /var/www/provision/html/db.php /var/www/html/db.php
+cp /var/www/provision/html/db.php /var/www/html/
+
+sudo chmod -R 755 /var/www/html/*
 
 dpkg -l | grep "apache2\|mysql-server-8.1\|php8.2"
