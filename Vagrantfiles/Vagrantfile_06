@@ -22,7 +22,7 @@ PMA_VERSION         = "5.2.1"
 # Database Variables
 RT_PASSWORD         = "Passw0rd0ne"
 DB_USERNAME         = "fredspotty"
-DB_PASSWORD         = "Passw0rdTw0"
+DB_PASSWORD         = "Passw0rd"
 DB_NAME             = "example_db"
 DB_NAME_TEST        = "example_db_test"
 PMA_PASSWORD        = "PM4Passw0rd"
