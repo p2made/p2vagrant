@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# 03 Install PHP 8.2
+# 04a Install PHP
 
 echo -e "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo -e "##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
@@ -35,6 +35,7 @@ apt-get -qy install php$1-pspell
 apt-get -qy install php$1-soap
 apt-get -qy install php$1-xmlrpc
 apt-get -qy install php$1-zip
+#apt-get -qy install php$1-{bcmath,bz2,cgi,curl,dom,fpm,gd,imagick,imap,intl,ldap,mbstring,mcrypt,mysql,pgsql,pspell,soap,xmlrpc,zip}
 
 apt-get -qy install php-pear
 apt-get -qy install libapache2-mod-php$1
@@ -46,7 +47,14 @@ sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/$1/apache2/php.ini
 sed -i 's/display_errors = .*/display_errors = on/' /etc/php/$1/apache2/php.ini
 sed -i 's/display_startup_errors = .*/display_startup_errors = on/' /etc/php/$1/apache2/php.ini
 
-cp /var/www/provision/html/phpinfo.php /var/www/html/phpinfo.php
+cp /var/www/provision/html/phpinfo.php /var/www/html/
+
+sudo chmod -R 755 /var/www/html/*
 
 a2enmod php$1
 service apache2 restart
+
+
+
+apt-get -qy install php-pear
+apt-get -qy install libapache2-mod-php$1
