@@ -22,11 +22,23 @@ All files you are directed to create are in...
 ```
 
 01. [Create Bare VM](./docs/01_Create_Bare_VM.md)
-02. [Upgrade & Install Utilities](./docs/02_Upgrade_Install_Utilities.md)
-03. [Install Apache](./docs/03_Install_Apache.md)
-04. [Install PHP (& Composer)](./docs/04_Install_PHP.md)
-05. [Install MySQL](./docs/05_Install_MySQL.md)
-06. [Install phpMyAdmin](./docs/06_Install_phpMyAdmin.md)
+02. [Upgrade](./docs/02_Upgrade.md)
+03. [Install Utilities](./docs/03_Install_Utilities.md)
+04. [Install Apache](./docs/04_Install_Apache.md)
+05. [Install PHP](./docs/05_Install_PHP.md)
+06. [Install Composer](./docs/06_Install_Composer.md)
+07. [Install MySQL](./docs/07_Install_MySQL.md)
+08. [Install phpMyAdmin](./docs/08_Install_phpMyAdmin.md)
+
+<!--
+09. [Page Title](./docs/09_Page_Title.md)
+10. [Page Title](./docs/10_Page_Title.md)
+11. [Page Title](./docs/11_Page_Title.md)
+12. [Page Title](./docs/12_Page_Title.md)
+13. [Page Title](./docs/13_Page_Title.md)
+14. [Page Title](./docs/14_Page_Title.md)
+15. [Page Title](./docs/15_Page_Title.md)
+-->
 
 * [Snapshots](./docs/Snapshots.md)
 * [Vagrant Commands](./docs/Commands.md)
