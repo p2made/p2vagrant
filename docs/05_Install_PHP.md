@@ -139,6 +139,14 @@ Or (if the VM is running)...
 vagrant provision
 ```
 
+`phpinfo.php` will be copied to `HOST_FOLDER/html/`.
+
+### Visit:
+
+* [http://192.168.42.100/phpinfo.php](http://192.168.42.100/phpinfo.php)
+
+... which should successfully display the PHP info page.
+
 ### All good?
 
 Save the moment with a [Snapshot](./Snapshots.md).

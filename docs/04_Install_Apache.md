@@ -138,6 +138,8 @@ Or (if the VM is running)...
 vagrant provision
 ```
 
+`index.htm` will be copied to `HOST_FOLDER/html/`.
+
 ### Visit:
 
 * [http://192.168.42.100/](http://192.168.42.100/)
