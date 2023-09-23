@@ -14,7 +14,7 @@ echo ""
 export DEBIAN_FRONTEND=noninteractive
 
 # PMA_VERSION         = "5.2.1"               | $1
-# PMA_PASSWORD        = "PM4Passw0rd"         | $2
+# DB_PASSWORD         = "PM4Passw0rd"         | $2
 # REMOTE_FOLDER       = "/var/www"            | $3
 
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:phpmyadmin/ppa
