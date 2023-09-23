@@ -43,8 +43,6 @@ service apache2 restart
 
 ### Create `provision/vhosts/local.conf`:
 
-some_text
-
 ```
 <VirtualHost *:80>
 	ServerAdmin admin@example.com
@@ -64,8 +62,6 @@ some_text
 ```
 
 ### Create `provision/html/index.htm`:
-
-some_text
 
 ```
 <html>
