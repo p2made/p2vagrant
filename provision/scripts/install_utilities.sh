@@ -11,6 +11,8 @@ echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo ""
 
+export DEBIAN_FRONTEND=noninteractive
+
 # TIMEZONE            = "Australia/Brisbane"  | $1
 
 timedatectl set-timezone $1 --no-ask-password
