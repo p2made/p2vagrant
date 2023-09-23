@@ -133,7 +133,7 @@ cp ./Vagrantfiles/Vagrantfile_05 ./Vagrantfile
 vagrant reload --provision
 ```
 
-Or (if the VM is running)...
+Or (*only if the VM is running*)...
 
 ```
 vagrant provision
