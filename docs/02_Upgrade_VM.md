@@ -2,8 +2,6 @@
 
 --
 
-Now that there's a bare Ubuntu VM…
-
 ### Create `upgrade_vm.sh`
 
 ```
