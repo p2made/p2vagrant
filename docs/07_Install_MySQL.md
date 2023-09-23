@@ -59,6 +59,19 @@ if (!$conn) {
 echo "Connected!";
 ```
 
+```
+<?php
+$conn = mysqli_connect("localhost", "db_user", "db_password", "db");
+
+if (!$conn) {
+	die("Error: " . mysqli_connect_error());
+}
+
+echo "Connected!";
+```
+
+Replace `db_user `, `db_password `, & `db `, with values from `Vagrantfile`.
+
 ### Update `Vagrantfile`
 
 ```
@@ -146,6 +159,12 @@ vagrant provision
 
 `db.php` will be copied to `HOST_FOLDER/html/`.
 
+### Visit:
+
+* [http://192.168.42.100/db.php](http://192.168.42.100/db.php)
+
+... if all went well you should be seeing the "*Connected!*" message.
+
 ### All good?
 
 Save the moment with a [Snapshot](./Snapshots.md).
@@ -156,86 +175,3 @@ Save the moment with a [Snapshot](./Snapshots.md).
 | [**Back to Steps**](../README.md)
 | [08 Install phpMyAdmin](./08_Install_phpMyAdmin.md)
 |
-
-
-
-
-
-
-
-```
-#!/bin/sh
-
-# 05 Install MySQL 8.1
-
-#MYSQL_VERSION       = $1 = 8.1
-#RT_PASSWORD         = $2 = "Passw0rd0ne"
-#DB_USERNAME         = $3 = "fredspotty"
-#DB_PASSWORD         = $4 = "Passw0rd"
-#DB_NAME             = $5 = "example_db"
-#DB_NAME_TEST        = $6 = "example_db_test"
-
-apt-get update
-
-apt-get -qy install mysql-server
-
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $2"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $2"
-
-# Create the database and grant privileges
-CMD="sudo mysql -uroot -p$2 -e"
-
-$CMD "CREATE USER '$3'@'%' IDENTIFIED BY '$4';"
-$CMD "CREATE DATABASE IF NOT EXISTS $5"
-$CMD "GRANT ALL PRIVILEGES ON $5.* TO '$3'@'%'"
-$CMD "CREATE DATABASE IF NOT EXISTS $6"
-$CMD "GRANT ALL PRIVILEGES ON $6.* TO '$3'@'%'"
-
-sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
-#grep -q "^sql_mode" /etc/mysql/mysql.conf.d/mysqld.cnf || echo "sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >> /etc/mysql/mysql.conf.d/mysqld.cnf
-
-service mysql restart
-service apache2 restart
-#systemctl restart apache2
-```
-
-### Run:
-
-```
-vagrant provision
-```
-
-or
-
-```
-vagrant reload --provision
-```
-
-### Create `HOST_FOLDER/html/db.php`:
-
-```
-<?php
-$conn = mysqli_connect("localhost", "db_user", "db_password", "db");
-
-if (!$conn) {
-	die("Error: " . mysqli_connect_error());
-}
-
-echo "Connected!";
-```
-
-Or copy this file...
-
-```
-cp ./provision/html/db.html ./shared/html/db.html
-```
-
-Peplace `localhost`, `db_user`, `db_password`, `db` with the values used in `Vagrantfile`.
-```
-
-### Visit:
-
-* [http://192.168.42.100/db.php](http://192.168.42.100/db.php)
-
-... if all went well you should be seeing the "*Connected!*" message.
-
