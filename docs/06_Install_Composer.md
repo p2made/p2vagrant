@@ -1,32 +1,36 @@
-# 02 Upgrade VM
+# 06 Install Composer
 
 --
 
-### Create `upgrade_vm.sh`
+### Create `provision/scripts/install_composer.sh`:
 
 ```
 #!/bin/sh
 
-# 02 Upgrade VM
+# 06 Install Composer
 
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "#####                                                       #####"
-echo "#####       Upgrading VM                                    #####"
-echo "#####                                                       #####"
-echo "#####       should always run first                         #####"
+echo "#####       Installing Composer                             #####"
 echo "#####                                                       #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo ""
 
-apt-get -q update
-apt-get -qy upgrade
-apt-get autoremove
-cat /etc/os-release
-```
+export DEBIAN_FRONTEND=noninteractive
 
-The `echo` lines at the top on the script (& others throughout) are to show in Terminal output which script is running. They can be removed when you're comfortable without them.
+cd /tmp
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+php composer-setup.php
+rm composer-setup.php
+
+sudo mv composer.phar /usr/local/bin/composer
+composer self-update
+
+composer
+```
 
 ### Update `Vagrantfile`
 
@@ -34,7 +38,7 @@ The `echo` lines at the top on the script (& others throughout) are to show in T
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 02 Upgrade VM
+# 06 Install Composer
 
 # Machine Variables
 MEMORY              = 4096
@@ -46,6 +50,9 @@ VM_IP               = "192.168.42.100"
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
+
+# Software Versions
+PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 
@@ -66,21 +73,31 @@ Vagrant.configure("2") do |config|
 	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: 'always'
 
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
+
 end
 ```
 
 Or copy this file...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
+cp ./Vagrantfiles/Vagrantfile_06 ./Vagrantfile
 ```
 
-If you don't want `upgrade_vm.sh`	 to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
-
-### Launch the VM
+### Provision the VM
 
 ```
-vagrant up
+vagrant reload --provision
+```
+
+Or (*only if the VM is running*)...
+
+```
+vagrant provision
 ```
 
 ### All good?
@@ -89,7 +106,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [01 Create Bare VM](./01_Create_Bare_VM.md)
+| [05 Install PHP](./05_Install_PHP.md)
 | [**Back to Steps**](../README.md)
-| [03 Install Utilities](./03_Install_Utilities.md)
+| [07 Install MySQL](./07_Install_MySQL.md)
 |
