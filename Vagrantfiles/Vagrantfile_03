@@ -33,4 +33,7 @@ Vagrant.configure("2") do |config|
 	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/_vm_start.sh", run: 'always'
 
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+
 end
