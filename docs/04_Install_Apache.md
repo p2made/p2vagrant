@@ -41,6 +41,28 @@ a2enmod ssl
 service apache2 restart
 ```
 
+### Create `provision/vhosts/local.conf`:
+
+some_text
+
+```
+<VirtualHost *:80>
+	ServerAdmin admin@example.com
+	DocumentRoot /var/www/html
+	DirectoryIndex index.html index.php
+
+	<Directory /var/www/html>
+		# Allow .htaccess rewrite rules
+		Options Indexes FollowSymLinks
+		AllowOverride All
+		Require all granted
+	</Directory>
+
+	ErrorLog "/var/log/apache2/localhost-error_log"
+	CustomLog "/var/log/apache2/localhost-access_log" common
+</VirtualHost>
+```
+
 ### Create `provision/html/index.htm`:
 
 some_text
