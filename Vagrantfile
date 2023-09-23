@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 04 Install Apache
+# 05 Install PHP
 
 # Machine Variables
 MEMORY              = 4096
