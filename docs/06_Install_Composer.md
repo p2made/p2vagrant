@@ -2,20 +2,34 @@
 
 --
 
-### section_title
-
-some_text
+### Create `provision/scripts/install_composer.sh`:
 
 ```
-some_code
-```
+#!/bin/sh
 
-### section_title
+# 06 Install Composer
 
-some_text
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo "#####                                                       #####"
+echo "#####       Installing Composer                             #####"
+echo "#####                                                       #####"
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo ""
 
-```
-some_code
+export DEBIAN_FRONTEND=noninteractive
+
+cd /tmp
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+php composer-setup.php
+rm composer-setup.php
+
+sudo mv composer.phar /usr/local/bin/composer
+composer self-update
+
+composer
 ```
 
 ### Update `Vagrantfile`
