@@ -168,7 +168,6 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 04 Install Apache -->
 | [03 Install Utilities](./03_Install_Utilities.md)
 | [**Back to Steps**](../README.md)
 | [05 Install PHP](./05_Install_PHP.md)
