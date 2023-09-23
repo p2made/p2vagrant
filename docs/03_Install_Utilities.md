@@ -1,34 +1,52 @@
-# 02 Upgrade VM
+# 03 Install Utilities
 
 --
 
-Now that there's a bare Ubuntu VM…
-
-### Create `upgrade_vm.sh`
+### Create `install_utilities.sh`
 
 ```
 #!/bin/sh
 
-# 02 Upgrade VM
+# 03 Install Utilities
 
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "#####                                                       #####"
-echo "#####       Upgrading VM                                    #####"
-echo "#####                                                       #####"
-echo "#####       should always run first                         #####"
+echo "#####       Installing Utilities                            #####"
 echo "#####                                                       #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo ""
 
-apt-get -q update
-apt-get -qy upgrade
-apt-get autoremove
-cat /etc/os-release
-```
+# TIMEZONE            = "Australia/Brisbane"  | $1
 
-The `echo` lines at the top on the script (& others throughout) are to show in Terminal output which script is running. They can be removed when you're comfortable without them.
+timedatectl set-timezone $1 --no-ask-password
+
+LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
+
+apt-get -qy install apt-transport-https
+apt-get -qy install bzip2
+apt-get -qy install ca-certificates
+apt-get -qy install curl
+apt-get -qy install expect
+apt-get -qy install file
+apt-get -qy install fish
+apt-get -qy install git
+apt-get -qy install gnupg2
+apt-get -qy install gzip
+apt-get -qy install libapr1
+apt-get -qy install libaprutil1
+apt-get -qy install libaprutil1-dbd-sqlite3
+apt-get -qy install libaprutil1-ldap
+apt-get -qy install liblua5.3-0
+apt-get -qy install lsb-release
+apt-get -qy install mime-support
+apt-get -qy install software-properties-common
+apt-get -qy install unzip
+
+chsh -s /usr/bin/fish
+echo 'cd /var/www' >> /home/vagrant/.profile
+```
 
 ### Update `Vagrantfile`
 
@@ -36,7 +54,7 @@ The `echo` lines at the top on the script (& others throughout) are to show in T
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 02 Upgrade VM
+# 03 Install Utilities
 
 # Machine Variables
 MEMORY              = 4096
@@ -68,16 +86,17 @@ Vagrant.configure("2") do |config|
 	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: 'always'
 
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+
 end
 ```
 
 Or copy this file...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
+cp ./Vagrantfiles/Vagrantfile_03 ./Vagrantfile
 ```
-
-If you don't want `upgrade_vm.sh`	 to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
 
 ### Launch the VM
 
@@ -91,8 +110,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 02 Upgrade VM -->
-| [01 Create Bare VM](./01_Create_Bare_VM.md)
+<!-- 03 Install Utilities -->
+| [02 Upgrade VM](./02_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
-| [03 Install Utilities](./03_Install_Utilities.md)
+| [04 Install Apache](./04_Install_Apache.md)
 |
