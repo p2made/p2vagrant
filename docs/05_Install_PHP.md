@@ -153,7 +153,6 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 05 Install PHP -->
 | [04 Install Apache](./04_Install_Apache.md)
 | [**Back to Steps**](../README.md)
 | [06 Install Composer](./06_Install_Composer.md)
