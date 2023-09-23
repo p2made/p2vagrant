@@ -43,8 +43,6 @@ service apache2 restart
 
 ### Create `provision/vhosts/local.conf`:
 
-some_text
-
 ```
 <VirtualHost *:80>
 	ServerAdmin admin@example.com
@@ -64,8 +62,6 @@ some_text
 ```
 
 ### Create `provision/html/index.htm`:
-
-some_text
 
 ```
 <html>
@@ -142,6 +138,8 @@ Or (if the VM is running)...
 vagrant provision
 ```
 
+`index.htm` will be copied to `HOST_FOLDER/html/`.
+
 ### Visit:
 
 * [http://192.168.42.100/](http://192.168.42.100/)
@@ -170,7 +168,6 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 04 Install Apache -->
 | [03 Install Utilities](./03_Install_Utilities.md)
 | [**Back to Steps**](../README.md)
 | [05 Install PHP](./05_Install_PHP.md)

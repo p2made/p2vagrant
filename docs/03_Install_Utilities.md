@@ -48,6 +48,8 @@ chsh -s /usr/bin/fish
 echo 'cd /var/www' >> /home/vagrant/.profile
 ```
 
+I put each install item on its own line so that the failure of any one does't risk crashing the whole.
+
 ### Update `Vagrantfile`
 
 ```
@@ -110,7 +112,6 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 03 Install Utilities -->
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
 | [04 Install Apache](./04_Install_Apache.md)
