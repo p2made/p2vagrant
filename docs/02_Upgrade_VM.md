@@ -77,6 +77,8 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
 ```
 
+If you don't want `upgrade_vm.sh`	 to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
+
 ### Launch the VM
 
 ```
