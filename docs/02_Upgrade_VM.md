@@ -4,14 +4,24 @@
 
 Now that there's a bare Ubuntu VM…
 
-### Create `_vm_start.sh`
+### Create `upgrade_vm.sh`
 
 ```
 #!/bin/sh
 
 # 02 Upgrade VM
 
-echo "Update & upgrade..."
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo "#####                                                       #####"
+echo "#####       Upgrading VM                                    #####"
+echo "#####                                                       #####"
+echo "#####       should always run first                         #####"
+echo "#####                                                       #####"
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+echo ""
+
 apt-get -q update
 apt-get -qy upgrade
 apt-get autoremove
@@ -54,7 +64,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
-	config.vm.provision :shell, path: "provision/scripts/_vm_start.sh", run: 'always'
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: 'always'
 
 end
 ```
