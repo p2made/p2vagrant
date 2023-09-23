@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 02 Upgrade
+# 02 Upgrade VM
 
 # Machine Variables
 MEMORY              = 4096
@@ -29,5 +29,8 @@ Vagrant.configure("2") do |config|
 
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/_vm_start.sh", run: 'always'
 
 end
