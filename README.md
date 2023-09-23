@@ -31,7 +31,7 @@ All files you are directed to create are in...
 08. [Install phpMyAdmin](./docs/08_Install_phpMyAdmin.md)
 
 <!--
-09. [Page Title](./docs/09_Page_Title.md)
+09. [Page Title](./docs/09_Install_Yarn.md)
 10. [Page Title](./docs/10_Page_Title.md)
 11. [Page Title](./docs/11_Page_Title.md)
 12. [Page Title](./docs/12_Page_Title.md)

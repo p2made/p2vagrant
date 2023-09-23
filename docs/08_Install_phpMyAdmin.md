@@ -149,5 +149,5 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 | [07 Install MySQL](./07_Install_MySQL.md)
 | [**Back to Steps**](../README.md)
-| [09 Page Title](./09_Page_Title.md)
+| [09 Install Yarn](./09_Install_Yarn.md)
 |
