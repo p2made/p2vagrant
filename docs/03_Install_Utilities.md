@@ -48,6 +48,8 @@ chsh -s /usr/bin/fish
 echo 'cd /var/www' >> /home/vagrant/.profile
 ```
 
+I put each install item on its own line so that the failure of any one does't risk crashing the whole.
+
 ### Update `Vagrantfile`
 
 ```
