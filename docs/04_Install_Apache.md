@@ -41,12 +41,20 @@ a2enmod ssl
 service apache2 restart
 ```
 
-### section_title
+### Create `provision/html/index.htm`:
 
 some_text
 
 ```
-some_code
+<html>
+<head>
+	<title>Awesome Test Project</title>
+</head>
+<body>
+	<h1>Shaka Bom!</h1>
+	<p>How cool is this?</p>
+</body>
+</html>
 ```
 
 ### Update `Vagrantfile`
