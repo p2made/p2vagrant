@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 06 Install Composer
+# 07 Install MySQL
 
 # Machine Variables
 MEMORY              = 4096
@@ -16,6 +16,15 @@ REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
 PHP_VERSION         = "8.2"
+MYSQL_VERSION       = "8.1"
+PMA_VERSION         = "5.2.1"
+
+# Database Variables
+RT_PASSWORD         = "Passw0rd0ne"
+DB_USERNAME         = "fredspotty"
+DB_PASSWORD         = "Passw0rd"
+DB_NAME             = "example_db"
+DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
@@ -40,6 +49,6 @@ Vagrant.configure("2") do |config|
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
