@@ -28,6 +28,8 @@ apt-get autoremove
 cat /etc/os-release
 ```
 
+The `echo` lines at the top on the script (& others throughout) are to show in Terminal output which script is running. They can be removed when you're comfortable without them.
+
 ### Update `Vagrantfile`
 
 ```
