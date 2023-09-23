@@ -112,7 +112,6 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 03 Install Utilities -->
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
 | [04 Install Apache](./04_Install_Apache.md)
