@@ -30,7 +30,7 @@ cat /etc/os-release
 
 The `echo` lines at the top on the script (& others throughout) are to show in Terminal output which script is running. They can be removed when you're comfortable without them.
 
-### Update `Vagrantfile`
+### Update `Vagrantfile`:
 
 ```
 # -*- mode: ruby -*-
@@ -79,7 +79,7 @@ cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
 
 If you don't want `upgrade_vm.sh` to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
 
-### Provision the VM
+### Provision the VM:
 
 ```
 vagrant reload --provision

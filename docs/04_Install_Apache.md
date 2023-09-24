@@ -77,7 +77,7 @@ The page is a simple `index.html` located within your VM in the `/var/www/html` 
 </VirtualHost>
 ```
 
-### Update `Vagrantfile`
+### Update `Vagrantfile`:
 
 ```
 # -*- mode: ruby -*-
@@ -128,7 +128,7 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_04 ./Vagrantfile
 ```
 
-### Provision the VM
+### Provision the VM:
 
 ```
 vagrant reload --provision
