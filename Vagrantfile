@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 04 Install Apache
+# 05 Install PHP
 
 # Machine Variables
 MEMORY              = 4096
@@ -35,6 +35,7 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
-	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
 
 end
