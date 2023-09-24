@@ -1,54 +1,30 @@
-# 03 Install Utilities
+# 09 Install Yarn
 
 --
 
-### Create `install_utilities.sh`
+### Create `provision/scripts/install_yarn.sh`:
 
 ```
 #!/bin/sh
 
-# 03 Install Utilities
+# 09 Install Yarn
 
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "#####                                                       #####"
-echo "#####       Installing Utilities                            #####"
+echo "#####       Installing Yarn                                 #####"
 echo "#####                                                       #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo ""
 
-# TIMEZONE            = "Australia/Brisbane"  | $1
+export DEBIAN_FRONTEND=noninteractive
 
-timedatectl set-timezone $1 --no-ask-password
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
-
-apt-get -qy install apt-transport-https
-apt-get -qy install bzip2
-apt-get -qy install ca-certificates
-apt-get -qy install curl
-apt-get -qy install expect
-apt-get -qy install file
-apt-get -qy install fish
-apt-get -qy install git
-apt-get -qy install gnupg2
-apt-get -qy install gzip
-apt-get -qy install libapr1
-apt-get -qy install libaprutil1
-apt-get -qy install libaprutil1-dbd-sqlite3
-apt-get -qy install libaprutil1-ldap
-apt-get -qy install liblua5.3-0
-apt-get -qy install lsb-release
-apt-get -qy install mime-support
-apt-get -qy install software-properties-common
-apt-get -qy install unzip
-
-chsh -s /usr/bin/fish
-grep -qxF 'cd /var/www' /home/vagrant/.profile || echo 'cd /var/www' >> /home/vagrant/.profile
+apt-get update && sudo apt-get -qy install yarn
 ```
-
-I put each install item on its own line so that the failure of any one does't risk crashing the whole.
 
 ### Update `Vagrantfile`
 
@@ -56,7 +32,7 @@ I put each install item on its own line so that the failure of any one does't ri
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 03 Install Utilities
+# 09 Install Yarn
 
 # Machine Variables
 MEMORY              = 4096
@@ -68,6 +44,17 @@ VM_IP               = "192.168.42.100"
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
+
+# Software Versions
+PHP_VERSION         = "8.2"
+MYSQL_VERSION       = "8.1"
+PMA_VERSION         = "5.2.1"
+
+# Database Variables
+DB_USERNAME         = "fredspotty"
+DB_PASSWORD         = "Passw0rd"
+DB_NAME             = "example_db"
+DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
@@ -90,6 +77,11 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/install_phpmyadmin.sh", :args => [PMA_VERSION, DB_PASSWORD, REMOTE_FOLDER]
+	config.vm.provision :shell, path: "provision/scripts/install_yarn.sh"
 
 end
 ```
@@ -97,13 +89,19 @@ end
 Or copy this file...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_03 ./Vagrantfile
+cp ./Vagrantfiles/Vagrantfile_09 ./Vagrantfile
 ```
 
-### Launch the VM
+### Provision the VM
 
 ```
-vagrant up
+vagrant reload --provision
+```
+
+Or (*only if the VM is running*)...
+
+```
+vagrant provision
 ```
 
 ### All good?
@@ -112,7 +110,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [02 Upgrade VM](./02_Upgrade_VM.md)
+| [08 Install phpMyAdmin](./08_Install_phpMyAdmin.md)
 | [**Back to Steps**](../README.md)
-| [04 Install Apache](./04_Install_Apache.md)
+| [10 Page Title](./10_Page_Title.md)
 |

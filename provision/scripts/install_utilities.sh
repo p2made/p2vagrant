@@ -40,4 +40,4 @@ apt-get -qy install software-properties-common
 apt-get -qy install unzip
 
 chsh -s /usr/bin/fish
-echo 'cd /var/www' >> /home/vagrant/.profile
+grep -qxF 'cd /var/www' /home/vagrant/.profile || echo 'cd /var/www' >> /home/vagrant/.profile
