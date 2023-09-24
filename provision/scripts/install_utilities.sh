@@ -5,7 +5,7 @@
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "#####                                                       #####"
-echo "#####       Installing __item__                             #####"
+echo "#####       Installing Utilities                            #####"
 echo "#####                                                       #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
@@ -16,6 +16,9 @@ export DEBIAN_FRONTEND=noninteractive
 # TIMEZONE            = "Australia/Brisbane"  | $1
 
 timedatectl set-timezone $1 --no-ask-password
+
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
 
@@ -38,6 +41,7 @@ apt-get -qy install lsb-release
 apt-get -qy install mime-support
 apt-get -qy install software-properties-common
 apt-get -qy install unzip
+apt-get -qy install yarn
 
 chsh -s /usr/bin/fish
 grep -qxF 'cd /var/www' /home/vagrant/.profile || echo 'cd /var/www' >> /home/vagrant/.profile
