@@ -35,14 +35,6 @@ brew install --cask vagrant-manager
 
 You might find it useful 🙃
 
-### section_title
-
-some_text
-
-```
-some_code
-```
-
 ### Install Vagrant Plugins
 
 ```
