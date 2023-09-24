@@ -5,7 +5,9 @@
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "#####                                                       #####"
-echo "#####       Installing __item__                             #####"
+echo "#####       Upgrading VM                                    #####"
+echo "#####                                                       #####"
+echo "#####       should always run first                         #####"
 echo "#####                                                       #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
@@ -13,3 +15,7 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
+apt-get -q update
+apt-get -qy upgrade
+apt-get autoremove
+cat /etc/os-release
