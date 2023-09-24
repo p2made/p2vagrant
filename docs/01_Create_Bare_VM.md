@@ -114,7 +114,7 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_01 ./Vagrantfile
 ```
 
-### Launch the VM:
+### Launch the VM
 
 ```
 vagrant up

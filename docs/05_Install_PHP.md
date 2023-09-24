@@ -2,7 +2,7 @@
 
 --
 
-### Create `provision/scripts/install_php.sh`:
+### Create `provision/scripts/install_php.sh`
 
 ```
 #!/bin/sh
@@ -65,14 +65,14 @@ a2enmod php$1
 service apache2 restart
 ```
 
-### Create `provision/html/phpinfo.php`:
+### Create `provision/html/phpinfo.php`
 
 ```
 <?php
 phpinfo();
 ```
 
-### Update `Vagrantfile`:
+### Update `Vagrantfile`
 
 ```
 # -*- mode: ruby -*-
@@ -124,7 +124,7 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_05 ./Vagrantfile
 ```
 
-### Provision the VM:
+### Provision the VM
 
 ```
 vagrant reload --provision
@@ -136,7 +136,7 @@ Or (*only if the VM is running*)...
 vagrant provision
 ```
 
-### Visit:
+### Visit
 
 * [http://192.168.42.100/phpinfo.php](http://192.168.42.100/phpinfo.php)
 

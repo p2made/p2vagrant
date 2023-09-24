@@ -2,7 +2,7 @@
 
 --
 
-### Create `provision/scripts/install_apache.sh`:
+### Create `provision/scripts/install_apache.sh`
 
 ```
 #!/bin/sh
@@ -41,7 +41,7 @@ a2enmod ssl
 service apache2 restart
 ```
 
-### Create `provision/html/index.htm`:
+### Create `provision/html/index.htm`
 
 ```
 <html>
@@ -57,7 +57,7 @@ service apache2 restart
 
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
-### Create `provision/vhosts/local.conf`:
+### Create `provision/vhosts/local.conf`
 
 ```
 <VirtualHost *:80>
@@ -77,7 +77,7 @@ The page is a simple `index.html` located within your VM in the `/var/www/html` 
 </VirtualHost>
 ```
 
-### Update `Vagrantfile`:
+### Update `Vagrantfile`
 
 ```
 # -*- mode: ruby -*-
@@ -128,7 +128,7 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_04 ./Vagrantfile
 ```
 
-### Provision the VM:
+### Provision the VM
 
 ```
 vagrant reload --provision
@@ -140,7 +140,7 @@ Or (*only if the VM is running*)...
 vagrant provision
 ```
 
-### Visit:
+### Visit
 
 * [http://192.168.42.100/](http://192.168.42.100/)
 
