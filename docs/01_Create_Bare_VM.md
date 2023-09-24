@@ -1,5 +1,7 @@
 # 01 Create Bare VM
 
+--
+
 Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider.
 
 The instructions given assume the use of [Homebrew](https://brew.sh). If you don't have it installed, run...
@@ -68,7 +70,7 @@ started with an older version of Vagrant.
 
 * `v.gui` needs to be set to `true`.
 * `v.memory` & `v.cpus` might as well be set now.
-* `config.vm.network` might as well be set now.
+* Same for `config.vm.network`.
 
 ```
 # -*- mode: ruby -*-
@@ -112,34 +114,6 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_01 ./Vagrantfile
 ```
 
-### Provision the VM
-
-```
-vagrant reload --provision
-```
-
-Or (*only if the VM is running*)...
-
-```
-vagrant provision
-```
-
-### All good?
-
-Save the moment with a [Snapshot](./Snapshots.md).
-
---
-
-| -- -- -- --
-| [**Back to Steps**](../README.md)
-| [02 Upgrade VM](./02_Upgrade_VM.md)
-|
-Or copy this file...
-
-```
-cp ./Vagrantfiles/Vagrantfile_01 ./Vagrantfile
-```
-
 ### Launch the VM
 
 ```
@@ -152,7 +126,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| -- -- -- --
+| [00 blank](./00_blank.md)
 | [**Back to Steps**](../README.md)
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 |
