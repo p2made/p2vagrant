@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 07 Install MySQL
+# 08 Install phpMyAdmin
 
 # Machine Variables
 MEMORY              = 4096
@@ -17,6 +17,7 @@ REMOTE_FOLDER       = "/var/www"
 # Software Versions
 PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
+PMA_VERSION         = "5.2.1"
 
 # Database Variables
 DB_USERNAME         = "fredspotty"
@@ -49,5 +50,6 @@ Vagrant.configure("2") do |config|
 #	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
 #	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/install_phpmyadmin.sh", :args => [PMA_VERSION, DB_PASSWORD, REMOTE_FOLDER]
 
 end
