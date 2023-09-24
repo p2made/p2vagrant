@@ -74,6 +74,9 @@ service apache2 restart
 </body>
 </html>
 ```
+```
+
+The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
 ### Update `Vagrantfile`
 
@@ -143,22 +146,6 @@ vagrant provision
 * [http://192.168.42.100/](http://192.168.42.100/)
 
 ... you should see the Apache default page of your VM.
-
-**Optionally** edit `HOST_FOLDER/html/index.html`:
-
-```
-<html>
-<head>
-	<title>Awesome Test Project</title>
-</head>
-<body>
-	<h1>Shaka Bom!</h1>
-	<p>How cool is this?</p>
-</body>
-</html>
-```
-
-The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
 ### All good?
 
