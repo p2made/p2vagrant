@@ -107,8 +107,3 @@ Save the moment with a [Snapshot](./Snapshots.md).
 | [**Back to Steps**](../README.md)
 | [07 Install MySQL](./07_Install_MySQL.md)
 |
-
-
-
-
-

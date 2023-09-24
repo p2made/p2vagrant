@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vi: set ft=ruby
 
-# 05 Install PHP
+# 06 Install Composer
 
 # Machine Variables
 MEMORY              = 4096
@@ -13,6 +13,9 @@ VM_IP               = "192.168.42.100"
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
+
+# Software Versions
+PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 
@@ -36,6 +39,7 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
-	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
 
 end
