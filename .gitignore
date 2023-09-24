@@ -11,4 +11,4 @@
 # z_gitignore folder
 /shared/html/phpmyadmin
 /z_gitignore
-/_provision
+/z_provision
