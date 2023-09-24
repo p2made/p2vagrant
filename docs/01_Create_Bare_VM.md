@@ -126,7 +126,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [00 blank](./00_blank.md)
+| -- -- -- --
 | [**Back to Steps**](../README.md)
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 |
