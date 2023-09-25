@@ -19,17 +19,19 @@ export DEBIAN_FRONTEND=noninteractive
 
 echo "LC_ALL=C.UTF-8 apt-add-repository -yu ppa:phpmyadmin/ppa"
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:phpmyadmin/ppa
+apt-get -qy install debconf-utils
 
 echo "debconf-set-selections <<< \"phpmyadmin phpmyadmin/dbconfig-install boolean true\""
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
 echo "debconf-set-selections <<< \"phpmyadmin phpmyadmin/app-password-confirm password $2\""
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $2"
 echo "debconf-set-selections <<< \"phpmyadmin phpmyadmin/mysql/admin-pass password $2\""
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $2"
 echo "debconf-set-selections <<< \"phpmyadmin phpmyadmin/mysql/app-pass password $2\""
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $2"
 echo "debconf-set-selections <<< \"phpmyadmin phpmyadmin/reconfigure-webserver multiselect none\""
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none"
+
+echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password $2" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/admin-pass password $2" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password $2" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
 
 echo "apt-get -qy install phpmyadmin"
 apt-get -qy install phpmyadmin
