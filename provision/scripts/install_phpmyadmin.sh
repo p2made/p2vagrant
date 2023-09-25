@@ -17,21 +17,16 @@ export DEBIAN_FRONTEND=noninteractive
 # DB_PASSWORD         = "PM4Passw0rd"         | $2
 # REMOTE_FOLDER       = "/var/www"            | $3
 
-DEBCONF_1 = "phpmyadmin phpmyadmin/dbconfig-install boolean true"
-DEBCONF_2 = "phpmyadmin phpmyadmin/app-password-confirm password $2"
-DEBCONF_3 = "phpmyadmin phpmyadmin/mysql/admin-pass password $2"
-DEBCONF_4 = "phpmyadmin phpmyadmin/mysql/app-pass password $2"
-DEBCONF_5 = "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none"
-
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:phpmyadmin/ppa
+
 #temp
 apt-get -qy install debconf-utils
 
-echo "$DEBCONF_1" | debconf-set-selections
-echo "$DEBCONF_2" | debconf-set-selections
-echo "$DEBCONF_3" | debconf-set-selections
-echo "$DEBCONF_4" | debconf-set-selections
-echo "$DEBCONF_5" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password $2" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/admin-pass password $2" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password $2" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
 
 apt-get -qy install phpmyadmin
 
