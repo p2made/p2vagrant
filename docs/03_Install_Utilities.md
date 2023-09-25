@@ -30,6 +30,7 @@ apt-get -qy install apt-transport-https
 apt-get -qy install bzip2
 apt-get -qy install ca-certificates
 apt-get -qy install curl
+apt-get -qy install debconf-utils
 apt-get -qy install expect
 apt-get -qy install file
 apt-get -qy install fish
