@@ -29,7 +29,7 @@ apt-get -qy install phpmyadmin
 
 rm -rf /usr/share/phpmyadmin
 
-cp -r $3/provision/html/phpMyAdmin $3/html/phpMyAdmin
+cp -R $3/provision/html/phpmyadmin $3/html/phpmyadmin
 
 sudo chmod -R 755 $3/html/phpmyadmin
 
