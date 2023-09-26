@@ -11,7 +11,7 @@ echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo ""
 
-export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND = noninteractive
 
 # PMA_VERSION         = "5.2.1"               | $1
 # DB_PASSWORD         = "PM4Passw0rd"         | $2
