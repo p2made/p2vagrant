@@ -2,7 +2,7 @@
 
 --
 
-### Create `install_utilities.sh`
+### Create `provision/scripts/install_utilities.sh`
 
 ```
 #!/bin/sh
@@ -18,6 +18,8 @@ echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo ""
 
+export DEBIAN_FRONTEND=noninteractive
+
 # TIMEZONE            = "Australia/Brisbane"  | $1
 
 timedatectl set-timezone $1 --no-ask-password
@@ -28,6 +30,7 @@ apt-get -qy install apt-transport-https
 apt-get -qy install bzip2
 apt-get -qy install ca-certificates
 apt-get -qy install curl
+apt-get -qy install debconf-utils
 apt-get -qy install expect
 apt-get -qy install file
 apt-get -qy install fish
@@ -85,9 +88,6 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
-	# Upgrade check...
-	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: 'always'
-
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 
@@ -100,10 +100,16 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_03 ./Vagrantfile
 ```
 
-### Launch the VM
+### Provision the VM
 
 ```
-vagrant up
+vagrant reload --provision
+```
+
+Or (*only if the VM is running*)...
+
+```
+vagrant provision
 ```
 
 ### All good?

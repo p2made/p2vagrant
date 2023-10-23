@@ -67,12 +67,12 @@ GPG public key, like so:
 # Getting our public key from the keyserver:
 gpg --fingerprint 7F52D5C61D1255C731362E826B97A1C2826404DA
 if [ $? -ne 0 ]; then
-    echo "\033[33mDownloading PGP Public Key...\033[0m"
+    echo -e "\033[33mDownloading PGP Public Key...\033[0m"
     gpg  --keyserver pgp.mit.edu --recv-keys 7F52D5C61D1255C731362E826B97A1C2826404DA
     # Security <security@paragonie.com>
     gpg --fingerprint 7F52D5C61D1255C731362E826B97A1C2826404DA
     if [ $? -ne 0 ]; then
-        echo "\033[31mCould not download PGP public key for verification\033[0m"
+        echo -e "\033[31mCould not download PGP public key for verification\033[0m"
         exit 1
     fi
 fi

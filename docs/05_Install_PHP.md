@@ -2,7 +2,7 @@
 
 --
 
-### Create `provision/scripts/install_php.sh`:
+### Create `provision/scripts/install_php.sh`
 
 ```
 #!/bin/sh
@@ -65,7 +65,7 @@ a2enmod php$1
 service apache2 restart
 ```
 
-### Create `provision/html/phpinfo.php`:
+### Create `provision/html/phpinfo.php`
 
 ```
 <?php
@@ -139,9 +139,7 @@ Or (*only if the VM is running*)...
 vagrant provision
 ```
 
-`phpinfo.php` will be copied to `HOST_FOLDER/html/`.
-
-### Visit:
+### Visit
 
 * [http://192.168.42.100/phpinfo.php](http://192.168.42.100/phpinfo.php)
 

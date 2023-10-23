@@ -26,7 +26,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 apt-get update && sudo apt-get -qy install yarn
 ```
 
-### Update `Vagrantfile`
+### Update `Vagrantfile`:
 
 ```
 # -*- mode: ruby -*-
@@ -92,7 +92,7 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_09 ./Vagrantfile
 ```
 
-### Provision the VM
+### Provision the VM:
 
 ```
 vagrant reload --provision

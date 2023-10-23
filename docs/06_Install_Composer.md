@@ -2,7 +2,7 @@
 
 --
 
-### Create `provision/scripts/install_composer.sh`:
+### Create `provision/scripts/install_composer.sh`
 
 ```
 #!/bin/sh
@@ -36,7 +36,7 @@ composer
 
 ```
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vi: set ft=ruby
 
 # 06 Install Composer
 
@@ -50,9 +50,6 @@ VM_IP               = "192.168.42.100"
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
-
-# Software Versions
-PHP_VERSION         = "8.2"
 
 Vagrant.configure("2") do |config|
 

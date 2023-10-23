@@ -2,7 +2,7 @@
 
 --
 
-### Create `provision/scripts/install_mysql.sh`:
+### Create `provision/scripts/install_mysql.sh`
 
 ```
 #!/bin/sh
@@ -47,7 +47,7 @@ sudo chmod -R 755 /var/www/html/*
 dpkg -l | grep "apache2\|mysql-server-8.1\|php8.2"
 ```
 
-### Create `provision/html/db.php`:
+### Create `provision/html/db.php`
 
 ```
 <?php
@@ -71,7 +71,7 @@ Replace `db_user `, `db_password `, & `db `, with values from `Vagrantfile`.
 
 ```
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vi: set ft=ruby
 
 # 07 Install MySQL
 
@@ -89,7 +89,6 @@ REMOTE_FOLDER       = "/var/www"
 # Software Versions
 PHP_VERSION         = "8.2"
 MYSQL_VERSION       = "8.1"
-PMA_VERSION         = "5.2.1"
 
 # Database Variables
 DB_USERNAME         = "fredspotty"
@@ -120,6 +119,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end

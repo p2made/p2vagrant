@@ -2,7 +2,7 @@
 
 --
 
-### Create `upgrade_vm.sh`
+### Create `provision/scripts/upgrade_vm.sh`
 
 ```
 #!/bin/sh
@@ -19,6 +19,8 @@ echo "#####                                                       #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo ""
+
+export DEBIAN_FRONTEND=noninteractive
 
 apt-get -q update
 apt-get -qy upgrade
@@ -75,12 +77,18 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
 ```
 
-If you don't want `upgrade_vm.sh`	 to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
+If you don't want `upgrade_vm.sh` to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
 
-### Launch the VM
+### Provision the VM
 
 ```
-vagrant up
+vagrant reload --provision
+```
+
+Or (*only if the VM is running*)...
+
+```
+vagrant provision
 ```
 
 ### All good?

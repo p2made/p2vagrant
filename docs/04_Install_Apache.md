@@ -2,7 +2,7 @@
 
 --
 
-### Create `provision/scripts/install_apache.sh`:
+### Create `provision/scripts/install_apache.sh`
 
 ```
 #!/bin/sh
@@ -41,7 +41,23 @@ a2enmod ssl
 service apache2 restart
 ```
 
-### Create `provision/vhosts/local.conf`:
+### Create `provision/html/index.htm`
+
+```
+<html>
+<head>
+	<title>Awesome Test Project</title>
+</head>
+<body>
+	<h1>Shaka Bom!</h1>
+	<p>How cool is this?</p>
+</body>
+</html>
+```
+
+The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
+
+### Create `provision/vhosts/local.conf`
 
 ```
 <VirtualHost *:80>
@@ -59,20 +75,6 @@ service apache2 restart
 	ErrorLog "/var/log/apache2/localhost-error_log"
 	CustomLog "/var/log/apache2/localhost-access_log" common
 </VirtualHost>
-```
-
-### Create `provision/html/index.htm`:
-
-```
-<html>
-<head>
-	<title>Awesome Test Project</title>
-</head>
-<body>
-	<h1>Shaka Bom!</h1>
-	<p>How cool is this?</p>
-</body>
-</html>
 ```
 
 ### Update `Vagrantfile`
@@ -138,29 +140,12 @@ Or (*only if the VM is running*)...
 vagrant provision
 ```
 
-`index.htm` will be copied to `HOST_FOLDER/html/`.
-
-### Visit:
+### Visit
 
 * [http://192.168.42.100/](http://192.168.42.100/)
 
 ... you should see the Apache default page of your VM.
 
-**Optionally** edit `HOST_FOLDER/html/index.html`:
-
-```
-<html>
-<head>
-	<title>Awesome Test Project</title>
-</head>
-<body>
-	<h1>Shaka Bom!</h1>
-	<p>How cool is this?</p>
-</body>
-</html>
-```
-
-The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
 
 ### All good?
 
