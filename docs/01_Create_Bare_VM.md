@@ -10,15 +10,14 @@ The instructions given assume the use of [Homebrew](https://brew.sh). If you don
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### Install the VMware Fusion 2023 Tech Preview
+### Install VMware Fusion
 
-* [This one](https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-TP2023) is the most recent as of [2023-07-13](https://blogs.vmware.com/teamfusion/2023/07/vmware-fusion-2023-tech-preview.html).
-* Installs `VMware Fusion Tech Preview` in your `Applications` folder.
-* Rename it to `VMware Fusion` (I don't know why that's necessary, but I read that it is, & it find that is).
+Go to the [VMware Fusion evaluation page](https://www.vmware.com/au/products/fusion/fusion-evaluation.html) & click [REGISTER FOR A PERSONAL USE LICENSE](https://www.vmware.com/go/getfusionplayer). There either log in, if you already have a VMware user account, or register. Once logged in, you automatically be redirected to the download page for the VMware universal installer.
+
 * Nothing needs to be set up in `VMware Fusion`.
-* VMware Fusion needs to be running when you run `vagrant up`, or any other Vagrant command that starts a VM.
+* It's best to have VMware Fusion running when you run `vagrant up`, or any other Vagrant command that starts a VM.
 * Technically VMware Fusion doesn't need to be running & will be lanched by vagrant when necessary. However…
-* VMware Fusion can take long enough to launch on my Mac that Vagrant times out.
+* If VMware Fusion takes too long to launch, Vagrant times out.
 
 ### Install Vagrant & VMware Utility
 
@@ -27,7 +26,7 @@ brew install --cask vagrant
 brew install --cask vagrant-vmware-utility
 ```
 
-#### Optionally install Vagrant Manager
+* Optionally install Vagrant Manager
 
 ```
 brew install --cask vagrant-manager
