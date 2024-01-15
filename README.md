@@ -29,9 +29,9 @@ All files you are directed to create are in...
 06. [Install Composer](./docs/06_Install_Composer.md)
 07. [Install MySQL](./docs/07_Install_MySQL.md)
 08. [Install phpMyAdmin](./docs/08_Install_phpMyAdmin.md)
+09. [Install Yarn](./docs/09_Install_Yarn.md)
 
 <!--
-09. [Page Title](./docs/09_Install_Yarn.md)
 10. [Page Title](./docs/10_Page_Title.md)
 11. [Page Title](./docs/11_Page_Title.md)
 12. [Page Title](./docs/12_Page_Title.md)
