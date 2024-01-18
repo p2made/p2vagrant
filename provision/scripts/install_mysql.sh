@@ -13,6 +13,9 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
+# Update package lists
+apt-get update
+
 # MYSQL_VERSION       = "8.1"                 | $1
 # DB_USERNAME         = "fredspotty"          | $2
 # DB_PASSWORD         = "Passw0rd"            | $3

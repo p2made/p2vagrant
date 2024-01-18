@@ -13,6 +13,9 @@ echo ""
 
 export DEBIAN_FRONTEND = noninteractive
 
+# Update package lists
+apt-get update
+
 # PMA_VERSION         = "5.2.1"               | $1
 # DB_PASSWORD         = "PM4Passw0rd"         | $2
 # REMOTE_FOLDER       = "/var/www"            | $3

@@ -13,6 +13,9 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
+# Update package lists
+apt-get update
+
 # TIMEZONE            = "Australia/Brisbane"  | $1
 
 timedatectl set-timezone $1 --no-ask-password

@@ -13,13 +13,11 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
-cd /tmp
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+# Update package lists
+apt-get update
 
-php composer-setup.php
-rm composer-setup.php
+# Install dependencies
+sudo apt-get install -y curl php-cli php-mbstring unzip
 
-sudo mv composer.phar /usr/local/bin/composer
-composer self-update
-
-composer
+# Download and install Composer
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer

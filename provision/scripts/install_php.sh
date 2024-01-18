@@ -13,6 +13,9 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
+# Update package lists
+apt-get update
+
 # PHP_VERSION         = "8.2"                 | $1
 
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
@@ -22,6 +25,7 @@ apt-get -qy install php$1
 apt-get -qy install php$1-bcmath
 apt-get -qy install php$1-bz2
 apt-get -qy install php$1-cgi
+apt-get -qy install php$1-cli
 apt-get -qy install php$1-curl
 apt-get -qy install php$1-dom
 apt-get -qy install php$1-fpm
@@ -56,3 +60,4 @@ sudo chmod -R 755 /var/www/html/*
 a2enmod php$1
 
 service apache2 restart
+
