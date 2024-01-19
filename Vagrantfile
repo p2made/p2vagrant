@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
-#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: 'always'
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: 'always'
 
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
 #	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
 #	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	config.vm.provision :shell, path: "provision/scripts/install_phpmyadmin.sh", :args => [PMA_VERSION, DB_PASSWORD, REMOTE_FOLDER]
+#	config.vm.provision :shell, path: "provision/scripts/install_phpmyadmin.sh", :args => [PMA_VERSION, DB_PASSWORD, REMOTE_FOLDER]
 #	config.vm.provision :shell, path: "provision/scripts/install_yarn.sh"
 
 end
