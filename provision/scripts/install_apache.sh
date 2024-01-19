@@ -5,7 +5,7 @@
 # Variables...
 # NONE!"
 
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
 echo ""
 echo "🚀 Installing Apache 🚀"
 echo "Script Name:  install_apache.sh"
@@ -64,7 +64,7 @@ enable_disable_modules_sites local.conf 000-default rewrite
 service apache2 restart
 
 echo ""
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
 echo ""
 echo "🏆 Apache Installed ‼️"
 echo ""

@@ -9,7 +9,7 @@
 # 4 - DB_NAME         = "example_db"
 # 5 - DB_NAME_TEST    = "example_db_test"
 
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
 echo ""
 echo "🚀 Installing MySQL 🚀"
 echo "Script Name:  install_mysql.sh"
@@ -45,7 +45,7 @@ sudo chmod -R 755 /var/www/html/*
 dpkg -l | grep "apache2\|mysql-server-8.1\|php8.2"
 
 echo ""
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
 echo ""
 echo "🏆 MySQL Installed ‼️"
 echo ""

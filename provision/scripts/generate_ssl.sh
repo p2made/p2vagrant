@@ -6,7 +6,7 @@
 # 1 - SSL_DIR         = "/var/www/provision/ssl"
 # 2 - CERT_NAME       = "p2_selfsigned"
 
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
 echo ""
 echo "🚀 Generating Self-Signed SSL Certificate 🚀"
 echo "Script Name:  generate_ssl.sh"
@@ -29,7 +29,7 @@ openssl req -x509 -nodes -days 999 -newkey rsa:2048 \
 openssl x509 -noout -text -in $1/$2.crt
 
 echo ""
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
 echo ""
 echo "🏆 Self-Signed SSL Certificate Generated ‼️"
 echo ""
