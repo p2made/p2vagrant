@@ -16,7 +16,7 @@ echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗
 echo ""
 echo "🚀 Installing Utilities 🚀"
 echo "Script Name:  install_utilities.sh"
-echo "Last Updated: 2023-01-19"
+echo "Last Updated: 2024-01-20"
 echo ""
 echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
 echo ""
@@ -90,6 +90,7 @@ echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 �
 # vi: set ft=ruby :
 
 # 03 Install Utilities
+# Updated: 2024-01-20
 
 # Machine Variables
 MEMORY              = 4096
@@ -117,6 +118,9 @@ Vagrant.configure("2") do |config|
 
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: 'always'
 
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]

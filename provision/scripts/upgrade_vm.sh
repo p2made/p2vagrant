@@ -9,7 +9,7 @@ echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗
 echo ""
 echo "🚀 Upgrading VM 🚀"
 echo "Script Name:  upgrade_vm.sh"
-echo "Last Updated: 2023-01-19"
+echo "Last Updated: 2024-01-20"
 echo "Should always run first "
 echo ""
 echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"

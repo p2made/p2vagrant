@@ -9,7 +9,7 @@ echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗
 echo ""
 echo "🚀 Installing Utilities 🚀"
 echo "Script Name:  install_utilities.sh"
-echo "Last Updated: 2023-01-19"
+echo "Last Updated: 2024-01-20"
 echo ""
 echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
 echo ""

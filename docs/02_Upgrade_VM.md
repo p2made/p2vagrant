@@ -16,7 +16,7 @@ echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗
 echo ""
 echo "🚀 Upgrading VM 🚀"
 echo "Script Name:  upgrade_vm.sh"
-echo "Last Updated: 2023-01-19"
+echo "Last Updated: 2024-01-20"
 echo "Should always run first "
 echo ""
 echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
@@ -69,6 +69,7 @@ The `echo` lines at the top on the script (& others throughout) are to show in T
 # vi: set ft=ruby :
 
 # 02 Upgrade VM
+# Updated: 2024-01-20
 
 # Machine Variables
 MEMORY              = 4096

@@ -1,9 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Updated: 2023-09-25
-
 # 01 Create Bare VM
+# Updated: 2024-01-20
 
 # Machine Variables
 MEMORY              = 4096
