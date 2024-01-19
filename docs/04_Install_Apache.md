@@ -12,19 +12,19 @@
 # Variables...
 # NONE!"
 
-# Store the script name
-SCRIPT_NAME="$(basename "$0")"
-
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Installing Apache 🚀"
-echo "Script Name: $0"
+echo "Script Name:  install_apache.sh"
 echo "Last Updated: 2023-01-19"
 echo ""
 echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
+
+# Add repository for ondrej/apache2
+LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
 
 # Function to install packages with error handling
 install_packages() {
@@ -50,9 +50,6 @@ enable_disable_modules_sites() {
 		exit 1
 	fi
 }
-
-# Add repository for ondrej/apache2
-LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
 
 # Call the function with the packages you want to install
 install_packages \
