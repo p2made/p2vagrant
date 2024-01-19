@@ -116,7 +116,7 @@ HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
-PHP_VERSION         = "8.2"
+PHP_VERSION         = "8.3"
 
 Vagrant.configure("2") do |config|
 

@@ -46,7 +46,7 @@ HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
-PHP_VERSION         = "8.2"
+PHP_VERSION         = "8.3"
 MYSQL_VERSION       = "8.1"
 PMA_VERSION         = "5.2.1"
 
