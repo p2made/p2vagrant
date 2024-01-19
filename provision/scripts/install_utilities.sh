@@ -59,11 +59,14 @@ install_packages \
 	software-properties-common \
 	unzip
 
+echo ""
 echo "✅ Utilities Installation: Packages installed successfully!"
+echo ""
 
 chsh -s /usr/bin/fish
 grep -qxF 'cd /var/www' /home/vagrant/.profile || echo 'cd /var/www' >> /home/vagrant/.profile
 
+echo ""
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🏆 Utilities Installed ‼️"
