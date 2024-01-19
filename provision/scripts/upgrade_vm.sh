@@ -5,13 +5,10 @@
 # Variables...
 # NONE!"
 
-# Store the script name
-SCRIPT_NAME="$(basename "$0")"
-
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Upgrading VM 🚀"
-echo "Script Name: $0"
+echo "Script Name: upgrade_vm.sh"
 echo "Last Updated: 2023-01-19"
 echo "Should always run first "
 echo ""
