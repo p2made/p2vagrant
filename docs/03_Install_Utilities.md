@@ -31,8 +31,11 @@ install_packages() {
 	fi
 }
 
-# Update package lists
-apt-get update
+# Function to update package lists
+echo "🔄 Updating package lists 🔄"
+if ! apt-get -q update; then
+	handle_error "⚠️ Failed to update package lists"
+fi
 
 # Set timezone
 echo "🕤 Setting timezone to $1 🕓"
