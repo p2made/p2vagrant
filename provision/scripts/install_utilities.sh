@@ -5,13 +5,10 @@
 # Variables...
 # $1 - TIMEZONE	 = "Australia/Brisbane"
 
-# Store the script name
-SCRIPT_NAME="$(basename "$0")"
-
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Installing Utilities 🚀"
-echo "Script Name: $0"
+echo "Script Name:  install_utilities.sh"
 echo "Last Updated: 2023-01-19"
 echo ""
 echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
