@@ -52,34 +52,3 @@ echo ""
 echo "🏆 Upgrade completed successfully ‼️"
 echo ""
 echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
-
-
-
-
-
-
-#!/bin/sh
-
-# 02 Upgrade VM
-
-# Variables...
-# NONE!"
-
-echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
-echo ""
-echo "🚀 Upgrading VM 🚀"
-echo "Script Name: $0"
-echo "Last Updated: 2023-01-19"
-echo "Should always run first"
-echo ""
-echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
-echo ""
-
-export DEBIAN_FRONTEND=noninteractive
-
-echo ""
-echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
-echo ""
-echo "🏆 Upgrade completed successfully ‼️"
-echo ""
-echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
