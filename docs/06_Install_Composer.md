@@ -12,13 +12,10 @@
 # Variables...
 # NONE!"
 
-# Store the script name
-SCRIPT_NAME="$(basename "$0")"
-
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Installing Composer 🚀"
-echo "Script Name: $0"
+echo "Script Name:  install_composer.sh"
 echo "Last Updated: 2023-01-19"
 echo ""
 echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
