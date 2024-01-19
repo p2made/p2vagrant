@@ -30,7 +30,7 @@ fi
 
 # Function to install packages with error handling
 install_packages() {
-	if ! 	"$@"; then \
+	if ! "$@"; then
 		echo "⚠️ Error: Failed to install packages 💥"
 		exit 1
 	fi
@@ -61,6 +61,10 @@ install_packages \
 	php$1-zip \
 	php-pear \
 	libapache2-mod-php$1
+
+echo ""
+echo "✅ PHP Installation: Packages installed successfully!"
+echo ""
 
 sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/$1/apache2/php.ini
 sed -i 's/post_max_size = .*/post_max_size = 64M/' /etc/php/$1/apache2/php.ini
