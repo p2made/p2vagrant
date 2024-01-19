@@ -25,7 +25,6 @@ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/loca
 echo ""
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
-echo "🏆 PHP Installed ‼️"
+echo "🏆 Composer Installed ‼️"
 echo ""
 echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
-
