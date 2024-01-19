@@ -3,7 +3,7 @@
 # 03 Install Utilities
 
 # Variables...
-# $1 - TIMEZONE     = "Australia/Brisbane"
+# $1 - TIMEZONE	 = "Australia/Brisbane"
 
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
@@ -18,10 +18,9 @@ export DEBIAN_FRONTEND=noninteractive
 
 # Function to install packages with error handling
 install_packages() {
-	packages=("$@")
-	if ! apt-get -qy install "${packages[@]}"; then
-	    echo "⚠️ Error: Failed to install packages 💥"
-	    exit 1
+	if ! apt-get -qy install "$@"; then
+		echo "⚠️ Error: Failed to install packages 💥"
+		exit 1
 	fi
 }
 
