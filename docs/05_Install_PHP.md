@@ -9,45 +9,69 @@
 
 # 05 Install PHP
 
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "#####                                                       #####"
-echo "#####       Installing PHP                                  #####"
-echo "#####                                                       #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+# Variables...
+# $1 - PHP_VERSION     = "8.2"
+
+# Store the script name
+SCRIPT_NAME="$(basename "$0")"
+
+echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
+echo ""
+echo "🚀 Installing PHP 🚀"
+echo "Script Name: $0"
+echo "Last Updated: 2023-01-19"
+echo ""
+echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
-# PHP_VERSION         = "8.2"                 | $1
-
+# Add repository for ondrej/php
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
 
-apt-get -qy install php$1
+# Function to update package lists
+echo "🔄 Updating package lists 🔄"
+if ! apt-get -q update; then
+	handle_error "⚠️ Failed to update package lists"
+fi
 
-apt-get -qy install php$1-bcmath
-apt-get -qy install php$1-bz2
-apt-get -qy install php$1-cgi
-apt-get -qy install php$1-curl
-apt-get -qy install php$1-dom
-apt-get -qy install php$1-fpm
-apt-get -qy install php$1-gd
-apt-get -qy install php$1-imagick
-apt-get -qy install php$1-imap
-apt-get -qy install php$1-intl
-apt-get -qy install php$1-ldap
-apt-get -qy install php$1-mbstring
-apt-get -qy install php$1-mcrypt
-apt-get -qy install php$1-mysql
-apt-get -qy install php$1-pgsql
-apt-get -qy install php$1-pspell
-apt-get -qy install php$1-soap
-apt-get -qy install php$1-xmlrpc
-apt-get -qy install php$1-zip
+# Function to install packages with error handling
+install_packages() {
+	if ! "$@"; then
+		echo "⚠️ Error: Failed to install packages 💥"
+		exit 1
+	fi
+}
 
-apt-get -qy install php-pear
-apt-get -qy install libapache2-mod-php$1
+# Call the function with the packages you want to install
+install_packages \
+	php$1 \
+	php$1-bcmath \
+	php$1-bz2 \
+	php$1-cgi \
+	php$1-cli \
+	php$1-curl \
+	php$1-dom \
+	php$1-fpm \
+	php$1-gd \
+	php$1-imagick \
+	php$1-imap \
+	php$1-intl \
+	php$1-ldap \
+	php$1-mbstring \
+	php$1-mcrypt \
+	php$1-mysql \
+	php$1-pgsql \
+	php$1-pspell \
+	php$1-soap \
+	php$1-xmlrpc \
+	php$1-zip \
+	php-pear \
+	libapache2-mod-php$1
+
+echo ""
+echo "✅ PHP Installation: Packages installed successfully!"
+echo ""
 
 sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/$1/apache2/php.ini
 sed -i 's/post_max_size = .*/post_max_size = 64M/' /etc/php/$1/apache2/php.ini
@@ -63,6 +87,13 @@ sudo chmod -R 755 /var/www/html/*
 a2enmod php$1
 
 service apache2 restart
+
+echo ""
+echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
+echo ""
+echo "🏆 PHP Installed ‼️"
+echo ""
+echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
 ```
 
 ### Create `provision/html/phpinfo.php`
