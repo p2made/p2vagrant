@@ -1,4 +1,4 @@
-# 04 Install Apache
+# 05 Install Apache
 
 --
 
@@ -7,7 +7,7 @@
 ```
 #!/bin/sh
 
-# 04 Install Apache
+# 05 Install Apache
 
 # Variables...
 # NONE!"
@@ -120,7 +120,8 @@ The page is a simple `index.html` located within your VM in the `/var/www/html` 
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 04 Install Apache
+# 05 Install Apache
+# Updated: 2024-01-20
 
 # Machine Variables
 MEMORY              = 4096
@@ -128,6 +129,8 @@ CPUS                = 1
 TIMEZONE            = "Australia/Brisbane"
 #TIMEZONE            = "Europe/London"
 VM_IP               = "192.168.42.100"
+SSL_DIR             = "/var/www/provision/ssl"
+CERT_NAME           = "p2_selfsigned"
 
 # Synced Folders
 HOST_FOLDER         = "."
@@ -154,6 +157,7 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/generate_ssl.sh", args: [SSL_DIR, CERT_NAME]
 	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 
 end
@@ -162,7 +166,7 @@ end
 Or copy this file...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_04 ./Vagrantfile
+cp ./Vagrantfiles/Vagrantfile_05 ./Vagrantfile
 ```
 
 ### Provision the VM
