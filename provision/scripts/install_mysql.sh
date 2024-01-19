@@ -2,27 +2,29 @@
 
 # 07 Install MySQL
 
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "#####                                                       #####"
-echo "#####       Installing MySQL $1                            #####"
-echo "#####                                                       #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+# Variables...
+# 1 - MYSQL_VERSION   = "8.1"
+# 2 - DB_USERNAME     = "fredspotty"
+# 3 - DB_PASSWORD     = "Passw0rd"
+# 4 - DB_NAME         = "example_db"
+# 5 - DB_NAME_TEST    = "example_db_test"
+
+echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
+echo ""
+echo "🚀 Installing MySQL 🚀"
+echo "Script Name:  install_apache.sh"
+echo "Last Updated: 2023-01-19"
+echo ""
+echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
-# Update package lists
-apt-get update
-
-# MYSQL_VERSION       = "8.1"                 | $1
-# DB_USERNAME         = "fredspotty"          | $2
-# DB_PASSWORD         = "Passw0rd"            | $3
-# DB_NAME             = "example_db"          | $4
-# DB_NAME_TEST        = "example_db_test"     | $5
-
-apt-get update
+# Function to update package lists
+echo "🔄 Updating package lists 🔄"
+if ! apt-get -q update; then
+	handle_error "⚠️ Failed to update package lists"
+fi
 
 apt-get -qy install mysql-server
 
@@ -41,3 +43,10 @@ cp /var/www/provision/html/db.php /var/www/html/
 sudo chmod -R 755 /var/www/html/*
 
 dpkg -l | grep "apache2\|mysql-server-8.1\|php8.2"
+
+echo ""
+echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
+echo ""
+echo "🏆 MySQL Installed ‼️"
+echo ""
+echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
