@@ -12,13 +12,10 @@
 # Variables...
 # NONE!"
 
-# Store the script name
-SCRIPT_NAME="$(basename "$0")"
-
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Upgrading VM 🚀"
-echo "Script Name: $0"
+echo "Script Name:  upgrade_vm.sh"
 echo "Last Updated: 2023-01-19"
 echo "Should always run first "
 echo ""
@@ -27,26 +24,25 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
-
 # Function for error handling
 handle_error() {
 	echo "⚠️ Error: $1 💥"
 	exit 1
 }
 
-# Update package lists
+# Function to update package lists
 echo "🔄 Updating package lists 🔄"
 if ! apt-get -q update; then
 	handle_error "⚠️ Failed to update package lists"
 fi
 
-# Upgrade packages
+# Function to upgrade packages
 echo "⬆️ Upgrading packages ⬆️"
 if ! apt-get -qy upgrade; then
 	handle_error "⚠️ Failed to upgrade packages"
 fi
 
-# Remove unnecessary packages
+# Function to remove unnecessary packages
 echo "🧹 Removing unnecessary packages 🧹"
 if ! apt-get autoremove; then
 	handle_error "⚠️ Failed to remove unnecessary packages"
