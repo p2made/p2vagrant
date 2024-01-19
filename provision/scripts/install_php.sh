@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# 05 Install PHP
+# 06 Install PHP
 
 # Variables...
 # $1 - PHP_VERSION     = "8.2"
@@ -36,6 +36,8 @@ install_packages() {
 # Call the function with the packages you want to install
 install_packages \
 	php$1 \
+	php$1-common \
+	php$1-mysql \
 	php$1-bcmath \
 	php$1-bz2 \
 	php$1-cgi \
@@ -50,13 +52,54 @@ install_packages \
 	php$1-ldap \
 	php$1-mbstring \
 	php$1-mcrypt \
-	php$1-mysql \
 	php$1-pgsql \
 	php$1-pspell \
 	php$1-soap \
 	php$1-xmlrpc \
 	php$1-zip \
+	php-apcu \
+	php-bacon-qr-code \
+	php-code-lts-u2f-php-server \
+	php-composer-ca-bundle \
+	php-dbase \
+	php-fig-http-message-util \
+	php-gd2 \
+	php-getallheaders \
+	php-google-recaptcha \
+	php-mariadb-mysql-kbs \
+	php-mysql \
+	php-nikic-fast-route \
 	php-pear \
+	php-phpmyadmin-motranslator \
+	php-phpmyadmin-shapefile \
+	php-phpmyadmin-sql-parser \
+	php-pragmarx-google2fa-qrcode \
+	php-psr-cache \
+	php-psr-container \
+	php-psr-http-factory \
+	php-psr-http-message \
+	php-psr-log \
+	php-recode \
+	php-slim-psr7 \
+	php-sodium \
+	php-symfony-cache \
+	php-symfony-cache-contracts \
+	php-symfony-config \
+	php-symfony-dependency-injection \
+	php-symfony-expression-language \
+	php-symfony-filesystem \
+	php-symfony-finder \
+	php-symfony-polyfill-php80 \
+	php-symfony-proxy-manager-bridge \
+	php-symfony-service-contracts \
+	php-symfony-var-exporter \
+	php-symfony-yaml \
+	php-tcpdf \
+	php-twig \
+	php-twig-doc \
+	php-twig-i18n-extension \
+	php-web-auth-webauthn-lib \
+	php-webmozart-assert \
 	libapache2-mod-php$1
 
 sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/$1/apache2/php.ini
