@@ -190,7 +190,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [04 Generate SSL Certificate](./04_Generate_SSL_Certificate.md)
+| [04 Generate SSL](./04_Generate_SSL.md)
 | [**Back to Steps**](../README.md)
 | [06 Install PHP](./06_Install_PHP.md)
 |

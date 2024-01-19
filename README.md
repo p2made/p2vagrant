@@ -24,7 +24,7 @@ All files you are directed to create are in...
 01. [Create Bare VM](./docs/01_Create_Bare_VM.md)
 02. [Upgrade VM](./docs/02_Upgrade_VM.md)
 03. [Install Utilities](./docs/03_Install_Utilities.md)
-04. [Generate SSL Certificate](./docs/04_Generate_SSL_Certificate.md)
+04. [Generate SSL](./docs/04_Generate_SSL.md)
 05. [Install Apache](./docs/05_Install_Apache.md)
 06. [Install PHP](./docs/06_Install_PHP.md)
 07. [Install Composer](./docs/07_Install_Composer.md)

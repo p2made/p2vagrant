@@ -1,4 +1,4 @@
-# 04 Generate SSL Certificate
+# 04 Generate SSL
 
 --
 
