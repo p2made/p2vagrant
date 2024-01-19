@@ -5,13 +5,10 @@
 # Variables...
 # $1 - PHP_VERSION     = "8.2"
 
-# Store the script name
-SCRIPT_NAME="$(basename "$0")"
-
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Installing PHP 🚀"
-echo "Script Name: $0"
+echo "Script Name:  install_php.sh"
 echo "Last Updated: 2023-01-19"
 echo ""
 echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
