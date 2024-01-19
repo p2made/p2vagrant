@@ -15,10 +15,28 @@ echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
+
 # Function to install packages with error handling
 install_packages() {
 	if ! apt-get -qy install "$@"; then
 		echo "⚠️ Error: Failed to install packages 💥"
+		exit 1
+	fi
+}
+
+# Function to copy files into place & set permissions
+copy_files() {
+	yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
+	yes | cp /var/www/provision/html/index.htm /var/www/html/
+	yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
+
+	sudo chmod -R 755 /var/www/html/*
+}
+
+# Function to enable site, disable site, and enable modules with error handling
+enable_disable_modules_sites() {
+	if ! a2ensite "$1" && ! a2dissite "$2" && ! a2enmod "$3" && ! a2enmod ssl; then
+		echo "⚠️ Error: Failed to configure Apache sites and modules 💥"
 		exit 1
 	fi
 }
@@ -37,16 +55,11 @@ echo ""
 echo "✅ Apache Installation: Packages installed successfully!"
 echo ""
 
-yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
-yes | cp /var/www/provision/html/index.htm /var/www/html/
-yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
+# Call the function to copy files
+copy_files
 
-sudo chmod -R 755 /var/www/html/*
-
-a2ensite local.conf
-a2dissite 000-default
-a2enmod rewrite
-a2enmod ssl
+# Call the function to enable/disable sites and enable modules (including ssl)
+enable_disable_modules_sites local.conf 000-default rewrite
 
 service apache2 restart
 
