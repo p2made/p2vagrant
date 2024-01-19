@@ -7,6 +7,8 @@
 # .vagrant
 /.vagrant
 /vagrant
+
+# SSL
 /provision/ssl
 
 # z_gitignore folder
