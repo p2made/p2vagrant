@@ -18,7 +18,7 @@ echo "🚀 Installing PHP 🚀"
 echo "Script Name:  install_php.sh"
 echo "Last Updated: 2023-01-19"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭
+echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
@@ -86,7 +86,7 @@ echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗
 echo ""
 echo "🏆 PHP Installed ‼️"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭
+echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
 ```
 
 ### Create `provision/html/phpinfo.php`

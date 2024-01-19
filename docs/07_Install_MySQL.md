@@ -22,7 +22,7 @@ echo "🚀 Installing MySQL 🚀"
 echo "Script Name:  install_mysql.sh"
 echo "Last Updated: 2023-01-19"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭
+echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
@@ -56,7 +56,7 @@ echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗
 echo ""
 echo "🏆 MySQL Installed ‼️"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭
+echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
 ```
 
 ### Create `provision/html/db.php`
