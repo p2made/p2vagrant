@@ -3,7 +3,7 @@
 # 06 Install PHP
 
 # Variables...
-# $1 - PHP_VERSION     = "8.3"
+# 1 - PHP_VERSION     = "8.3"
 
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""

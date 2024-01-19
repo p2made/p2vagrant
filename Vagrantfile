@@ -27,6 +27,8 @@ DB_USERNAME         = "fredspotty"
 DB_PASSWORD         = "Passw0rd"
 DB_NAME             = "example_db"
 DB_NAME_TEST        = "example_db_test"
+PMA_USERNAME        = "pmauser"
+PMA_PASSWORD        = "PM4Passw0rd"
 
 Vagrant.configure("2") do |config|
 
@@ -53,8 +55,8 @@ Vagrant.configure("2") do |config|
 #	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
 #	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
-	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-#	config.vm.provision :shell, path: "provision/scripts/install_phpmyadmin.sh", :args => [PMA_VERSION, DB_PASSWORD, REMOTE_FOLDER]
+#	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/install_phpmyadmin.sh", :args => [PMA_USERNAME, PMA_PASSWORD, REMOTE_FOLDER]
 #	config.vm.provision :shell, path: "provision/scripts/install_yarn.sh"
 
 end

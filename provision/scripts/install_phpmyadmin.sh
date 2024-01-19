@@ -1,41 +1,60 @@
 #!/bin/sh
 
-# 08 Install phpMyAdmin
+# 09 Install phpMyAdmin
 
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "#####                                                       #####"
-echo "#####       Installing phpMyAdmin                           #####"
-echo "#####                                                       #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+# Variables...
+# 1 - PMA_USERNAME      = ⚠️ See Vagrantfile
+# 2 - PMA_PASSWORD      = ⚠️ See Vagrantfile
+# 3 - REMOTE_FOLDER     = "/var/www"
+
+# Validate arguments
+if [ -z "$2" ]; then
+    echo "⚠️ Error: Missing phpMyAdmin database password 💥"
+    exit 1
+fi
+
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo ""
+echo "🚀 Installing phpMyAdmin 🚀"
+echo "Script Name:  install_phpmyadmin.sh"
+echo "Last Updated: 2024-01-20"
+echo ""
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 
-export DEBIAN_FRONTEND = noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
-# Update package lists
-apt-get update
+# Add repository for phpMyAdmin
+LC_ALL=C.UTF-8 sudo apt-add-repository -yu ppa:phpmyadmin/ppa
 
-# PMA_VERSION         = "5.2.1"               | $1
-# DB_PASSWORD         = "PM4Passw0rd"         | $2
-# REMOTE_FOLDER       = "/var/www"            | $3
+# Call the vm_upgrade.sh script
+/var/www/provision/scripts/vm_upgrade.sh
 
-LC_ALL=C.UTF-8 apt-add-repository -yu ppa:phpmyadmin/ppa
+# Install phpMyAdmin
+sudo apt -qy install phpmyadmin
 
-echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
-echo "phpmyadmin phpmyadmin/app-password-confirm password $2" | debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/admin-pass password $2" | debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/app-pass password $2" | debconf-set-selections
-echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
+# Remove the default phpMyAdmin directory
+sudo rm -rf /usr/share/phpmyadmin
 
-apt-get -qy install phpmyadmin
+# Copy phpMyAdmin to the specified folder
+sudo cp -R $3/provision/html/phpmyadmin $3/html/phpmyadmin
 
-rm -rf /usr/share/phpmyadmin
-
-cp -R $3/provision/html/phpmyadmin $3/html/phpmyadmin
-
+# Set permissions
 sudo chmod -R 755 $3/html/phpmyadmin
 
+echo ""
+echo "✅ phpMyAdmin installation completed successfully!"
+echo ""
+
+# Enable mbstring
 sudo phpenmod mbstring
-#service apache2 restart
-systemctl restart apache2
+
+# Restart Apache to apply changes
+sudo systemctl restart apache2
+
+echo ""
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo ""
+echo "🏆 phpMyAdmin Installed ‼️"
+echo ""
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"

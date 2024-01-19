@@ -3,7 +3,7 @@
 # 03 Install Utilities
 
 # Variables...
-# $1 - TIMEZONE	 = "Australia/Brisbane"
+# 1 - TIMEZONE	 = "Australia/Brisbane"
 
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""

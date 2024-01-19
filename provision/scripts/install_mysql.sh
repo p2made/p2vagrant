@@ -4,8 +4,8 @@
 
 # Variables...
 # 1 - MYSQL_VERSION   = "8.1"
-# 2 - DB_USERNAME     = "fredspotty"
-# 3 - DB_PASSWORD     = "Passw0rd"
+# 2 - DB_USERNAME     = ⚠️ See Vagrantfile
+# 3 - DB_PASSWORD     = ⚠️ See Vagrantfile
 # 4 - DB_NAME         = "example_db"
 # 5 - DB_NAME_TEST    = "example_db_test"
 
