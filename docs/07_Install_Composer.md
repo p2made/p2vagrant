@@ -1,4 +1,4 @@
-# 06 Install Composer
+# 07 Install Composer
 
 --
 
@@ -7,31 +7,41 @@
 ```
 #!/bin/sh
 
-# 06 Install Composer
+# 07 Install Composer
 
 # Variables...
 # NONE!"
 
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+# Function for error handling
+handle_error() {
+    echo "⚠️ Error: $1 💥"
+    exit 1
+}
+
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 echo "🚀 Installing Composer 🚀"
 echo "Script Name:  install_composer.sh"
 echo "Last Updated: 2024-01-20"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
+export DEBIAN_FRONTEND=noninteractive
+
 # Download and install Composer
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+if ! curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer; then
+    handle_error "Failed to install Composer"
+fi
 
 echo ""
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 echo "🏆 Composer Installed ‼️"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 ```
 
 ### Update `Vagrantfile`
@@ -40,7 +50,8 @@ echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 �
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 06 Install Composer
+# 07 Install Composer
+# Updated: 2024-01-20
 
 # Machine Variables
 MEMORY              = 4096
@@ -52,6 +63,9 @@ VM_IP               = "192.168.42.100"
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
+
+# Software Versions
+PHP_VERSION         = "8.3"
 
 Vagrant.configure("2") do |config|
 
@@ -74,6 +88,7 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/generate_ssl.sh", args: [SSL_DIR, CERT_NAME]
 	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
@@ -84,7 +99,7 @@ end
 Or copy this file...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_06 ./Vagrantfile
+cp ./Vagrantfiles/Vagrantfile_07 ./Vagrantfile
 ```
 
 ### Provision the VM

@@ -5,13 +5,19 @@
 # Variables...
 # NONE!"
 
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+# Function for error handling
+handle_error() {
+	echo "⚠️ Error: $1 💥"
+	exit 1
+}
+
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 echo "🚀 Installing Apache 🚀"
 echo "Script Name:  install_apache.sh"
 echo "Last Updated: 2024-01-20"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
@@ -22,7 +28,7 @@ LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
 # Function to install packages with error handling
 install_packages() {
 	if ! apt-get -qy install "$@"; then
-		echo "⚠️ Error: Failed to install packages 💥"
+		handle_error "Failed to install packages"
 		exit 1
 	fi
 }
@@ -64,8 +70,8 @@ enable_disable_modules_sites local.conf 000-default rewrite
 service apache2 restart
 
 echo ""
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 echo "🏆 Apache Installed ‼️"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"

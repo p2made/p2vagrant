@@ -1,4 +1,4 @@
-# 07 Install MySQL
+# 08 Install MySQL
 
 --
 
@@ -16,47 +16,57 @@
 # 4 - DB_NAME         = "example_db"
 # 5 - DB_NAME_TEST    = "example_db_test"
 
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+# Function for error handling
+handle_error() {
+	echo "⚠️ Error: $1 💥"
+	exit 1
+}
+
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 echo "🚀 Installing MySQL 🚀"
 echo "Script Name:  install_mysql.sh"
 echo "Last Updated: 2024-01-20"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
-# Function to update package lists
-echo "🔄 Updating package lists 🔄"
-if ! apt-get -q update; then
-	handle_error "⚠️ Failed to update package lists"
+# Call the vm_upgrade.sh script
+/var/www/provision/scripts/vm_upgrade.sh || handle_error "Failed to upgrade VM"
+
+# Install MySQL
+if ! apt-get -qy install mysql-server; then
+	handle_error "Failed to install MySQL"
 fi
 
-apt-get -qy install mysql-server
-
 # Create the database and grant privileges
-echo "CREATE USER '$2'@'%' IDENTIFIED BY '$3'"      | mysql
-echo "CREATE DATABASE IF NOT EXISTS $4"             | mysql
-echo "CREATE DATABASE IF NOT EXISTS $5"             | mysql
-echo "GRANT ALL PRIVILEGES ON $4.* TO '$2'@'%';"    | mysql
-echo "GRANT ALL PRIVILEGES ON $5.* TO '$2'@'%';"    | mysql
-echo "flush privileges"                             | mysql
+echo "CREATE USER '$2'@'%' IDENTIFIED BY '$3'"      | mysql || handle_error "Failed to create MySQL user"
+echo "CREATE DATABASE IF NOT EXISTS $4"             | mysql || handle_error "Failed to create MySQL database $4"
+echo "CREATE DATABASE IF NOT EXISTS $5"             | mysql || handle_error "Failed to create MySQL database $5"
+echo "GRANT ALL PRIVILEGES ON $4.* TO '$2'@'%';"    | mysql || handle_error "Failed to grant privileges on $4"
+echo "GRANT ALL PRIVILEGES ON $5.* TO '$2'@'%';"    | mysql || handle_error "Failed to grant privileges on $5"
+echo "flush privileges"                             | mysql || handle_error "Failed to flush privileges"
 
+# Update MySQL configuration
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
-cp /var/www/provision/html/db.php /var/www/html/
+# Copy database file
+cp /var/www/provision/html/db.php /var/www/html/ || handle_error "Failed to copy db.php file"
 
-sudo chmod -R 755 /var/www/html/*
+# Set permissions
+sudo chmod -R 755 /var/www/html/ || handle_error "Failed to set permissions on /var/www/html/"
 
-dpkg -l | grep "apache2\|mysql-server-8.1\|php8.2"
+# Display installed packages
+dpkg -l | grep "apache2\|mysql-server-$1\|php8.2"
 
 echo ""
-echo "⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️"
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 echo "🏆 MySQL Installed ‼️"
 echo ""
-echo "🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭 🛠️ ⚙️ ⚗️ ⚒️ 🗜 🔭"
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 ```
 
 ### Create `provision/html/db.php`
@@ -86,6 +96,7 @@ Replace `db_user `, `db_password `, & `db `, with values from `Vagrantfile`.
 # vi: set ft=ruby
 
 # 07 Install MySQL
+# Updated: 2024-01-20
 
 # Machine Variables
 MEMORY              = 4096
@@ -129,6 +140,7 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/generate_ssl.sh", args: [SSL_DIR, CERT_NAME]
 	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
@@ -140,7 +152,7 @@ end
 Or copy this file...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_07 ./Vagrantfile
+cp ./Vagrantfiles/Vagrantfile_08 ./Vagrantfile
 ```
 
 **Customise**
