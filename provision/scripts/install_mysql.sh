@@ -12,7 +12,7 @@
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Installing MySQL 🚀"
-echo "Script Name:  install_apache.sh"
+echo "Script Name:  install_mysql.sh"
 echo "Last Updated: 2023-01-19"
 echo ""
 echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
