@@ -2,6 +2,9 @@
 
 # 02 Upgrade VM
 
+# Variables...
+# NONE!"
+
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Upgrading VM 🚀"
