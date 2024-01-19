@@ -5,9 +5,6 @@
 # Variables...
 # NONE!"
 
-# Store the script name
-SCRIPT_NAME="$(basename "$0")"
-
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Installing Apache 🚀"
