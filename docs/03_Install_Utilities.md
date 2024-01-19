@@ -12,6 +12,9 @@
 # Variables...
 # $1 - TIMEZONE	 = "Australia/Brisbane"
 
+# Store the script name
+SCRIPT_NAME="$(basename "$0")"
+
 echo "⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️"
 echo ""
 echo "🚀 Installing Utilities 🚀"
