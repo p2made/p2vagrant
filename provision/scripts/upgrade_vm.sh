@@ -17,9 +17,33 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get -q update
-apt-get -qy upgrade
-apt-get autoremove
+
+# Function for error handling
+handle_error() {
+	echo "⚠️ Error: $1 💥"
+	exit 1
+}
+
+# Update package lists
+echo "🔄 Updating package lists 🔄"
+if ! apt-get -q update; then
+	handle_error "⚠️ Failed to update package lists"
+fi
+
+# Upgrade packages
+echo "⬆️ Upgrading packages ⬆️"
+if ! apt-get -qy upgrade; then
+	handle_error "⚠️ Failed to upgrade packages"
+fi
+
+# Remove unnecessary packages
+echo "🧹 Removing unnecessary packages 🧹"
+if ! apt-get autoremove; then
+	handle_error "⚠️ Failed to remove unnecessary packages"
+fi
+
+# Display OS information
+echo "📄 Displaying OS information 📄"
 cat /etc/os-release
 
 echo ""
