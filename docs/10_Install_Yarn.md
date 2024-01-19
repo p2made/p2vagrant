@@ -111,7 +111,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [08 Install phpMyAdmin](./08_Install_phpMyAdmin.md)
+| [09 Install phpMyAdmin](./09_Install_phpMyAdmin.md)
 | [**Back to Steps**](../README.md)
-| [10 Page Title](./10_Page_Title.md)
+| [11 Page Title](./11_Page_Title.md)
 |

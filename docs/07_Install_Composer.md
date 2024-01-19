@@ -105,7 +105,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [05 Install PHP](./05_Install_PHP.md)
+| [06 Install PHP](./06_Install_PHP.md)
 | [**Back to Steps**](../README.md)
-| [07 Install MySQL](./07_Install_MySQL.md)
+| [08 Install MySQL](./08_Install_MySQL.md)
 |

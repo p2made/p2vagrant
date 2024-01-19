@@ -175,7 +175,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [04 Install Apache](./04_Install_Apache.md)
+| [05 Install Apache](./05_Install_Apache.md)
 | [**Back to Steps**](../README.md)
-| [06 Install Composer](./06_Install_Composer.md)
+| [07 Install Composer](./07_Install_Composer.md)
 |

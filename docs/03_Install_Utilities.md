@@ -150,5 +150,5 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
-| [04 Install Apache](./04_Install_Apache.md)
+| [04 Generate SSL Certificate](./04_Generate_SSL_Certificate.md)
 |

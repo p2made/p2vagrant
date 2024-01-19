@@ -177,7 +177,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [06 Install Composer](./06_Install_Composer.md)
+| [07 Install Composer](./07_Install_Composer.md)
 | [**Back to Steps**](../README.md)
-| [08 Install phpMyAdmin](./08_Install_phpMyAdmin.md)
+| [09 Install phpMyAdmin](./09_Install_phpMyAdmin.md)
 |
