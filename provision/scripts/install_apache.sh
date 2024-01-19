@@ -19,6 +19,9 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
+# Add repository for ondrej/apache2
+LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
+
 # Function to install packages with error handling
 install_packages() {
 	if ! apt-get -qy install "$@"; then
@@ -43,9 +46,6 @@ enable_disable_modules_sites() {
 		exit 1
 	fi
 }
-
-# Add repository for ondrej/apache2
-LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
 
 # Call the function with the packages you want to install
 install_packages \

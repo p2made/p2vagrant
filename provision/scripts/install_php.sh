@@ -19,44 +19,48 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
-# Update package lists
-apt-get update
-
+# Add repository for ondrej/php
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
+
+# Function to update package lists
+echo "🔄 Updating package lists 🔄"
+if ! apt-get -q update; then
+	handle_error "⚠️ Failed to update package lists"
+fi
 
 # Function to install packages with error handling
 install_packages() {
-	if ! apt-get -qy install "$@"; then
+	if ! 	"$@"; then \
 		echo "⚠️ Error: Failed to install packages 💥"
 		exit 1
 	fi
 }
 
-apt-get -qy install php$1
-
-apt-get -qy install php$1-bcmath
-apt-get -qy install php$1-bz2
-apt-get -qy install php$1-cgi
-apt-get -qy install php$1-cli
-apt-get -qy install php$1-curl
-apt-get -qy install php$1-dom
-apt-get -qy install php$1-fpm
-apt-get -qy install php$1-gd
-apt-get -qy install php$1-imagick
-apt-get -qy install php$1-imap
-apt-get -qy install php$1-intl
-apt-get -qy install php$1-ldap
-apt-get -qy install php$1-mbstring
-apt-get -qy install php$1-mcrypt
-apt-get -qy install php$1-mysql
-apt-get -qy install php$1-pgsql
-apt-get -qy install php$1-pspell
-apt-get -qy install php$1-soap
-apt-get -qy install php$1-xmlrpc
-apt-get -qy install php$1-zip
-
-apt-get -qy install php-pear
-apt-get -qy install libapache2-mod-php$1
+# Call the function with the packages you want to install
+install_packages \
+	php$1 \
+	php$1-bcmath \
+	php$1-bz2 \
+	php$1-cgi \
+	php$1-cli \
+	php$1-curl \
+	php$1-dom \
+	php$1-fpm \
+	php$1-gd \
+	php$1-imagick \
+	php$1-imap \
+	php$1-intl \
+	php$1-ldap \
+	php$1-mbstring \
+	php$1-mcrypt \
+	php$1-mysql \
+	php$1-pgsql \
+	php$1-pspell \
+	php$1-soap \
+	php$1-xmlrpc \
+	php$1-zip \
+	php-pear \
+	libapache2-mod-php$1
 
 sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/$1/apache2/php.ini
 sed -i 's/post_max_size = .*/post_max_size = 64M/' /etc/php/$1/apache2/php.ini
@@ -79,60 +83,3 @@ echo ""
 echo "🏆 PHP Installed ‼️"
 echo ""
 echo "🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭 🛠️⚙️⚗️ ⚒️🗜🔭"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-export DEBIAN_FRONTEND=noninteractive
-
-# Function to copy files into place & set permissions
-copy_files() {
-	yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
-	yes | cp /var/www/provision/html/index.htm /var/www/html/
-	yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
-
-	sudo chmod -R 755 /var/www/html/*
-}
-
-# Function to enable site, disable site, and enable modules with error handling
-enable_disable_modules_sites() {
-	if ! a2ensite "$1" && ! a2dissite "$2" && ! a2enmod "$3" && ! a2enmod ssl; then
-		echo "⚠️ Error: Failed to configure Apache sites and modules 💥"
-		exit 1
-	fi
-}
-
-# Add repository for ondrej/apache2
-LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
-
-# Call the function with the packages you want to install
-install_packages \
-	apache2 \
-	apache2-bin \
-	apache2-data \
-	apache2-utils
-
-echo ""
-echo "✅ Apache Installation: Packages installed successfully!"
-echo ""
-
-# Call the function to copy files
-copy_files
-
-# Call the function to enable/disable sites and enable modules (including ssl)
-enable_disable_modules_sites local.conf 000-default rewrite
-
-service apache2 restart
-
