@@ -1,22 +1,48 @@
 #!/bin/sh
 
-# 09 Install Yarn
+# 10 Install Yarn
 
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "#####                                                       #####"
-echo "#####       Installing Yarn                                 #####"
-echo "#####                                                       #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
-echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
+# Variables...
+# NONE!"
+
+# Function for error handling
+handle_error() {
+	echo "⚠️ Error: $1 💥"
+	exit 1
+}
+
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo ""
+echo "🚀 Installing Yarn 🚀"
+echo "Script Name:  install_yarn.sh"
+echo "Last Updated: 2024-01-21"
+echo ""
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
-# Update package lists
-apt-get update
+# Call the vm_upgrade.sh script
+/var/www/provision/scripts/vm_upgrade.sh
 
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "🔑 Adding Yarn GPG key..."
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - || \
+	handle_error "Failed to add Yarn GPG key."
+
+echo "📦 Adding Yarn repository..."
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-apt-get update && sudo apt-get -qy install yarn
+echo "🔄 Updating package lists after adding Yarn repository..."
+apt-get update || \
+	handle_error "Failed to update package lists after adding Yarn repository."
+
+echo "🚀 Installing Yarn..."
+apt-get -qy install yarn || \
+	handle_error "Failed to install Yarn."
+
+echo ""
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo ""
+echo "🏆 Yarn Installed ‼️"
+echo ""
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"

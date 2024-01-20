@@ -1,4 +1,4 @@
-# 09 Install Yarn
+# 10 Install Yarn
 
 --
 
@@ -7,7 +7,7 @@
 ```
 #!/bin/sh
 
-# 09 Install Yarn
+# 10 Install Yarn
 
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
 echo "##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####"
@@ -32,7 +32,7 @@ apt-get update && sudo apt-get -qy install yarn
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 09 Install Yarn
+# 10 Install Yarn
 
 # Machine Variables
 MEMORY              = 4096
@@ -90,7 +90,7 @@ end
 Or copy this file...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_09 ./Vagrantfile
+cp ./Vagrantfiles/Vagrantfile_10 ./Vagrantfile
 ```
 
 ### Provision the VM:

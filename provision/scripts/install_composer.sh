@@ -22,8 +22,6 @@ echo ""
 
 export DEBIAN_FRONTEND=noninteractive
 
-export DEBIAN_FRONTEND=noninteractive
-
 # Download and install Composer
 if ! curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer; then
     handle_error "Failed to install Composer"
