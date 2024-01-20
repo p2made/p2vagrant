@@ -30,15 +30,12 @@ LC_ALL=C.UTF-8 sudo apt-add-repository -yu ppa:phpmyadmin/ppa
 # Call the vm_upgrade.sh script
 /var/www/provision/scripts/vm_upgrade.sh
 
-# Set default usernames if not provided
-PMA_USERNAME=${1:-phpmyadmin}
-
 # Set phpMyAdmin database user and password for debconf selections
 echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/db/app-user string $1" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/app-pass password $2" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/app-password-confirm password $2" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/dbconfig-install boolean true"             | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/db/app-user string $1"                     | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password $2"                | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password $2"          | sudo debconf-set-selections
 
 # Install phpMyAdmin
 sudo apt -qy install phpmyadmin
