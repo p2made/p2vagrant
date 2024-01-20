@@ -16,7 +16,7 @@ vagrant ssh
 LC_ALL=C.UTF-8 sudo apt-add-repository -yu ppa:phpmyadmin/ppa
 
 sudo apt-get update
-sudo apt -qy install phpmyadmin
+sudo apt-get -qy install phpmyadmin
 sudo rm -rf /usr/share/phpmyadmin
 ```
 

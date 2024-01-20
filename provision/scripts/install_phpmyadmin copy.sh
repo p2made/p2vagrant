@@ -64,3 +64,84 @@ echo ""
 echo "🏆 phpMyAdmin Installed ‼️"
 echo ""
 echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#!/bin/sh
+
+# 09 Install phpMyAdmin
+
+# Variables...
+# 1 - DB_USERNAME       = ⚠️ See Vagrantfile
+# 2 - DB_PASSWORD       = ⚠️ See Vagrantfile
+# 3 - PMA_USERNAME      = ⚠️ See Vagrantfile
+# 4 - PMA_PASSWORD      = ⚠️ See Vagrantfile
+# 5 - REMOTE_FOLDER     = "/var/www"
+
+# Validate arguments
+if [ -z "$2" ]; then
+    echo "⚠️ Error: Missing phpMyAdmin database password 💥"
+    exit 1
+fi
+
+# Export variables
+export PMA_USERNAME=$1
+export PMA_PASSWORD=$2
+
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo ""
+echo "🚀 Installing phpMyAdmin 🚀"
+echo "Script Name:  install_phpmyadmin.sh"
+echo "Last Updated: 2024-01-20"
+echo ""
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo ""
+
+# Add repository for phpMyAdmin
+#LC_ALL=C.UTF-8 sudo apt-add-repository -yu ppa:phpmyadmin/ppa
+
+# Call the vm_upgrade.sh script
+#/var/www/provision/scripts/vm_upgrade.sh
+
+# Export variables for the sudo command
+sudo PMA_USERNAME=$PMA_USERNAME PMA_PASSWORD=$PMA_PASSWORD apt -qy install phpmyadmin
+
+# Remove the default phpMyAdmin directory
+sudo rm -rf /usr/share/phpmyadmin
+
+# Copy phpMyAdmin to the specified folder
+sudo cp -R $1/provision/html/phpmyadmin $1/html/phpmyadmin
+
+# Set permissions
+sudo chmod -R 755 $1/html/phpmyadmin
+
+# Enable mbstring
+sudo phpenmod mbstring
+
+# Restart Apache to apply changes
+sudo systemctl restart apache2
+
+echo ""
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo ""
+echo "🏆 phpMyAdmin Installed ‼️"
+echo ""
+echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
