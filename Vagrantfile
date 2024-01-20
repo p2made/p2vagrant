@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vi: set ft=ruby
 
-# 04 Generate SSL
+# 09 Install Yarn
 # Updated: 2024-01-20
 
 # Machine Variables
@@ -10,8 +10,6 @@ CPUS                = 1
 TIMEZONE            = "Australia/Brisbane"
 #TIMEZONE            = "Europe/London"
 VM_IP               = "192.168.42.100"
-SSL_DIR             = "/var/www/provision/ssl"
-CERT_NAME           = "p2_selfsigned"
 
 # Synced Folders
 HOST_FOLDER         = "."
@@ -57,6 +55,7 @@ Vagrant.configure("2") do |config|
 #	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 #	config.vm.provision :shell, path: "provision/scripts/install_phpmyadmin.sh", :args => [PMA_USERNAME, PMA_PASSWORD, REMOTE_FOLDER]
-	config.vm.provision :shell, path: "provision/scripts/install_yarn.sh"
+#	config.vm.provision :shell, path: "provision/scripts/install_yarn.sh"
+	config.vm.provision :shell, path: "provision/scripts/configure_sites.sh", :args => [REMOTE_FOLDER]
 
 end

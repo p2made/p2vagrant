@@ -1,0 +1,6 @@
+# ./provision/data/sites_data
+
+# Site data format: "domain|reverse_domain|transformed_domain|numeric_template"
+subdomain1.example.tld|tld.example.subdomain1|tld_example_subdomain1|0
+subdomain2.example.tld|tld.example.subdomain2|tld_example_subdomain2|0
+example.tld|tld.example|tld_example|1
