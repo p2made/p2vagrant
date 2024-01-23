@@ -1,101 +1,100 @@
-#!/bin/sh
+#!/usr/bin/env fish
 
-# 10 Configure Websites
+# 11 Configure Websites
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo ""
-echo "🌍 Configuring Websites 🌍"
-echo "📜 Script Name:  configure_sites.sh"
-echo "📅 Last Updated: 2024-01-21"
-echo ""
-echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo ""
+echo -e "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo -e ""
 
 # Variables...
 # 1 - REMOTE_FOLDER   = "/var/www"
+#set VM_FOLDER           $1            # production version
+set VM_FOLDER           "/var/www"    # ssh test version
+set DATA_FOLDER         $VM_FOLDER/provision/data
+set TEMPLATES_FOLDER    $VM_FOLDER/provision/templates
+set VHOSTS_FOLDER       $VM_FOLDER/provision/vhosts
+set SSL_FOLDER          $VM_FOLDER/provision/ssl
+set GENERATION_DATE     $(date "+%Y-%m-%d")
 
-VM_FOLDER="$1"
-TEMPLATES_FOLDER="${VM_FOLDER}/provision/templates"
-VHOSTS_FOLDER="${VM_FOLDER}/provision/vhosts"
-SSL_FOLDER="${VM_FOLDER}/provision/ssl"
-GENERATION_DATE=$(date "+%Y-%m-%d")
+# Array of site data
+echo -e "📚 About to attempt reading data."
 
 # Load site data from the data file
-DATA_FILE="${VM_FOLDER}/provision/data/sites_data.txt"
+set DATA_FILE "$DATA_FOLDER/sites_data"
 if [ ! -f "$DATA_FILE" ]; then
 	echo "⚠️ Error: Data file $DATA_FILE not found."
 	exit 1
-fi
-sites=($(cat "$DATA_FILE"))
+end
+set sites (cat "$DATA_FILE")
 
 # Function for error handling
-handle_error() {
-	echo "⚠️ Error: $1 💥"
+function handle_error
+	echo -e "⚠️ Error: $argv 💥"
 	exit 1
-}
+end
 
-export DEBIAN_FRONTEND=noninteractive
-
-# Function to generate the conf files
-generate_conf() {
-	local domain=$1
-	local reverse_domain=$2
-	local transformed_domain=$3
-	local numeric_template=$4
+# Function to generate the conf files and SSL files
+function configure_sites
+	# $argv[1] - domain
+	# $argv[2] - template index
+	# $argv[3] - reversed domain
+	# $argv[4] - transformed domain
 
 	# Select the appropriate template based on the numeric value
-	local template_file="${TEMPLATES_FOLDER}/${numeric_template}.conf"
+	set template_file $TEMPLATES_FOLDER/$argv[2].conf
 
 	# Check if the template file exists
-	if [ ! -f "$template_file" ]; then
-		handle_error "Template file ${numeric_template}.conf not found in ${TEMPLATES_FOLDER}."
-	fi
+	if not test -f $template_file
+		handle_error "Template file $argv[2].conf not found in $TEMPLATES_FOLDER."
+	end
 
 	# Read the template content
-	local template_content=$(cat "$template_file")
+	set conf_template (cat "$template_file")
+
+	echo -e "conf_template: $conf_template"
 
 	# Replace placeholders with actual values
-	local content_with_placeholders=$(echo "$template_content" | \
-		sed "s|{{DOMAIN}}|${domain}|g" | \
-		sed "s|{{TRANSFORMED_DOMAIN}}|${transformed_domain}|g" | \
-		sed "s|{{REVERSE_DOMAIN}}|${reverse_domain}|g" | \
-		sed "s|{{GENERATION_DATE}}|${GENERATION_DATE}|g"
+	set content_with_data (echo $conf_template | \
+		sed "s|{{DOMAIN}}|$argv[1]|g" | \
+		sed "s|{{TRANSFORMED_DOMAIN}}|$argv[4]|g" | \
+		sed "s|{{REVERSE_DOMAIN}}|$argv[3]|g" | \
+		sed "s|{{GENERATION_DATE}}|$GENERATION_DATE|g"
 	)
 
+	echo -e "content_with_data: "$content_with_data
+
 	# Save conf file
-	echo "${content_with_placeholders}" >"${VHOSTS_FOLDER}/${transformed_domain}.conf"
+	set conf_file_path $VHOSTS_FOLDER"/"$argv[4]".conf"
+	echo $content_with_data > $conf_file_path
 
-	# Check if the web root folder exists; if not, create it
-	if [ ! -d "${VM_FOLDER}/${transformed_domain}" ]; then
-		mkdir "${VM_FOLDER}/${transformed_domain}"
-	fi
+	echo -e ""
+	echo -e "✅ Stuff done! ... we freakin' hope 😖"
+	echo -e ""
+end
 
-	# Copy index.html if it doesn't exist in the web root folder
-	if [ ! -f "${VM_FOLDER}/${transformed_domain}/index.html" ]; then
-		cp "${VM_FOLDER}/provision/html/index.html" "${VM_FOLDER}/${transformed_domain}/"
-	fi
+# Iterate through the site data
+for one_site in $sites
+	# First get thy data in order young coder
+	set site_info (string split ' ' $one_site)
+	set parts (string split '.' $site_info[1])
 
-	# Copy phpinfo.php if it doesn't exist in the web root folder
-	if [ ! -f "${VM_FOLDER}/${transformed_domain}/phpinfo.php" ]; then
-		cp "${VM_FOLDER}/provision/html/phpinfo.php" "${VM_FOLDER}/${transformed_domain}/"
-	fi
+	set reversed_parts ""
+	for i in (seq (count $parts) -1 2)
+		set -l part $parts[$i]
+		set reversed_parts $reversed_parts$part"."
+	end
+	set reversed_parts $reversed_parts$parts[1]
 
-	echo ""
-	echo "✅ ${transformed_domain}.conf configured successfully!"
-	echo ""
-}
+	set parts (string split '.' $reversed_parts)
 
-# Loop through each site and generate conf files
-for site_data in "${sites[@]}"; do
-	IFS='|' read -ra site_data <<<"${site_data}"
-	generate_conf "${site_data[0]}" "${site_data[1]}" "${site_data[2]}" "${site_data[3]}"
-done
+	set site_info $site_info (string join "." $parts)
+	set site_info $site_info (string join "_" $parts)
 
-service apache2 restart
+	# Now go configure some web sites
+	configure_sites $site_info
+end
 
-echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo ""
-echo "🏆 Websites Configured ‼️"
-echo ""
-echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+# Restart Apache after all configurations
+#service apache2 restart
+
+echo -e ""
+echo -e "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"

@@ -1,0 +1,7 @@
+# ./provision/data/sites_data
+
+# Site data format:
+# "domain template_index"
+subdomain1.example.tld 0
+subdomain2.example.tld 0
+example.tld 1
