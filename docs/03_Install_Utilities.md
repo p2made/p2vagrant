@@ -1,5 +1,7 @@
 # 03 Install Utilities
 
+**Updated:** 2024-01-26
+
 --
 
 ### Create `provision/scripts/install_utilities.sh`
