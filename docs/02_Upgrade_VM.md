@@ -1,5 +1,7 @@
 # 02 Upgrade VM
 
+**Updated:** 2024-01-26
+
 --
 
 ### Create `provision/scripts/upgrade_vm.sh`
