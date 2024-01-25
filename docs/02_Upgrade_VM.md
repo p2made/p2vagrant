@@ -79,7 +79,7 @@ The `echo` lines at the top on the script (& others throughout) are to show in T
 # vi: set ft=ruby :
 
 # 02 Upgrade VM
-# Updated: 2024-01-20
+# Updated: 2024-01-26
 
 # Machine Variables
 MEMORY              = 4096
@@ -107,8 +107,8 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
-	# Upgrade check...
-	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: 'always'
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
 
 end
 ```
