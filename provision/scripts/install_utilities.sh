@@ -62,9 +62,7 @@ install_packages \
 	software-properties-common \
 	unzip
 
-echo ""
 echo "✅ Utilities Installation: Packages installed successfully!"
-echo ""
 
 # Set Fish as the default shell
 chsh -s /usr/bin/fish
