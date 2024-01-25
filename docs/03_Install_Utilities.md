@@ -91,7 +91,7 @@ echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 �
 # vi: set ft=ruby :
 
 # 03 Install Utilities
-# Updated: 2024-01-20
+# Updated: 2024-01-26
 
 # Machine Variables
 MEMORY              = 4096
@@ -132,16 +132,10 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_03 ./Vagrantfile
 ```
 
-### Provision the VM
+### With the Vagrant machine already running, provision the VM...
 
 ```
 vagrant reload --provision
-```
-
-Or (*only if the VM is running*)...
-
-```
-vagrant provision
 ```
 
 ### All good?

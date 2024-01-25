@@ -4,7 +4,7 @@
 # Updated 2024-01-26
 
 # Variables...
-# 1 - TIMEZONE	 = "Australia/Brisbane"
+# 1 - TIMEZONE   = "Australia/Brisbane"
 
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
@@ -66,8 +66,19 @@ echo ""
 echo "✅ Utilities Installation: Packages installed successfully!"
 echo ""
 
+# Set Fish as the default shell
 chsh -s /usr/bin/fish
-grep -qxF 'cd /var/www' /home/vagrant/.profile || echo 'cd /var/www' >> /home/vagrant/.profile
+
+# Check if changing the default shell was successful
+if [ $? -eq 0 ]; then
+	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
+else
+	echo "⚠️ Error: Failed to set Fish shell as default 💥"
+fi
+
+# Append the 'cd /var/www' line to .profile if it doesn't exist
+grep -qxF 'cd /var/www' /home/vagrant/.profile || \
+	echo 'cd /var/www' >> /home/vagrant/.profile
 
 echo ""
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"

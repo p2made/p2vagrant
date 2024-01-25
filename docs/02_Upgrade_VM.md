@@ -121,16 +121,10 @@ cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
 
 If you don't want `upgrade_vm.sh` to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
 
-### Provision the VM
+### With the Vagrant machine already running, provision the VM...
 
 ```
 vagrant reload --provision
-```
-
-Or (*only if the VM is running*)...
-
-```
-vagrant provision
 ```
 
 ### All good?

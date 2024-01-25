@@ -52,7 +52,6 @@ fi
 # Display OS information
 echo "📄 Displaying OS information 📄"
 cat /etc/os-release
-echo ""
 echo "✅ System update complete! ✅"
 
 echo ""
