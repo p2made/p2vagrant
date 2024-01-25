@@ -1,5 +1,7 @@
 # 01 Create Bare VM
 
+**Updated:** 2024-01-26
+
 --
 
 Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider.
@@ -16,7 +18,7 @@ Go to the [VMware Fusion evaluation page](https://www.vmware.com/au/products/fus
 
 * Nothing needs to be set up in `VMware Fusion`.
 * It's best to have VMware Fusion running when you run `vagrant up`, or any other Vagrant command that starts a VM.
-* Technically VMware Fusion doesn't need to be running & will be lanched by vagrant when necessary. However…
+* Technically VMware Fusion doesn't need to be running & will be lanched by vagrant when necessary. However...
 * If VMware Fusion takes too long to launch, Vagrant times out.
 
 ### Install Vagrant & VMware Utility
@@ -26,6 +28,13 @@ brew install --cask vagrant
 brew install --cask vagrant-vmware-utility
 ```
 
+### Install Vagrant Plugins
+
+```
+vagrant plugin install vagrant-share
+vagrant plugin install vagrant-vmware-desktop
+```
+
 * Optionally install Vagrant Manager
 
 ```
@@ -33,13 +42,6 @@ brew install --cask vagrant-manager
 ```
 
 You might find it useful 🙃
-
-### Install Vagrant Plugins
-
-```
-vagrant plugin install vagrant-share
-vagrant plugin install vagrant-vmware-desktop
-```
 
 ### Check `vagrant` status
 
