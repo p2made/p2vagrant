@@ -1,17 +1,18 @@
 #!/bin/sh
 
 # 03 Install Utilities
+# Updated 2024-01-26
 
 # Variables...
 # 1 - TIMEZONE	 = "Australia/Brisbane"
 
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo ""
-echo "🚀 Installing Utilities 🚀"
-echo "📜 Script Name:  install_utilities.sh"
-echo "📅 Last Updated: 2024-01-20"
-echo ""
-echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo "🇲🇳"
+echo "🇦🇿 🚀 Installing Utilities 🚀"
+echo "🇺🇿 📜 Script Name:  install_utilities.sh"
+echo "🇹🇲 📅 Last Updated: 2024-01-26"
+echo "🇹🇯"
+echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
 export DEBIAN_FRONTEND=noninteractive
@@ -70,7 +71,7 @@ grep -qxF 'cd /var/www' /home/vagrant/.profile || echo 'cd /var/www' >> /home/va
 
 echo ""
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo ""
-echo "🏆 Utilities Installed ‼️"
-echo ""
-echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo "🇲🇳"
+echo "🇦🇿 🏆 Utilities Installed ‼️"
+echo "🇺🇿"
+echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
