@@ -37,8 +37,7 @@ apt-get update && sudo apt-get -qy install yarn
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-TIMEZONE            = "Australia/Brisbane"
-#TIMEZONE            = "Europe/London"
+TIMEZONE            = "Australia/Brisbane" # "Europe/London"
 VM_IP               = "192.168.42.100"
 
 # Synced Folders

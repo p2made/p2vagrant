@@ -126,8 +126,7 @@ The page is a simple `index.html` located within your VM in the `/var/www/html` 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-TIMEZONE            = "Australia/Brisbane"
-#TIMEZONE            = "Europe/London"
+TIMEZONE            = "Australia/Brisbane" # "Europe/London"
 VM_IP               = "192.168.42.100"
 SSL_DIR             = "/var/www/provision/ssl"
 CERT_NAME           = "p2_selfsigned"

@@ -101,8 +101,7 @@ Replace `db_user `, `db_password `, & `db `, with values from `Vagrantfile`.
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
-TIMEZONE            = "Australia/Brisbane"
-#TIMEZONE            = "Europe/London"
+TIMEZONE            = "Australia/Brisbane" # "Europe/London"
 VM_IP               = "192.168.42.100"
 
 # Synced Folders
