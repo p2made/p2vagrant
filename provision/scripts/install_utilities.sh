@@ -58,9 +58,12 @@ install_packages \
 	liblua5.3-0 \
 	lsb-release \
 	mime-support \
+	nodejs \
+	npm \
 	openssl \
 	software-properties-common \
-	unzip
+	unzip \
+	yarn
 
 echo "✅ Utilities Installation: Packages installed successfully!"
 

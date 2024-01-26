@@ -1,5 +1,7 @@
 # 04 Generate SSL
 
+**Updated:** 2024-01-26
+
 --
 
 ### Create `provision/scripts/generate_ssl.sh`
