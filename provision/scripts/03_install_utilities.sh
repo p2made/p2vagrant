@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # 03 Install Utilities
 
@@ -7,9 +7,9 @@
 
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
-echo "🇦🇿 🚀 Installing Utilities 🚀"
-echo "🇺🇿 📜 Script Name:  03_install_utilities.sh"
-echo "🇹🇲 📅 Last Updated: 2024-01-26"
+echo "🇦🇿    🚀 Installing Utilities 🚀"
+echo "🇺🇿    📜 Script Name:  03_install_utilities.sh"
+echo "🇹🇲    📅 Last Updated: 2024-01-26"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
@@ -20,6 +20,11 @@ handle_error() {
 	exit 1
 }
 
+# Function to announce success
+announce_success() {
+	echo "✅ $1"
+}
+
 export DEBIAN_FRONTEND=noninteractive
 
 # Function to install packages with error handling
@@ -27,7 +32,23 @@ install_packages() {
 	if ! apt-get -qy install "$@"; then
 		handle_error "Failed to install packages"
 	fi
+
+	announce_success "Utilities Installation: Packages installed successfully!"
 }
+
+
+
+
+
+echo ""
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo "🇲🇳"
+echo "🇦🇿    🏆 _script_job_complete_ ‼️"
+echo "🇺🇿"
+echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+
+# -- -- // -- -- // -- -- // -- -- // -- -- // -- --
+
 
 # Function to update package lists
 echo "🔄 Updating package lists 🔄"
@@ -69,7 +90,6 @@ install_packages \
 	unzip \
 	yarn
 
-echo "✅ Utilities Installation: Packages installed successfully!"
 
 # Set Fish as the default shell
 sudo usermod -s /usr/bin/fish vagrant
