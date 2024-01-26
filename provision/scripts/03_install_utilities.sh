@@ -14,20 +14,25 @@ echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
+# Function for error handling
+handle_error() {
+	echo "⚠️ Error: $1 💥"
+	exit 1
+}
+
 export DEBIAN_FRONTEND=noninteractive
 
 # Function to install packages with error handling
 install_packages() {
 	if ! apt-get -qy install "$@"; then
-		echo "⚠️ Error: Failed to install packages 💥"
-		exit 1
+		handle_error "Failed to install packages"
 	fi
 }
 
 # Function to update package lists
 echo "🔄 Updating package lists 🔄"
 if ! apt-get -q update; then
-	handle_error "⚠️ Failed to update package lists"
+	handle_error "Failed to update package lists"
 fi
 
 # Set timezone
@@ -74,7 +79,7 @@ sudo chsh -s /usr/bin/fish vagrant
 if [ $? -eq 0 ]; then
 	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
 else
-	echo "⚠️ Error: Failed to set Fish shell as default 💥"
+	handle_error "Failed to set Fish shell as default"
 fi
 
 # Append the 'cd /var/www' line to .profile if it doesn't exist
