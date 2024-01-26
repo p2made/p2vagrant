@@ -4,7 +4,7 @@
 
 --
 
-### Create `provision/scripts/upgrade_vm.sh`
+### Create `provision/scripts/02_upgrade_vm.sh`
 
 ```
 #!/bin/sh
@@ -18,7 +18,7 @@
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿 🚀 Upgrading VM 🚀"
-echo "🇺🇿 📜 Script Name:  upgrade_vm.sh"
+echo "🇺🇿 📜 Script Name:  02_upgrade_vm.sh"
 echo "🇹🇲 📅 Last Updated: 2024-01-26"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
@@ -110,7 +110,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
+	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
 
 end
 ```
@@ -121,7 +121,7 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
 ```
 
-If you don't want `upgrade_vm.sh` to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
+If you don't want `02_upgrade_vm.sh` to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
 
 ### With the Vagrant machine already running, provision the VM...
 

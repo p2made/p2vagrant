@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # 03 Install Utilities
-# Updated 2024-01-26
 
 # Variables...
 # 1 - TIMEZONE   = "Australia/Brisbane"

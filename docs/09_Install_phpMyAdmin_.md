@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
+	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
