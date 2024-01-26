@@ -4,7 +4,7 @@
 
 --
 
-### Create `provision/scripts/install_utilities.sh`
+### Create `provision/scripts/03_install_utilities.sh`
 
 ```
 #!/bin/sh
@@ -18,7 +18,7 @@
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿 🚀 Installing Utilities 🚀"
-echo "🇺🇿 📜 Script Name:  install_utilities.sh"
+echo "🇺🇿 📜 Script Name:  03_install_utilities.sh"
 echo "🇹🇲 📅 Last Updated: 2024-01-26"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
@@ -123,7 +123,7 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
-	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
 
 end
 ```

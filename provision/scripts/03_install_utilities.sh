@@ -8,7 +8,7 @@
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿 🚀 Installing Utilities 🚀"
-echo "🇺🇿 📜 Script Name:  install_utilities.sh"
+echo "🇺🇿 📜 Script Name:  03_install_utilities.sh"
 echo "🇹🇲 📅 Last Updated: 2024-01-26"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
@@ -67,7 +67,8 @@ install_packages \
 echo "✅ Utilities Installation: Packages installed successfully!"
 
 # Set Fish as the default shell
-chsh -s /usr/bin/fish
+sudo usermod -s /usr/bin/fish vagrant
+sudo chsh -s /usr/bin/fish vagrant
 
 # Check if changing the default shell was successful
 if [ $? -eq 0 ]; then
