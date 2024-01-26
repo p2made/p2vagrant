@@ -1,44 +1,87 @@
 # 03 Install Utilities
 
-**Updated:** 2024-01-26
+**Updated:** 2024-01-27
 
 --
 
 ### Create `provision/scripts/03_install_utilities.sh`
 
 ```
-#!/bin/sh
+#!/bin/bash
 
 # 03 Install Utilities
-# Updated 2024-01-26
 
 # Variables...
-# 1 - TIMEZONE	 = "Australia/Brisbane"
+# 1 - TIMEZONE   = "Australia/Brisbane"
+
+# Get the last modified date dynamically
+last_modified_date=$(date -r "$0" "+%Y-%m-%d")
 
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
-echo "🇦🇿 🚀 Installing Utilities 🚀"
-echo "🇺🇿 📜 Script Name:  03_install_utilities.sh"
-echo "🇹🇲 📅 Last Updated: 2024-01-26"
+echo "🇦🇿    🚀 Installing Utilities 🚀"
+echo "🇺🇿    📜 Script Name:  03_install_utilities.sh"
+echo "🇹🇲    📅 Last Updated: $last_modified_date"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
+# Function for error handling
+# Usage: handle_error "Error message"
+handle_error() {
+	echo "⚠️ Error: $1 💥"
+	echo "Run `vagrant halt` then restore the last snapshot before trying again."
+	exit 1
+}
+
+# Function to announce success
+# Usage: announce_success "Task completed successfully."
+announce_success() {
+	echo "✅ $1"
+}
+
 export DEBIAN_FRONTEND=noninteractive
 
-# Function to install packages with error handling
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+# Function to install packages with progress dots and error handling
 install_packages() {
-	if ! apt-get -qy install "$@"; then
-		echo "⚠️ Error: Failed to install packages 💥"
-		exit 1
+	echo "🔄 Installing packages 🔄"
+
+	# Run apt-get in a subshell to capture its output
+	(
+		while IFS= read -r line; do
+			echo -n "🐌"
+		done < <(apt-get -qy install "$@" 2>&1)
+		echo ""  # Move to the next line after the dots
+	)
+
+	if [ "${PIPESTATUS[0]}" -ne 0 ]; then
+		handle_error "Failed to install packages"
+	fi
+
+	announce_success "Utilities Installation: Packages installed successfully!"
+}
+
+update_package_lists() {
+	echo "🔄 Updating package lists 🔄"
+	if ! apt-get -q update 2>&1; then
+		handle_error "Failed to update package lists"
 	fi
 }
 
-# Function to update package lists
-echo "🔄 Updating package lists 🔄"
-if ! apt-get -q update; then
-	handle_error "⚠️ Failed to update package lists"
-fi
+# Function to set Fish as the default shell
+set_fish_as_default_shell() {
+	if ! sudo usermod -s /usr/bin/fish vagrant; then
+		handle_error "Failed to set Fish shell as default"
+	fi
+
+	sudo chsh -s /usr/bin/fish vagrant
+
+	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
+}
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Set timezone
 echo "🕤 Setting timezone to $1 🕓"
@@ -67,21 +110,23 @@ install_packages \
 	liblua5.3-0 \
 	lsb-release \
 	mime-support \
+	nodejs \
+	npm \
 	openssl \
 	software-properties-common \
-	unzip
+	unzip \
+	yarn
 
-echo ""
-echo "✅ Utilities Installation: Packages installed successfully!"
-echo ""
+set_fish_as_default_shell
 
-chsh -s /usr/bin/fish
-grep -qxF 'cd /var/www' /home/vagrant/.profile || echo 'cd /var/www' >> /home/vagrant/.profile
+# Append the 'cd /var/www' line to .profile if it doesn't exist
+grep -qxF 'cd /var/www' /home/vagrant/.profile || \
+	echo 'cd /var/www' >> /home/vagrant/.profile
 
 echo ""
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
-echo "🇦🇿 🏆 Utilities Installed ‼️"
+echo "🇦🇿    🏆 Utilities Installed ‼️"
 echo "🇺🇿"
 echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
 ```
@@ -122,7 +167,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
+#	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
 	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
 
 end
@@ -134,10 +179,20 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_03 ./Vagrantfile
 ```
 
-### With the Vagrant machine already running, provision the VM...
+* **Note:** From here on, all but the last provisioning script call will be commented out. If you want to run more than one step at once, simply uncomment the earlier lines.
+
+### Provision the VM...
+
+If the VM is running
 
 ```
 vagrant reload --provision
+```
+
+If the VM is **not** running
+
+```
+vagrant up --provision
 ```
 
 ### All good?

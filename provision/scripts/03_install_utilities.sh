@@ -5,56 +5,74 @@
 # Variables...
 # 1 - TIMEZONE   = "Australia/Brisbane"
 
+# Get the last modified date dynamically
+last_modified_date=$(date -r "$0" "+%Y-%m-%d")
+
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿    🚀 Installing Utilities 🚀"
 echo "🇺🇿    📜 Script Name:  03_install_utilities.sh"
-echo "🇹🇲    📅 Last Updated: 2024-01-26"
+echo "🇹🇲    📅 Last Updated: $last_modified_date"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
 # Function for error handling
+# Usage: handle_error "Error message"
 handle_error() {
 	echo "⚠️ Error: $1 💥"
+	echo "Run `vagrant halt` then restore the last snapshot before trying again."
 	exit 1
 }
 
 # Function to announce success
+# Usage: announce_success "Task completed successfully."
 announce_success() {
 	echo "✅ $1"
 }
 
 export DEBIAN_FRONTEND=noninteractive
 
-# Function to install packages with error handling
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+# Function to install packages with progress dots and error handling
 install_packages() {
-	if ! apt-get -qy install "$@"; then
+	echo "🔄 Installing packages 🔄"
+
+	# Run apt-get in a subshell to capture its output
+	(
+		while IFS= read -r line; do
+			echo -n "🐌"
+		done < <(apt-get -qy install "$@" 2>&1)
+		echo ""  # Move to the next line after the dots
+	)
+
+	if [ "${PIPESTATUS[0]}" -ne 0 ]; then
 		handle_error "Failed to install packages"
 	fi
 
 	announce_success "Utilities Installation: Packages installed successfully!"
 }
 
+update_package_lists() {
+	echo "🔄 Updating package lists 🔄"
+	if ! apt-get -q update 2>&1; then
+		handle_error "Failed to update package lists"
+	fi
+}
 
+# Function to set Fish as the default shell
+set_fish_as_default_shell() {
+	if ! sudo usermod -s /usr/bin/fish vagrant; then
+		handle_error "Failed to set Fish shell as default"
+	fi
 
+	sudo chsh -s /usr/bin/fish vagrant
 
+	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
+}
 
-echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 _script_job_complete_ ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
-
-# -- -- // -- -- // -- -- // -- -- // -- -- // -- --
-
-
-# Function to update package lists
-echo "🔄 Updating package lists 🔄"
-if ! apt-get -q update; then
-	handle_error "Failed to update package lists"
-fi
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Set timezone
 echo "🕤 Setting timezone to $1 🕓"
@@ -90,17 +108,7 @@ install_packages \
 	unzip \
 	yarn
 
-
-# Set Fish as the default shell
-sudo usermod -s /usr/bin/fish vagrant
-sudo chsh -s /usr/bin/fish vagrant
-
-# Check if changing the default shell was successful
-if [ $? -eq 0 ]; then
-	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
-else
-	handle_error "Failed to set Fish shell as default"
-fi
+set_fish_as_default_shell
 
 # Append the 'cd /var/www' line to .profile if it doesn't exist
 grep -qxF 'cd /var/www' /home/vagrant/.profile || \
@@ -109,6 +117,6 @@ grep -qxF 'cd /var/www' /home/vagrant/.profile || \
 echo ""
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
-echo "🇦🇿 🏆 Utilities Installed ‼️"
+echo "🇦🇿    🏆 Utilities Installed ‼️"
 echo "🇺🇿"
 echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
