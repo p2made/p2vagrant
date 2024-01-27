@@ -5,14 +5,11 @@
 # Variables...
 # NONE!"
 
-# Get the last modified date dynamically
-last_modified_date=$(date -r "$0" "+%Y-%m-%d")
-
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿    🚀 Upgrading VM 🚀"
 echo "🇺🇿    📜 Script Name:  02_upgrade_vm.sh"
-echo "🇹🇲    📅 Last Updated: $last_modified_date"
+echo "🇹🇲    📅 Last Updated: 2024-01-27"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""

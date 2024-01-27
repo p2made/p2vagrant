@@ -92,7 +92,7 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
 	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
-	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/04_install_apache.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_php.sh", :args => [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", :args => [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]

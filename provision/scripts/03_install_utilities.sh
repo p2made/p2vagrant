@@ -5,14 +5,11 @@
 # Variables...
 # 1 - TIMEZONE   = "Australia/Brisbane"
 
-# Get the last modified date dynamically
-last_modified_date=$(date -r "$0" "+%Y-%m-%d")
-
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿    🚀 Installing Utilities 🚀"
 echo "🇺🇿    📜 Script Name:  03_install_utilities.sh"
-echo "🇹🇲    📅 Last Updated: $last_modified_date"
+echo "🇹🇲    📅 Last Updated: 2024-01-27"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""

@@ -32,6 +32,7 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
-	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/00_fish_test.sh", args: ['true', 'false']
 
 end

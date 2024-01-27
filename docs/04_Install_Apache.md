@@ -1,8 +1,10 @@
-# 05 Install Apache
+# 04 Install Apache
+
+**Updated:** 2024-01-27
 
 --
 
-### Create `provision/scripts/install_apache.sh`
+### Create `provision/scripts/04_install_apache.sh`
 
 ```
 #!/bin/sh
@@ -15,7 +17,7 @@
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 echo "🚀 Installing Apache 🚀"
-echo "📜 Script Name:  install_apache.sh"
+echo "📜 Script Name:  04_install_apache.sh"
 echo "📅 Last Updated: 2024-01-20"
 echo ""
 echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
@@ -155,7 +157,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
 	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
 	config.vm.provision :shell, path: "provision/scripts/04_generate_ssl.sh", args: [SSL_DIR, CERT_NAME]
-	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
+	config.vm.provision :shell, path: "provision/scripts/04_install_apache.sh"
 
 end
 ```
@@ -166,24 +168,19 @@ Or copy this file...
 cp ./Vagrantfiles/Vagrantfile_05 ./Vagrantfile
 ```
 
-### Provision the VM
+### Provision the VM...
+
+If the VM is **not** running
+
+```
+vagrant up --provision
+```
+
+If the VM is running
 
 ```
 vagrant reload --provision
 ```
-
-Or (*only if the VM is running*)...
-
-```
-vagrant provision
-```
-
-### Visit
-
-* [http://192.168.42.100/](http://192.168.42.100/)
-
-... you should see the Apache default page of your VM.
-
 
 ### All good?
 
@@ -191,7 +188,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [04 Generate SSL](./04_Generate_SSL.md)
+| [03 Install Utilities](./03_Install_Utilities.md)
 | [**Back to Steps**](../README.md)
-| [06 Install PHP](./06_Install_PHP.md)
+| [05 Install PHP](./05_Install_PHP.md)
 |

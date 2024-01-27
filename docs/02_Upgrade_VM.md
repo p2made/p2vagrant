@@ -14,14 +14,11 @@
 # Variables...
 # NONE!"
 
-# Get the last modified date dynamically
-last_modified_date=$(date -r "$0" "+%Y-%m-%d")
-
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿    🚀 Upgrading VM 🚀"
 echo "🇺🇿    📜 Script Name:  02_upgrade_vm.sh"
-echo "🇹🇲    📅 Last Updated: $last_modified_date"
+echo "🇹🇲    📅 Last Updated: 2024-01-27"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
@@ -161,16 +158,16 @@ If you don't want `02_upgrade_vm.sh` to run every time you launch the VM, either
 
 ### Provision the VM...
 
-If the VM is running
-
-```
-vagrant reload --provision
-```
-
 If the VM is **not** running
 
 ```
 vagrant up --provision
+```
+
+If the VM is running
+
+```
+vagrant reload --provision
 ```
 
 ### All good?

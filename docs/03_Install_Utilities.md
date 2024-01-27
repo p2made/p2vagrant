@@ -14,14 +14,11 @@
 # Variables...
 # 1 - TIMEZONE   = "Australia/Brisbane"
 
-# Get the last modified date dynamically
-last_modified_date=$(date -r "$0" "+%Y-%m-%d")
-
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿    🚀 Installing Utilities 🚀"
 echo "🇺🇿    📜 Script Name:  03_install_utilities.sh"
-echo "🇹🇲    📅 Last Updated: $last_modified_date"
+echo "🇹🇲    📅 Last Updated: 2024-01-27"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
@@ -183,16 +180,16 @@ cp ./Vagrantfiles/Vagrantfile_03 ./Vagrantfile
 
 ### Provision the VM...
 
-If the VM is running
-
-```
-vagrant reload --provision
-```
-
 If the VM is **not** running
 
 ```
 vagrant up --provision
+```
+
+If the VM is running
+
+```
+vagrant reload --provision
 ```
 
 ### All good?
@@ -203,5 +200,5 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
-| [04 Generate SSL](./04_Generate_SSL.md)
+| [04 Install Apache](./04_Install_Apache.md)
 |

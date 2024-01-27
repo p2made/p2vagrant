@@ -1,6 +1,6 @@
 # 01 Create Bare VM
 
-**Updated:** 2024-01-26
+**Updated:** 2024-01-27
 
 --
 
