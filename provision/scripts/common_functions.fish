@@ -39,12 +39,8 @@ function install_packages
 	echo "🔄 Installing Packages 🔄"
 
 	for package in $argv
-		set result (eval echo $package)
-		set -a packages_to_install $result
-	end
-
-	for package in $packages_to_install
-		if not apt-get -qy install $package
+		set cleaned (eval echo $package)
+		if not apt-get -qy install $cleaned
 			handle_error "Failed to install packages"
 		end
 	end

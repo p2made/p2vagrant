@@ -14,7 +14,6 @@ echo ""
 # Variables...
 # 1 - PHP_VERSION     = "8.3"
 set PHP_VERSION $1      # production
-#set PHP_VERSION "8.3"   # testing
 
 set PACKAGE_LIST \
 	php$PHP_VERSION \

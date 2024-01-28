@@ -1,104 +1,71 @@
 #!/bin/fish
 
-# 00 _script_title_
+# 06 Install MySQL
 
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
-echo "🇦🇿    🚀 _active_title_ 🚀"
-echo "🇺🇿    📜 Script Name:  00_fish_test.sh"
-echo "🇹🇲    📅 Last Updated: 2024-01-27"
+echo "🇦🇿    🚀 Installing MySQL 🚀"
+echo "🇺🇿    📜 Script Name:  06_install_mysql.fish"
+echo "🇹🇲    📅 Last Updated: 2024-01-28"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
 # Variables...
-# 1 - TIMEZONE   = "Australia/Brisbane"
-# NONE!"
+# 1 - MYSQL_VERSION   = "8.1"
+# 2 - DB_USERNAME     = "fredspotty"
+# 3 - DB_PASSWORD     = "Passw0rd"
+# 4 - DB_NAME         = "example_db"
+# 5 - DB_NAME_TEST    = "example_db_test"
+# 6 - PHP_VERSION     = "8.3"
 
-# Shove data in here
+#set MYSQL_VERSION $1                # prod
+set MYSQL_VERSION "8.1"             # test
+#set DB_USERNAME $2                  # prod
+set DB_USERNAME "fredspotty"        # test
+#set DB_PASSWORD $3                  # prod
+set DB_PASSWORD "Passw0rd"          # test
+#set DB_NAME $4                      # prod
+set DB_NAME "example_db"            # test
+#set DB_NAME_TEST $5                 # prod
+set DB_NAME_TEST "example_db_test"  # test
+#set PHP_VERSION $46                 # prod
+set PHP_VERSION "8.3"               # test
+
+set PACKAGE_LIST \
+	mysql-server
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
 
 set -x DEBIAN_FRONTEND noninteractive
 
-# Start _script_title_ logic...
-
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-# Functions
 
-# Function form
-#function function_name
-#    ... Function body ...
-#    if not [SOME_CHECK]
-#        handle_error "Failed to perform some action."
-#    end
-#    announce_success "Successfully completed some action." # optional
-#end
+# Update package lists
+update_package_lists
 
-# Example usage:
-#function_name
-#function_name argument
-#function_name argument1 argument2
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-# Execution
-
-# single line statements
-# including calls to functions
-
-echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 _script_job_complete_ ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
-
-# -- -- // -- -- // -- -- // -- -- // -- -- // -- --
-
-#!/bin/sh
-
-# 07 Install MySQL
-
-# Variables...
-# 1 - MYSQL_VERSION   = "8.1"
-# 2 - DB_USERNAME     = ⚠️ See Vagrantfile
-# 3 - DB_PASSWORD     = ⚠️ See Vagrantfile
-# 4 - DB_NAME         = "example_db"
-# 5 - DB_NAME_TEST    = "example_db_test"
-
-# Function for error handling
-handle_error() {
-	echo "⚠️ Error: $1 💥"
-	exit 1
-}
-
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo ""
-echo "🚀 Installing MySQL 🚀"
-echo "📜 Script Name:  install_mysql.sh"
-echo "📅 Last Updated: 2024-01-20"
-echo ""
-echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo ""
-
-export DEBIAN_FRONTEND=noninteractive
-
-# Call the vm_upgrade.sh script
-/var/www/provision/scripts/vm_upgrade.sh || handle_error "Failed to upgrade VM"
-
-# Install MySQL
-if ! apt-get -qy install mysql-server; then
-	handle_error "Failed to install MySQL"
-fi
+# Install PHP packages
+install_packages $PACKAGE_LIST
 
 # Create the database and grant privileges
-echo "CREATE USER '$2'@'%' IDENTIFIED BY '$3'"      | mysql || handle_error "Failed to create MySQL user"
-echo "CREATE DATABASE IF NOT EXISTS $4"             | mysql || handle_error "Failed to create MySQL database $4"
-echo "CREATE DATABASE IF NOT EXISTS $5"             | mysql || handle_error "Failed to create MySQL database $5"
-echo "GRANT ALL PRIVILEGES ON $4.* TO '$2'@'%';"    | mysql || handle_error "Failed to grant privileges on $4"
-echo "GRANT ALL PRIVILEGES ON $5.* TO '$2'@'%';"    | mysql || handle_error "Failed to grant privileges on $5"
-echo "flush privileges"                             | mysql || handle_error "Failed to flush privileges"
+echo "CREATE USER '$DB_USERNAME'@'%' IDENTIFIED BY '$DB_PASSWORD'" | \
+	mysql || handle_error "Failed to create MySQL user"
+
+echo "CREATE DATABASE IF NOT EXISTS $DB_NAME" | \
+	mysql || handle_error "Failed to create MySQL database $DB_NAME"
+
+echo "CREATE DATABASE IF NOT EXISTS $DB_NAME_TEST" | \
+	mysql || handle_error "Failed to create MySQL database $DB_NAME_TEST"
+
+echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USERNAME'@'%';" | \
+	mysql || handle_error "Failed to grant privileges on $DB_NAME"
+
+echo "GRANT ALL PRIVILEGES ON $DB_NAME_TEST.* TO '$DB_USERNAME'@'%';" | \
+	mysql || handle_error "Failed to grant privileges on $DB_NAME_TEST"
+
+echo "flush privileges" | \
+	mysql || handle_error "Failed to flush privileges"
 
 # Update MySQL configuration
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -110,11 +77,13 @@ cp /var/www/provision/html/db.php /var/www/html/ || handle_error "Failed to copy
 sudo chmod -R 755 /var/www/html/ || handle_error "Failed to set permissions on /var/www/html/"
 
 # Display installed packages
-dpkg -l | grep "apache2\|mysql-server-$1\|php8.2"
+apt list --installed | \
+	grep -E "apache2|mysql-server-$MYSQL_VERSION|php$PHP_VERSION" | \
+	awk '{print $1, $2}'
 
 echo ""
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo ""
-echo "🏆 MySQL Installed ‼️"
-echo ""
-echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo "🇲🇳"
+echo "🇦🇿    🏆 MySQL Installed ‼️"
+echo "🇺🇿"
+echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"

@@ -2,7 +2,7 @@
 
 --
 
-### Create `provision/scripts/install_mysql.sh`
+### Create `provision/scripts/06_install_mysql.fish`
 
 ```
 #!/bin/sh
@@ -25,7 +25,7 @@ handle_error() {
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo ""
 echo "🚀 Installing MySQL 🚀"
-echo "📜 Script Name:  install_mysql.sh"
+echo "📜 Script Name:  06_install_mysql.fish"
 echo "📅 Last Updated: 2024-01-20"
 echo ""
 echo "🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
@@ -141,7 +141,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
 	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
-	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", args: [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish", args: [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
 ```
