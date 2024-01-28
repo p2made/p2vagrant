@@ -2,7 +2,7 @@
 
 --
 
-### Create `provision/scripts/06_install_phpmyadmin.fish`
+### Create `provision/scripts/07_install_phpmyadmin.fish`
 
 ```
 #!/bin/sh
@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
 	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", args: [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	config.vm.provision :shell, path: "provision/scripts/06_install_phpmyadmin.fish", args: [PMA_VERSION, DB_PASSWORD, REMOTE_FOLDER]
+	config.vm.provision :shell, path: "provision/scripts/07_install_phpmyadmin.fish", args: [PMA_VERSION, DB_PASSWORD, REMOTE_FOLDER]
 
 end
 ```

@@ -1,3 +1,61 @@
+#!/bin/fish
+
+# 00 _script_title_
+
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo "🇲🇳"
+echo "🇦🇿    🚀 _active_title_ 🚀"
+echo "🇺🇿    📜 Script Name:  00_fish_test.sh"
+echo "🇹🇲    📅 Last Updated: 2024-01-27"
+echo "🇹🇯"
+echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
+echo ""
+
+# Variables...
+# 1 - TIMEZONE   = "Australia/Brisbane"
+# NONE!"
+
+# Shove data in here
+
+# Source common functions
+source /var/www/provision/scripts/common_functions.fish
+
+set -x DEBIAN_FRONTEND noninteractive
+
+# Start _script_title_ logic...
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# Functions
+
+# Function form
+#function function_name
+#    ... Function body ...
+#    if not [SOME_CHECK]
+#        handle_error "Failed to perform some action."
+#    end
+#    announce_success "Successfully completed some action." # optional
+#end
+
+# Example usage:
+#function_name
+#function_name argument
+#function_name argument1 argument2
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# Execution
+
+# single line statements
+# including calls to functions
+
+echo ""
+echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
+echo "🇲🇳"
+echo "🇦🇿    🏆 _script_job_complete_ ‼️"
+echo "🇺🇿"
+echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+
+# -- -- // -- -- // -- -- // -- -- // -- -- // -- --
+
 #!/bin/sh
 
 # 07 Install MySQL
