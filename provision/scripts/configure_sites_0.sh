@@ -82,7 +82,7 @@ function configure_sites
 		-key $ssl_key_file \
 		-out $ssl_cert_file \
 		-days 3650 \
-		-subj /CN=$domain
+		-subj "/C=AU/O=P2M/CN=*.$domain"
 
 	# Put `conf` & SSL files into place
 	sudo cp -f $vhosts_file /etc/apache2/sites-available/
@@ -108,20 +108,15 @@ for one_site in $sites
 	set site_info (string split ' ' $one_site)
 	set parts (string split '.' $site_info[1])
 
-	set reversed_parts ""
-	for i in (seq (count $parts) -1 2)
-		set -l part $parts[$i]
-		set reversed_parts $reversed_parts$part"."
+	for part in $parts
+		set -p reversed_parts $part
 	end
-	set reversed_parts $reversed_parts$parts[1]
 
-	set parts (string split '.' $reversed_parts)
-
-	set site_info $site_info (string join "." $parts)
-	set site_info $site_info (string join "_" $parts)
+	set -a site_info $site_info (string join "." $reversed_parts)
+	set -a site_info $site_info (string join "_" $reversed_parts)
 
 	# Now go configure some web sites
-	configure_sites $site_info
+	configure_site $site_info
 end
 
 # Restart Apache after all configurations
