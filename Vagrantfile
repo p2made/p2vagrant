@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 05 Install PHP
+# 06 Install MySQL
 # Updated: 2024-01-28
 
 # Machine Variables
@@ -16,6 +16,14 @@ REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
 PHP_VERSION         = "8.3"
+MYSQL_VERSION       = "8.0"
+
+# Database Variables
+ROOT_PASSWORD       = "Ro07Passw0rd"
+DB_USERNAME         = "fredspotty"
+DB_PASSWORD         = "Passw0rd"
+DB_NAME             = "example_db"
+DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
@@ -36,7 +44,8 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
 #	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish", args: [REMOTE_FOLDER]
-	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
+#	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
