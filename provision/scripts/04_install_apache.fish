@@ -13,13 +13,13 @@ echo ""
 
 # Variables...
 # 1 - REMOTE_FOLDER   = "/var/www"
-set VM_FOLDER           $1            # production version
-#set VM_FOLDER           "/var/www"    # ssh test version
+#set VM_FOLDER           $1            # production version
+set VM_FOLDER           "/var/www"    # ssh test version
 set PROVISION_FOLDER    $VM_FOLDER/provision
 set HTML_FOLDER         $PROVISION_FOLDER/html
 set SSL_FOLDER          $PROVISION_FOLDER/ssl
 set VHOSTS_FOLDER       $PROVISION_FOLDER/vhosts
-set WEB_FOLDER          "/var/www/html"
+set GENERATION_DATE     $(date "+%Y-%m-%d")
 
 set PACKAGE_LIST \
 	apache2 \
@@ -57,7 +57,7 @@ announce_success "Apache packages installed successfully!"
 # Generate SSL key
 echo "🔄 Generating SSL key 🔄"
 if not openssl genrsa \
-	-out $SSL_FOLDER/localhost.key \
+	-out /var/www/provision/ssl/localhost.key \
 	2048
 	handle_error "Failed to generate SSL key"
 end
@@ -65,8 +65,8 @@ end
 # Generate self-signed SSL certificate
 echo "🔄 Generating self-signed SSL certificate 🔄"
 if not openssl req -x509 -nodes \
-	-key $SSL_FOLDER/localhost.key \
-	-out $SSL_FOLDER/localhost.cert \
+	-key /var/www/provision/ssl/localhost.key \
+	-out /var/www/provision/ssl/localhost.cert \
 	-days 3650 \
 	-subj "/CN=localhost" 2>/dev/null
 
@@ -76,21 +76,21 @@ end
 announce_success "SSL files generated successfully!"
 
 # Display information about the generated certificate
-openssl x509 -noout -text -in $SSL_FOLDER/localhost.cert
+openssl x509 -noout -text -in /var/www/provision/ssl/localhost.cert
 
 # Copy web server files into place
-yes | cp $VHOSTS_FOLDER/local.conf /etc/apache2/sites-available/
-yes | cp $HTML_FOLDER/index.htm $WEB_FOLDER/
-yes | cp $SSL_FOLDER/* /etc/apache2/sites-available/
+yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
+yes | cp /var/www/provision/html/index.htm /var/www/html/
+yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
 
 # Check if index.html exists in the html folder
-if not test -e $WEB_FOLDER/index.html
+if not test -e /var/www/html/index.html
 	# Copy index.html from the same source as index.htm
-	cp $HTML_FOLDER/index.html $WEB_FOLDER/
+	cp /var/www/provision/html/index.html /var/www/html/
 end
 
 # Set permissions on web server files
-chmod -R 755 $WEB_FOLDER/*
+chmod -R 755 /var/www/html/*
 chmod 600 /etc/apache2/sites-available/localhost.key
 
 a2ensite local.conf

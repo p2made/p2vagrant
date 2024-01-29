@@ -14,6 +14,9 @@
 /ssl
 /provision/ssl
 
+# logs
+/provision/logs
+
 # z_gitignore folder
 /shared/html/phpmyadmin
 /z_gitignore

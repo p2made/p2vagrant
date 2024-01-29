@@ -41,7 +41,6 @@ set PACKAGE_LIST \
 	php$PHP_VERSION-mysql \
 	php$PHP_VERSION-oauth \
 	php$PHP_VERSION-opcache \
-	php$PHP_VERSION-openssl \
 	php$PHP_VERSION-pcov \
 	php$PHP_VERSION-pspell \
 	php$PHP_VERSION-psr \
@@ -68,7 +67,6 @@ set PACKAGE_LIST \
 	php-google-recaptcha \
 	php-json \
 	php-nikic-fast-route \
-	php-openssl \
 	php-pear \
 	php-phpmyadmin-motranslator \
 	php-phpmyadmin-shapefile \
@@ -111,18 +109,18 @@ LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
 # Update package lists & install packages
 update_and_install_packages $PACKAGE_LIST
 
-sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/$PHP_VERSION/apache2/php.ini
-sed -i 's/post_max_size = .*/post_max_size = 64M/' /etc/php/$PHP_VERSION/apache2/php.ini
-sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' /etc/php/$PHP_VERSION/apache2/php.ini
-sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/$PHP_VERSION/apache2/php.ini
-sed -i 's/display_errors = .*/display_errors = on/' /etc/php/$PHP_VERSION/apache2/php.ini
-sed -i 's/display_startup_errors = .*/display_startup_errors = on/' /etc/php/$PHP_VERSION/apache2/php.ini
+sed -i 's/max_execution_time = .*/max_execution_time = 60/' "/etc/php/$PHP_VERSION/apache2/php.ini"
+sed -i 's/post_max_size = .*/post_max_size = 64M/' "/etc/php/$PHP_VERSION/apache2/php.ini"
+sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' "/etc/php/$PHP_VERSION/apache2/php.ini"
+sed -i 's/memory_limit = .*/memory_limit = 512M/' "/etc/php/$PHP_VERSION/apache2/php.ini"
+sed -i 's/display_errors = .*/display_errors = on/' "/etc/php/$PHP_VERSION/apache2/php.ini"
+sed -i 's/display_startup_errors = .*/display_startup_errors = on/' "/etc/php/$PHP_VERSION/apache2/php.ini"
 
 cp /var/www/provision/html/phpinfo.php /var/www/html/
 
 sudo chmod -R 755 /var/www/html/*
 
-a2enmod php$PHP_VERSION
+a2enmod "php$PHP_VERSION"
 
 # Restart Apache to apply changes
 systemctl restart apache2
