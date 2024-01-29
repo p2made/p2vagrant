@@ -6,13 +6,20 @@ echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 �
 echo "🇲🇳"
 echo "🇦🇿    🚀 Installing Apache (with SSL 🙃) 🚀"
 echo "🇺🇿    📜 Script Name:  04_install_apache.fish"
-echo "🇹🇲    📅 Last Updated: 2024-01-28"
+echo "🇹🇲    📅 Last Updated: 2024-01-29"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
 # Variables...
-# NONE!"
+# 1 - REMOTE_FOLDER   = "/var/www"
+set VM_FOLDER           $1            # production version
+#set VM_FOLDER           "/var/www"    # ssh test version
+set PROVISION_FOLDER    $VM_FOLDER/provision
+set HTML_FOLDER         $PROVISION_FOLDER/html
+set SSL_FOLDER          $PROVISION_FOLDER/ssl
+set VHOSTS_FOLDER       $PROVISION_FOLDER/vhosts
+set WEB_FOLDER          "/var/www/html"
 
 set PACKAGE_LIST \
 	apache2 \
@@ -29,39 +36,39 @@ source /var/www/provision/scripts/common_functions.fish
 # Function to announce success
 # Usage: announce_success "Task completed successfully." [use_alternate_icon]
 
+# Function to update package lists
+# Usage: update_package_lists
+
 # Function to install packages with error handling
 # Usage: install_packages $package_list
 
 set -x DEBIAN_FRONTEND noninteractive
 
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
 # Add repository for ondrej/apache2
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
 
-
-# Update package lists
-update_package_lists
-
-# Install PHP packages
-install_packages $PACKAGE_LIST
+# Update package lists & install packages
+update_and_install_packages $PACKAGE_LIST
 
 announce_success "Apache packages installed successfully!"
 
 # Generate SSL key
 echo "🔄 Generating SSL key 🔄"
 if not openssl genrsa \
-	-out /var/www/provision/ssl/localhost.key \
+	-out $SSL_FOLDER/localhost.key \
 	2048
 	handle_error "Failed to generate SSL key"
 end
 
 # Generate self-signed SSL certificate
-# Generate self-signed SSL certificate
 echo "🔄 Generating self-signed SSL certificate 🔄"
 if not openssl req -x509 -nodes \
-	-keyout /var/www/provision/ssl/localhost.key \
-	-out /var/www/provision/ssl/localhost.cert \
+	-key $SSL_FOLDER/localhost.key \
+	-out $SSL_FOLDER/localhost.cert \
 	-days 3650 \
-	-subj "/CN=\\*.localhost" 2>/dev/null
+	-subj "/CN=localhost" 2>/dev/null
 
 	handle_error "Failed to generate self-signed SSL certificate"
 end
@@ -69,23 +76,30 @@ end
 announce_success "SSL files generated successfully!"
 
 # Display information about the generated certificate
-openssl x509 -noout -text -in /var/www/provision/ssl/localhost.cert
+openssl x509 -noout -text -in $SSL_FOLDER/localhost.cert
 
 # Copy web server files into place
-yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
-yes | cp /var/www/provision/html/index.htm /var/www/html/
-yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
+yes | cp $VHOSTS_FOLDER/local.conf /etc/apache2/sites-available/
+yes | cp $HTML_FOLDER/index.htm $WEB_FOLDER/
+yes | cp $SSL_FOLDER/* /etc/apache2/sites-available/
+
+# Check if index.html exists in the html folder
+if not test -e $WEB_FOLDER/index.html
+	# Copy index.html from the same source as index.htm
+	cp $HTML_FOLDER/index.html $WEB_FOLDER/
+end
 
 # Set permissions on web server files
-sudo chmod -R 755 /var/www/html/*
-sudo chmod 600 /etc/apache2/sites-available/localhost.key
+chmod -R 755 $WEB_FOLDER/*
+chmod 600 /etc/apache2/sites-available/localhost.key
 
 a2ensite local.conf
 a2dissite 000-default
 a2enmod rewrite
 a2enmod ssl
 
-service apache2 restart
+# Restart Apache to apply changes
+systemctl restart apache2
 
 announce_success "Apache Installed Successfully! ✅"
 

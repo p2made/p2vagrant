@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 05 Install PHP
-# Updated: 2024-01-20
+# 04 Install Apache (with SSL)
+# Updated: 2024-01-28
 
 # Machine Variables
 MEMORY              = 4096
@@ -13,9 +13,6 @@ VM_IP               = "192.168.42.100"
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
-
-# Software Versions
-PHP_VERSION         = "8.3"
 
 Vagrant.configure("2") do |config|
 
@@ -36,7 +33,6 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
 #	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
-	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
 
 end

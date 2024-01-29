@@ -1,6 +1,7 @@
 #!/bin/fish
 
 # common_functions.fish
+# Last Updated: 2024-01-29
 
 # Function for error handling
 # Usage: handle_error "Error message"
@@ -23,19 +24,17 @@ function announce_success
 	echo "$icon $argv[1]"
 end
 
-# Function to update package lists
-# Usage: update_package_lists
-function update_package_lists
+# Function to update package lists the install packages with error handling
+# Usage: install_packages $package_list
+function update_and_install_packages
 	echo "🔄 Updating package lists 🔄"
 
 	if not apt-get -q update > /dev/null 2>&1
 		handle_error "Failed to update package lists"
 	end
-end
 
-# Function to install packages with error handling
-# Usage: install_packages $package_list
-function install_packages
+	announce_success "Package lists updated successfully."
+
 	echo "🔄 Installing Packages 🔄"
 
 	for package in $argv
