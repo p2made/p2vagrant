@@ -1,5 +1,4 @@
 # Vagrant on macOS
-#
 
 # Mac DS_Store Files
 .DS_Store
@@ -8,11 +7,14 @@
 /.vagrant
 /vagrant
 
+# web folder
+/html
+
 # SSL
+/ssl
 /provision/ssl
 
 # z_gitignore folder
 /shared/html/phpmyadmin
 /z_gitignore
 /z_provision
-/html/phpmyadmin
