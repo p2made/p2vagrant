@@ -6,7 +6,7 @@ echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 �
 echo "🇲🇳"
 echo "🇦🇿    🚀 Installing MySQL 🚀"
 echo "🇺🇿    📜 Script Name:  06_install_mysql.fish"
-echo "🇹🇲    📅 Last Updated: 2024-01-28"
+echo "🇹🇲    📅 Last Updated: 2024-01-30"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
