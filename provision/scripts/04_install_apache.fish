@@ -2,14 +2,15 @@
 
 # 04 Install Apache (with SSL)
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🚀 Installing Apache (with SSL 🙃) 🚀"
-echo "🇺🇿    📜 Script Name:  04_install_apache.fish"
-echo "🇹🇲    📅 Last Updated: 2024-01-31"
-echo "🇹🇯"
-echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+echo "🇺🇦"
+echo "🇺🇦    🚀 Installing Apache (with SSL 🙃) 🚀"
+echo "🇺🇦    📜 Script Name:  04_install_apache.fish"
+echo "🇺🇦    📅 Last Updated: 2024-01-31"
+echo "🇺🇦"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
 echo ""
+# -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
 
 # Arguments...
 # 1 - REMOTE_FOLDER   = "/var/www"
@@ -104,9 +105,10 @@ systemctl restart apache2
 
 announce_success "Apache Installed Successfully! ✅"
 
+# -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
 echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 Apache Installed ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+echo "🇺🇦"
+echo "🇺🇦    🏆 Apache Installed (with SSL 🙃) ‼️"
+echo "🇺🇦"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"

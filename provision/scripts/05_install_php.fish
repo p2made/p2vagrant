@@ -2,15 +2,15 @@
 
 # 05 Install PHP (with Composer)
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🚀 Installing PHP (with Composer 🙃) 🚀"
-echo "🇺🇿    📜 Script Name:  05_install_php.fish"
-echo "🇹🇲    📅 Last Updated: 2024-01-28"
-echo "🇹🇯"
-echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+echo "🇺🇦"
+echo "🇺🇦    🚀 Installing PHP (with Composer 🙃) 🚀"
+echo "🇺🇦    📜 Script Name:  05_install_php.fish"
+echo "🇺🇦    📅 Last Updated: 2024-01-31"
+echo "🇺🇦"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
 echo ""
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
 
 # Arguments...
 # 1 - REMOTE_FOLDER   = "/var/www"
@@ -41,8 +41,9 @@ source /var/www/provision/scripts/common_functions.fish
 # SSL_FOLDER       $PROVISION_FOLDER/ssl
 # VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
 set_path_variables $argv[1]
-set PHP_VERSION $argv[2]
-set PHP_INI (echo "/etc/php/$PHP_VERSION/apache2/php.ini")
+
+set PHP_VERSION    $argv[2]
+set PHP_INI        (echo "/etc/php/$PHP_VERSION/apache2/php.ini")
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
@@ -90,27 +91,7 @@ set PACKAGE_LIST \
 
 set -x DEBIAN_FRONTEND noninteractive
 
-# Start _script_title_ logic...
-
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-# Functions
-
-# Function form
-#function function_name
-#    ... Function body ...
-#    if not [SOME_CHECK]
-#        handle_error "Failed to perform some action."
-#    end
-#    announce_success "Successfully completed some action." # optional
-#end
-
-# Example usage:
-#function_name
-#function_name argument
-#function_name argument1 argument2
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-# Execution
 
 # Add repository for ondrej/php
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
@@ -126,7 +107,6 @@ sed -i 's/display_errors = .*/display_errors = on/' $PHP_INI
 sed -i 's/display_startup_errors = .*/display_startup_errors = on/' $PHP_INI
 
 cp /var/www/provision/html/phpinfo.php /var/www/html/
-
 sudo chmod -R 755 /var/www/html/*
 
 a2enmod (echo "php$PHP_VERSION")
@@ -143,10 +123,10 @@ end
 
 announce_success "Composer Installed Successfully! ✅"
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
 echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 PHP Installed (with Composer) ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+echo "🇺🇦"
+echo "🇺🇦    🏆 PHP Installed (with Composer 🙃) ‼️"
+echo "🇺🇦"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
