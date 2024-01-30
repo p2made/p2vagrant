@@ -11,7 +11,7 @@ echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
-# Variables...
+# Arguments...
 # 1 - TIMEZONE   = "Australia/Brisbane"
 
 # Function for error handling

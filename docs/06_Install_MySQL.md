@@ -20,7 +20,7 @@ echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
-# Variables...
+# Arguments...
 # 1 - MYSQL_VERSION   = "8.1"
 # 2 - DB_USERNAME     = "fredspotty"
 # 3 - DB_PASSWORD     = "Passw0rd"

@@ -11,7 +11,7 @@ echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
-# Variables...
+# Arguments...
 # 1 - REMOTE_FOLDER   = "/var/www"
 #set VM_FOLDER           $1            # production version
 set VM_FOLDER           "/var/www"    # ssh test version

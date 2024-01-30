@@ -11,21 +11,81 @@ echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
-# Source common functions
-source /var/www/provision/scripts/common_functions.fish
-
 # Arguments...
 # 1 - PHP_VERSION     = "8.3"
 
-# Script variables...
 set PHP_VERSION $argv[1]
 
-set -a PACKAGE_LIST (echo "php$PHP_VERSION php-pear")
-set -a PACKAGE_LIST (echo "php$PHP_VERSION-{bcmath,bz2,cgi,curl,dom,fpm,gd,imagick,imap,intl}")
-set -a PACKAGE_LIST (echo "php$PHP_VERSION-{ldap,mbstring,mcrypt,mysql,pgsql,pspell,soap,xmlrpc,zip}")
-set -a PACKAGE_LIST (echo "php$PHP_VERSION-{apcu,cli,common,enchant,gmp,gnupg,memcache,oauth,opcache,pcov,psr}")
-set -a PACKAGE_LIST (echo "php$PHP_VERSION-{readline,redis,sqlite3,tidy,uuid,xdebug,xml,xsl,zstd}")
-set -a PACKAGE_LIST (echo "libapache2-mod-php$PHP_VERSION")
+set PACKAGE_LIST \
+	php$PHP_VERSION \
+	php$PHP_VERSION-common \
+	php$PHP_VERSION-apcu \
+	php$PHP_VERSION-bcmath \
+	php$PHP_VERSION-bz2 \
+	php$PHP_VERSION-cgi \
+	php$PHP_VERSION-cli \
+	php$PHP_VERSION-curl \
+	php$PHP_VERSION-decimal \
+	php$PHP_VERSION-dom \
+	php$PHP_VERSION-enchant \
+	php$PHP_VERSION-fpm \
+	php$PHP_VERSION-gd \
+	php$PHP_VERSION-gmp \
+	php$PHP_VERSION-gnupg \
+	php$PHP_VERSION-imagick \
+	php$PHP_VERSION-imap \
+	php$PHP_VERSION-intl \
+	php$PHP_VERSION-ldap \
+	php$PHP_VERSION-mbstring \
+	php$PHP_VERSION-memcache \
+	php$PHP_VERSION-mysql \
+	php$PHP_VERSION-oauth \
+	php$PHP_VERSION-opcache \
+	php$PHP_VERSION-pcov \
+	php$PHP_VERSION-pspell \
+	php$PHP_VERSION-psr \
+	php$PHP_VERSION-readline \
+	php$PHP_VERSION-redis \
+	php$PHP_VERSION-soap \
+	php$PHP_VERSION-sqlite3 \
+	php$PHP_VERSION-tidy \
+	php$PHP_VERSION-uuid \
+	php$PHP_VERSION-xdebug \
+	php$PHP_VERSION-xml \
+	php$PHP_VERSION-xmlrpc \
+	php$PHP_VERSION-xsl \
+	php$PHP_VERSION-zip \
+	php$PHP_VERSION-zstd \
+	php \
+	php-composer-ca-bundle \
+	php-date \
+	php-db \
+	php-db-dataobject \
+	php-deepcopy \
+	php-dompdf \
+	php-font-lib \
+	php-google-recaptcha \
+	php-json \
+	php-nikic-fast-route \
+	php-pear \
+	php-phpmyadmin-motranslator \
+	php-phpmyadmin-shapefile \
+	php-phpmyadmin-sql-parser \
+	php-psr-cache \
+	php-psr-http-factory \
+	php-psr-http-message \
+	php-psr-log \
+	php-sodium \
+	php-tcpdf \
+	php-twig \
+	php-twig-extensions \
+	php-twig-html-extra \
+	php-twig-intl-extra \
+	php-webmozart-assert \
+	libapache2-mod-php$PHP_VERSION
+
+# Source common functions
+source /var/www/provision/scripts/common_functions.fish
 
 # Function for error handling
 # Usage: handle_error "Error message"

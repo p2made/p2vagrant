@@ -23,7 +23,7 @@ echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 �
 echo ""
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-# Variables...
+# Arguments...
 # 1 - MYSQL_VERSION   = "8.1"
 # 2 - PHP_VERSION     = "8.3"
 # 3 - ROOT_PASSWORD   = ⚠️ See Vagrantfile

@@ -3,6 +3,22 @@
 # common_functions.fish
 # Last Updated: 2024-01-29
 
+# Arguments...
+# 1 - REMOTE_FOLDER   = "/var/www"
+
+# Script variables...
+set GENERATION_DATE     $(date "+%Y-%m-%d")
+
+# Function to set path variables based on the passed path root
+# Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
+function set_path_variables
+	set -g VM_FOLDER $argv[1]
+	set -g PROVISION_FOLDER $VM_FOLDER/provision
+	set -g HTML_FOLDER      $PROVISION_FOLDER/html
+	set -g SSL_FOLDER       $PROVISION_FOLDER/ssl
+	set -g VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
+end
+
 # Function for error handling
 # Usage: handle_error "Error message"
 function handle_error

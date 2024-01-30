@@ -6,26 +6,13 @@ echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 �
 echo "🇲🇳"
 echo "🇦🇿    🚀 Installing Apache (with SSL 🙃) 🚀"
 echo "🇺🇿    📜 Script Name:  04_install_apache.fish"
-echo "🇹🇲    📅 Last Updated: 2024-01-29"
+echo "🇹🇲    📅 Last Updated: 2024-01-31"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
-# Variables...
+# Arguments...
 # 1 - REMOTE_FOLDER   = "/var/www"
-#set VM_FOLDER           $1            # production version
-set VM_FOLDER           "/var/www"    # ssh test version
-set PROVISION_FOLDER    $VM_FOLDER/provision
-set HTML_FOLDER         $PROVISION_FOLDER/html
-set SSL_FOLDER          $PROVISION_FOLDER/ssl
-set VHOSTS_FOLDER       $PROVISION_FOLDER/vhosts
-set GENERATION_DATE     $(date "+%Y-%m-%d")
-
-set PACKAGE_LIST \
-	apache2 \
-	apache2-bin \
-	apache2-data \
-	apache2-utils
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
@@ -41,6 +28,16 @@ source /var/www/provision/scripts/common_functions.fish
 
 # Function to install packages with error handling
 # Usage: install_packages $package_list
+
+# Script variables...
+
+# Function to set path variables based on the passed path root
+# Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
+set_path_variables $argv[1]
+
+# Always set PACKAGE_LIST when using update_and_install_packages
+set PACKAGE_LIST \
+	apache2 apache2-{bin,data,utils}
 
 set -x DEBIAN_FRONTEND noninteractive
 
@@ -80,12 +77,11 @@ openssl x509 -noout -text -in /var/www/provision/ssl/localhost.cert
 
 # Copy web server files into place
 yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
-yes | cp /var/www/provision/html/index.htm /var/www/html/
 yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
+yes | cp /var/www/provision/html/index.htm /var/www/html/
 
 # Check if index.html exists in the html folder
 if not test -e /var/www/html/index.html
-	# Copy index.html from the same source as index.htm
 	cp /var/www/provision/html/index.html /var/www/html/
 end
 

@@ -11,7 +11,7 @@ echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
-# Variables...
+# Arguments...
 # 1 - REMOTE_FOLDER     = "/var/www"
 
 set REMOTE_FOLDER $argv[1]
