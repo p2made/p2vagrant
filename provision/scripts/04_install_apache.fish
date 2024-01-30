@@ -33,6 +33,11 @@ source /var/www/provision/scripts/common_functions.fish
 
 # Function to set path variables based on the passed path root
 # Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
+# VM_FOLDER $argv[1]
+# PROVISION_FOLDER $VM_FOLDER/provision
+# HTML_FOLDER      $PROVISION_FOLDER/html
+# SSL_FOLDER       $PROVISION_FOLDER/ssl
+# VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
 set_path_variables $argv[1]
 
 # Always set PACKAGE_LIST when using update_and_install_packages
@@ -54,7 +59,7 @@ announce_success "Apache packages installed successfully!"
 # Generate SSL key
 echo "🔄 Generating SSL key 🔄"
 if not openssl genrsa \
-	-out /var/www/provision/ssl/localhost.key \
+	-out $SSL_FOLDER/localhost.key \
 	2048
 	handle_error "Failed to generate SSL key"
 end
@@ -62,8 +67,8 @@ end
 # Generate self-signed SSL certificate
 echo "🔄 Generating self-signed SSL certificate 🔄"
 if not openssl req -x509 -nodes \
-	-key /var/www/provision/ssl/localhost.key \
-	-out /var/www/provision/ssl/localhost.cert \
+	-key $SSL_FOLDER/localhost.key \
+	-out $SSL_FOLDER/localhost.cert \
 	-days 3650 \
 	-subj "/CN=localhost" 2>/dev/null
 
@@ -73,16 +78,16 @@ end
 announce_success "SSL files generated successfully!"
 
 # Display information about the generated certificate
-openssl x509 -noout -text -in /var/www/provision/ssl/localhost.cert
+openssl x509 -noout -text -in $SSL_FOLDER/localhost.cert
 
 # Copy web server files into place
-yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
-yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
-yes | cp /var/www/provision/html/index.htm /var/www/html/
+yes | cp $VHOSTS_FOLDER/local.conf /etc/apache2/sites-available/
+yes | cp $SSL_FOLDER/* /etc/apache2/sites-available/
+yes | cp $HTML_FOLDER/index.htm /var/www/html/
 
 # Check if index.html exists in the html folder
 if not test -e /var/www/html/index.html
-	cp /var/www/provision/html/index.html /var/www/html/
+	cp $HTML_FOLDER/index.html /var/www/html/
 end
 
 # Set permissions on web server files
