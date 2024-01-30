@@ -11,6 +11,11 @@ set GENERATION_DATE     $(date "+%Y-%m-%d")
 
 # Function to set path variables based on the passed path root
 # Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
+# VM_FOLDER $argv[1]
+# PROVISION_FOLDER $VM_FOLDER/provision
+# HTML_FOLDER      $PROVISION_FOLDER/html
+# SSL_FOLDER       $PROVISION_FOLDER/ssl
+# VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
 function set_path_variables
 	set -g VM_FOLDER $argv[1]
 	set -g PROVISION_FOLDER $VM_FOLDER/provision
