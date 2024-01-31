@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 06 Install MySQL
-# Updated: 2024-01-31
+# 07 Install phpMyAdmin
+# Updated: 2024-01-28
 
 # Machine Variables
 MEMORY              = 4096
@@ -16,10 +16,11 @@ REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
 PHP_VERSION         = "8.3"
-MYSQL_VERSION       = "8.0"
+MYSQL_VERSION       = "8.1"
+PMA_VERSION         = "5.2.1"
 
 # Database Variables
-ROOT_PASSWORD       = "Ro07Passw0rd"
+ROOT_PASSWORD       = "RootPassw0rd"
 DB_USERNAME         = "fredspotty"
 DB_PASSWORD         = "Passw0rd"
 DB_NAME             = "example_db"
@@ -46,6 +47,7 @@ Vagrant.configure("2") do |config|
 #	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish", args: [REMOTE_FOLDER]
 #	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [REMOTE_FOLDER, PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish", args: [REMOTE_FOLDER, MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+#	config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish", args: [REMOTE_FOLDER, MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/07_install_phpmyadmin.fish", args: [REMOTE_FOLDER]
 
 end

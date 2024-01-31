@@ -20,6 +20,7 @@ set GENERATION_DATE     $(date "+%Y-%m-%d")
 # SSL_FOLDER       $PROVISION_FOLDER/ssl
 # TEMPLATES_FOLDER $PROVISION_FOLDER/templates
 # VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
+# WEB_FOLDER       $VM_FOLDER/html
 function set_path_variables
 	set -g VM_FOLDER $argv[1]
 	set -g PROVISION_FOLDER $VM_FOLDER/provision
@@ -30,6 +31,7 @@ function set_path_variables
 	set -g SSL_FOLDER       $PROVISION_FOLDER/ssl
 	set -g TEMPLATES_FOLDER $PROVISION_FOLDER/templates
 	set -g VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
+	set -g WEB_FOLDER       $VM_FOLDER/html
 end
 
 # Function for error handling
@@ -53,9 +55,7 @@ function announce_success
 	echo "$icon $argv[1]"
 end
 
-# Function to update package lists the install packages with error handling
-# Usage: install_packages $package_list
-function update_and_install_packages
+function update_package_lists
 	echo "🔄 Updating package lists 🔄"
 
 	if not apt-get -q update > /dev/null 2>&1
@@ -63,7 +63,9 @@ function update_and_install_packages
 	end
 
 	announce_success "Package lists updated successfully."
+end
 
+function install_packages
 	echo "🔄 Installing Packages 🔄"
 
 	for package in $argv
@@ -74,4 +76,11 @@ function update_and_install_packages
 	end
 
 	announce_success "Packages installed successfully!"
+end
+
+# Function to update package lists the install packages with error handling
+# Usage: install_packages $package_list
+function update_and_install_packages
+	update_package_lists
+	install_packages $argv
 end
