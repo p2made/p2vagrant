@@ -36,14 +36,14 @@ source /var/www/provision/scripts/common_functions.fish
 # Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
 # VM_FOLDER $argv[1] - usually /var/www
 # PROVISION_FOLDER $VM_FOLDER/provision
-# DATA_FOLDER      $PROVISION_FOLDER/data
-# HTML_FOLDER      $PROVISION_FOLDER/html
-# LOGS_FOLDER      $PROVISION_FOLDER/logs
-# SCRIPTS_FOLDER   $PROVISION_FOLDER/scripts
-# SSL_FOLDER       $PROVISION_FOLDER/ssl
-# TEMPLATES_FOLDER $PROVISION_FOLDER/templates
-# VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
-# WEB_FOLDER       $VM_FOLDER/html
+# PROVISION_DATA      $PROVISION_FOLDER/data
+# PROVISION_HTML      $PROVISION_FOLDER/html
+# PROVISION_LOGS      $PROVISION_FOLDER/logs
+# PROVISION_SCRIPTS   $PROVISION_FOLDER/scripts
+# PROVISION_SSL       $PROVISION_FOLDER/ssl
+# PROVISION_TEMPLATES $PROVISION_FOLDER/templates
+# PROVISION_VHOSTS    $PROVISION_FOLDER/vhosts
+# SHARED_HTML       $VM_FOLDER/html
 set_path_variables $argv[1]
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
@@ -61,11 +61,11 @@ apt -qy install phpmyadmin
 rm -rf /usr/share/phpmyadmin
 
 # Copy phpMyAdmin to the specified folder
-rm -rf $WEB_FOLDER/phpmyadmin && \
-cp -R $HTML_FOLDER/phpmyadmin $WEB_FOLDER/phpmyadmin
+rm -rf $SHARED_HTML/phpmyadmin && \
+cp -R $PROVISION_HTML/phpmyadmin $SHARED_HTML/phpmyadmin
 
 # Set permissions
-chmod -R 755 $WEB_FOLDER/phpmyadmin
+chmod -R 755 $SHARED_HTML/phpmyadmin
 
 # Enable mbstring
 phpenmod mbstring

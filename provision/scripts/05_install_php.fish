@@ -13,8 +13,7 @@ echo ""
 # -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - REMOTE_FOLDER   = /var/www
-# 2 - PHP_VERSION     = "8.3"
+# 1 - PHP_VERSION     = "8.3"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
@@ -22,7 +21,7 @@ source /var/www/provision/scripts/common_functions.fish
 # Script variables...
 # GENERATION_DATE     $(date "+%Y-%m-%d")
 # VM_FOLDER           /var/www
-# WEB_FOLDER          $VM_FOLDER/html
+# SHARED_HTML          $VM_FOLDER/html
 # PROVISION_FOLDER    $VM_FOLDER/provision
 # PROVISION_DATA      $VM_FOLDER/provision/data
 # PROVISION_HTML      $VM_FOLDER/provision/html
@@ -110,8 +109,8 @@ sed -i 's/memory_limit = .*/memory_limit = 512M/' $PHP_INI
 sed -i 's/display_errors = .*/display_errors = on/' $PHP_INI
 sed -i 's/display_startup_errors = .*/display_startup_errors = on/' $PHP_INI
 
-cp /var/www/provision/html/phpinfo.php /var/www/html/
-sudo chmod -R 755 /var/www/html/*
+cp $PROVISION_HTML/phpinfo.php $SHARED_HTML/
+sudo chmod -R 755 $SHARED_HTML/*
 
 a2enmod (echo "php$PHP_VERSION")
 

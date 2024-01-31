@@ -36,13 +36,13 @@ source /var/www/provision/scripts/common_functions.fish
 # Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
 # VM_FOLDER $argv[1]
 # PROVISION_FOLDER $VM_FOLDER/provision
-# DATA_FOLDER      $PROVISION_FOLDER/data
-# HTML_FOLDER      $PROVISION_FOLDER/html
-# LOGS_FOLDER      $PROVISION_FOLDER/logs
-# SCRIPTS_FOLDER   $PROVISION_FOLDER/scripts
-# SSL_FOLDER       $PROVISION_FOLDER/ssl
-# TEMPLATES_FOLDER $PROVISION_FOLDER/templates
-# VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
+# PROVISION_DATA      $PROVISION_FOLDER/data
+# PROVISION_HTML      $PROVISION_FOLDER/html
+# PROVISION_LOGS      $PROVISION_FOLDER/logs
+# PROVISION_SCRIPTS   $PROVISION_FOLDER/scripts
+# PROVISION_SSL       $PROVISION_FOLDER/ssl
+# PROVISION_TEMPLATES $PROVISION_FOLDER/templates
+# PROVISION_VHOSTS    $PROVISION_FOLDER/vhosts
 set_path_variables $argv[1]
 
 # Always set PACKAGE_LIST when using update_and_install_packages
@@ -97,11 +97,11 @@ echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 �
 #set VM_FOLDER           $1            # production version
 set VM_FOLDER           "/var/www"    # ssh test version
 set PROVISION_FOLDER    $VM_FOLDER/provision
-set DATA_FOLDER         $PROVISION_FOLDER/data
-set HTML_FOLDER         $PROVISION_FOLDER/html
-set SSL_FOLDER          $PROVISION_FOLDER/ssl
-set TEMPLATES_FOLDER    $PROVISION_FOLDER/templates
-set VHOSTS_FOLDER       $PROVISION_FOLDER/vhosts
+set PROVISION_DATA         $PROVISION_FOLDER/data
+set PROVISION_HTML         $PROVISION_FOLDER/html
+set PROVISION_SSL          $PROVISION_FOLDER/ssl
+set PROVISION_TEMPLATES    $PROVISION_FOLDER/templates
+set PROVISION_VHOSTS       $PROVISION_FOLDER/vhosts
 set GENERATION_DATE     $(date "+%Y-%m-%d")
 
 # Array of site data
@@ -130,12 +130,12 @@ function configure_sites
 	set underscore_domain $argv[4]
 
 	# Select the appropriate template based on the numeric value
-	set template_file $TEMPLATES_FOLDER/$template_index.conf
-	set vhosts_file $VHOSTS_FOLDER/$underscore_domain.conf
+	set template_file $PROVISION_TEMPLATES/$template_index.conf
+	set vhosts_file $PROVISION_VHOSTS/$underscore_domain.conf
 
 	# Check if the template file exists
 	if not test -f $template_file
-		handle_error "Template file $template_index.conf not found in $TEMPLATES_FOLDER"
+		handle_error "Template file $template_index.conf not found in $PROVISION_TEMPLATES"
 	end
 
 	# Use sed to replace placeholders in the template and save it to the new file
@@ -145,13 +145,13 @@ function configure_sites
 		s|{{GENERATION_DATE}}|$GENERATION_DATE|g" $template_file > $vhosts_file
 
 	# Check if SSL folder exists
-	if not test -d $SSL_FOLDER
-		handle_error "SSL folder $SSL_FOLDER not found"
+	if not test -d $PROVISION_SSL
+		handle_error "SSL folder $PROVISION_SSL not found"
 	end
 
 	# Set paths for SSL certificate and key
-	set ssl_cert_file $SSL_FOLDER/$domain.cert
-	set ssl_key_file $SSL_FOLDER/$domain.key
+	set ssl_cert_file $PROVISION_SSL/$domain.cert
+	set ssl_key_file $PROVISION_SSL/$domain.key
 
 	# Generate SSL key
 	openssl genrsa \
@@ -167,7 +167,7 @@ function configure_sites
 
 	# Put `conf` & SSL files into place
 	sudo cp -f $vhosts_file /etc/apache2/sites-available/
-	sudo cp -f $SSL_FOLDER/$domain.* /etc/apache2/sites-available/
+	sudo cp -f $PROVISION_SSL/$domain.* /etc/apache2/sites-available/
 
 	# Create site root if it doesn't already exist
 	mkdir -p $VM_FOLDER/$underscore_domain
@@ -175,7 +175,7 @@ function configure_sites
 	# Copy files only if they do not exist
 	set files_to_copy "index.html" "phpinfo.php" "db.php"
 	for file in $files_to_copy
-		cp -u $HTML_FOLDER/$file $VM_FOLDER/$underscore_domain/
+		cp -u $PROVISION_HTML/$file $VM_FOLDER/$underscore_domain/
 	end
 
 

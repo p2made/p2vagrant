@@ -6,7 +6,7 @@
 # Script variables...
 # GENERATION_DATE     $(date "+%Y-%m-%d")
 # VM_FOLDER           /var/www
-# WEB_FOLDER          $VM_FOLDER/html
+# SHARED_HTML          $VM_FOLDER/html
 # PROVISION_FOLDER    $VM_FOLDER/provision
 # PROVISION_DATA      $VM_FOLDER/provision/data
 # PROVISION_HTML      $VM_FOLDER/provision/html
@@ -18,7 +18,7 @@
 
 set -gx GENERATION_DATE     $(date "+%Y-%m-%d")
 set -gx VM_FOLDER           /var/www
-set -gx WEB_FOLDER          $VM_FOLDER/html
+set -gx SHARED_HTML         $VM_FOLDER/html
 set -gx PROVISION_FOLDER    $VM_FOLDER/provision
 set -gx PROVISION_DATA      $VM_FOLDER/provision/data
 set -gx PROVISION_HTML      $VM_FOLDER/provision/html
@@ -49,6 +49,8 @@ function announce_success
 	echo "$icon $argv[1]"
 end
 
+# Function to update package with error handling
+# Usage: update_package_lists
 function update_package_lists
 	echo "🔄 Updating package lists 🔄"
 
@@ -59,6 +61,8 @@ function update_package_lists
 	announce_success "Package lists updated successfully."
 end
 
+# Function to install packages with error handling
+# Usage: install_packages $package_list
 function install_packages
 	echo "🔄 Installing Packages 🔄"
 
@@ -73,8 +77,31 @@ function install_packages
 end
 
 # Function to update package lists the install packages with error handling
-# Usage: install_packages $package_list
+# invokes update_package_lists & install_packages in a single call
+# Usage: update_and_install_packages $package_list
 function update_and_install_packages
 	update_package_lists
 	install_packages $argv
+end
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+function header_banner
+	echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+	echo "🇺🇦"
+	echo "🇺🇦    🚀 $argv[1] 🚀"
+	echo "🇺🇦    📜 Script Name:  $argv[2]"
+	echo "🇺🇦    📅 Last Updated: $argv[3]"
+	echo "🇺🇦"
+	echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
+	echo ""
+end
+
+function footer_banner
+	echo ""
+	echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+	echo "🇺🇦"
+	echo "🇺🇦    🏆 $argv[1] ‼️"
+	echo "🇺🇦"
+	echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
 end

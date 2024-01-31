@@ -49,9 +49,9 @@ sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/$1/apache2/php.ini
 sed -i 's/display_errors = .*/display_errors = on/' /etc/php/$1/apache2/php.ini
 sed -i 's/display_startup_errors = .*/display_startup_errors = on/' /etc/php/$1/apache2/php.ini
 
-cp /var/www/provision/html/phpinfo.php /var/www/html/
+cp $PROVISION_HTML/phpinfo.php $SHARED_HTML/
 
-sudo chmod -R 755 /var/www/html/*
+sudo chmod -R 755 $SHARED_HTML/*
 
 a2enmod php$1
 

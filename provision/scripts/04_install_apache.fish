@@ -21,7 +21,7 @@ source /var/www/provision/scripts/common_functions.fish
 # Script variables...
 # GENERATION_DATE     $(date "+%Y-%m-%d")
 # VM_FOLDER           /var/www
-# WEB_FOLDER          $VM_FOLDER/html
+# SHARED_HTML          $VM_FOLDER/html
 # PROVISION_FOLDER    $VM_FOLDER/provision
 # PROVISION_DATA      $VM_FOLDER/provision/data
 # PROVISION_HTML      $VM_FOLDER/provision/html
@@ -64,7 +64,7 @@ announce_success "Apache packages installed successfully!"
 # Generate SSL key
 echo "🔄 Generating SSL key 🔄"
 if not openssl genrsa \
-	-out $SSL_FOLDER/localhost.key \
+	-out $PROVISION_SSL/localhost.key \
 	2048
 	handle_error "Failed to generate SSL key"
 end
@@ -72,8 +72,8 @@ end
 # Generate self-signed SSL certificate
 echo "🔄 Generating self-signed SSL certificate 🔄"
 if not openssl req -x509 -nodes \
-	-key $SSL_FOLDER/localhost.key \
-	-out $SSL_FOLDER/localhost.cert \
+	-key $PROVISION_SSL/localhost.key \
+	-out $PROVISION_SSL/localhost.cert \
 	-days 3650 \
 	-subj "/CN=localhost" 2>/dev/null
 
@@ -83,20 +83,20 @@ end
 announce_success "SSL files generated successfully!"
 
 # Display information about the generated certificate
-openssl x509 -noout -text -in $SSL_FOLDER/localhost.cert
+openssl x509 -noout -text -in $PROVISION_SSL/localhost.cert
 
 # Copy web server files into place
-yes | cp $VHOSTS_FOLDER/local.conf /etc/apache2/sites-available/
-yes | cp $SSL_FOLDER/* /etc/apache2/sites-available/
-yes | cp $HTML_FOLDER/index.htm /var/www/html/
+yes | cp $PROVISION_VHOSTS/local.conf /etc/apache2/sites-available/
+yes | cp $PROVISION_SSL/* /etc/apache2/sites-available/
+yes | cp $PROVISION_HTML/index.htm $SHARED_HTML/
 
 # Check if index.html exists in the html folder
-if not test -e /var/www/html/index.html
-	cp $HTML_FOLDER/index.html /var/www/html/
+if not test -e $SHARED_HTML/index.html
+	cp $PROVISION_HTML/index.html $SHARED_HTML/
 end
 
 # Set permissions on web server files
-chmod -R 755 /var/www/html/*
+chmod -R 755 $SHARED_HTML/*
 chmod 600 /etc/apache2/sites-available/localhost.key
 
 a2ensite local.conf

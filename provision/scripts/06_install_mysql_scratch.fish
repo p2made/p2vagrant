@@ -119,12 +119,12 @@ else
 end
 
 # Copy database file
-cp /var/www/provision/html/db.php /var/www/html/ || \
+cp $PROVISION_HTML/db.php $SHARED_HTML/ || \
     handle_error "Failed to copy db.php file"
 
 # Set permissions
-sudo chmod -R 755 /var/www/html/ || \
-    handle_error "Failed to set permissions on /var/www/html/"
+sudo chmod -R 755 $SHARED_HTML/ || \
+    handle_error "Failed to set permissions on $SHARED_HTML/"
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 echo ""

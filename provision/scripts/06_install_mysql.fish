@@ -1,6 +1,14 @@
 #!/bin/fish
 
+# Source common functions
+source /var/www/provision/scripts/common_functions.fish
+
 # 06 Install MySQL
+
+header_banner \
+	"Installing MySQL" \
+	"06_install_mysql.fish" \
+	"2024-01-31"
 
 # This script is intended for use with Vagrant provisioning.
 # It installs MySQL, updates its configuration, creates a user and databases,
@@ -13,33 +21,21 @@
 # Test usage:
 #   sudo ./06_install_mysql.fish
 
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
-echo "🇺🇦"
-echo "🇺🇦    🚀 Installing MySQL 🚀"
-echo "🇺🇦    📜 Script Name:  06_install_mysql.fish"
-echo "🇺🇦    📅 Last Updated: 2024-01-31"
-echo "🇺🇦"
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
-echo ""
 # -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - REMOTE_FOLDER   = /var/www
-# 2 - MYSQL_VERSION   = "8.1"
-# 3 - PHP_VERSION     = "8.3"
-# 4 - ROOT_PASSWORD   = ⚠️ See Vagrantfile
-# 5 - DB_USERNAME     = ⚠️ See Vagrantfile
-# 6 - DB_PASSWORD     = ⚠️ See Vagrantfile
-# 7 - DB_NAME         = "example_db"
-# 8 - DB_NAME_TEST    = "example_db_test"
-
-# Source common functions
-source /var/www/provision/scripts/common_functions.fish
+# 1 - MYSQL_VERSION   = "8.1"
+# 2 - PHP_VERSION     = "8.3"
+# 3 - ROOT_PASSWORD   = ⚠️ See Vagrantfile
+# 4 - DB_USERNAME     = ⚠️ See Vagrantfile
+# 5 - DB_PASSWORD     = ⚠️ See Vagrantfile
+# 6 - DB_NAME         = "example_db"
+# 7 - DB_NAME_TEST    = "example_db_test"
 
 # Script variables...
 # GENERATION_DATE     $(date "+%Y-%m-%d")
 # VM_FOLDER           /var/www
-# WEB_FOLDER          $VM_FOLDER/html
+# SHARED_HTML          $VM_FOLDER/html
 # PROVISION_FOLDER    $VM_FOLDER/provision
 # PROVISION_DATA      $VM_FOLDER/provision/data
 # PROVISION_HTML      $VM_FOLDER/provision/html
@@ -116,17 +112,12 @@ else
 end
 
 # Copy database file
-cp /var/www/provision/html/db.php /var/www/html/ || \
+cp $PROVISION_HTML/db.php $SHARED_HTML/ || \
     handle_error "Failed to copy db.php file"
 
 # Set permissions
-sudo chmod -R 755 /var/www/html/ || \
-    handle_error "Failed to set permissions on /var/www/html/"
+sudo chmod -R 755 $SHARED_HTML/ || \
+    handle_error "Failed to set permissions on $SHARED_HTML/"
 
 # -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
-echo ""
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
-echo "🇺🇦"
-echo "🇺🇦    🏆 MySQL Installed ‼️"
-echo "🇺🇦"
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
+footer_banner "MySQL Installed"
