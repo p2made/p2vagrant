@@ -32,6 +32,8 @@ echo ""
 # 6 - DB_NAME         = "example_db"
 # 7 - DB_NAME_TEST    = "example_db_test"
 
+set_path_variables /var/www
+
 set MYSQL_VERSION "8.1"             # test
 set PHP_VERSION   "8.3"             # test
 set ROOT_PASSWORD "RootPassw0rd"    # test
@@ -40,13 +42,13 @@ set DB_PASSWORD   "Passw0rd"        # test
 set DB_NAME       "example_db"      # test
 set DB_NAME_TEST  "example_db_test" # test
 
-set MYSQL_VERSION $argv[1]
-set PHP_VERSION   $argv[2]
-set ROOT_PASSWORD $argv[3]
-set DB_USERNAME   $argv[4]
-set DB_PASSWORD   $argv[5]
-set DB_NAME       $argv[6]
-set DB_NAME_TEST  $argv[7]
+set MYSQL_VERSION $argv[2]
+set PHP_VERSION   $argv[3]
+set ROOT_PASSWORD $argv[4]
+set DB_USERNAME   $argv[5]
+set DB_PASSWORD   $argv[6]
+set DB_NAME       $argv[7]
+set DB_NAME_TEST  $argv[8]
 
 echo "MYSQL_VERSION: $MYSQL_VERSION"
 echo "PHP_VERSION:   $PHP_VERSION"

@@ -13,14 +13,22 @@ set GENERATION_DATE     $(date "+%Y-%m-%d")
 # Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
 # VM_FOLDER $argv[1]
 # PROVISION_FOLDER $VM_FOLDER/provision
+# DATA_FOLDER      $PROVISION_FOLDER/data
 # HTML_FOLDER      $PROVISION_FOLDER/html
+# LOGS_FOLDER      $PROVISION_FOLDER/logs
+# SCRIPTS_FOLDER   $PROVISION_FOLDER/scripts
 # SSL_FOLDER       $PROVISION_FOLDER/ssl
+# TEMPLATES_FOLDER $PROVISION_FOLDER/templates
 # VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
 function set_path_variables
 	set -g VM_FOLDER $argv[1]
 	set -g PROVISION_FOLDER $VM_FOLDER/provision
+	set -g DATA_FOLDER      $PROVISION_FOLDER/data
 	set -g HTML_FOLDER      $PROVISION_FOLDER/html
+	set -g LOGS_FOLDER      $PROVISION_FOLDER/logs
+	set -g SCRIPTS_FOLDER   $PROVISION_FOLDER/scripts
 	set -g SSL_FOLDER       $PROVISION_FOLDER/ssl
+	set -g TEMPLATES_FOLDER $PROVISION_FOLDER/templates
 	set -g VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
 end
 

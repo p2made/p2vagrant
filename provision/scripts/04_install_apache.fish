@@ -13,7 +13,7 @@ echo ""
 # -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - REMOTE_FOLDER   = "/var/www"
+# 1 - REMOTE_FOLDER   = /var/www
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
@@ -36,8 +36,12 @@ source /var/www/provision/scripts/common_functions.fish
 # Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
 # VM_FOLDER $argv[1]
 # PROVISION_FOLDER $VM_FOLDER/provision
+# DATA_FOLDER      $PROVISION_FOLDER/data
 # HTML_FOLDER      $PROVISION_FOLDER/html
+# LOGS_FOLDER      $PROVISION_FOLDER/logs
+# SCRIPTS_FOLDER   $PROVISION_FOLDER/scripts
 # SSL_FOLDER       $PROVISION_FOLDER/ssl
+# TEMPLATES_FOLDER $PROVISION_FOLDER/templates
 # VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
 set_path_variables $argv[1]
 

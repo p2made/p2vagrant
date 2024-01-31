@@ -13,35 +13,25 @@
 # Test usage:
 #   sudo ./06_install_mysql.fish
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🚀 Installing MySQL 🚀"
-echo "🇺🇿    📜 Script Name:  06_install_mysql.fish"
-echo "🇹🇲    📅 Last Updated: 2024-01-30"
-echo "🇹🇯"
-echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+echo "🇺🇦"
+echo "🇺🇦    🚀 Installing MySQL 🚀"
+echo "🇺🇦    📜 Script Name:  06_install_mysql.fish"
+echo "🇺🇦    📅 Last Updated: 2024-01-31"
+echo "🇺🇦"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
 echo ""
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - MYSQL_VERSION   = "8.1"
-# 2 - PHP_VERSION     = "8.3"
-# 3 - ROOT_PASSWORD   = ⚠️ See Vagrantfile
-# 4 - DB_USERNAME     = ⚠️ See Vagrantfile
-# 5 - DB_PASSWORD     = ⚠️ See Vagrantfile
-# 6 - DB_NAME         = "example_db"
-# 7 - DB_NAME_TEST    = "example_db_test"
-
-set MYSQL_VERSION $argv[1]
-set PHP_VERSION   $argv[2]
-set ROOT_PASSWORD $argv[3]
-set DB_USERNAME   $argv[4]
-set DB_PASSWORD   $argv[5]
-set DB_NAME       $argv[6]
-set DB_NAME_TEST  $argv[7]
-
-set PACKAGE_LIST \
-    mysql-server
+# 1 - REMOTE_FOLDER   = /var/www
+# 2 - MYSQL_VERSION   = "8.1"
+# 3 - PHP_VERSION     = "8.3"
+# 4 - ROOT_PASSWORD   = ⚠️ See Vagrantfile
+# 5 - DB_USERNAME     = ⚠️ See Vagrantfile
+# 6 - DB_PASSWORD     = ⚠️ See Vagrantfile
+# 7 - DB_NAME         = "example_db"
+# 8 - DB_NAME_TEST    = "example_db_test"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
@@ -58,9 +48,32 @@ source /var/www/provision/scripts/common_functions.fish
 # Function to install packages with error handling
 # Usage: install_packages $package_list
 
+# Script variables...
+
+# Function to set path variables based on the passed path root
+# Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
+# VM_FOLDER $argv[1]
+# PROVISION_FOLDER $VM_FOLDER/provision
+# HTML_FOLDER      $PROVISION_FOLDER/html
+# SSL_FOLDER       $PROVISION_FOLDER/ssl
+# VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
+set_path_variables $argv[1]
+
+set MYSQL_VERSION  $argv[2]
+set PHP_VERSION    $argv[3]
+set ROOT_PASSWORD  $argv[4]
+set DB_USERNAME    $argv[5]
+set DB_PASSWORD    $argv[6]
+set DB_NAME        $argv[7]
+set DB_NAME_TEST   $argv[8]
+
+# Always set PACKAGE_LIST when using update_and_install_packages
+set PACKAGE_LIST \
+    mysql-server
+
 set -x DEBIAN_FRONTEND noninteractive
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Update package lists & install packages
 update_and_install_packages $PACKAGE_LIST
@@ -106,10 +119,10 @@ cp /var/www/provision/html/db.php /var/www/html/ || \
 sudo chmod -R 755 /var/www/html/ || \
     handle_error "Failed to set permissions on /var/www/html/"
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
 echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 MySQL Installed ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+echo "🇺🇦"
+echo "🇺🇦    🏆 MySQL Installed ‼️"
+echo "🇺🇦"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
