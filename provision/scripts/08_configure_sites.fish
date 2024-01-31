@@ -1,18 +1,99 @@
 #!/bin/fish
 
-# 11 Configure Websites
+# 00 _script_title_
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿 🌐 Configuring Websites 🌐"
-echo "🇺🇿 📜 Script Name:  08_configure_sites.fish"
-echo "🇹🇲 📅 Last Updated: 2024-01-21"
-echo "🇹🇯"
-echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+echo "🇺🇦"
+echo "🇺🇦    🚀 Configuring Websites 🚀"
+echo "🇺🇦    📜 Script Name:  08_configure_sites.fish"
+echo "🇺🇦    📅 Last Updated: 2024-01-28"
+echo "🇺🇦"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
 echo ""
+# -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
 
 # Arguments...
 # 1 - REMOTE_FOLDER   = "/var/www"
+
+# Source common functions
+source /var/www/provision/scripts/common_functions.fish
+
+# Function for error handling
+# Usage: handle_error "Error message"
+
+# Function to announce success
+# Usage: announce_success "Task completed successfully." [use_alternate_icon]
+
+# Function to update package lists
+# Usage: update_package_lists
+
+# Function to install packages with error handling
+# Usage: install_packages $package_list
+
+# Script variables...
+
+# Function to set path variables based on the passed path root
+# Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
+# VM_FOLDER $argv[1]
+# PROVISION_FOLDER $VM_FOLDER/provision
+# DATA_FOLDER      $PROVISION_FOLDER/data
+# HTML_FOLDER      $PROVISION_FOLDER/html
+# LOGS_FOLDER      $PROVISION_FOLDER/logs
+# SCRIPTS_FOLDER   $PROVISION_FOLDER/scripts
+# SSL_FOLDER       $PROVISION_FOLDER/ssl
+# TEMPLATES_FOLDER $PROVISION_FOLDER/templates
+# VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
+set_path_variables $argv[1]
+
+# Always set PACKAGE_LIST when using update_and_install_packages
+set PACKAGE_LIST \
+	package1 \
+	package2
+
+set -x DEBIAN_FRONTEND noninteractive
+
+# Start _script_title_ logic...
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# Functions
+
+# Function form
+#function function_name
+#    ... Function body ...
+#    if not [SOME_CHECK]
+#        handle_error "Failed to perform some action."
+#    end
+#    announce_success "Successfully completed some action." # optional
+#end
+
+# Example usage:
+#function_name
+#function_name argument
+#function_name argument1 argument2
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# Execution
+
+# Add repository if appliciable
+
+# Update package lists & install packages
+update_and_install_packages $PACKAGE_LIST
+
+# single line statements
+# including calls to functions
+
+# -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
+echo ""
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+echo "🇺🇦"
+echo "🇺🇦    🏆 _script_job_complete_ ‼️"
+echo "🇺🇦"
+echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+
 #set VM_FOLDER           $1            # production version
 set VM_FOLDER           "/var/www"    # ssh test version
 set PROVISION_FOLDER    $VM_FOLDER/provision

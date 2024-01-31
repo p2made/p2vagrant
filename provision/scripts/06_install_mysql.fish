@@ -36,6 +36,19 @@ echo ""
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
 
+# Script variables...
+# GENERATION_DATE     $(date "+%Y-%m-%d")
+# VM_FOLDER           /var/www
+# WEB_FOLDER          $VM_FOLDER/html
+# PROVISION_FOLDER    $VM_FOLDER/provision
+# PROVISION_DATA      $VM_FOLDER/provision/data
+# PROVISION_HTML      $VM_FOLDER/provision/html
+# PROVISION_LOGS      $VM_FOLDER/provision/logs
+# PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
+# PROVISION_SSL       $VM_FOLDER/provision/ssl
+# PROVISION_TEMPLATES $VM_FOLDER/provision/templates
+# PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
+
 # Function for error handling
 # Usage: handle_error "Error message"
 
@@ -50,22 +63,13 @@ source /var/www/provision/scripts/common_functions.fish
 
 # Script variables...
 
-# Function to set path variables based on the passed path root
-# Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
-# VM_FOLDER $argv[1]
-# PROVISION_FOLDER $VM_FOLDER/provision
-# HTML_FOLDER      $PROVISION_FOLDER/html
-# SSL_FOLDER       $PROVISION_FOLDER/ssl
-# VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
-set_path_variables $argv[1]
-
-set MYSQL_VERSION  $argv[2]
-set PHP_VERSION    $argv[3]
-set ROOT_PASSWORD  $argv[4]
-set DB_USERNAME    $argv[5]
-set DB_PASSWORD    $argv[6]
-set DB_NAME        $argv[7]
-set DB_NAME_TEST   $argv[8]
+set MYSQL_VERSION  $argv[1]
+set PHP_VERSION    $argv[2]
+set ROOT_PASSWORD  $argv[3]
+set DB_USERNAME    $argv[4]
+set DB_PASSWORD    $argv[5]
+set DB_NAME        $argv[6]
+set DB_NAME_TEST   $argv[7]
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \

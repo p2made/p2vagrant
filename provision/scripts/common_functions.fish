@@ -3,36 +3,30 @@
 # common_functions.fish
 # Last Updated: 2024-01-29
 
-# Arguments...
-# 1 - REMOTE_FOLDER   = "/var/www"
-
 # Script variables...
-set GENERATION_DATE     $(date "+%Y-%m-%d")
+# GENERATION_DATE     $(date "+%Y-%m-%d")
+# VM_FOLDER           /var/www
+# WEB_FOLDER          $VM_FOLDER/html
+# PROVISION_FOLDER    $VM_FOLDER/provision
+# PROVISION_DATA      $VM_FOLDER/provision/data
+# PROVISION_HTML      $VM_FOLDER/provision/html
+# PROVISION_LOGS      $VM_FOLDER/provision/logs
+# PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
+# PROVISION_SSL       $VM_FOLDER/provision/ssl
+# PROVISION_TEMPLATES $VM_FOLDER/provision/templates
+# PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
-# Function to set path variables based on the passed path root
-# Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
-# VM_FOLDER $argv[1]
-# PROVISION_FOLDER $VM_FOLDER/provision
-# DATA_FOLDER      $PROVISION_FOLDER/data
-# HTML_FOLDER      $PROVISION_FOLDER/html
-# LOGS_FOLDER      $PROVISION_FOLDER/logs
-# SCRIPTS_FOLDER   $PROVISION_FOLDER/scripts
-# SSL_FOLDER       $PROVISION_FOLDER/ssl
-# TEMPLATES_FOLDER $PROVISION_FOLDER/templates
-# VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
-# WEB_FOLDER       $VM_FOLDER/html
-function set_path_variables
-	set -g VM_FOLDER $argv[1]
-	set -g PROVISION_FOLDER $VM_FOLDER/provision
-	set -g DATA_FOLDER      $PROVISION_FOLDER/data
-	set -g HTML_FOLDER      $PROVISION_FOLDER/html
-	set -g LOGS_FOLDER      $PROVISION_FOLDER/logs
-	set -g SCRIPTS_FOLDER   $PROVISION_FOLDER/scripts
-	set -g SSL_FOLDER       $PROVISION_FOLDER/ssl
-	set -g TEMPLATES_FOLDER $PROVISION_FOLDER/templates
-	set -g VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
-	set -g WEB_FOLDER       $VM_FOLDER/html
-end
+set -gx GENERATION_DATE     $(date "+%Y-%m-%d")
+set -gx VM_FOLDER           /var/www
+set -gx WEB_FOLDER          $VM_FOLDER/html
+set -gx PROVISION_FOLDER    $VM_FOLDER/provision
+set -gx PROVISION_DATA      $VM_FOLDER/provision/data
+set -gx PROVISION_HTML      $VM_FOLDER/provision/html
+set -gx PROVISION_LOGS      $VM_FOLDER/provision/logs
+set -gx PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
+set -gx PROVISION_SSL       $VM_FOLDER/provision/ssl
+set -gx PROVISION_TEMPLATES $VM_FOLDER/provision/templates
+set -gx PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
 # Function for error handling
 # Usage: handle_error "Error message"

@@ -3,7 +3,7 @@
 # Mac DS_Store Files
 .DS_Store
 
-# .vagrant
+# Vagrant
 /.vagrant
 /vagrant
 
@@ -17,10 +17,20 @@
 # logs
 /provision/logs
 
+# Preserve empty folders
+!/html/.p2m_keep_folder
+!/provision/logs/.p2m_keep_folder
+!/provision/ssl/.p2m_keep_folder
+!/ssl/.p2m_keep_folder
+
+# Exclude folders completely
+/provision/notes/
+
+# Exclude folders ending with '_'
+**_/
+
+# Exclude the Vagrantfile
+/Vagrantfile
+
 # z_gitignore folder
-/shared/html/phpmyadmin
 /z_gitignore
-/z_provision
-/provision/notes
-/provision/templates_
-/Vagrantfiles_

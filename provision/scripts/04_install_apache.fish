@@ -13,10 +13,23 @@ echo ""
 # -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - REMOTE_FOLDER   = /var/www
+# NONE!"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
+
+# Script variables...
+# GENERATION_DATE     $(date "+%Y-%m-%d")
+# VM_FOLDER           /var/www
+# WEB_FOLDER          $VM_FOLDER/html
+# PROVISION_FOLDER    $VM_FOLDER/provision
+# PROVISION_DATA      $VM_FOLDER/provision/data
+# PROVISION_HTML      $VM_FOLDER/provision/html
+# PROVISION_LOGS      $VM_FOLDER/provision/logs
+# PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
+# PROVISION_SSL       $VM_FOLDER/provision/ssl
+# PROVISION_TEMPLATES $VM_FOLDER/provision/templates
+# PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
 # Function for error handling
 # Usage: handle_error "Error message"
@@ -31,19 +44,6 @@ source /var/www/provision/scripts/common_functions.fish
 # Usage: install_packages $package_list
 
 # Script variables...
-
-# Function to set path variables based on the passed path root
-# Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
-# VM_FOLDER $argv[1]
-# PROVISION_FOLDER $VM_FOLDER/provision
-# DATA_FOLDER      $PROVISION_FOLDER/data
-# HTML_FOLDER      $PROVISION_FOLDER/html
-# LOGS_FOLDER      $PROVISION_FOLDER/logs
-# SCRIPTS_FOLDER   $PROVISION_FOLDER/scripts
-# SSL_FOLDER       $PROVISION_FOLDER/ssl
-# TEMPLATES_FOLDER $PROVISION_FOLDER/templates
-# VHOSTS_FOLDER    $PROVISION_FOLDER/vhosts
-set_path_variables $argv[1]
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
