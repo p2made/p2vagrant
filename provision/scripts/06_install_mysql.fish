@@ -32,8 +32,8 @@ header_banner \
 # 6 - DB_NAME         = "example_db"
 # 7 - DB_NAME_TEST    = "example_db_test"
 
-# Script variables...
-# GENERATION_DATE     $(date "+%Y-%m-%d")
+# Script constants...
+# TODAYS_DATE         $(date "+%Y-%m-%d")
 # VM_FOLDER           /var/www
 # SHARED_HTML          $VM_FOLDER/html
 # PROVISION_FOLDER    $VM_FOLDER/provision
@@ -57,7 +57,7 @@ header_banner \
 # Function to install packages with error handling
 # Usage: install_packages $package_list
 
-# Script variables...
+# Script constants...
 
 set MYSQL_VERSION  $argv[1]
 set PHP_VERSION    $argv[2]

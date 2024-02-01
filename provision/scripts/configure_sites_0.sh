@@ -21,7 +21,7 @@ set PROVISION_HTML         $PROVISION_FOLDER/html
 set PROVISION_SSL          $PROVISION_FOLDER/ssl
 set PROVISION_TEMPLATES    $PROVISION_FOLDER/templates
 set PROVISION_VHOSTS       $PROVISION_FOLDER/vhosts
-set GENERATION_DATE     $(date "+%Y-%m-%d")
+set TODAYS_DATE         $(date "+%Y-%m-%d")
 
 # Array of site data
 set sites \

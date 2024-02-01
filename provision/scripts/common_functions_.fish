@@ -18,6 +18,7 @@
 # PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
 set -U TODAYS_DATE         (date "+%Y-%m-%d")
+#set -U TODAYS_DATE         $(date "+%Y-%m-%d")
 set -U VM_FOLDER           /var/www
 set -U SHARED_HTML         $VM_FOLDER/html
 set -U PROVISION_FOLDER    $VM_FOLDER/provision
@@ -28,29 +29,16 @@ set -U PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
 set -U PROVISION_SSL       $VM_FOLDER/provision/ssl
 set -U PROVISION_TEMPLATES $VM_FOLDER/provision/templates
 set -U PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
+
+set -U LOGS_FOLDER_EXISTS  ensure_logs_folder
 set -U LOG_FILE_TAIL       "_log.txt"
-
-if test -d $PROVISION_LOGS
-	# Set permissions to allow the current user to write and others to read
-	chmod -R 744 $PROVISION_LOGS
-
-	set -U LOGS_FOLDER_EXISTS 0  # Success
-else
-	# Create the folder
-	mkdir -p $PROVISION_LOGS
-	set -U LOGS_FOLDER_EXISTS $status
-end
 
 # Function for error handling
 # Usage: handle_error "Error message" "Error details"
 function handle_error
-	set name "errors"
-	set log_file_name $name$LOG_FILE_TAIL
-	set log_file $PROVISION_LOGS/$log_file_name
-
+	set log_file_name (set_log_file_name "errors")
+	set log_file (provide_log_file $log_file_name)
 	set custom_error_message (echo "⚠️ Error: $argv[1] 💥")
-
-	check_log_file
 
 	# Write the common log lines
 	write_log_banner $log_file 1
@@ -61,28 +49,6 @@ function handle_error
 
 	echo $custom_error_message
 	exit 1
-end
-
-# Function to check log_file
-# Exits via handle_error on failure.
-# Usage: check_log_file log_file
-function check_log_file
-	if test $LOGS_FOLDER_EXISTS -ne 0
-		handle_error "No logs folder"
-	end
-
-	set log_file (echo $PROVISION_LOGS/$argv[1])
-
-	if test -e $argv[1]
-		# Log file already exists, return success
-		return
-	end
-
-	touch $argv[1]
-
-	if test $status -ne 0
-		handle_error "Unable to create log file: $argv[1]"
-	end
 end
 
 # Function to announce success
@@ -104,11 +70,8 @@ end
 function update_package_lists
 	echo "🔄 Updating package lists 🔄"
 
-	set name "updates"
-	set log_file_name $name$LOG_FILE_TAIL
-	set log_file $PROVISION_LOGS/$log_file_name
-
-	check_log_file
+	set log_file_name (set_log_file_name "updates")
+	set log_file (provide_log_file $log_file_name)
 
 	# Write the common log lines
 	write_log_banner $log_file 0
@@ -137,10 +100,8 @@ function install_packages
 	set name $argv[1]
 	set package_list $argv[2..-1]  # Exclude the first argument (name)
 
-	set log_file_name $name$LOG_FILE_TAIL
-	set log_file $PROVISION_LOGS/$log_file_name
-
-	check_log_file
+	set log_file_name (set_log_file_name $name)
+	set log_file (provide_log_file $log_file_name)
 
 	# Write the common log lines
 	write_log_banner $log_file $name
@@ -190,6 +151,53 @@ function write_log_banner
 
 	echo $banner_art >> $argv[1]
 	echo "$TODAYS_DATE (date '+%T')" >> $argv[1]
+end
+
+# Function to ensure logs folder exists with correct permissions and ownership
+# Returns 0 on success, non-zero on failure
+function ensure_logs_folder
+	# Check if the folder exists
+	if test -d $PROVISION_LOGS
+		# Set permissions to allow the current user to write and others to read
+		chmod -R 744 $PROVISION_LOGS
+
+		return 0  # Success
+	else
+		# Create the folder
+		mkdir -p $PROVISION_LOGS
+		return $status
+	end
+end
+
+# Function to return the log file name
+# Usage: set_log_file_name "<name>"
+function set_log_file_name
+	return "$argv[1]_log.txt"
+end
+
+# Function to provide a log file
+# Returns path to the log file if the log file already exists or is created successfully.
+# Exits via handle_error on failure.
+# Usage: provide_log_file "full_log_file_name"
+function provide_log_file
+	if test $LOGS_FOLDER_EXISTS -ne 0
+		handle_error "No logs folder"
+	end
+
+	set log_file (echo $PROVISION_LOGS/$argv[1])
+
+	if test -e $log_file
+		# Log file already exists, return success
+		return $log_file
+	end
+
+	touch $log_file
+
+	if test $status -ne 0
+		handle_error "Unable to create log file: $argv[1]"
+	end
+
+	return $log_file
 end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --

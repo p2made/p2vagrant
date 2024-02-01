@@ -2,24 +2,23 @@
 
 # 04 Install Apache (with SSL)
 
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
-echo "🇺🇦"
-echo "🇺🇦    🚀 Installing Apache (with SSL 🙃) 🚀"
-echo "🇺🇦    📜 Script Name:  04_install_apache.fish"
-echo "🇺🇦    📅 Last Updated: 2024-01-31"
-echo "🇺🇦"
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
-echo ""
-# -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
+# Source common functions
+source /var/www/provision/scripts/common_functions.fish
+
+header_banner \
+	"Installing Apache (with SSL 🙃)" \
+	"04_install_apache.fish" \
+	"2024-02-02"
+
+# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
+set job_complete "Apache Installed (with SSL 🙃)"
 
 # Arguments...
 # NONE!"
 
-# Source common functions
-source /var/www/provision/scripts/common_functions.fish
+# Script constants...
 
-# Script variables...
-# GENERATION_DATE     $(date "+%Y-%m-%d")
+# TODAYS_DATE         $(date "+%Y-%m-%d")
 # VM_FOLDER           /var/www
 # SHARED_HTML          $VM_FOLDER/html
 # PROVISION_FOLDER    $VM_FOLDER/provision
@@ -31,27 +30,35 @@ source /var/www/provision/scripts/common_functions.fish
 # PROVISION_TEMPLATES $VM_FOLDER/provision/templates
 # PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
+# Always set PACKAGE_LIST when using update_and_install_packages
+set PACKAGE_LIST \
+	install_apache2 \
+	apache2 \
+	apache2-bin \
+	apache2-data \
+	apache2-utils
+
+# Script functions...
+
 # Function for error handling
 # Usage: handle_error "Error message"
 
 # Function to announce success
 # Usage: announce_success "Task completed successfully." [use_alternate_icon]
 
-# Function to update package lists
+# Function to update package with error handling
 # Usage: update_package_lists
 
 # Function to install packages with error handling
 # Usage: install_packages $package_list
 
-# Script variables...
-
-# Always set PACKAGE_LIST when using update_and_install_packages
-set PACKAGE_LIST \
-	apache2 apache2-{bin,data,utils}
+# Function to update package lists the install packages with error handling
+# invokes update_package_lists & install_packages in a single call
+# Usage: update_and_install_packages $package_list
 
 set -x DEBIAN_FRONTEND noninteractive
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Add repository for ondrej/apache2
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
@@ -107,12 +114,5 @@ a2enmod ssl
 # Restart Apache to apply changes
 systemctl restart apache2
 
-announce_success "Apache Installed Successfully! ✅"
-
 # -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
-echo ""
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
-echo "🇺🇦"
-echo "🇺🇦    🏆 Apache Installed (with SSL 🙃) ‼️"
-echo "🇺🇦"
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
+footer_banner $job_complete

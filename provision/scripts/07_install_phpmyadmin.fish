@@ -30,7 +30,7 @@ source /var/www/provision/scripts/common_functions.fish
 # Function to install packages with error handling
 # Usage: install_packages $package_list
 
-# Script variables...
+# Script constants...
 
 # Function to set path variables based on the passed path root
 # Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile

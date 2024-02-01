@@ -18,8 +18,8 @@ echo ""
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
 
-# Script variables...
-# GENERATION_DATE     $(date "+%Y-%m-%d")
+# Script constants...
+# TODAYS_DATE         $(date "+%Y-%m-%d")
 # VM_FOLDER           /var/www
 # SHARED_HTML          $VM_FOLDER/html
 # PROVISION_FOLDER    $VM_FOLDER/provision
@@ -43,7 +43,7 @@ source /var/www/provision/scripts/common_functions.fish
 # Function to install packages with error handling
 # Usage: install_packages $package_list
 
-# Script variables...
+# Script constants...
 
 set PHP_VERSION    $argv[2]
 set PHP_INI        (echo "/etc/php/$PHP_VERSION/apache2/php.ini")
