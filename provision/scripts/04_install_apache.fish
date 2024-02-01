@@ -2,59 +2,30 @@
 
 # 04 Install Apache (with SSL)
 
+set script_name     "04_install_apache.fish"
+set updated_date    "2024-02-02"
+
+set active_title    "Installing Apache (with SSL 🙃)"
+set job_complete    "Apache Installed (with SSL 🙃)"
+
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
 
-header_banner \
-	"Installing Apache (with SSL 🙃)" \
-	"04_install_apache.fish" \
-	"2024-02-02"
+header_banner $active_title $script_name $updated_date
 
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
-set job_complete "Apache Installed (with SSL 🙃)"
 
 # Arguments...
 # NONE!"
 
-# Script constants...
-
-# TODAYS_DATE         $(date "+%Y-%m-%d")
-# VM_FOLDER           /var/www
-# SHARED_HTML          $VM_FOLDER/html
-# PROVISION_FOLDER    $VM_FOLDER/provision
-# PROVISION_DATA      $VM_FOLDER/provision/data
-# PROVISION_HTML      $VM_FOLDER/provision/html
-# PROVISION_LOGS      $VM_FOLDER/provision/logs
-# PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
-# PROVISION_SSL       $VM_FOLDER/provision/ssl
-# PROVISION_TEMPLATES $VM_FOLDER/provision/templates
-# PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
+# Script variables...
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
-	install_apache2 \
 	apache2 \
 	apache2-bin \
 	apache2-data \
 	apache2-utils
-
-# Script functions...
-
-# Function for error handling
-# Usage: handle_error "Error message"
-
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
-
-# Function to update package with error handling
-# Usage: update_package_lists
-
-# Function to install packages with error handling
-# Usage: install_packages $package_list
-
-# Function to update package lists the install packages with error handling
-# invokes update_package_lists & install_packages in a single call
-# Usage: update_and_install_packages $package_list
 
 set -x DEBIAN_FRONTEND noninteractive
 
@@ -114,5 +85,5 @@ a2enmod ssl
 # Restart Apache to apply changes
 systemctl restart apache2
 
-# -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
 footer_banner $job_complete

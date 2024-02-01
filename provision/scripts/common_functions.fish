@@ -7,7 +7,7 @@
 
 # TODAYS_DATE         $(date "+%Y-%m-%d")
 # VM_FOLDER           /var/www
-# SHARED_HTML          $VM_FOLDER/html
+# SHARED_HTML         $VM_FOLDER/html
 # PROVISION_FOLDER    $VM_FOLDER/provision
 # PROVISION_DATA      $VM_FOLDER/provision/data
 # PROVISION_HTML      $VM_FOLDER/provision/html
@@ -28,61 +28,12 @@ set -U PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
 set -U PROVISION_SSL       $VM_FOLDER/provision/ssl
 set -U PROVISION_TEMPLATES $VM_FOLDER/provision/templates
 set -U PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
-set -U LOG_FILE_TAIL       "_log.txt"
-
-if test -d $PROVISION_LOGS
-	# Set permissions to allow the current user to write and others to read
-	chmod -R 744 $PROVISION_LOGS
-
-	set -U LOGS_FOLDER_EXISTS 0  # Success
-else
-	# Create the folder
-	mkdir -p $PROVISION_LOGS
-	set -U LOGS_FOLDER_EXISTS $status
-end
 
 # Function for error handling
-# Usage: handle_error "Error message" "Error details"
+# Usage: handle_error "Error message"
 function handle_error
-	set name "errors"
-	set log_file_name $name$LOG_FILE_TAIL
-	set log_file $PROVISION_LOGS/$log_file_name
-
-	set custom_error_message (echo "⚠️ Error: $argv[1] 💥")
-
-	check_log_file
-
-	# Write the common log lines
-	write_log_banner $log_file 1
-
-	# Output the error message and details to the log
-	echo $custom_error_message >> $log_file
-	echo "Error details: $argv[2]" >> $log_file
-
-	echo $custom_error_message
+	echo "⚠️ Error: $argv 💥"
 	exit 1
-end
-
-# Function to check log_file
-# Exits via handle_error on failure.
-# Usage: check_log_file log_file
-function check_log_file
-	if test $LOGS_FOLDER_EXISTS -ne 0
-		handle_error "No logs folder"
-	end
-
-	set log_file (echo $PROVISION_LOGS/$argv[1])
-
-	if test -e $argv[1]
-		# Log file already exists, return success
-		return
-	end
-
-	touch $argv[1]
-
-	if test $status -ne 0
-		handle_error "Unable to create log file: $argv[1]"
-	end
 end
 
 # Function to announce success
@@ -104,62 +55,22 @@ end
 function update_package_lists
 	echo "🔄 Updating package lists 🔄"
 
-	set name "updates"
-	set log_file_name $name$LOG_FILE_TAIL
-	set log_file $PROVISION_LOGS/$log_file_name
-
-	check_log_file
-
-	# Write the common log lines
-	write_log_banner $log_file 0
-
-	# Capture the output and error message
-	set update_result (command apt-get update ^&1 | tr -d '\n')
-
-	# Write the common log lines
-	write_log_banner $log_file 0
-
-	# Check the exit status
-	if test $status -ne 0
-		# Extract the error message
-		set error_message (echo $update_result | tr -d '\n')
-		handle_error "Failed to update package lists" $error_message
+	if not apt-get -q update > /dev/null 2>&1
+		handle_error "Failed to update package lists"
 	end
 
 	announce_success "Package lists updated successfully."
 end
 
 # Function to install packages with error handling
-# Usage: install_packages $name $package_list
+# Usage: install_packages $package_list
 function install_packages
 	echo "🔄 Installing Packages 🔄"
 
-	set name $argv[1]
-	set package_list $argv[2..-1]  # Exclude the first argument (name)
-
-	set log_file_name $name$LOG_FILE_TAIL
-	set log_file $PROVISION_LOGS/$log_file_name
-
-	check_log_file
-
-	# Write the common log lines
-	write_log_banner $log_file $name
-
-	for package in $package_list
-		set cleaned (echo $package)
-		echo "🔄 Installing: $cleaned" >> $log_file
-
-		# Capture the output and error message
-		set install_result (command apt-get -y install $cleaned ^&1 | tr -d '\n')
-
-		# Append the output to the log file
-		echo $install_result >> $log_file
-
-		# Check the exit status
-		if test $status -ne 0
-			# Extract the error message
-			set error_message (echo $install_result | tr -d '\n')
-			handle_error "Failed to install package: $cleaned" $error_message
+	for package in $argv
+		set cleaned (eval echo $package)
+		if not apt-get -qy install $cleaned
+			handle_error "Failed to install packages"
 		end
 	end
 
@@ -172,24 +83,6 @@ end
 function update_and_install_packages
 	update_package_lists
 	install_packages $argv
-end
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-
-# Function to write common log lines
-# Usage: write_log_banner $log_file 0/1/string
-function write_log_banner
-	switch $argv[2]
-		case 0
-			set banner_art "🔄 /%/ p2m /%/ -- 🔄 UPDATING 🔄 UPDATING 🔄 -- /%/ p2m /%/ 🔄"
-		case 1
-			set banner_art "🚨 /%/ p2m /%/ -- 🚨 ERROR 🚨 ERROR 🚨 ERROR 🚨 -- /%/ p2m /%/ 🚨"
-		case '*'
-			set banner_art "🔄 /%/ p2m /%/ -- 🔄 $argv[2] 🔄 -- /%/ p2m /%/ 🔄"
-	end
-
-	echo $banner_art >> $argv[1]
-	echo "$TODAYS_DATE (date '+%T')" >> $argv[1]
 end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --

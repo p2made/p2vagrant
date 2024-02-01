@@ -2,51 +2,26 @@
 
 # 05 Install PHP (with Composer)
 
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
-echo "🇺🇦"
-echo "🇺🇦    🚀 Installing PHP (with Composer 🙃) 🚀"
-echo "🇺🇦    📜 Script Name:  05_install_php.fish"
-echo "🇺🇦    📅 Last Updated: 2024-01-31"
-echo "🇺🇦"
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
-echo ""
-# -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
+set script_name     "05_install_php.fish"
+set updated_date    "2024-02-02"
 
-# Arguments...
-# 1 - PHP_VERSION     = "8.3"
+set active_title    "Installing PHP (with Composer 🙃)"
+set job_complete    "PHP Installed (with Composer 🙃)"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
 
-# Script constants...
-# TODAYS_DATE         $(date "+%Y-%m-%d")
-# VM_FOLDER           /var/www
-# SHARED_HTML          $VM_FOLDER/html
-# PROVISION_FOLDER    $VM_FOLDER/provision
-# PROVISION_DATA      $VM_FOLDER/provision/data
-# PROVISION_HTML      $VM_FOLDER/provision/html
-# PROVISION_LOGS      $VM_FOLDER/provision/logs
-# PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
-# PROVISION_SSL       $VM_FOLDER/provision/ssl
-# PROVISION_TEMPLATES $VM_FOLDER/provision/templates
-# PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
+header_banner $active_title $script_name $updated_date
 
-# Function for error handling
-# Usage: handle_error "Error message"
+# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
+# Arguments...
+# 1 - PHP_VERSION     = "8.3"
 
-# Function to update package lists
-# Usage: update_package_lists
+# Script variables...
 
-# Function to install packages with error handling
-# Usage: install_packages $package_list
-
-# Script constants...
-
-set PHP_VERSION    $argv[2]
-set PHP_INI        (echo "/etc/php/$PHP_VERSION/apache2/php.ini")
+set PHP_VERSION    $argv[1]
+set PHP_INI        /etc/php/$PHP_VERSION/apache2/php.ini
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
@@ -94,7 +69,7 @@ set PACKAGE_LIST \
 
 set -x DEBIAN_FRONTEND noninteractive
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Add repository for ondrej/php
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
@@ -126,10 +101,5 @@ end
 
 announce_success "Composer Installed Successfully! ✅"
 
-# -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
-echo ""
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
-echo "🇺🇦"
-echo "🇺🇦    🏆 PHP Installed (with Composer 🙃) ‼️"
-echo "🇺🇦"
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
+# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
+footer_banner $job_complete
