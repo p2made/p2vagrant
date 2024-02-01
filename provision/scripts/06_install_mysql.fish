@@ -1,27 +1,19 @@
 #!/bin/fish
 
+# 00 _script_title_
+
+set script_name     "06_install_mysql.fish"
+set updated_date    "2024-02-02"
+
+set active_title    "Installing MySQL"
+set job_complete    "MySQL Installed"
+
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
 
-# 06 Install MySQL
+header_banner $active_title $script_name $updated_date
 
-header_banner \
-	"Installing MySQL" \
-	"06_install_mysql.fish" \
-	"2024-01-31"
-
-# This script is intended for use with Vagrant provisioning.
-# It installs MySQL, updates its configuration, creates a user and databases,
-# and performs necessary configurations for integration with Apache.
-
-# Usage in Vagrantfile:
-#   config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish",
-#                       args: [MYSQL_VERSION, PHP_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-
-# Test usage:
-#   sudo ./06_install_mysql.fish
-
-# -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
 # 1 - MYSQL_VERSION   = "8.1"
@@ -32,32 +24,7 @@ header_banner \
 # 6 - DB_NAME         = "example_db"
 # 7 - DB_NAME_TEST    = "example_db_test"
 
-# Script constants...
-# TODAYS_DATE         $(date "+%Y-%m-%d")
-# VM_FOLDER           /var/www
-# SHARED_HTML          $VM_FOLDER/html
-# PROVISION_FOLDER    $VM_FOLDER/provision
-# PROVISION_DATA      $VM_FOLDER/provision/data
-# PROVISION_HTML      $VM_FOLDER/provision/html
-# PROVISION_LOGS      $VM_FOLDER/provision/logs
-# PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
-# PROVISION_SSL       $VM_FOLDER/provision/ssl
-# PROVISION_TEMPLATES $VM_FOLDER/provision/templates
-# PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
-
-# Function for error handling
-# Usage: handle_error "Error message"
-
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
-
-# Function to update package lists
-# Usage: update_package_lists
-
-# Function to install packages with error handling
-# Usage: install_packages $package_list
-
-# Script constants...
+# Script variables...
 
 set MYSQL_VERSION  $argv[1]
 set PHP_VERSION    $argv[2]
@@ -119,5 +86,5 @@ cp $PROVISION_HTML/db.php $SHARED_HTML/ || \
 sudo chmod -R 755 $SHARED_HTML/ || \
     handle_error "Failed to set permissions on $SHARED_HTML/"
 
-# -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
-footer_banner "MySQL Installed"
+# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
+footer_banner $job_complete
