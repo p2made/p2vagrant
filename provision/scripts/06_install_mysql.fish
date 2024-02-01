@@ -26,13 +26,13 @@ header_banner $active_title $script_name $updated_date
 
 # Script variables...
 
-set MYSQL_VERSION  $argv[1]
-set PHP_VERSION    $argv[2]
-set ROOT_PASSWORD  $argv[3]
-set DB_USERNAME    $argv[4]
-set DB_PASSWORD    $argv[5]
-set DB_NAME        $argv[6]
-set DB_NAME_TEST   $argv[7]
+set MYSQL_VERSION "8.1"             # test
+set PHP_VERSION   "8.3"             # test
+set ROOT_PASSWORD "RootPassw0rd"    # test
+set DB_USERNAME   "fredspotty"      # test
+set DB_PASSWORD   "Passw0rd"        # test
+set DB_NAME       "example_db"      # test
+set DB_NAME_TEST  "example_db_test" # test
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
