@@ -1,6 +1,33 @@
 #!/bin/fish
 
 # common_functions.fish
+# Last Updated: 2024-02-01
+
+# Script constants...
+
+# TODAYS_DATE         $(date "+%Y-%m-%d")
+# VM_FOLDER           /var/www
+# SHARED_HTML         $VM_FOLDER/html
+# PROVISION_FOLDER    $VM_FOLDER/provision
+# PROVISION_DATA      $VM_FOLDER/provision/data
+# PROVISION_HTML      $VM_FOLDER/provision/html
+# PROVISION_LOGS      $VM_FOLDER/provision/logs
+# PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
+# PROVISION_SSL       $VM_FOLDER/provision/ssl
+# PROVISION_TEMPLATES $VM_FOLDER/provision/templates
+# PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
+
+set -U TODAYS_DATE         (date "+%Y-%m-%d")
+set -U VM_FOLDER           /var/www
+set -U SHARED_HTML         $VM_FOLDER/html
+set -U PROVISION_FOLDER    $VM_FOLDER/provision
+set -U PROVISION_DATA      $VM_FOLDER/provision/data
+set -U PROVISION_HTML      $VM_FOLDER/provision/html
+set -U PROVISION_LOGS      $VM_FOLDER/provision/logs
+set -U PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
+set -U PROVISION_SSL       $VM_FOLDER/provision/ssl
+set -U PROVISION_TEMPLATES $VM_FOLDER/provision/templates
+set -U PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
 # Function for error handling
 # Usage: handle_error "Error message"
@@ -23,7 +50,7 @@ function announce_success
 	echo "$icon $argv[1]"
 end
 
-# Function to update package lists
+# Function to update package with error handling
 # Usage: update_package_lists
 function update_package_lists
 	echo "🔄 Updating package lists 🔄"
@@ -31,6 +58,8 @@ function update_package_lists
 	if not apt-get -q update > /dev/null 2>&1
 		handle_error "Failed to update package lists"
 	end
+
+	announce_success "Package lists updated successfully."
 end
 
 # Function to install packages with error handling
@@ -39,15 +68,43 @@ function install_packages
 	echo "🔄 Installing Packages 🔄"
 
 	for package in $argv
-		set result (eval echo $package)
-		set -a packages_to_install $result
-	end
-
-	for package in $packages_to_install
-		if not apt-get -qy install $package
+		set cleaned (eval echo $package)
+		if not apt-get -qy install $cleaned
 			handle_error "Failed to install packages"
 		end
 	end
 
 	announce_success "Packages installed successfully!"
+end
+
+# Function to update package lists the install packages with error handling
+# invokes update_package_lists & install_packages in a single call
+# Usage: update_and_install_packages $package_list
+function update_and_install_packages
+	update_package_lists
+	install_packages $argv
+end
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+function header_banner
+	echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+	echo "🇺🇦"
+	echo "🇺🇦    🚀 $argv[1] 🚀"
+	echo "🇺🇦        on 📅 $TODAYS_DATE 📅"
+	echo "🇺🇦"
+	echo "🇺🇦    📜 Script Name:  $argv[2]"
+	echo "🇺🇦    📅 Last Updated: $argv[3]"
+	echo "🇺🇦"
+	echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
+	echo ""
+end
+
+function footer_banner
+	echo ""
+	echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
+	echo "🇺🇦"
+	echo "🇺🇦    🏆 $argv[1] ‼️"
+	echo "🇺🇦"
+	echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
 end

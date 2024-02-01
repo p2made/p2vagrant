@@ -20,7 +20,7 @@ echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
 
-# Variables...
+# Arguments...
 # 1 - PHP_VERSION     = "8.3"
 #set PHP_VERSION $1      # production
 set PHP_VERSION "8.3"   # testing

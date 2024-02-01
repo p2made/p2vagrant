@@ -1,4 +1,4 @@
-# 08 Install phpMyAdmin (manual)
+# 07 Install phpMyAdmin (manual)
 
 --
 

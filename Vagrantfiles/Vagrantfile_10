@@ -50,8 +50,8 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
 	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
 	config.vm.provision :shell, path: "provision/scripts/install_composer.sh"
-	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", args: [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-	config.vm.provision :shell, path: "provision/scripts/install_phpmyadmin.sh", args: [PMA_USERNAME, PMA_PASSWORD, REMOTE_FOLDER]
+	config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish", args: [MYSQL_VERSION, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/07_install_phpmyadmin.fish", args: [PMA_USERNAME, PMA_PASSWORD, REMOTE_FOLDER]
 	config.vm.provision :shell, path: "provision/scripts/install_yarn.sh"
 
 end
