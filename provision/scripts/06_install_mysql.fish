@@ -36,7 +36,7 @@ set DB_NAME_TEST   $argv[7]
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
-    mysql-server
+	mysql-server
 
 set -x DEBIAN_FRONTEND noninteractive
 
@@ -67,24 +67,24 @@ set -a sql_string (echo "flush privileges")
 set -a err_string (echo "Failed to flush privileges")
 
 for i in (seq 1 6)
-    echo $sql_string[$i] | mysql -u root -p$ROOT_PASSWORD > /var/www/provision/logs/mysql_output.log 2>&1 || \
-        handle_error $err_string[$i]
+	echo $sql_string[$i] | mysql -u root -p$ROOT_PASSWORD > /var/www/provision/logs/mysql_output.log 2>&1 || \
+		handle_error $err_string[$i]
 end
 
 # Update MySQL configuration
 if test -f /etc/mysql/mysql.conf.d/mysqld.cnf
-    sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 else
-    handle_error "mysqld.cnf file not found."
+	handle_error "mysqld.cnf file not found."
 end
 
 # Copy database file
 cp $PROVISION_HTML/db.php $SHARED_HTML/ || \
-    handle_error "Failed to copy db.php file"
+	handle_error "Failed to copy db.php file"
 
 # Set permissions
 sudo chmod -R 755 $SHARED_HTML/ || \
-    handle_error "Failed to set permissions on $SHARED_HTML/"
+	handle_error "Failed to set permissions on $SHARED_HTML/"
 
 # -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
 footer_banner $job_complete
