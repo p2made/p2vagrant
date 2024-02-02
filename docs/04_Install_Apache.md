@@ -121,7 +121,7 @@ function footer_banner
 end
 ```
 
-I had gone some way with this approach before updating these docs, so `common_functions.fish` comes as it is well beyond this step.
+I had gone some way with this approach before updating these docs, so `common_functions.fish` comes as it is well beyond this step. A consequence of using `common_functions.fish ` is right up the top, `set -U VM_FOLDER /var/www`. It turned that hard coding that made setting all the values based on `VM_FOLDER` as simple as you see there. Doing it by passing an argument from the `Vagrantfile` is sufficiently more complicated to be worth the one item of data duplication. In return I've been able to replace a multitude of strings with those constants.
 
 ### Create `provision/scripts/04_install_apache.fish`
 
