@@ -1,6 +1,6 @@
 # 08 Install MySQL
 
-**Updated:** 2024-01-28
+**Updated:** 2024-02-03
 
 --
 
