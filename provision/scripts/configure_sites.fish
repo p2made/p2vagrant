@@ -1,9 +1,9 @@
 #!/bin/fish
 
-# 00 _script_title_
+# 09 Configure Sites
 
 set script_name     "configure_sites.fish"
-set updated_date    "2024-02-02"
+set updated_date    "2024-02-03"
 
 set active_title    "Configuring Websites"
 set job_complete    "Websites Configured"
@@ -18,58 +18,65 @@ header_banner $active_title $script_name $updated_date
 # Arguments...
 # NONE!"
 
-# Script variables...
-
-# Array of site data
-set sites \
-	"example.test 1" \
-	"subdomain1.example.test 0" \
-	"subdomain2.example.test 0"
+# File path for site data
+set site_data_file "/var/www/provision/data/sites_data"
 
 set -x DEBIAN_FRONTEND noninteractive
 
-# Start _script_title_ logic...
-
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-# Function to generate the conf files and SSL files
-function configure_site
-	# $argv[1] - domain
-	# $argv[2] - template index
-	# $argv[3] - reverse domain
-	# $argv[4] - underscore domain
-	# $argv[5] - ssl filename
+function set_site_variables
 
-	# For readability, set $argv parts to discrete variables
-	set domain              $argv[1]
-	set template_index      $argv[2]
-	set reverse_domain      $argv[3]
-	set underscore_domain   $argv[4]
-	set ssl_filename        $argv[5]
+	set site_info (string split '\t' $one_site)
 
+	set -g domain $site_info[1]
+	set -g template_num $site_info[2]
+
+	if count $site_info > 2
+		set -g vhosts_prefix "$site_info[3]_"
+	else
+		set -g vhosts_prefix ""
+	end
+
+	set parts (string split '.' $domain)
+
+	for part in $parts
+		set -p reversed $part
+	end
+
+	set -g reverse_domain (string join "." $reversed)
+	set -g underscore_domain (string join "_" $reversed)
+end
+
+function write_vhosts_file
 	# Select the appropriate template based on the numeric value
-	set template_file $PROVISION_TEMPLATES/$template_index.conf
-	set vhosts_file $PROVISION_VHOSTS/$underscore_domain.conf
+	set template_file $PROVISION_TEMPLATES/$template_num.conf
+
+	# Set path for vhosts file
+	set vhosts_file $PROVISION_VHOSTS/$vhosts_prefix$underscore_domain.conf
 
 	# Check if the template file exists
 	if not test -f $template_file
-		handle_error "Template file $template_index.conf not found in $PROVISION_TEMPLATES"
+		handle_error "Template file $template_num.conf not found in $PROVISION_TEMPLATES"
 	end
 
 	# Use sed to replace placeholders in the template and save it to the new file
 	sed \
 		"s|{{DOMAIN}}|$domain|g; \
 		s|{{UNDERSCORE_DOMAIN}}|$underscore_domain|g; \
-		s|{{GENERATION_DATE}}|$TODAYS_DATE|g" $template_file > $vhosts_file
+		s|{{TODAYS_DATE}}|$TODAYS_DATE|g" $template_file > $vhosts_file
+end
 
+function generate_ssl_files
 	# Check if SSL folder exists
 	if not test -d $PROVISION_SSL
 		handle_error "SSL folder $PROVISION_SSL not found"
 	end
 
 	# Set paths for SSL certificate and key
-	set ssl_cert_file $PROVISION_SSL/$ssl_filename.cert
-	set ssl_key_file $PROVISION_SSL/$ssl_filename.key
+	set ssl_root_string "$PROVISION_SSL/$underscore_domain"_"$TODAYS_DATE"
+	set ssl_cert_file $ssl_root_string.cert
+	set ssl_key_file $ssl_root_string.key
 
 	# Generate SSL key
 	openssl genrsa \
@@ -82,10 +89,12 @@ function configure_site
 		-out $ssl_cert_file \
 		-days 3650 \
 		-subj /CN=$domain
+end
 
+function configure_website
 	# Put `conf` & SSL files into place
 	sudo cp -f $vhosts_file /etc/apache2/sites-available/
-	sudo cp -f $PROVISION_SSL/$ssl_filename.* /etc/apache2/sites-available/
+	sudo cp -f $ssl_root_string.* /etc/apache2/sites-available/
 
 	# Create site root if it doesn't already exist
 	mkdir -p $VM_FOLDER/$underscore_domain
@@ -100,30 +109,35 @@ function configure_site
 	sudo a2ensite $underscore_domain
 end
 
+function erase_site_variables
+	set -e domain
+	set -e template_num
+	set -e vhosts_prefix
+	set -e reverse_domain
+	set -e underscore_domain
+	set -e ssl_filename
+end
+
 # Iterate through the site data
-for one_site in $sites
+for one_site in (cat $site_data_file | grep -v '^#')
 	# First get thy data in order young coder
-	set site_info (string split ' ' $one_site)
-	set domain $site_info[1]
-	set template_index $site_info[2]
+	set_site_variables $one_site
 
-	set parts_orig (string split '.' $domain)
-
-	for part in $parts_orig
-		set -p reversed_parts $part
-	end
-
-	set reverse_domain (string join "." $reversed_parts)
-	set underscore_domain (string join "_" $reversed_parts)
-	set ssl_filename "$reversed_parts"_"$TODAYS_DATE"
+	# Now we have variables...
+	# $domain
+	# $template_num
+	# $vhosts_prefix
+	# $reverse_domain
+	# $underscore_domain
+	# $ssl_filename
 
 	# Now go configure some web sites
-	configure_site \
-		$domain \
-		$template_index \
-		$reverse_domain \
-		$underscore_domain \
-		$ssl_filename
+	write_vhosts_file
+	generate_ssl_files
+	configure_website
+
+	# Reset for the next site
+	erase_site_variables
 end
 
 # Restart Apache after all configurations

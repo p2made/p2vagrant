@@ -1,3 +1,6 @@
-example.tld 1
-subdomain1.example.tld 0
-subdomain2.example.tld 0
+# Sites data - one site per tab separated line
+# domain	template_num	[vhosts_prefix]
+example.test	1	000
+# subdomains
+subdomain1.example.test	0
+subdomain2.example.test	0
