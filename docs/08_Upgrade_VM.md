@@ -4,7 +4,7 @@
 
 --
 
-### section_title
+### Create `provision/scripts/06_install_mysql.fish`
 
 some_text
 
