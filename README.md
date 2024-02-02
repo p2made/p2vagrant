@@ -31,10 +31,10 @@ All files you are directed to create are in...
 05. [Install PHP (with Composer)](./docs/05_Install_PHP.md)
 06. [Install MySQL](./docs/06_Install_MySQL.md)
 07. [Install phpMyAdmin](./docs/07_Install_phpMyAdmin.md)
-08. [Configure Sites](./docs/08_Configure_Sites.md)
 
 <!--
-09. [Page Title](./docs/09_Page_Title.md)
+08. [Upgrade VM (revisited)](./docs/08_Upgrade_VM.md)
+09. [Configure Sites](./docs/09_Configure_Sites.md)
 10. [Page Title](./docs/10_Page_Title.md)
 11. [Page Title](./docs/11_Page_Title.md)
 12. [Page Title](./docs/12_Page_Title.md)
