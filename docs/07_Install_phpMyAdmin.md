@@ -71,7 +71,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [08 Install MySQL](./08_Install_MySQL.md)
+| [06 Install MySQL](./06_Install_MySQL.md)
 | [**Back to Steps**](../README.md)
-| [10 Install Yarn](./10_Install_Yarn.md)
+| [08 Upgrade VM (revisited)](./08_Upgrade_VM.md)
 |
