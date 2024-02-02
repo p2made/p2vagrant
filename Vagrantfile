@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vi: set ft=ruby
 
-# 06 Install MySQL
-# Updated: 2024-01-28
+# 08 Upgrade VM (revisited)
+# Updated: 2024-02-03
 
 # Machine Variables
 MEMORY              = 4096
@@ -16,7 +16,7 @@ REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
 PHP_VERSION         = "8.3"
-MYSQL_VERSION       = "8.0"
+MYSQL_VERSION       = "8.1"
 
 # Database Variables
 ROOT_PASSWORD       = "RootPassw0rd"
@@ -41,11 +41,14 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"
+
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
 #	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
 #	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+#	config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
