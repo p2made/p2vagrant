@@ -47,6 +47,8 @@ function configure_site
 	set underscore_domain   $argv[4]
 	set ssl_filename        $argv[5]
 
+	set site_folder         $VM_FOLDER/$underscore_domain
+
 	# Select the appropriate template based on the numeric value
 	set template_file $PROVISION_TEMPLATES/$template_index.conf
 	set vhosts_file $PROVISION_VHOSTS/$underscore_domain.conf
@@ -85,15 +87,16 @@ function configure_site
 
 	# Put `conf` & SSL files into place
 	sudo cp -f $vhosts_file /etc/apache2/sites-available/
-	sudo cp -f $PROVISION_SSL/$ssl_filename.* /etc/apache2/sites-available/
+	sudo cp -f $ssl_cert_file /etc/apache2/sites-available/
+	sudo cp -f $ssl_key_file /etc/apache2/sites-available/
 
 	# Create site root if it doesn't already exist
-	mkdir -p $VM_FOLDER/$underscore_domain
+	mkdir -p $site_folder
 
 	# Copy files only if they do not exist
 	set files_to_copy "index.html" "phpinfo.php" "db.php"
 	for file in $files_to_copy
-		cp -u $PROVISION_HTML/$file $VM_FOLDER/$underscore_domain/
+		cp -u $PROVISION_HTML/$file $site_folder/
 	end
 
 	# Enable site
