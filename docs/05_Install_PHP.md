@@ -198,7 +198,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [05 Install Apache](./05_Install_Apache.md)
+| [04 Install Apache (with SSL)](./04_Install_Apache.md)
 | [**Back to Steps**](../README.md)
-| [07 Install Composer](./07_Install_Composer.md)
+| [06 Install MySQL](./06_Install_MySQL.md)
 |
