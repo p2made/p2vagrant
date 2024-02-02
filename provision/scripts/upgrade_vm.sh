@@ -1,82 +1,104 @@
-#!/bin/bash
+#!/bin/fish
 
-# 02 Upgrade VM
+# 08 Upgrade VM (revisited)
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🚀 Upgrading VM 🚀"
-echo "🇺🇿    📜 Script Name:  02_upgrade_vm.sh"
-echo "🇹🇲    📅 Last Updated: 2024-01-27"
-echo "🇹🇯"
-echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
-echo ""
+set script_name     "upgrade_vm.fish"
+set updated_date    "2024-02-03"
+
+set active_title    "Upgrading VM"
+set job_complete    "Upgrade completed successfully"
+
+# Source common functions
+source /var/www/provision/scripts/common_functions.fish
+
+header_banner $active_title $script_name $updated_date
+
+# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
 # NONE!"
 
+# Script constants...
+
+# GENERATION_DATE     $(date "+%Y-%m-%d")
+# VM_FOLDER           /var/www
+# SHARED_HTML          $VM_FOLDER/html
+# PROVISION_FOLDER    $VM_FOLDER/provision
+# PROVISION_DATA      $VM_FOLDER/provision/data
+# PROVISION_HTML      $VM_FOLDER/provision/html
+# PROVISION_LOGS      $VM_FOLDER/provision/logs
+# PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
+# PROVISION_SSL       $VM_FOLDER/provision/ssl
+# PROVISION_TEMPLATES $VM_FOLDER/provision/templates
+# PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
+
+# Script variables...
+
+# Always set PACKAGE_LIST when using update_and_install_packages
+set PACKAGE_LIST \
+	package1 \
+	package2
+
+# Script functions...
+
 # Function for error handling
 # Usage: handle_error "Error message"
-handle_error() {
-	echo "⚠️ Error: $1 💥"
-	echo "Run `vagrant halt` then restore the last snapshot before trying again."
-	exit 1
-}
 
 # Function to announce success
-# Usage: announce_success "Task completed successfully."
-announce_success() {
-	echo "✅ $1"
-}
+# Usage: announce_success "Task completed successfully." [use_alternate_icon]
+
+# Function to update package with error handling
+# Usage: update_package_lists
+
+# Function to install packages with error handling
+# Usage: install_packages $package_list
+
+# Function to update package lists the install packages with error handling
+# invokes update_package_lists & install_packages in a single call
+# Usage: update_and_install_packages $package_list
+
+set -x DEBIAN_FRONTEND noninteractive
+
+# Start _script_title_ logic...
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+# Custom functions
 
 # Function to announce a job not needing to be done
 # Usage: announce_no_job "Nothing to do."
-announce_no_job() {
-	echo "👍 $1"
-}
+function announce_no_job
+	echo "👍 $argv[1]"
+end
 
-export DEBIAN_FRONTEND=noninteractive
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-
-update_package_lists() {
-	echo "🔄 Updating package lists 🔄"
-	if ! apt-get -q update 2>&1; then
-		handle_error "Failed to update package lists"
-	fi
-}
-
-# Function to upgrade packages if updates are available
-upgrade_packages() {
-	if ! apt-get -q -s upgrade 2>&1 | grep -q '^[[:digit:]]\+ upgraded'; then
-		announce_no_job "No packages to upgrade."
-		return
-	fi
-
+# Function to upgrade package with error handling
+# Usage: upgrade_packages
+function upgrade_packages
 	echo "⬆️ Upgrading packages ⬆️"
-	if ! apt-get -qy upgrade 2>&1; then
+
+	if not apt-get -qy upgrade > /dev/null 2>&1
 		handle_error "Failed to upgrade packages"
-	fi
+	end
 
 	announce_success "Packages successfully upgraded."
-}
+end
 
 # Function to remove unnecessary packages
-remove_unnecessary_packages() {
-	if ! apt-get autoremove --dry-run | grep -q '^[[:digit:]]\+ packages will be removed'; then
+# Usage: remove_unnecessary_packages
+function remove_unnecessary_packages
+	if not apt-get autoremove --dry-run | grep -q '^[[:digit:]]\+ packages will be removed'
 		announce_no_job "No unnecessary packages to remove."
 		return
-	fi
+	end
 
 	echo "🧹 Removing unnecessary packages 🧹"
 
-	if ! apt-get -qy autoremove; then
+	if not apt-get -qy autoremove
 		handle_error "Failed to remove unnecessary packages"
-	fi
+	end
 
 	announce_success "Unnecessary packages removed."
-}
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+end
 
 update_package_lists
 upgrade_packages
@@ -88,9 +110,5 @@ cat /etc/os-release
 
 announce_success "System update complete! ✅"
 
-echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 Upgrade completed successfully ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
+footer_banner $job_complete
