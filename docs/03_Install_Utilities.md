@@ -11,9 +11,6 @@
 
 # 03 Install Utilities
 
-# Arguments...
-# 1 - TIMEZONE   = "Australia/Brisbane"
-
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿    🚀 Installing Utilities 🚀"
@@ -22,6 +19,9 @@ echo "🇹🇲    📅 Last Updated: 2024-01-27"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
+
+# Arguments...
+# 1 - TIMEZONE   = "Australia/Brisbane"
 
 # Function for error handling
 # Usage: handle_error "Error message"
