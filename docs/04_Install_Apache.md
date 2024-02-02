@@ -4,6 +4,10 @@
 
 --
 
+
+
+
+
 ### Create `provision/scripts/04_install_apache.fish`
 
 ```
@@ -11,66 +15,58 @@
 
 # 04 Install Apache (with SSL)
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🚀 Installing Apache (with SSL 🙃) 🚀"
-echo "🇺🇿    📜 Script Name:  04_install_apache.fish"
-echo "🇹🇲    📅 Last Updated: 2024-01-28"
-echo "🇹🇯"
-echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
-echo ""
+set script_name     "04_install_apache.fish"
+set updated_date    "2024-02-02"
+
+set active_title    "Installing Apache (with SSL 🙃)"
+set job_complete    "Apache Installed (with SSL 🙃)"
+
+# Source common functions
+source /var/www/provision/scripts/common_functions.fish
+
+header_banner $active_title $script_name $updated_date
+
+# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
 # NONE!"
 
+# Script variables...
+
+# Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
 	apache2 \
 	apache2-bin \
 	apache2-data \
 	apache2-utils
 
-# Source common functions
-source /var/www/provision/scripts/common_functions.fish
-
-# Function for error handling
-# Usage: handle_error "Error message"
-
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
-
-# Function to install packages with error handling
-# Usage: install_packages $package_list
-
 set -x DEBIAN_FRONTEND noninteractive
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Add repository for ondrej/apache2
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
 
-
-# Update package lists
-update_package_lists
-
-# Install PHP packages
-install_packages $PACKAGE_LIST
+# Update package lists & install packages
+update_and_install_packages $PACKAGE_LIST
 
 announce_success "Apache packages installed successfully!"
 
 # Generate SSL key
 echo "🔄 Generating SSL key 🔄"
 if not openssl genrsa \
-	-out /var/www/provision/ssl/localhost.key \
+	-out $PROVISION_SSL/localhost.key \
 	2048
 	handle_error "Failed to generate SSL key"
 end
 
 # Generate self-signed SSL certificate
-# Generate self-signed SSL certificate
 echo "🔄 Generating self-signed SSL certificate 🔄"
 if not openssl req -x509 -nodes \
-	-keyout /var/www/provision/ssl/localhost.key \
-	-out /var/www/provision/ssl/localhost.cert \
+	-key $PROVISION_SSL/localhost.key \
+	-out $PROVISION_SSL/localhost.cert \
 	-days 3650 \
-	-subj "/CN=\\*.localhost" 2>/dev/null
+	-subj "/CN=localhost" 2>/dev/null
 
 	handle_error "Failed to generate self-signed SSL certificate"
 end
@@ -78,32 +74,32 @@ end
 announce_success "SSL files generated successfully!"
 
 # Display information about the generated certificate
-openssl x509 -noout -text -in /var/www/provision/ssl/localhost.cert
+openssl x509 -noout -text -in $PROVISION_SSL/localhost.cert
 
 # Copy web server files into place
-yes | cp /var/www/provision/vhosts/local.conf /etc/apache2/sites-available/
-yes | cp /var/www/provision/html/index.htm /var/www/html/
-yes | cp /var/www/provision/ssl/* /etc/apache2/sites-available/
+yes | cp $PROVISION_VHOSTS/local.conf /etc/apache2/sites-available/
+yes | cp $PROVISION_SSL/* /etc/apache2/sites-available/
+yes | cp $PROVISION_HTML/index.htm $SHARED_HTML/
+
+# Check if index.html exists in the html folder
+if not test -e $SHARED_HTML/index.html
+	cp $PROVISION_HTML/index.html $SHARED_HTML/
+end
 
 # Set permissions on web server files
-sudo chmod -R 755 /var/www/html/*
-sudo chmod 600 /etc/apache2/sites-available/localhost.key
+chmod -R 755 $SHARED_HTML/*
+chmod 600 /etc/apache2/sites-available/localhost.key
 
 a2ensite local.conf
 a2dissite 000-default
 a2enmod rewrite
 a2enmod ssl
 
-service apache2 restart
+# Restart Apache to apply changes
+systemctl restart apache2
 
-announce_success "Apache Installed Successfully! ✅"
-
-echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 Apache Installed ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
+footer_banner $job_complete
 ```
 
 ### Create `provision/html/index.htm`
