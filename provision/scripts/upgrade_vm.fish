@@ -76,6 +76,13 @@ end
 function upgrade_packages
 	echo "⬆️ Upgrading packages ⬆️"
 
+	# Check if there are packages to upgrade
+	if not apt-get -s upgrade | grep -q '^[[:digit:]]\+ upgraded'
+		announce_no_job "No packages to upgrade."
+		return
+	end
+
+	# Actually perform the upgrade
 	if not apt-get -qy upgrade > /dev/null 2>&1
 		handle_error "Failed to upgrade packages"
 	end
