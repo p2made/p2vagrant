@@ -13,7 +13,7 @@ vagrant ssh
 ### Install phpMyAdmin
 
 ```
-LC_ALL=C.UTF-8 sudo apt-add-repository -yu ppa:phpmyadmin/ppa
+sudo LC_ALL=C.UTF-8 apt-add-repository -yu ppa:phpmyadmin/ppa
 
 sudo apt-get update
 sudo apt-get -qy install phpmyadmin
@@ -24,9 +24,22 @@ The installer prompts, accept the defaults & enter a password of your choosing.
 
 ### Finish phpMyAdmin Installation
 
+First remove the phpMyAdmin folder that the installer has just put in place.
+
+```
+sudo rm -rf /usr/share/phpmyadmin
+```
+
+Now copy the phpMyAdmin folder that's part of this project, & set permissions.
+
 ```
 sudo cp -R /var/www/provision/html/phpmyadmin /var/www/html/phpmyadmin
 sudo chmod -R 755 /var/www/html/phpmyadmin
+```
+
+Finally, make sure a `php` module that phpMyAdmin requires is enabled.
+
+```
 sudo phpenmod mbstring
 ```
 
@@ -58,7 +71,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [08 Install MySQL](./08_Install_MySQL.md)
+| [06 Install MySQL](./06_Install_MySQL.md)
 | [**Back to Steps**](../README.md)
-| [10 Install Yarn](./10_Install_Yarn.md)
+| [08 Upgrade VM (revisited)](./08_Upgrade_VM.md)
 |
