@@ -17,17 +17,17 @@
 # PROVISION_TEMPLATES $VM_FOLDER/provision/templates
 # PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
-set -U TODAYS_DATE         (date "+%Y-%m-%d")
-set -U VM_FOLDER           /var/www
-set -U SHARED_HTML         $VM_FOLDER/html
-set -U PROVISION_FOLDER    $VM_FOLDER/provision
-set -U PROVISION_DATA      $VM_FOLDER/provision/data
-set -U PROVISION_HTML      $VM_FOLDER/provision/html
-set -U PROVISION_LOGS      $VM_FOLDER/provision/logs
-set -U PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
-set -U PROVISION_SSL       $VM_FOLDER/provision/ssl
-set -U PROVISION_TEMPLATES $VM_FOLDER/provision/templates
-set -U PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
+set -g TODAYS_DATE         (date "+%Y-%m-%d")
+set -g VM_FOLDER           /var/www
+set -g SHARED_HTML         $VM_FOLDER/html
+set -g PROVISION_FOLDER    $VM_FOLDER/provision
+set -g PROVISION_DATA      $VM_FOLDER/provision/data
+set -g PROVISION_HTML      $VM_FOLDER/provision/html
+set -g PROVISION_LOGS      $VM_FOLDER/provision/logs
+set -g PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
+set -g PROVISION_SSL       $VM_FOLDER/provision/ssl
+set -g PROVISION_TEMPLATES $VM_FOLDER/provision/templates
+set -g PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
 # Function for error handling
 # Usage: handle_error "Error message"
