@@ -1,6 +1,6 @@
 # 02 Upgrade VM
 
-**Updated:** 2024-01-27
+**Updated:** 2024-02-02
 
 --
 
@@ -11,9 +11,6 @@
 
 # 02 Upgrade VM
 
-# Arguments...
-# NONE!"
-
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿    🚀 Upgrading VM 🚀"
@@ -22,6 +19,9 @@ echo "🇹🇲    📅 Last Updated: 2024-01-27"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
+
+# Arguments...
+# NONE!"
 
 # Function for error handling
 # Usage: handle_error "Error message"
@@ -153,8 +153,6 @@ Or copy this file...
 ```
 cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
 ```
-
-If you don't want `02_upgrade_vm.sh` to run every time you launch the VM, either comment the line out or delete `run: 'always'`.
 
 ### Provision the VM...
 
