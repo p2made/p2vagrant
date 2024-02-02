@@ -33,17 +33,19 @@ set -x DEBIAN_FRONTEND noninteractive
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Function to generate the conf files and SSL files
-function configure_sites
+function configure_site
 	# $argv[1] - domain
 	# $argv[2] - template index
 	# $argv[3] - reverse domain
 	# $argv[4] - underscore domain
+	# $argv[5] - ssl filename
 
 	# For readability, set $argv parts to discrete variables
-	set domain $argv[1]
-	set template_index $argv[2]
-	set reverse_domain $argv[3]
-	set underscore_domain $argv[4]
+	set domain              $argv[1]
+	set template_index      $argv[2]
+	set reverse_domain      $argv[3]
+	set underscore_domain   $argv[4]
+	set ssl_filename        $argv[5]
 
 	# Select the appropriate template based on the numeric value
 	set template_file $PROVISION_TEMPLATES/$template_index.conf
@@ -58,7 +60,7 @@ function configure_sites
 	sed \
 		"s|{{DOMAIN}}|$domain|g; \
 		s|{{UNDERSCORE_DOMAIN}}|$underscore_domain|g; \
-		s|{{GENERATION_DATE}}|$GENERATION_DATE|g" $template_file > $vhosts_file
+		s|{{GENERATION_DATE}}|$TODAYS_DATE|g" $template_file > $vhosts_file
 
 	# Check if SSL folder exists
 	if not test -d $PROVISION_SSL
@@ -66,8 +68,8 @@ function configure_sites
 	end
 
 	# Set paths for SSL certificate and key
-	set ssl_cert_file $PROVISION_SSL/$domain.cert
-	set ssl_key_file $PROVISION_SSL/$domain.key
+	set ssl_cert_file $PROVISION_SSL/$ssl_filename.cert
+	set ssl_key_file $PROVISION_SSL/$ssl_filename.key
 
 	# Generate SSL key
 	openssl genrsa \
@@ -83,7 +85,7 @@ function configure_sites
 
 	# Put `conf` & SSL files into place
 	sudo cp -f $vhosts_file /etc/apache2/sites-available/
-	sudo cp -f $PROVISION_SSL/$domain.* /etc/apache2/sites-available/
+	sudo cp -f $PROVISION_SSL/$ssl_filename.* /etc/apache2/sites-available/
 
 	# Create site root if it doesn't already exist
 	mkdir -p $VM_FOLDER/$underscore_domain
@@ -94,35 +96,38 @@ function configure_sites
 		cp -u $PROVISION_HTML/$file $VM_FOLDER/$underscore_domain/
 	end
 
-
 	# Enable site
-	#sudo a2ensite $underscore_domain
+	sudo a2ensite $underscore_domain
 end
 
 # Iterate through the site data
 for one_site in $sites
 	# First get thy data in order young coder
 	set site_info (string split ' ' $one_site)
-	set parts (string split '.' $site_info[1])
+	set domain $site_info[1]
+	set template_index $site_info[2]
 
-	set reversed_parts ""
-	for i in (seq (count $parts) -1 2)
-		set -l part $parts[$i]
-		set reversed_parts $reversed_parts$part"."
+	set parts_orig (string split '.' $domain)
+
+	for part in $parts_orig
+		set -p reversed_parts $part
 	end
-	set reversed_parts $reversed_parts$parts[1]
 
-	set parts (string split '.' $reversed_parts)
-
-	set site_info $site_info (string join "." $parts)
-	set site_info $site_info (string join "_" $parts)
+	set reverse_domain (string join "." $reversed_parts)
+	set underscore_domain (string join "_" $reversed_parts)
+	set ssl_filename "$reversed_parts"_"$TODAYS_DATE"
 
 	# Now go configure some web sites
-	configure_sites $site_info
+	configure_site \
+		$domain \
+		$template_index \
+		$reverse_domain \
+		$underscore_domain \
+		$ssl_filename
 end
 
 # Restart Apache after all configurations
-#sudo service apache2 restart
+sudo service apache2 restart
 
 # -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
 footer_banner $job_complete
