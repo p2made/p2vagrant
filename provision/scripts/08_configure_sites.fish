@@ -2,119 +2,35 @@
 
 # 00 _script_title_
 
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
-echo "🇺🇦"
-echo "🇺🇦    🚀 Configuring Websites 🚀"
-echo "🇺🇦    📜 Script Name:  08_configure_sites.fish"
-echo "🇺🇦    📅 Last Updated: 2024-01-28"
-echo "🇺🇦"
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
-echo ""
-# -- -- /%/ -- -- /%/ -- header_banner -- /%/ -- -- /%/ -- --
+set script_name     "08_configure_sites.fish"
+set updated_date    "2024-02-02"
 
-# Arguments...
-# 1 - REMOTE_FOLDER   = "/var/www"
+set active_title    "Configuring Websites"
+set job_complete    "Websites Configured"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
 
-# Function for error handling
-# Usage: handle_error "Error message"
+header_banner $active_title $script_name $updated_date
 
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
+# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
-# Function to update package lists
-# Usage: update_package_lists
+# Arguments...
+# NONE!"
 
-# Function to install packages with error handling
-# Usage: install_packages $package_list
+# Script variables...
 
-# Script constants...
-
-# Function to set path variables based on the passed path root
-# Usage: set_path_variables /var/www - usually REMOTE_FOLDER from the Vagrantfile
-# VM_FOLDER $argv[1]
-# PROVISION_FOLDER $VM_FOLDER/provision
-# PROVISION_DATA      $PROVISION_FOLDER/data
-# PROVISION_HTML      $PROVISION_FOLDER/html
-# PROVISION_LOGS      $PROVISION_FOLDER/logs
-# PROVISION_SCRIPTS   $PROVISION_FOLDER/scripts
-# PROVISION_SSL       $PROVISION_FOLDER/ssl
-# PROVISION_TEMPLATES $PROVISION_FOLDER/templates
-# PROVISION_VHOSTS    $PROVISION_FOLDER/vhosts
-set_path_variables $argv[1]
-
-# Always set PACKAGE_LIST when using update_and_install_packages
-set PACKAGE_LIST \
-	package1 \
-	package2
+# Array of site data
+set sites \
+	"example.test 1" \
+	"subdomain1.example.test 0" \
+	"subdomain2.example.test 0"
 
 set -x DEBIAN_FRONTEND noninteractive
 
 # Start _script_title_ logic...
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-# Functions
-
-# Function form
-#function function_name
-#    ... Function body ...
-#    if not [SOME_CHECK]
-#        handle_error "Failed to perform some action."
-#    end
-#    announce_success "Successfully completed some action." # optional
-#end
-
-# Example usage:
-#function_name
-#function_name argument
-#function_name argument1 argument2
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-# Execution
-
-# Add repository if appliciable
-
-# Update package lists & install packages
-update_and_install_packages $PACKAGE_LIST
-
-# single line statements
-# including calls to functions
-
-# -- -- /%/ -- -- /%/ -- footer_banner -- /%/ -- -- /%/ -- --
-echo ""
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
-echo "🇺🇦"
-echo "🇺🇦    🏆 _script_job_complete_ ‼️"
-echo "🇺🇦"
-echo "🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-
-
-#set VM_FOLDER           $1            # production version
-set VM_FOLDER           "/var/www"    # ssh test version
-set PROVISION_FOLDER    $VM_FOLDER/provision
-set PROVISION_DATA         $PROVISION_FOLDER/data
-set PROVISION_HTML         $PROVISION_FOLDER/html
-set PROVISION_SSL          $PROVISION_FOLDER/ssl
-set PROVISION_TEMPLATES    $PROVISION_FOLDER/templates
-set PROVISION_VHOSTS       $PROVISION_FOLDER/vhosts
-set TODAYS_DATE         $(date "+%Y-%m-%d")
-
-# Array of site data
-set sites \
-	"example.tld 1" \
-	"subdomain1.example.tld 0" \
-	"subdomain2.example.tld 0"
-
-# Function for error handling
-function handle_error
-	echo "⚠️ Error: $argv 💥"
-	exit 1
-end
 
 # Function to generate the conf files and SSL files
 function configure_sites
@@ -208,9 +124,5 @@ end
 # Restart Apache after all configurations
 #sudo service apache2 restart
 
-echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿 🏆 Websites Configured ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
+footer_banner $job_complete
