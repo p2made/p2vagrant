@@ -11,82 +11,74 @@
 
 # 06 Install MySQL
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🚀 Installing MySQL 🚀"
-echo "🇺🇿    📜 Script Name:  06_install_mysql.fish"
-echo "🇹🇲    📅 Last Updated: 2024-01-28"
-echo "🇹🇯"
-echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
-echo ""
+set script_name     "06_install_mysql.fish"
+set updated_date    "2024-02-02"
 
-# Arguments...
-# 1 - MYSQL_VERSION   = "8.1"
-# 2 - DB_USERNAME     = "fredspotty"
-# 3 - DB_PASSWORD     = "Passw0rd"
-# 4 - DB_NAME         = "example_db"
-# 5 - DB_NAME_TEST    = "example_db_test"
-# 6 - PHP_VERSION     = "8.3"
-
-set MYSQL_VERSION $1                # prod
-#set MYSQL_VERSION "8.1"             # test
-set DB_USERNAME $2                  # prod
-#set DB_USERNAME "fredspotty"        # test
-set DB_PASSWORD $3                  # prod
-#set DB_PASSWORD "Passw0rd"          # test
-set DB_NAME $4                      # prod
-#set DB_NAME "example_db"            # test
-set DB_NAME_TEST $5                 # prod
-#set DB_NAME_TEST "example_db_test"  # test
-set PHP_VERSION $46                 # prod
-#set PHP_VERSION "8.3"               # test
-
-set PACKAGE_LIST \
-	mysql-server
+set active_title    "Installing MySQL"
+set job_complete    "MySQL Installed"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
 
-# Function for error handling
-# Usage: handle_error "Error message"
+header_banner $active_title $script_name $updated_date
 
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
+# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
-# Function to update package lists
-# Usage: update_package_lists
+# Arguments...
+# 1 - MYSQL_VERSION   = "8.1"
+# 2 - PHP_VERSION     = "8.3"
+# 3 - ROOT_PASSWORD   = ⚠️ See Vagrantfile
+# 4 - DB_USERNAME     = ⚠️ See Vagrantfile
+# 5 - DB_PASSWORD     = ⚠️ See Vagrantfile
+# 6 - DB_NAME         = "example_db"
+# 7 - DB_NAME_TEST    = "example_db_test"
 
-# Function to install packages with error handling
-# Usage: install_packages $package_list
+# Script variables...
+
+set MYSQL_VERSION  $argv[1]
+set PHP_VERSION    $argv[2]
+set ROOT_PASSWORD  $argv[3]
+set DB_USERNAME    $argv[4]
+set DB_PASSWORD    $argv[5]
+set DB_NAME        $argv[6]
+set DB_NAME_TEST   $argv[7]
+
+# Always set PACKAGE_LIST when using update_and_install_packages
+set PACKAGE_LIST \
+	mysql-server
 
 set -x DEBIAN_FRONTEND noninteractive
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-# Update package lists
-update_package_lists
+# Update package lists & install packages
+update_and_install_packages $PACKAGE_LIST
 
-# Install PHP packages
-install_packages $PACKAGE_LIST
+sudo mkdir -p /var/www/provision/logs
+sudo touch /var/www/provision/logs/mysql_output.log
+sudo chmod -R 755 /var/www/provision/logs
+
+# Set root password
+mysqladmin -u root password $ROOT_PASSWORD || handle_error "Failed to set root password."
 
 # Create the database and grant privileges
-echo "CREATE USER '$DB_USERNAME'@'%' IDENTIFIED BY '$DB_PASSWORD'" | \
-	mysql || handle_error "Failed to create MySQL user"
+set -a sql_string (echo "CREATE USER '$DB_USERNAME'@'%' IDENTIFIED BY '$DB_PASSWORD'")
+set -a err_string (echo "Failed to create MySQL user")
+set -a sql_string (echo "CREATE DATABASE IF NOT EXISTS $DB_NAME")
+set -a err_string (echo "Failed to create MySQL database $DB_NAME")
+set -a sql_string (echo "CREATE DATABASE IF NOT EXISTS $DB_NAME_TEST")
+set -a err_string (echo "Failed to create MySQL database $DB_NAME_TEST")
+set -a sql_string (echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USERNAME'@'%';")
+set -a err_string (echo "Failed to grant privileges on $DB_NAME")
+set -a sql_string (echo "GRANT ALL PRIVILEGES ON $DB_NAME_TEST.* TO '$DB_USERNAME'@'%';")
+set -a err_string (echo "Failed to grant privileges on $DB_NAME_TEST")
+set -a sql_string (echo "flush privileges")
+set -a err_string (echo "Failed to flush privileges")
 
-echo "CREATE DATABASE IF NOT EXISTS $DB_NAME" | \
-	mysql || handle_error "Failed to create MySQL database $DB_NAME"
-
-echo "CREATE DATABASE IF NOT EXISTS $DB_NAME_TEST" | \
-	mysql || handle_error "Failed to create MySQL database $DB_NAME_TEST"
-
-echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USERNAME'@'%';" | \
-	mysql || handle_error "Failed to grant privileges on $DB_NAME"
-
-echo "GRANT ALL PRIVILEGES ON $DB_NAME_TEST.* TO '$DB_USERNAME'@'%';" | \
-	mysql || handle_error "Failed to grant privileges on $DB_NAME_TEST"
-
-echo "flush privileges" | \
-	mysql || handle_error "Failed to flush privileges"
+for i in (seq 1 6)
+	echo $sql_string[$i] | mysql -u root -p$ROOT_PASSWORD > /var/www/provision/logs/mysql_output.log 2>&1 || \
+		handle_error $err_string[$i]
+end
 
 # Update MySQL configuration
 if test -f /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -96,23 +88,15 @@ else
 end
 
 # Copy database file
-cp /var/www/provision/html/db.php /var/www/html/ || \
+cp $PROVISION_HTML/db.php $SHARED_HTML/ || \
 	handle_error "Failed to copy db.php file"
 
 # Set permissions
-sudo chmod -R 755 /var/www/html/ || \
-	handle_error "Failed to set permissions on /var/www/html/"
+sudo chmod -R 755 $SHARED_HTML/ || \
+	handle_error "Failed to set permissions on $SHARED_HTML/"
 
-apt-get list --installed | \
-	grep -E "apache2|mysql-server-$MYSQL_VERSION|php$PHP_VERSION" | \
-	awk '{print $1, $2}'
-
-echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 MySQL Installed ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
+footer_banner $job_complete
 ```
 
 ### Create `provision/html/db.php`
