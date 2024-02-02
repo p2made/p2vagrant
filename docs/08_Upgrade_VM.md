@@ -6,8 +6,6 @@
 
 ### Create `provision/scripts/upgrade_vm.fish`
 
-some_text
-
 ```
 #!/bin/fish
 
