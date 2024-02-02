@@ -327,5 +327,5 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 | [03 Install Utilities](./03_Install_Utilities.md)
 | [**Back to Steps**](../README.md)
-| [05 Install PHP](./05_Install_PHP.md)
+| [05 Install PHP (with Composer)](./05_Install_PHP.md)
 |
