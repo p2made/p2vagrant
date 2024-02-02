@@ -105,7 +105,7 @@ install_packages \
 	unzip \
 	yarn
 
-set_fish_as_default_shell
+set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
 
 # Append the 'cd /var/www' line to .profile if it doesn't exist
 grep -qxF 'cd /var/www' /home/vagrant/.profile || \

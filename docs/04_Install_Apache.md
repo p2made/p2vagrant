@@ -1,6 +1,6 @@
 # 04 Install Apache (with SSL 🙃)
 
-**Updated:** 2024-01-28
+**Updated:** 2024-02-02
 
 --
 

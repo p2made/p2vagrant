@@ -1,6 +1,6 @@
 # 03 Install Utilities
 
-**Updated:** 2024-01-27
+**Updated:** 2024-02-02
 
 --
 
@@ -114,7 +114,7 @@ install_packages \
 	unzip \
 	yarn
 
-set_fish_as_default_shell
+set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
 
 # Append the 'cd /var/www' line to .profile if it doesn't exist
 grep -qxF 'cd /var/www' /home/vagrant/.profile || \
@@ -127,6 +127,9 @@ echo "🇦🇿    🏆 Utilities Installed ‼️"
 echo "🇺🇿"
 echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
 ```
+
+That function `set_fish_as_default_shell() { ... }` is just as described on the label. It sets [fish](https://fishshell.com) as the default shell. From here on all the scripts are 
+
 
 ### Update `Vagrantfile`
 
