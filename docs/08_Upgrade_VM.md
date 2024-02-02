@@ -194,7 +194,7 @@ end
 Or copy this file...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_06 ./Vagrantfile
+cp ./Vagrantfiles/Vagrantfile_08 ./Vagrantfile
 ```
 
 ### Provision the VM...
