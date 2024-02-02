@@ -2,7 +2,7 @@
 
 # 00 _script_title_
 
-set script_name     "08_configure_sites.fish"
+set script_name     "configure_sites.fish"
 set updated_date    "2024-02-02"
 
 set active_title    "Configuring Websites"

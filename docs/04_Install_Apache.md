@@ -123,14 +123,14 @@ end
 
 I had gone some way with this approach before updating these docs, so `common_functions.fish` comes as it is well beyond this step. A consequence of using `common_functions.fish ` is right up the top, `set -U VM_FOLDER /var/www`. It turned that hard coding that made setting all the values based on `VM_FOLDER` as simple as you see there. Doing it by passing an argument from the `Vagrantfile` is sufficiently more complicated to be worth the one item of data duplication. In return I've been able to replace a multitude of strings with those constants.
 
-### Create `provision/scripts/04_install_apache.fish`
+### Create `provision/scripts/install_apache.fish`
 
 ```
 #!/bin/fish
 
 # 04 Install Apache (with SSL)
 
-set script_name     "04_install_apache.fish"
+set script_name     "install_apache.fish"
 set updated_date    "2024-02-02"
 
 set active_title    "Installing Apache (with SSL 🙃)"
@@ -292,9 +292,9 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
-#	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
-	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
+#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_apache.fish"
 
 end
 ```

@@ -4,14 +4,14 @@
 
 --
 
-### Create `provision/scripts/06_install_mysql.fish`
+### Create `provision/scripts/install_mysql.fish`
 
 ```
 #!/bin/fish
 
 # 06 Install MySQL
 
-set script_name     "06_install_mysql.fish"
+set script_name     "install_mysql.fish"
 set updated_date    "2024-02-02"
 
 set active_title    "Installing MySQL"
@@ -166,11 +166,11 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
-#	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
-#	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish"
+#	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
 ```

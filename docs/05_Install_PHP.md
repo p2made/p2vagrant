@@ -4,14 +4,14 @@
 
 --
 
-### Create `provision/scripts/05_install_php.fish`
+### Create `provision/scripts/install_php.fish`
 
 ```
 #!/bin/fish
 
 # 05 Install PHP (with Composer)
 
-set script_name     "05_install_php.fish"
+set script_name     "install_php.fish"
 set updated_date    "2024-02-02"
 
 set active_title    "Installing PHP (with Composer 🙃)"
@@ -160,10 +160,10 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
-#	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
-	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish"
+	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
 
 end
 ```
