@@ -128,8 +128,7 @@ echo "🇺🇿"
 echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
 ```
 
-That function `set_fish_as_default_shell() { ... }` is just as described on the label. It sets [fish](https://fishshell.com) as the default shell. From here on all the scripts are 
-
+That function `set_fish_as_default_shell() { ... }` is just as described on the label. It sets [🐟fish🐠](https://fishshell.com) as the default shell. After this step, all the scripts will be 🐠`.fish`🐟, so let's go swimming 🏊🏊‍♀️🏊‍♂️
 
 ### Update `Vagrantfile`
 
