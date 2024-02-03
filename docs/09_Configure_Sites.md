@@ -29,3 +29,30 @@ vagrantfile
 Or copy this file...
 
 ```
+cp ./Vagrantfiles/Vagrantfile_09 ./Vagrantfile
+```
+
+### Provision the VM...
+
+If the VM is **not** running
+
+```
+vagrant up --provision
+```
+
+If the VM is running
+
+```
+vagrant reload --provision
+```
+
+### All good?
+
+Save the moment with a [Snapshot](./Snapshots.md).
+
+--
+
+| [08 Upgrade VM (revisited)](./08_Upgrade_VM.md)
+| [**Back to Steps**](../README.md)
+| [10 Page Title](./10_Page_Title.md)
+|
