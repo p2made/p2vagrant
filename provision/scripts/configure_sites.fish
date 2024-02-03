@@ -67,76 +67,73 @@ function configure_website
 	sudo a2ensite $underscore_domain
 end
 
-function erase_site_variables
-	set -e domain
-	set -e template_filename
-	set -e vhosts_prefix
-	set -e reverse_domain
-	set -e underscore_domain
-end
+# Function to setup important site variables
+# Usage: setup_site_variables $one_site
+function setup_site_variables
+	set -g site_info_temp (string split ' ' $argv)
 
-# Function to set important site variables
-function set_site_variables
-	set site_info (string split ' ' $argv)
+	set -g site_info_temp[2] $site_info_temp[2].conf
+	if set -q site_info_temp[3]
+		set -g site_info_temp[3] $site_info_temp[3]_
+	else
+		set -g site_info_temp[3] ""
+	end
 
-	set -g domain $site_info[1]
-	set -g template_filename $site_info[2].conf
-	#set -g vhosts_prefix false
-	#set -g vhosts_prefix (count $site_info > 2 ? "$site_info[3]_" : "")
-	#set -g vhosts_prefix (count $site_info) > 2 ? "$site_info[3]_" : ""
-	set -g vhosts_prefix (count $site_info > 2 && echo "$site_info[3]_" || echo null)
-	#if count $site_info > 2
-	#	set -g vhosts_prefix "$site_info[3]_"
-	#else
-	#	set -g vhosts_prefix ""
-	#end
-
-	set parts (string split '.' $domain)
+	set parts (string split '.' $site_info_temp[1])
 
 	for part in $parts
 		set -p reversed $part
 	end
 
-	set -g reverse_domain (string join "." $reversed)
-	set -g underscore_domain (string join "_" $reversed)
+	set -g site_info_temp[4] (string join "." $reversed)
+	set -g site_info_temp[5] (string join "_" $reversed)
+	set -g site_info_temp[3] $site_info_temp[3]$site_info_temp[5].conf
 
-	echo "argv:                 $argv"
-	echo ""
-	echo "domain:               $domain"
-	echo "template_filename:    $template_filename"
-	echo "vhosts_prefix:        $vhosts_prefix"
-	echo "reverse_domain:       $reverse_domain"
-	echo "underscore_domain:    $underscore_domain"
-	echo "-- -- /%/ -- -- /%/ -- -- /%/ -- --"
-	echo ""
+end
+
+# Function to write the vhosts file from a template
+# Usage: write_vhosts_file $site_info
+function write_vhosts_file
+	# Select the appropriate template based on the numeric value
+	set template_file $PROVISION_TEMPLATES/$argv[2]
+
+	# Set path for vhosts file
+	set vhosts_file $PROVISION_VHOSTS/$argv[3]
+
+	# Check if the template file exists
+	if not test -f $template_file
+		handle_error "Template file $template_filename.conf not found in $PROVISION_TEMPLATES"
+	end
+
+	# Use sed to replace placeholders in the template and save it to the new file
+	sed \
+		"s|{{DOMAIN}}|$argv[1]|g; \
+		s|{{UNDERSCORE_DOMAIN}}|$argv[5]|g; \
+		s|{{TODAYS_DATE}}|$TODAYS_DATE|g" $template_file > $vhosts_file
 end
 
 # Iterate through the site data
 for one_site in (cat $site_data_file | grep -v '^#')
 	# First get thy data in order, young coder
-	#set site_info (string split ' ' $argv[1])
+	setup_site_variables $one_site
 
-	# Now we have...
-	# site_info[1] - the domain name
-	# site_info[2] - the template number
-	# site_info[3] - the vhosts prefix if set
+	# We have the data all as we want it, but in a global variable
+	# Put it in a local variable, & erase the global
+	set site_info $site_info_temp
+	set -e site_info_temp
 
-	set_site_variables $one_site
+	# site_info[1] - domain
+	# site_info[2] - template_filename
+	# site_info[3] - vhosts_filename
+	# site_info[4] - reverse_domain
+	# site_info[5] - underscore_domain
 
-	# Now we have variables...
-	# $domain
-	# $template_filename
-	# $vhosts_prefix
-	# $reverse_domain
-	# $underscore_domain
+	# Now all the data for a site is in `site_info`
+	# Within functions, replace 'site_info' with 'argv'
 
 	# Now go configure some web sites
-	#write_vhosts_file
-	#generate_ssl_files
-	#configure_website
+	write_vhosts_file $site_info
 
-	# Reset for the next site
-	erase_site_variables
 end
 
 # Restart Apache after all configurations
