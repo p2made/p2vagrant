@@ -31,11 +31,12 @@ function set_site_variables
 	set -g domain $site_info[1]
 	set -g template_filename $site_info[2].conf
 	#set -g vhosts_prefix false
-	if count $site_info > 2
-		set -g vhosts_prefix "$site_info[3]_"
-	else
-		set -g vhosts_prefix ""
-	end
+	set -g vhosts_prefix (count $site_info) > 2 ? "$site_info[3]_" : ""
+	#if count $site_info > 2
+	#	set -g vhosts_prefix "$site_info[3]_"
+	#else
+	#	set -g vhosts_prefix ""
+	#end
 
 	set parts (string split '.' $domain)
 
