@@ -118,7 +118,7 @@ for one_site in (cat $site_data_file | grep -v '^#')
 	setup_site_variables $one_site
 
 	# We have the data all as we want it, but in a global variable
-	# Put it in a local variable, & erase the global
+	# Put it in a local variable, & erase the global variable
 	set site_info $site_info_temp
 	set -e site_info_temp
 
