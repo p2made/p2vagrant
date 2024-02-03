@@ -29,11 +29,12 @@ function set_site_variables
 	set site_info (string split ' ' $argv[1])
 
 	set -g domain $site_info[1]
-	set -g template_num $site_info[2]
-
+	set -g template_filename $site_info[2].conf
 	#set -g vhosts_prefix false
 	if count $site_info > 2
 		set -g vhosts_prefix "$site_info[3]_"
+	else
+		set -g vhosts_prefix ""
 	end
 
 	set parts (string split '.' $domain)
@@ -44,18 +45,27 @@ function set_site_variables
 
 	set -g reverse_domain (string join "." $reversed)
 	set -g underscore_domain (string join "_" $reversed)
+
+	echo "domain $domain"
+	echo "template_filename $template_filename"
+	echo "vhosts_prefix $vhosts_prefix"
+	echo "reverse_domain $reverse_domain"
+	echo "underscore_domain $underscore_domain"
+	echo ""
+	echo "-- -- /%/ -- -- /%/ -- -- /%/ -- --"
+
 end
 
 function write_vhosts_file
 	# Select the appropriate template based on the numeric value
-	set template_file $PROVISION_TEMPLATES/$template_num.conf
+	set template_file $PROVISION_TEMPLATES/$template_filename
 
 	# Set path for vhosts file
 	set vhosts_file $PROVISION_VHOSTS/$vhosts_prefix$underscore_domain.conf
 
 	# Check if the template file exists
 	if not test -f $template_file
-		handle_error "Template file $template_num.conf not found in $PROVISION_TEMPLATES"
+		handle_error "Template file $template_filename.conf not found in $PROVISION_TEMPLATES"
 	end
 
 	# Use sed to replace placeholders in the template and save it to the new file
@@ -109,7 +119,7 @@ end
 
 function erase_site_variables
 	set -e domain
-	set -e template_num
+	set -e template_filename
 	set -e vhosts_prefix
 	set -e reverse_domain
 	set -e underscore_domain
@@ -122,15 +132,15 @@ for one_site in (cat $site_data_file | grep -v '^#')
 
 	# Now we have variables...
 	# $domain
-	# $template_num
+	# $template_filename
 	# $vhosts_prefix
 	# $reverse_domain
 	# $underscore_domain
 
 	# Now go configure some web sites
-	write_vhosts_file
-	generate_ssl_files
-	configure_website
+	#write_vhosts_file
+	#generate_ssl_files
+	#configure_website
 
 	# Reset for the next site
 	erase_site_variables
