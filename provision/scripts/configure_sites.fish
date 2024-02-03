@@ -84,11 +84,12 @@ function set_site_variables
 	#set -g vhosts_prefix false
 	#set -g vhosts_prefix (count $site_info > 2 ? "$site_info[3]_" : "")
 	#set -g vhosts_prefix (count $site_info) > 2 ? "$site_info[3]_" : ""
-	if count $site_info > 2
-		set -g vhosts_prefix "$site_info[3]_"
+	set -g vhosts_prefix (count $site_info > 2 && echo "$site_info[3]_" || echo null)
+	#if count $site_info > 2
+	#	set -g vhosts_prefix "$site_info[3]_"
 	#else
 	#	set -g vhosts_prefix ""
-	end
+	#end
 
 	set parts (string split '.' $domain)
 
@@ -108,7 +109,6 @@ function set_site_variables
 	echo "underscore_domain:    $underscore_domain"
 	echo "-- -- /%/ -- -- /%/ -- -- /%/ -- --"
 	echo ""
-
 end
 
 # Iterate through the site data
