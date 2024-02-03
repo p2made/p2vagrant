@@ -2,7 +2,7 @@
 
 # 05 Install PHP (with Composer)
 
-set script_name     "05_install_php.fish"
+set script_name     "install_php.fish"
 set updated_date    "2024-02-02"
 
 set active_title    "Installing PHP (with Composer 🙃)"

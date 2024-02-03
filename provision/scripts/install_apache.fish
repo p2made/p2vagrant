@@ -2,7 +2,7 @@
 
 # 04 Install Apache (with SSL)
 
-set script_name     "04_install_apache.fish"
+set script_name     "install_apache.fish"
 set updated_date    "2024-02-02"
 
 set active_title    "Installing Apache (with SSL 🙃)"
