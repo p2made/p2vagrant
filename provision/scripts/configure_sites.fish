@@ -26,16 +26,14 @@ set -x DEBIAN_FRONTEND noninteractive
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 function set_site_variables
-
-	set site_info (string split '\t' $one_site)
+	set site_info (string split ' ' $argv[1])
 
 	set -g domain $site_info[1]
 	set -g template_num $site_info[2]
 
+	#set -g vhosts_prefix false
 	if count $site_info > 2
 		set -g vhosts_prefix "$site_info[3]_"
-	else
-		set -g vhosts_prefix ""
 	end
 
 	set parts (string split '.' $domain)
@@ -115,12 +113,11 @@ function erase_site_variables
 	set -e vhosts_prefix
 	set -e reverse_domain
 	set -e underscore_domain
-	set -e ssl_filename
 end
 
 # Iterate through the site data
 for one_site in (cat $site_data_file | grep -v '^#')
-	# First get thy data in order young coder
+	# First get thy data in order, young coder
 	set_site_variables $one_site
 
 	# Now we have variables...
@@ -129,7 +126,6 @@ for one_site in (cat $site_data_file | grep -v '^#')
 	# $vhosts_prefix
 	# $reverse_domain
 	# $underscore_domain
-	# $ssl_filename
 
 	# Now go configure some web sites
 	write_vhosts_file
