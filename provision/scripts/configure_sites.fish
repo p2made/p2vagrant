@@ -56,25 +56,6 @@ function set_site_variables
 
 end
 
-function write_vhosts_file
-	# Select the appropriate template based on the numeric value
-	set template_file $PROVISION_TEMPLATES/$template_filename
-
-	# Set path for vhosts file
-	set vhosts_file $PROVISION_VHOSTS/$vhosts_prefix$underscore_domain.conf
-
-	# Check if the template file exists
-	if not test -f $template_file
-		handle_error "Template file $template_filename.conf not found in $PROVISION_TEMPLATES"
-	end
-
-	# Use sed to replace placeholders in the template and save it to the new file
-	sed \
-		"s|{{DOMAIN}}|$domain|g; \
-		s|{{UNDERSCORE_DOMAIN}}|$underscore_domain|g; \
-		s|{{TODAYS_DATE}}|$TODAYS_DATE|g" $template_file > $vhosts_file
-end
-
 function generate_ssl_files
 	# Check if SSL folder exists
 	if not test -d $PROVISION_SSL
@@ -125,9 +106,40 @@ function erase_site_variables
 	set -e underscore_domain
 end
 
+# Function to write the vhosts file from a template
+# Usage: write_vhosts_file $site_info
+function write_vhosts_file
+	# Select the appropriate template based on the numeric value
+	set template_file $PROVISION_TEMPLATES/$site_info[2].conf
+
+	# Set path for vhosts file
+	set vhosts_file $PROVISION_VHOSTS/$vhosts_prefix$underscore_domain.conf
+
+	# Check if the template file exists
+	if not test -f $template_file
+		handle_error "Template file $template_filename.conf not found in $PROVISION_TEMPLATES"
+	end
+
+	# Use sed to replace placeholders in the template and save it to the new file
+	sed \
+		"s|{{DOMAIN}}|$domain|g; \
+		s|{{UNDERSCORE_DOMAIN}}|$underscore_domain|g; \
+		s|{{TODAYS_DATE}}|$TODAYS_DATE|g" $template_file > $vhosts_file
+end
+
 # Iterate through the site data
 for one_site in (cat $site_data_file | grep -v '^#')
 	# First get thy data in order, young coder
+	set site_info (string split ' ' $argv[1])
+
+	# Now we have...
+	# site_info[1] - the domain name
+	# site_info[2] - the template number
+	# site_info[3] - the vhosts prefix if set
+
+
+
+
 	set_site_variables $one_site
 
 	# Now we have variables...
