@@ -1,27 +1,27 @@
 # 03 Install Utilities
 
-**Updated:** 2024-01-27
+**Updated:** 2024-02-02
 
 --
 
-### Create `provision/scripts/03_install_utilities.sh`
+### Create `provision/scripts/install_utilities.sh`
 
 ```
 #!/bin/bash
 
 # 03 Install Utilities
 
-# Arguments...
-# 1 - TIMEZONE   = "Australia/Brisbane"
-
 echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
 echo "🇲🇳"
 echo "🇦🇿    🚀 Installing Utilities 🚀"
-echo "🇺🇿    📜 Script Name:  03_install_utilities.sh"
+echo "🇺🇿    📜 Script Name:  install_utilities.sh"
 echo "🇹🇲    📅 Last Updated: 2024-01-27"
 echo "🇹🇯"
 echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
 echo ""
+
+# Arguments...
+# 1 - TIMEZONE   = "Australia/Brisbane"
 
 # Function for error handling
 # Usage: handle_error "Error message"
@@ -114,7 +114,7 @@ install_packages \
 	unzip \
 	yarn
 
-set_fish_as_default_shell
+set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
 
 # Append the 'cd /var/www' line to .profile if it doesn't exist
 grep -qxF 'cd /var/www' /home/vagrant/.profile || \
@@ -127,6 +127,8 @@ echo "🇦🇿    🏆 Utilities Installed ‼️"
 echo "🇺🇿"
 echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
 ```
+
+That function `set_fish_as_default_shell() { ... }` is just as described on the label. It sets [🐟fish🐠](https://fishshell.com) as the default shell. After this step, all the scripts will be 🐠`.fish`🐟, so let's go swimming 🏊🏊‍♀️🏊‍♂️
 
 ### Update `Vagrantfile`
 
@@ -164,8 +166,8 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
-	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 
 end
 ```
@@ -200,5 +202,5 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
-| [04 Install Apache](./04_Install_Apache.md)
+| [04 Install Apache (with SSL)](./04_Install_Apache.md)
 |
