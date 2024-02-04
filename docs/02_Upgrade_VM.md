@@ -1,6 +1,6 @@
 # 02 Upgrade VM
 
-**Updated:** 2024-02-02
+Updated: 2024-02-02
 
 --
 

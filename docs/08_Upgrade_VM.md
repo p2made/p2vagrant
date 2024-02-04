@@ -1,6 +1,6 @@
 # 08 Upgrade VM (revisited)
 
-**Updated:** 2024-02-03
+Updated: 2024-02-03
 
 --
 
@@ -197,17 +197,7 @@ cp ./Vagrantfiles/Vagrantfile_08 ./Vagrantfile
 
 ### Provision the VM...
 
-If the VM is **not** running
-
-```
-vagrant up --provision
-```
-
-If the VM is running
-
-```
-vagrant reload --provision
-```
+Not this time. `run: "always"`, means the script will run every time `vagrant up` is run. If you don't want it running, connent the line out.
 
 ### All good?
 

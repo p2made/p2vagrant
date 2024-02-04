@@ -1,6 +1,6 @@
 # 04 Install Apache (with SSL 🙃)
 
-**Updated:** 2024-02-02
+Updated: 2024-02-02
 
 --
 
@@ -318,6 +318,15 @@ If the VM is running
 ```
 vagrant reload --provision
 ```
+
+### Visit
+
+* [http://192.168.42.100/](http://192.168.42.100/)
+
+You should see a minimal page that I put there. For the Apache default page of your VM visit... 
+
+* [http://192.168.42.100/index.html](http://192.168.42.100/index.html)
+
 
 ### All good?
 

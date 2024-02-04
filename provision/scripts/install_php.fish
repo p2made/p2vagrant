@@ -1,6 +1,7 @@
 #!/bin/fish
 
 # 05 Install PHP (with Composer)
+# Updated: 2024-02-04
 
 set script_name     "install_php.fish"
 set updated_date    "2024-02-02"
