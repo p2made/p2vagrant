@@ -1,6 +1,7 @@
 #!/bin/fish
 
 # 09 Configure Sites
+# Updated: 2024-02-04
 
 set script_name     "configure_sites.fish"
 set updated_date    "2024-02-03"
