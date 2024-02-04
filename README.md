@@ -1,5 +1,7 @@
 # P2Vagrant (Apple Silicon)
 
+Updated: 2024-02-04
+
 ### <a id="steps"></a> Steps Taken to build this macOS/M2/Ubuntu VM
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
@@ -14,6 +16,8 @@ All files you are directed to create are in...
 
 ```
 /provision
+	/data
+	/etc
 	/html
 	/scripts
 	/ssl

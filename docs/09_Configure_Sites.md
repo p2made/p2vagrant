@@ -1,6 +1,6 @@
 # 09 Configure Sites
 
-**Updated:** 2024-02-04
+Updated: 2024-02-04
 
 --
 
