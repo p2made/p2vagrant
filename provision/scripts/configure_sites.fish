@@ -25,32 +25,6 @@ set -x DEBIAN_FRONTEND noninteractive
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-# Function to generate SSL files
-# Usage: generate_ssl_files $site_info
-function generate_ssl_files
-	# Check if SSL folder exists
-	if not test -d $PROVISION_SSL
-		handle_error "SSL folder $PROVISION_SSL not found"
-	end
-
-	# Set paths for SSL certificate and key
-	set ssl_root_string $PROVISION_SSL/$argv[5]_$TODAYS_DATE
-	set ssl_cert_file $ssl_root_string.cert
-	set ssl_key_file $ssl_root_string.key
-
-	# Generate SSL key
-	openssl genrsa \
-		-out $ssl_key_file \
-		2048
-
-	# Generate self-signed SSL certificate
-	openssl req -new -x509 \
-		-key $ssl_key_file \
-		-out $ssl_cert_file \
-		-days 3650 \
-		-subj /CN=$argv[1]
-end
-
 # Function to configure a website
 # Usage: configure_website $site_info
 function configure_website
@@ -72,6 +46,8 @@ function configure_website
 end
 
 # Function to setup important site variables
+# We can't return a value, so we put them in a global variable
+# that we will quickly use & then erase.
 # Usage: setup_site_variables $one_site
 function setup_site_variables
 	set split_temp (string split ' ' $argv)
@@ -102,14 +78,8 @@ end
 # Function to write the vhosts file from a template
 # Usage: write_vhosts_file $site_info
 function write_vhosts_file
-	# Select the appropriate template based on the numeric value
-	set template_file $PROVISION_TEMPLATES/$argv[4]
-
-	# Set path for vhosts file
-	set vhosts_file $PROVISION_VHOSTS/$argv[5]
-
 	# Check if the template file exists
-	if not test -f $template_file
+	if not test -f $PROVISION_TEMPLATES/$argv[4]
 		handle_error "Template file $template_filename.conf not found in $PROVISION_TEMPLATES"
 	end
 
@@ -119,10 +89,34 @@ function write_vhosts_file
 		-e "s|{{UNDERSCORE_DOMAIN}}|$argv[3]|g" \
 		-e "s|{{SSL_FILENAME}}|$argv[6]|g" \
 		-e "s|{{TODAYS_DATE}}|$TODAYS_DATE|g" \
-		$template_file > $vhosts_file
+		$PROVISION_TEMPLATES/$argv[4] > $PROVISION_VHOSTS/$argv[5]
 end
 
-# Iterate through the site data
+# Function to generate SSL files
+# Usage: generate_ssl_files $site_info
+function generate_ssl_files
+	# Check if SSL folder exists
+	if not test -d $PROVISION_SSL
+		handle_error "SSL folder $PROVISION_SSL not found"
+	end
+
+	# Set paths for SSL certificate and key
+	set ssl_cert_file $PROVISION_SSL/$argv[6].cert
+	set ssl_key_file $PROVISION_SSL/$argv[6].key
+
+	# Generate SSL key
+	openssl genrsa \
+		-out $ssl_key_file \
+		2048
+
+	# Generate self-signed SSL certificate
+	openssl req -new -x509 \
+		-key $ssl_key_file \
+		-out $ssl_cert_file \
+		-days 3650 \
+		-subj /CN=$argv[1]
+end
+
 for one_site in (cat $site_data_file | grep -v '^#')
 	# First get thy data in order, young coder
 	setup_site_variables $one_site
@@ -143,8 +137,8 @@ for one_site in (cat $site_data_file | grep -v '^#')
 	# Within functions, replace 'site_info' with 'argv'
 
 	# Now go configure some web sites
-	write_vhosts_file $site_info
-	#generate_ssl_files $site_info
+	write_vhosts_file  $site_info
+	generate_ssl_files $site_info
 
 end
 
