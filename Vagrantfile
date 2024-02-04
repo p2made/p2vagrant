@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 08 Upgrade VM (revisited)
-# Updated: 2024-02-03
+# 09 Configure Sites
+# Updated: 2024-02-04
 
 # Machine Variables
 MEMORY              = 4096
@@ -45,10 +45,11 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/02_upgrade_vm.sh"
-#	config.vm.provision :shell, path: "provision/scripts/03_install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/04_install_apache.fish"
-#	config.vm.provision :shell, path: "provision/scripts/05_install_php.fish", args: [PHP_VERSION]
-#	config.vm.provision :shell, path: "provision/scripts/06_install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish"
+#	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/configure_sites.fish", args: [VM_IP]
 
 end

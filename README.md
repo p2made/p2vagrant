@@ -1,10 +1,10 @@
 # P2Vagrant (Apple Silicon)
 
-**Updated:** 2024-02-02
+Updated: 2024-02-04
 
 ### <a id="steps"></a> Steps Taken to build this macOS/M2/Ubuntu VM
 
-Following are the steps taken to get to where I am. Because it's primarily for self-consumption, explanations may be sparse in places.
+Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
 All versions of `Vagrantfile` are in `/Vagrantfiles` as `Vagrantfile_nn`, where `nn` is the step that Vagrantfile is for. You can restore any version of `Vagrantfile` with...
 
@@ -17,6 +17,7 @@ All files you are directed to create are in...
 ```
 /provision
 	/data
+	/etc
 	/html
 	/scripts
 	/ssl
@@ -31,10 +32,10 @@ All files you are directed to create are in...
 05. [Install PHP (with Composer)](./docs/05_Install_PHP.md)
 06. [Install MySQL](./docs/06_Install_MySQL.md)
 07. [Install phpMyAdmin](./docs/07_Install_phpMyAdmin.md)
-
-<!--
 08. [Upgrade VM (revisited)](./docs/08_Upgrade_VM.md)
 09. [Configure Sites](./docs/09_Configure_Sites.md)
+
+<!--
 10. [Page Title](./docs/10_Page_Title.md)
 11. [Page Title](./docs/11_Page_Title.md)
 12. [Page Title](./docs/12_Page_Title.md)
