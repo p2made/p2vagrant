@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
-#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"
 
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
