@@ -301,6 +301,36 @@ If you've used a different IP address, &/or different TLD, substitute accordingl
 
 There is a copy of the Ubuntu guest `hosts` file, with these edits made, in `/provision/etc`. **DO NOT** copy that file to `/etc/hosts` on yout Mac. Those edits are only necessary on the VM if you want to access the websites directly on the VM.
 
+### Visit
+
+* [example.test/index.html](http://example.test/index.html)
+* [example.test/index.php](http://example.test/index.php)
+* [example.test/phpinfo.php](http://example.test/phpinfo.php)
+* [example.test/db.php](http://example.test/db.php)
+* [subdomain1.example.test/index.html](http://subdomain1.example.test/index.html)
+* [subdomain1.example.test/index.php](http://subdomain1.example.test/index.php)
+* [subdomain1.example.test/phpinfo.php](http://subdomain1.example.test/phpinfo.php)
+* [subdomain1.example.test/db.php](http://subdomain1.example.test/db.php)
+* [subdomain2.example.test/index.html](http://subdomain2.example.test/index.html)
+* [subdomain2.example.test/index.php](http://subdomain2.example.test/index.php)
+* [subdomain2.example.test/phpinfo.php](http://subdomain2.example.test/phpinfo.php)
+* [subdomain2.example.test/db.php](http://subdomain2.example.test/db.php)
+
+Or for the `https` versions...
+
+* [example.test/index.html](https://example.test/index.html)
+* [example.test/index.php](https://example.test/index.php)
+* [example.test/phpinfo.php](https://example.test/phpinfo.php)
+* [example.test/db.php](https://example.test/db.php)
+* [subdomain1.example.test/index.html](https://subdomain1.example.test/index.html)
+* [subdomain1.example.test/index.php](https://subdomain1.example.test/index.php)
+* [subdomain1.example.test/phpinfo.php](https://subdomain1.example.test/phpinfo.php)
+* [subdomain1.example.test/db.php](https://subdomain1.example.test/db.php)
+* [subdomain2.example.test/index.html](https://subdomain2.example.test/index.html)
+* [subdomain2.example.test/index.php](https://subdomain2.example.test/index.php)
+* [subdomain2.example.test/phpinfo.php](https://subdomain2.example.test/phpinfo.php)
+* [subdomain2.example.test/db.php](https://subdomain2.example.test/db.php)
+
 ### All good?
 
 Save the moment with a [Snapshot](./Snapshots.md).
