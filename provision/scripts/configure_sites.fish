@@ -140,8 +140,6 @@ function configure_website
 	echo "Website configured for $argv[1]"
 end
 
-function update_hosts_file
-
 for one_site in (cat $site_data_file | grep -v '^#')
 	# First get thy data in order, young coder
 	setup_site_variables $one_site
