@@ -1,7 +1,7 @@
 #!/bin/fish
 
 # common_functions.fish
-# Last Updated: 2024-02-01
+# Updated: 2024-02-04
 
 # Script constants...
 
