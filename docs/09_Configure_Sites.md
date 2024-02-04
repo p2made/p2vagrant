@@ -280,6 +280,28 @@ If the VM is running
 vagrant reload --provision
 ```
 
+### Edit the `hosts` of you Mac
+
+Open the file `/etc/hosts` in your preferred text editor. I use [BBEdit](https://www.barebones.com/products/bbedit/), with which I can open the file from Terminal with `BBEdit /etc/hosts`, or by navigating to it in the open file dialog of BBEdit. You will need to confirm for editing the file, then authenticate as an admin user to save it.
+
+Add this line...
+
+```
+192.168.42.100	test *.test *.*.test
+```
+
+If you've used a different IP address, &/or different TLD, substitute accordingly. If you use more than one TLD, you will need one line like this for each. The `*.` parts should match the depth of subdomains used. So if you have `subdomain2. subdomain1.example.test` you will need to add `*.*.*.test`.
+
+
+**DO NOT** edit anything already in the `hosts` file unless you are supremely confident of knowing what you are doing. I separate the original from my additions with this comment...
+
+```
+# original above, additions below
+```
+
+
+
+
 ### All good?
 
 Save the moment with a [Snapshot](./Snapshots.md).
