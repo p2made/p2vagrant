@@ -25,26 +25,6 @@ set -x DEBIAN_FRONTEND noninteractive
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-# Function to configure a website
-# Usage: configure_website $site_info
-function configure_website
-	# Put `conf` & SSL files into place
-	sudo cp -f $PROVISION_VHOSTS/$argv[3] /etc/apache2/sites-available/
-	sudo cp -f $PROVISION_SSL/$argv[5]_$TODAYS_DATE.* /etc/apache2/sites-available/
-
-	# Create site root if it doesn't already exist
-	mkdir -p $VM_FOLDER/$underscore_domain
-
-	# Copy files only if they do not exist
-	set files_to_copy "index.html" "index.php" "phpinfo.php" "db.php"
-	for file in $files_to_copy
-		cp -u $PROVISION_HTML/$file $VM_FOLDER/$argv[5]/
-	end
-
-	# Enable site
-	sudo a2ensite $argv[3]
-end
-
 # Function to setup important site variables
 # We can't return a value, so we put them in a global variable
 # that we will quickly use & then erase.
@@ -59,11 +39,11 @@ function setup_site_variables
 	# $site_info_temp[5] is the vhosts filename
 	# $site_info_temp[6] is the SSL filename
 
-	set split_temp (string split ' ' $argv)
+	set split_string (string split ' ' $argv)
 
-	set -g site_info_temp[1] $split_temp[1]                            # 1 domain name
+	set -g site_info_temp[1] $split_string[1]                          # 1 domain name
 
-	set parts (string split '.' $split_temp[1])
+	set parts (string split '.' $split_string[1])
 
 	for part in $parts
 		set -p reversed $part
@@ -72,10 +52,10 @@ function setup_site_variables
 	set -g site_info_temp[2] (string join "." $reversed)               # 2 reverse domain
 	set -g site_info_temp[3] (string join "_" $reversed)               # 3 underscore domain
 
-	set -g site_info_temp[4] $split_temp[2].conf                       # 4 template filename
+	set -g site_info_temp[4] $split_string[2].conf                     # 4 template filename
 
-	if set -q split_temp[3]
-		set -g site_info_temp[5] $split_temp[3]_
+	if set -q split_string[3]
+		set -g site_info_temp[5] $split_string[3]_
 	else
 		set -g site_info_temp[5] ""
 	end
@@ -110,16 +90,38 @@ function generate_ssl_files
 	end
 
 	# Generate SSL key
-	openssl genrsa \
-		-out $PROVISION_SSL/$argv[6].key \
-		2048
+	if not openssl genrsa -out $PROVISION_SSL/$argv[6].key 2048
+		handle_error "Failed to generate SSL key for $argv[1]"
+	end
 
 	# Generate self-signed SSL certificate
-	openssl req -new -x509 \
+	if not openssl req -new -x509 \
 		-key $PROVISION_SSL/$argv[6].key \
 		-out $PROVISION_SSL/$argv[6].cert \
 		-days 3650 \
 		-subj /CN=$argv[1]
+		handle_error "Failed to generate SSL certificate for $argv[1]"
+	end
+end
+
+# Function to configure a website with everything done so far
+# Usage: configure_website $site_info
+function configure_website
+	# Put `conf` & SSL files into place
+	sudo cp -f $PROVISION_VHOSTS/$argv[5] /etc/apache2/sites-available/
+	sudo cp -f $PROVISION_SSL/$argv[6].* /etc/apache2/sites-available/
+
+	# Create site root if it doesn't already exist
+	mkdir -p $VM_FOLDER/$argv[3]
+
+	# Copy files only if they do not exist
+	set files_to_copy "index.html" "index.php" "phpinfo.php" "db.php"
+	for file in $files_to_copy
+		cp -u $PROVISION_HTML/$file $VM_FOLDER/$argv[3]/
+	end
+
+	# Enable site
+	sudo a2ensite $argv[5]
 end
 
 for one_site in (cat $site_data_file | grep -v '^#')
@@ -132,11 +134,11 @@ for one_site in (cat $site_data_file | grep -v '^#')
 	set -e site_info_temp
 
 	# site_info[1] - domain
-	# site_info[2] - reverse_domain
-	# site_info[3] - underscore_domain
-	# site_info[4] - template_filename
-	# site_info[5] - vhosts_filename
-	# site_info[6] - ssl_filename
+	# site_info[2] - reverse domain
+	# site_info[3] - underscore domain
+	# site_info[4] - template filename
+	# site_info[5] - vhosts filename
+	# site_info[6] - SSL base filename
 
 	# Now all the data for a site is in `site_info`
 	# Within functions, replace 'site_info' with 'argv'
@@ -152,10 +154,3 @@ sudo service apache2 restart
 
 # -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
 footer_banner $job_complete
-
-	#echo "site_info[1] $site_info[1]"
-	#echo "site_info[2] $site_info[2]"
-	#echo "site_info[3] $site_info[3]"
-	#echo "site_info[4] $site_info[4]"
-	#echo "site_info[5] $site_info[5]"
-	#echo "site_info[6] $site_info[6]"
