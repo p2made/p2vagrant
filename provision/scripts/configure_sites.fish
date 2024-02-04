@@ -163,7 +163,9 @@ for one_site in (cat $site_data_file | grep -v '^#')
 end
 
 # Restart Apache after all configurations
+echo "Restarting apache to enable new websites."
 sudo service apache2 restart
+echo "Websites setup complete."
 
 # -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
 footer_banner $job_complete
