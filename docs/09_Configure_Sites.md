@@ -280,7 +280,7 @@ If the VM is running
 vagrant reload --provision
 ```
 
-### Edit the `hosts` of you Mac
+### Edit the `hosts` file of you Mac
 
 Open the file `/etc/hosts` in your preferred text editor. I use [BBEdit](https://www.barebones.com/products/bbedit/), with which I can open the file from Terminal with `BBEdit /etc/hosts`, or by navigating to it in the open file dialog of BBEdit. You will need to confirm for editing the file, then authenticate as an admin user to save it.
 
@@ -299,8 +299,7 @@ If you've used a different IP address, &/or different TLD, substitute accordingl
 # original above, additions below
 ```
 
-
-
+There is a copy of the Ubuntu guest `hosts` file, with these edits made, in `/provision/etc`. **DO NOT** copy that file to `/etc/hosts` on yout Mac. Those edits are only necessary on the VM if you want to access the websites directly on the VM.
 
 ### All good?
 
