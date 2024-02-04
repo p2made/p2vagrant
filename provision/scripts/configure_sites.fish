@@ -16,7 +16,11 @@ header_banner $active_title $script_name $updated_date
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# NONE!"
+# 1 - VM_IP           = "192.168.42.100"
+
+# Script variables...
+
+set VM_IP          $argv[1]
 
 # File path for site data
 set site_data_file "/var/www/provision/data/sites_data"
@@ -134,6 +138,8 @@ function configure_website
 	# Output progress message
 	echo "Website configured for $argv[1]"
 end
+
+function update_hosts_file
 
 for one_site in (cat $site_data_file | grep -v '^#')
 	# First get thy data in order, young coder
