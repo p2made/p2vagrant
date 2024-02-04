@@ -50,9 +50,18 @@ end
 # that we will quickly use & then erase.
 # Usage: setup_site_variables $one_site
 function setup_site_variables
+	# Use the passed string $one_site to set...
+	# $site_info_temp[1-6], where...
+	# $site_info_temp[1] is the domain
+	# $site_info_temp[2] is the reverse domain
+	# $site_info_temp[3] is the underscore domain
+	# $site_info_temp[4] is the template filename
+	# $site_info_temp[5] is the vhosts filename
+	# $site_info_temp[6] is the SSL filename
+
 	set split_temp (string split ' ' $argv)
 
-	set -g site_info_temp[1] $split_temp[1]
+	set -g site_info_temp[1] $split_temp[1]                            # 1 domain name
 
 	set parts (string split '.' $split_temp[1])
 
@@ -60,10 +69,10 @@ function setup_site_variables
 		set -p reversed $part
 	end
 
-	set -g site_info_temp[2] (string join "." $reversed)
-	set -g site_info_temp[3] (string join "_" $reversed)
+	set -g site_info_temp[2] (string join "." $reversed)               # 2 reverse domain
+	set -g site_info_temp[3] (string join "_" $reversed)               # 3 underscore domain
 
-	set -g site_info_temp[4] $split_temp[2].conf
+	set -g site_info_temp[4] $split_temp[2].conf                       # 4 template filename
 
 	if set -q split_temp[3]
 		set -g site_info_temp[5] $split_temp[3]_
@@ -71,8 +80,8 @@ function setup_site_variables
 		set -g site_info_temp[5] ""
 	end
 
-	set -g site_info_temp[5] $site_info_temp[5]$site_info_temp[3].conf
-	set -g site_info_temp[6] $site_info_temp[3]_$TODAYS_DATE
+	set -g site_info_temp[5] $site_info_temp[5]$site_info_temp[3].conf # 5 vhosts filename
+	set -g site_info_temp[6] $site_info_temp[3]_$TODAYS_DATE           # 6 SSL base filename
 end
 
 # Function to write the vhosts file from a template
@@ -100,19 +109,15 @@ function generate_ssl_files
 		handle_error "SSL folder $PROVISION_SSL not found"
 	end
 
-	# Set paths for SSL certificate and key
-	set ssl_cert_file $PROVISION_SSL/$argv[6].cert
-	set ssl_key_file $PROVISION_SSL/$argv[6].key
-
 	# Generate SSL key
 	openssl genrsa \
-		-out $ssl_key_file \
+		-out $PROVISION_SSL/$argv[6].key \
 		2048
 
 	# Generate self-signed SSL certificate
 	openssl req -new -x509 \
-		-key $ssl_key_file \
-		-out $ssl_cert_file \
+		-key $PROVISION_SSL/$argv[6].key \
+		-out $PROVISION_SSL/$argv[6].cert \
 		-days 3650 \
 		-subj /CN=$argv[1]
 end
