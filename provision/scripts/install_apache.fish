@@ -11,15 +11,18 @@ set job_complete    "Apache Installed (with SSL 🙃)"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
+# Only for scripts that configure websites.
+source /var/www/provision/scripts/common_sites_config.fish
 
 header_banner $active_title $script_name $updated_date
 
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# NONE!"
+# 1 - SSL_PREFIX      = "p2m"
 
 # Script variables...
+set SSL_PREFIX $argv[1]
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
@@ -40,29 +43,11 @@ update_and_install_packages $PACKAGE_LIST
 
 announce_success "Apache packages installed successfully!"
 
-# Generate SSL key
-echo "🔄 Generating SSL key 🔄"
-if not openssl genrsa \
-	-out $PROVISION_SSL/localhost.key \
-	2048
-	handle_error "Failed to generate SSL key"
-end
+set domain            localhost
+set ssl_base_filename _localhost_$TODAYS_DATE
+set ssl_base_filename $SSL_PREFIX$ssl_base_filename
 
-# Generate self-signed SSL certificate
-echo "🔄 Generating self-signed SSL certificate 🔄"
-if not openssl req -x509 -nodes \
-	-key $PROVISION_SSL/localhost.key \
-	-out $PROVISION_SSL/localhost.cert \
-	-days 3650 \
-	-subj "/CN=localhost" 2>/dev/null
-
-	handle_error "Failed to generate self-signed SSL certificate"
-end
-
-announce_success "SSL files generated successfully!"
-
-# Display information about the generated certificate
-openssl x509 -noout -text -in $PROVISION_SSL/localhost.cert
+generate_ssl_files $domain $ssl_base_filename
 
 # Copy web server files into place
 yes | cp $PROVISION_VHOSTS/local.conf /etc/apache2/sites-available/
@@ -76,7 +61,7 @@ end
 
 # Set permissions on web server files
 chmod -R 755 $SHARED_HTML/*
-chmod 600 /etc/apache2/sites-available/localhost.key
+chmod 600 /etc/apache2/sites-available/$ssl_base_filename.key
 
 a2ensite local.conf
 a2dissite 000-default
