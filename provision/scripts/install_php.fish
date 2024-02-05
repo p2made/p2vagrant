@@ -20,7 +20,6 @@ header_banner $active_title $script_name $updated_date
 # 1 - PHP_VERSION     = "8.3"
 
 # Script variables...
-
 set PHP_VERSION    $argv[1]
 set PHP_INI        /etc/php/$PHP_VERSION/apache2/php.ini
 
@@ -78,11 +77,11 @@ LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
 # Update package lists & install packages
 update_and_install_packages $PACKAGE_LIST
 
-sed -i 's/max_execution_time = .*/max_execution_time = 60/' $PHP_INI
-sed -i 's/post_max_size = .*/post_max_size = 64M/' $PHP_INI
-sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' $PHP_INI
-sed -i 's/memory_limit = .*/memory_limit = 512M/' $PHP_INI
-sed -i 's/display_errors = .*/display_errors = on/' $PHP_INI
+sed -i 's/max_execution_time = .*/max_execution_time = 60/'         $PHP_INI
+sed -i 's/post_max_size = .*/post_max_size = 64M/'                  $PHP_INI
+sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/'       $PHP_INI
+sed -i 's/memory_limit = .*/memory_limit = 512M/'                   $PHP_INI
+sed -i 's/display_errors = .*/display_errors = on/'                 $PHP_INI
 sed -i 's/display_startup_errors = .*/display_startup_errors = on/' $PHP_INI
 
 cp $PROVISION_HTML/phpinfo.php $SHARED_HTML/
