@@ -132,7 +132,7 @@ Replace `db_user `, `db_password `, & `db `, with values from your `Vagrantfile`
 MEMORY              = 4096
 CPUS                = 1
 TIMEZONE            = "Australia/Brisbane" # "Europe/London"
-VM_IP               = "192.168.42.100"
+VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
 
 # Synced Folders
 HOST_FOLDER         = "."
@@ -205,7 +205,7 @@ vagrant provision
 
 ### Visit:
 
-* [https://192.168.42.100/db.php](https://192.168.42.100/db.php)
+* [http://192.168.42.100/db.php](http://192.168.42.100/db.php)
 
 ... if all went well you should be seeing the "*Connected!*" message.
 

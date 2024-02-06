@@ -19,10 +19,9 @@ header_banner $active_title $script_name $updated_date
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - SSL_PREFIX      = "p2m"
+# NONE!"
 
 # Script variables...
-set SSL_PREFIX $argv[1]
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
@@ -44,8 +43,7 @@ update_and_install_packages $PACKAGE_LIST
 announce_success "Apache packages installed successfully!"
 
 set domain            localhost
-set ssl_base_filename _localhost_$TODAYS_DATE
-set ssl_base_filename $SSL_PREFIX$ssl_base_filename
+set ssl_base_filename localhost_$TODAYS_DATE
 
 generate_ssl_files $domain $ssl_base_filename
 

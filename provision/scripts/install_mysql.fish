@@ -4,7 +4,7 @@
 # Updated: 2024-02-04
 
 set script_name     "install_mysql.fish"
-set updated_date    "2024-02-02"
+set updated_date    "2024-02-04"
 
 set active_title    "Installing MySQL"
 set job_complete    "MySQL Installed"

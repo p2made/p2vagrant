@@ -8,7 +8,7 @@
 MEMORY              = 4096
 CPUS                = 1
 TIMEZONE            = "Australia/Brisbane" # "Europe/London"
-VM_IP               = "192.168.42.100"
+VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
 
 # Synced Folders
 HOST_FOLDER         = "."
@@ -24,9 +24,6 @@ DB_USERNAME         = "fredspotty"
 DB_PASSWORD         = "Passw0rd"
 DB_NAME             = "example_db"
 DB_NAME_TEST        = "example_db_test"
-
-# Extra
-SSL_PREFIX          = "p2m"
 
 Vagrant.configure("2") do |config|
 
@@ -45,14 +42,14 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
-#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"
 
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [SSL_PREFIX]
-	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish"
+#	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
 #	config.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
-#	config.vm.provision :shell, path: "provision/scripts/configure_sites.fish", args: [VM_IP]
+	config.vm.provision :shell, path: "provision/scripts/configure_sites.fish"
 
 end

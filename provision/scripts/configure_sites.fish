@@ -19,10 +19,9 @@ header_banner $active_title $script_name $updated_date
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - SSL_PREFIX      = "p2m"
+# NONE!"
 
 # Script variables...
-set SSL_PREFIX $argv[1]
 
 # File path for site data
 set site_data_file "/var/www/provision/data/sites_data"
@@ -34,7 +33,7 @@ set -x DEBIAN_FRONTEND noninteractive
 # Function to setup important site variables
 # We can't return a value, so we put them in a global variable
 # that we will quickly use & then erase.
-# Usage: setup_site_variables $one_site $ssl_prefix
+# Usage: setup_site_variables $one_site
 function setup_site_variables
 	# Use the passed string $one_site to set a temporary global...
 	# $site_info_temp[1-6], where...
@@ -67,7 +66,7 @@ function setup_site_variables
 	end
 
 	set -g site_info_temp[5] $site_info_temp[5]$site_info_temp[3].conf # 5 vhosts filename
-	set -g site_info_temp[6] $SSL_PREFIX$site_info_temp[3]_$TODAYS_DATE   # 6 SSL base filename
+	set -g site_info_temp[6] $site_info_temp[3]_$TODAYS_DATE           # 6 SSL base filename
 end
 
 for one_site in (cat $site_data_file | grep -v '^#')
@@ -119,7 +118,7 @@ end
 # Restart Apache after all configurations
 echo "Restarting apache to enable new websites."
 sudo service apache2 restart
-echo "Websites setup complete."
+announce_success "Websites setup complete."
 
 # -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
 footer_banner $job_complete
