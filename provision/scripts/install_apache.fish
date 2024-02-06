@@ -11,17 +11,16 @@ set job_complete    "Apache Installed (with SSL 🙃)"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
-# Only for scripts that configure websites.
-source /var/www/provision/scripts/common_sites_config.fish
 
 header_banner $active_title $script_name $updated_date
 
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# NONE!"
+# 1 - VM_IP = "192.168.22.42"
 
 # Script variables...
+set VM_IP $argv[1]
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
@@ -42,8 +41,8 @@ update_and_install_packages $PACKAGE_LIST
 
 announce_success "Apache packages installed successfully!"
 
-set domain            localhost
-set ssl_base_filename localhost_$TODAYS_DATE
+set domain            $VM_IP
+set ssl_base_filename "$VM_IP"_"$TODAYS_DATE"
 
 generate_ssl_files $domain $ssl_base_filename
 
