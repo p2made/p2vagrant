@@ -4,7 +4,7 @@ Updated: 2024-02-02
 
 --
 
-Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider.
+Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell, & Swift. After that fish is the shell in `ssh` sessions, & provisioning scripts are in Swift (this is a Mac project after all 🙃).
 
 The instructions given assume the use of [Homebrew](https://brew.sh). If you don't have it installed, run...
 

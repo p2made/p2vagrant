@@ -1,7 +1,7 @@
 #!/bin/fish
 
 # common_functions.fish
-# Updated: 2024-02-07
+# Updated: 2024-02-08
 
 # Script constants...
 
@@ -17,46 +17,23 @@
 # PROVISION_TEMPLATES $VM_FOLDER/provision/templates
 # PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
-set -U TODAYS_DATE         (date "+%Y-%m-%d")
-set -U VM_FOLDER           /var/www
-set -U SHARED_HTML         $VM_FOLDER/html
-set -U PROVISION_FOLDER    $VM_FOLDER/provision
-set -U PROVISION_DATA      $VM_FOLDER/provision/data
-set -U PROVISION_HTML      $VM_FOLDER/provision/html
-set -U PROVISION_LOGS      $VM_FOLDER/provision/logs
-set -U PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
-set -U PROVISION_SSL       $VM_FOLDER/provision/ssl
-set -U PROVISION_TEMPLATES $VM_FOLDER/provision/templates
-set -U PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
+set TODAYS_DATE         (date "+%Y-%m-%d")
+set VM_FOLDER           /var/www
+set SHARED_HTML         $VM_FOLDER/html
+set PROVISION_FOLDER    $VM_FOLDER/provision
+set PROVISION_DATA      $VM_FOLDER/provision/data
+set PROVISION_HTML      $VM_FOLDER/provision/html
+set PROVISION_LOGS      $VM_FOLDER/provision/logs
+set PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
+set PROVISION_SSL       $VM_FOLDER/provision/ssl
+set PROVISION_TEMPLATES $VM_FOLDER/provision/templates
+set PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
 
-#
-
-
-# -- -- /%/ -- -- /%/ Utility Functions /%/ -- -- /%/ -- -- /%/ -- --
-
-# Function for error handling
-# Usage: handle_error "Error message"
-function handle_error
-	echo "⚠️ Error: $argv 💥"
-	exit 1
-end
-
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
-function announce_success
-	set icon "✅"
-
-	if test -n "$argv[2]"
-		if test "$argv[2]" -eq 1
-			set icon "👍"
-		end
-	end
-
-	echo "$icon $argv[1]"
-end
-
-
-# -- -- /%/ -- -- /%/ Update & Install Packages /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/      Update & Install Packages      /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to update package with error handling
 # Usage: update_package_lists
@@ -93,7 +70,11 @@ function update_and_install_packages
 	install_packages $argv
 end
 
-# -- -- /%/ -- -- /%/ Configure Sites /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/           Configure Sites           /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to setup important site variables
 # We can't return a value, so we put them in a global variable
@@ -232,44 +213,110 @@ function configure_website
 	echo "Website configured for $domain"
 end
 
-# 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 /%/ Header & Footer Banners /%/ 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/          Utility Functions          /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
+# Function for error handling
+# Use without closing punctuation on the message.
+# Usage: handle_error "Error message"
+function handle_error
+	echo "⚠️ Error: $argv 💥"
+	echo "Run `vagrant halt` then restore the last snapshot before trying again."
+	exit 1
+end
+
+# Function to announce success
+# Usage: announce_success "Task completed successfully." [use_alternate_icon]
+function announce_success
+	set icon "✅"
+
+	if test "$argv[2]" -eq 1
+		set icon "👍"
+	end
+
+	echo "$icon $argv[1]"
+end
+
+# Function to announce a job not needing to be done
+# Usage: announce_no_job "Nothing to do."
+function announce_no_job
+	echo "👍 $1"
+end
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/       Header & Footer Banners       /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+# Banner flags
 set ua "🇺🇦"
 set btbu " 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
 set btb $btbu$btbu$btbu$btbu$btbu
 
-function banner_output
+# Function to write shalom peace salam banner
+# Usage: peace_banner i - where i is 1 to 4
+function peace_banner
 	switch $argv[1]
-		case 0
-			echo $ua$btb; echo $ua
-		case 1
-			echo $ua
-		case 2
-			echo $ua; echo $ua$btb; echo ""
-		case 3
-			echo ""; echo $ua$btb; echo $ua
-		case 4
-			echo $ua; echo $ua$btb
-		case "*"
-			echo "$ua    $argv[1]"
+		case 1 # Binary
+			echo "$ua    🕊️  01110011 01101000 01100001 01101100 01101111 01101101 🕊️"
+			echo "$ua    🕊️  01110000 01100101 01100001 01100011 01100101          🕊️"
+			echo "$ua    🕊️  01110011 01100001 01101100 01100001 01101101          🕊️"
+		case 2 # Hexadecimal
+			echo "$ua    🕊️  73 68 61 6C 6F 6D 🕊️"
+			echo "$ua    🕊️  70 65 61 63 65    🕊️"
+			echo "$ua    🕊️  73 61 6C 61 6D    🕊️"
+		case 3 # Octal
+			echo "$ua    🕊️  163 150 141 154 157 155 🕊️"
+			echo "$ua    🕊️  160 145 141 143 145     🕊️"
+			echo "$ua    🕊️  163 141 154 141 155     🕊️"
+		case 4 # Morse Code
+			echo "$ua    🕊️  ... .... .- .-.. --- -- 🕊️"
+			echo "$ua    🕊️     .--. . .- -.-. .     🕊️"
+			echo "$ua    🕊️     ... .- .-.. .- --    🕊️"
 	end
 end
 
+# Function to write header banner
+# Usage: header_banner $active_title $script_name $updated_date
 function header_banner
-	banner_output 0
-	banner_output "🚀 $argv[1] 🚀"
-	banner_output "📅     on $TODAYS_DATE"
-	banner_output 1
-	banner_output "📜 Script Name:  $argv[2]"
-	banner_output "📅 Last Updated: $argv[3]"
-	banner_output 2
+	echo "$ua$btb"
+	echo "$ua"
+	echo "$ua                        ___"
+	echo "$ua                  _____|_  )                   _           _"
+	echo "$ua         /\      |  __ \/ /                   (_)         | |"
+	echo "$ua        /  \     | |__)/___|   _ __  _ __ ___  _  ___  ___| |_"
+	echo "$ua       / /\ \    |  ___/      | '_ \| '__/ _ \| |/ _ \/ __| __|"
+	echo "$ua      / ____ \   | |          | |_) | | | (_) | |  __/ (__| |_"
+	echo "$ua     /_/    \_\  |_|          | .__/|_|  \___/| |\___|\___|\__|"
+	echo "$ua                              | |            _/ |"
+	echo "$ua                              |_|           |__/"
+	echo "$ua"
+	echo "$ua      🚀 $argv[1] 🚀"
+	echo "$ua      📅     on $TODAYS_DATE"
+	echo "$ua"
+	echo "$ua      📜 Script Name:  $argv[2]"
+	echo "$ua      📅 Last Updated: $argv[3]"
+	echo "$ua"
+	echo "$ua$btb"
+	echo ""
 end
 
+# Function to write footer banner
+# Usage: footer_banner $job_complete
 function footer_banner
-	banner_output 3
-	banner_output "🏆 $argv[1] ‼️"
-	banner_output 4
+	echo ""
+	echo "$ua$btb"
+	echo "$ua"
+	echo "$ua      🏆 $argv[1] ‼️"
+	echo "$ua"
+	peace_banner (math (random) % 4 + 1)
+	echo "$ua"
+	echo "$ua$btb"
 end
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 

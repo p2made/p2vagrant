@@ -4,7 +4,7 @@
 # Updated: 2024-02-07
 
 set script_name     "install_mysql.fish"
-set updated_date    "2024-02-04"
+set updated_date    "2024-02-02"
 
 set active_title    "Installing MySQL"
 set job_complete    "MySQL Installed"
@@ -17,15 +17,15 @@ header_banner $active_title $script_name $updated_date
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-set MYSQL_VERSION  $argv[1] # "8.0"
-set PHP_VERSION    $argv[2] # "8.3"
-set ROOT_PASSWORD  $argv[3] # ⚠️ See Vagrantfile
-set DB_USERNAME    $argv[4] # ⚠️ See Vagrantfile
-set DB_PASSWORD    $argv[5] # ⚠️ See Vagrantfile
-set DB_NAME        $argv[6] # "example_db"
-set DB_NAME_TEST   $argv[7] # "example_db_test"
+set MYSQL_VERSION   $argv[1] # "8.0"
+set PHP_VERSION     $argv[2] # "8.3"
+set ROOT_PASSWORD   $argv[3] # ⚠️ See Vagrantfile
+set DB_USERNAME     $argv[4] # ⚠️ See Vagrantfile
+set DB_PASSWORD     $argv[5] # ⚠️ See Vagrantfile
+set DB_NAME         $argv[6] # "example_db"
+set DB_NAME_TEST    $argv[7] # "example_db_test"
 
-# Always set PACKAGE_LIST when using update_and_install_packages
+# Always set PACKAGE_LIST when using install_packages or update_and_install_packages
 set PACKAGE_LIST \
 	mysql-server
 
@@ -35,6 +35,10 @@ set -x DEBIAN_FRONTEND noninteractive
 
 # Update package lists & install packages
 update_and_install_packages $PACKAGE_LIST
+
+sudo mkdir -p /var/www/provision/logs
+sudo touch /var/www/provision/logs/mysql_output.log
+sudo chmod -R 755 /var/www/provision/logs
 
 # Set root password
 mysqladmin -u root password $ROOT_PASSWORD || handle_error "Failed to set root password."
@@ -59,11 +63,11 @@ for i in (seq 1 6)
 end
 
 # Update MySQL configuration
-if not test -f /etc/mysql/mysql.conf.d/mysqld.cnf
+if test -f /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+else
 	handle_error "mysqld.cnf file not found."
 end
-
-sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Copy database file
 cp $PROVISION_HTML/db.php $SHARED_HTML/ || \
