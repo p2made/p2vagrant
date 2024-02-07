@@ -263,7 +263,7 @@ The page is a simple `index.html` located within your VM in the `/var/www/html` 
 # vi: set ft=ruby :
 
 # 04 Install Apache (with SSL)
-# Updated: 2024-01-28
+# Updated: 2024-02-07
 
 # Machine Variables
 MEMORY              = 4096
@@ -321,11 +321,11 @@ vagrant reload --provision
 
 ### Visit
 
-* [http://192.168.42.100/](http://192.168.42.100/)
+* [http://192.168.22.42/](http://192.168.22.42/)
 
 You should see a minimal page that I put there. For the Apache default page of your VM visit... 
 
-* [http://192.168.42.100/index.html](http://192.168.42.100/index.html)
+* [http://192.168.22.42/index.html](http://192.168.22.42/index.html)
 
 
 ### All good?

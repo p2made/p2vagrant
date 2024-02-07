@@ -51,7 +51,7 @@ sudo phpenmod mbstring
 sudo service apache2 restart
 ```
 
-* Visit [http://192.168.42.100/phpmyadmin/](http://192.168.42.100/phpmyadmin/), log in with 'phpmyadmin' & the password you entered.
+* Visit [http://192.168.22.42/phpmyadmin/](http://192.168.22.42/phpmyadmin/), log in with 'phpmyadmin' & the password you entered.
 
 #### Accessing the Database from Outside the VM
 

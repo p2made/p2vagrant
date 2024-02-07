@@ -1,7 +1,7 @@
 #!/bin/fish
 
 # 04 Install Apache (with SSL)
-# Updated: 2024-02-04
+# Updated: 2024-02-07
 
 set script_name     "install_apache.fish"
 set updated_date    "2024-02-02"

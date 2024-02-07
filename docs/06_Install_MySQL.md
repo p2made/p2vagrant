@@ -126,7 +126,7 @@ Replace `db_user `, `db_password `, & `db `, with values from your `Vagrantfile`
 # vi: set ft=ruby :
 
 # 06 Install MySQL
-# Updated: 2024-01-28
+# Updated: 2024-02-07
 
 # Machine Variables
 MEMORY              = 4096
@@ -205,7 +205,7 @@ vagrant provision
 
 ### Visit:
 
-* [http://192.168.42.100/db.php](http://192.168.42.100/db.php)
+* [http://192.168.22.42/db.php](http://192.168.22.42/db.php)
 
 ... if all went well you should be seeing the "*Connected!*" message.
 

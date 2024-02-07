@@ -1,7 +1,7 @@
 #!/bin/fish
 
 # 08 Upgrade VM (revisited)
-# Updated: 2024-02-04
+# Updated: 2024-02-07
 
 set script_name     "upgrade_vm.fish"
 set updated_date    "2024-02-03"

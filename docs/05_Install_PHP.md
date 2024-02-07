@@ -128,7 +128,7 @@ phpinfo();
 # vi: set ft=ruby :
 
 # 05 Install PHP
-# Updated: 2024-01-28
+# Updated: 2024-02-07
 
 # Machine Variables
 MEMORY              = 4096
@@ -188,7 +188,7 @@ vagrant provision
 
 ### Visit
 
-* [http://192.168.42.100/phpinfo.php](http://192.168.42.100/phpinfo.php)
+* [http://192.168.22.42/phpinfo.php](http://192.168.22.42/phpinfo.php)
 
 ... which should successfully display the PHP info page.
 

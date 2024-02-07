@@ -137,7 +137,7 @@ footer_banner $job_complete
 # vi: set ft=ruby
 
 # 08 Upgrade VM (revisited)
-# Updated: 2024-02-03
+# Updated: 2024-02-07
 
 # Machine Variables
 MEMORY              = 4096

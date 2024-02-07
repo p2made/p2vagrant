@@ -207,7 +207,7 @@ footer_banner $job_complete
 # vi: set ft=ruby
 
 # 09 Configure Sites
-# Updated: 2024-02-04
+# Updated: 2024-02-07
 
 # Machine Variables
 MEMORY              = 4096
@@ -287,7 +287,7 @@ Open the file `/etc/hosts` in your preferred text editor. I use [BBEdit](https:/
 Add this line...
 
 ```
-192.168.42.100 test *.test *.*.test
+192.168.22.42 test *.test *.*.test
 ```
 
 If you've used a different IP address, &/or different TLD, substitute accordingly. If you use more than one TLD, you will need one line like this for each. The `*.` parts should match the depth of subdomains used. So if you have `subdomain2. subdomain1.example.test` you will need to add `*.*.*.test`.
