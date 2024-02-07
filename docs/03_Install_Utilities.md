@@ -137,13 +137,13 @@ That function `set_fish_as_default_shell() { ... }` is just as described on the 
 # vi: set ft=ruby :
 
 # 03 Install Utilities
-# Updated: 2024-01-26
+# Updated: 2024-02-07
 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
 TIMEZONE            = "Australia/Brisbane" # "Europe/London"
-VM_IP               = "192.168.42.100"
+VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
 
 # Synced Folders
 HOST_FOLDER         = "."

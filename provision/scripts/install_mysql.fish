@@ -1,7 +1,7 @@
 #!/bin/fish
 
 # 06 Install MySQL
-# Updated: 2024-02-04
+# Updated: 2024-02-07
 
 set script_name     "install_mysql.fish"
 set updated_date    "2024-02-02"
@@ -17,25 +17,15 @@ header_banner $active_title $script_name $updated_date
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - MYSQL_VERSION   = "8.1"
-# 2 - PHP_VERSION     = "8.3"
-# 3 - ROOT_PASSWORD   = ⚠️ See Vagrantfile
-# 4 - DB_USERNAME     = ⚠️ See Vagrantfile
-# 5 - DB_PASSWORD     = ⚠️ See Vagrantfile
-# 6 - DB_NAME         = "example_db"
-# 7 - DB_NAME_TEST    = "example_db_test"
+set MYSQL_VERSION   $argv[1] # "8.0"
+set PHP_VERSION     $argv[2] # "8.3"
+set ROOT_PASSWORD   $argv[3] # ⚠️ See Vagrantfile
+set DB_USERNAME     $argv[4] # ⚠️ See Vagrantfile
+set DB_PASSWORD     $argv[5] # ⚠️ See Vagrantfile
+set DB_NAME         $argv[6] # "example_db"
+set DB_NAME_TEST    $argv[7] # "example_db_test"
 
-# Script variables...
-
-set MYSQL_VERSION  $argv[1]
-set PHP_VERSION    $argv[2]
-set ROOT_PASSWORD  $argv[3]
-set DB_USERNAME    $argv[4]
-set DB_PASSWORD    $argv[5]
-set DB_NAME        $argv[6]
-set DB_NAME_TEST   $argv[7]
-
-# Always set PACKAGE_LIST when using update_and_install_packages
+# Always set PACKAGE_LIST when using install_packages or update_and_install_packages
 set PACKAGE_LIST \
 	mysql-server
 

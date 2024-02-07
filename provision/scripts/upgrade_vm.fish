@@ -1,7 +1,7 @@
 #!/bin/fish
 
 # 08 Upgrade VM (revisited)
-# Updated: 2024-02-04
+# Updated: 2024-02-07
 
 set script_name     "upgrade_vm.fish"
 set updated_date    "2024-02-03"
@@ -13,7 +13,6 @@ set job_complete    "Upgrade completed successfully"
 source /var/www/provision/scripts/common_functions.fish
 
 header_banner $active_title $script_name $updated_date
-
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...

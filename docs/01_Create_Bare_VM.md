@@ -4,7 +4,7 @@ Updated: 2024-02-02
 
 --
 
-Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider.
+Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell, & Swift. After that fish is the shell in `ssh` sessions, & provisioning scripts are in Swift (this is a Mac project after all 🙃).
 
 The instructions given assume the use of [Homebrew](https://brew.sh). If you don't have it installed, run...
 
@@ -70,13 +70,13 @@ started with an older version of Vagrant.
 # vi: set ft=ruby :
 
 # 01 Create Bare VM
-# Updated: 2024-01-26
+# Updated: 2024-02-07
 
 # Machine Variables
 MEMORY              = 4096
 CPUS                = 1
 TIMEZONE            = "Australia/Brisbane" # "Europe/London"
-VM_IP               = "192.168.42.100"
+VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
 
 # Synced Folders
 HOST_FOLDER         = "."

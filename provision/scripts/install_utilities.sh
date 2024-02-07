@@ -2,61 +2,52 @@
 
 # 03 Install Utilities
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🚀 Installing Utilities 🚀"
-echo "🇺🇿    📜 Script Name:  install_utilities.sh"
-echo "🇹🇲    📅 Last Updated: 2024-01-27"
-echo "🇹🇯"
-echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
-echo ""
+script_name="install_utilities.sh"
+updated_date="2024-02-08"
+
+active_title="Installing Utilities"
+job_complete="Utilities Installed"
+
+# Source common functions
+source /var/www/provision/scripts/common_functions.sh
+
+header_banner "$active_title" "$script_name" "$updated_date"
+# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - TIMEZONE   = "Australia/Brisbane"
+TIMEZONE=$argv[1] # "Australia/Brisbane"
 
-# Function for error handling
-# Usage: handle_error "Error message"
-handle_error() {
-	echo "⚠️ Error: $1 💥"
-	echo "Run `vagrant halt` then restore the last snapshot before trying again."
-	exit 1
-}
-
-# Function to announce success
-# Usage: announce_success "Task completed successfully."
-announce_success() {
-	echo "✅ $1"
-}
+# Always set PACKAGE_LIST when using update_and_install_packages
+PACKAGE_LIST=(
+	"apt-transport-https"
+	"bzip2"
+	"ca-certificates"
+	"curl"
+	"debconf-utils"
+	"expect"
+	"file"
+	"fish"
+	"git"
+	"gnupg2"
+	"gzip"
+	"libapr1"
+	"libaprutil1"
+	"libaprutil1-dbd-sqlite3"
+	"libaprutil1-ldap"
+	"liblua5.3-0"
+	"lsb-release"
+	"mime-support"
+	"nodejs"
+	"npm"
+	"openssl"
+	"software-properties-common"
+	"unzip"
+	"yarn"
+)
 
 export DEBIAN_FRONTEND=noninteractive
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-
-# Function to install packages with progress dots and error handling
-install_packages() {
-	echo "🔄 Installing packages 🔄"
-
-	# Run apt-get in a subshell to capture its output
-	(
-		while IFS= read -r line; do
-			echo -n "🐌"
-		done < <(apt-get -qy install "$@" 2>&1)
-		echo ""  # Move to the next line after the dots
-	)
-
-	if [ "${PIPESTATUS[0]}" -ne 0 ]; then
-		handle_error "Failed to install packages"
-	fi
-
-	announce_success "Utilities Installation: Packages installed successfully!"
-}
-
-update_package_lists() {
-	echo "🔄 Updating package lists 🔄"
-	if ! apt-get -q update 2>&1; then
-		handle_error "Failed to update package lists"
-	fi
-}
 
 # Function to set Fish as the default shell
 set_fish_as_default_shell() {
@@ -79,31 +70,17 @@ timedatectl set-timezone $1 --no-ask-password
 LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
 
 # Call the function with the packages you want to install
-install_packages \
-	apt-transport-https \
-	bzip2 \
-	ca-certificates \
-	curl \
-	debconf-utils \
-	expect \
-	file \
-	fish \
-	git \
-	gnupg2 \
-	gzip \
-	libapr1 \
-	libaprutil1 \
-	libaprutil1-dbd-sqlite3 \
-	libaprutil1-ldap \
-	liblua5.3-0 \
-	lsb-release \
-	mime-support \
-	nodejs \
-	npm \
-	openssl \
-	software-properties-common \
-	unzip \
-	yarn
+install_packages $PACKAGE_LIST
+
+# Install Swift
+echo "🚀 Installing Swift..."
+SWIFT_URL="https://swift.org/builds/swift-5.5.1-release/ubuntu2004/swift-5.5.1-RELEASE/swift-5.5.1-RELEASE-ubuntu20.04.tar.gz"
+curl -L $SWIFT_URL -o swift.tar.gz
+tar -xzf swift.tar.gz -C /usr/share
+sudo ln -s /usr/share/swift/usr/bin/swift /usr/bin/swift
+
+# Add Swift binary path to PATH
+echo 'export PATH="/usr/share/swift/usr/bin:$PATH"' >> /home/vagrant/.bashrc
 
 set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
 
@@ -111,9 +88,5 @@ set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
 grep -qxF 'cd /var/www' /home/vagrant/.profile || \
 	echo 'cd /var/www' >> /home/vagrant/.profile
 
-echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 Utilities Installed ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
+footer_banner "$job_complete"
