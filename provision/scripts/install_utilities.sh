@@ -20,6 +20,7 @@ TIMEZONE=$argv[1] # "Australia/Brisbane"
 # Always set PACKAGE_LIST when using update_and_install_packages
 PACKAGE_LIST=(
 	"apt-transport-https"
+	"binutils"
 	"bzip2"
 	"ca-certificates"
 	"curl"
@@ -31,19 +32,39 @@ PACKAGE_LIST=(
 	"gnupg2"
 	"gzip"
 	"libapr1"
-	"libaprutil1"
 	"libaprutil1-dbd-sqlite3"
 	"libaprutil1-ldap"
+	"libaprutil1"
+	"libc6-dev"
+	"libcurl4-openssl-dev"
+	"libcurl4"
+	"libedit2"
+	"libgcc-9-dev"
 	"liblua5.3-0"
+	"libpython2.7"
+	"libpython3.8"
+	"libsqlite3-0"
+	"libstdc++-9-dev"
+	"libxml2-dev"
+	"libxml2"
+	"libz3-dev"
 	"lsb-release"
 	"mime-support"
 	"nodejs"
 	"npm"
 	"openssl"
+	"pkg-config"
 	"software-properties-common"
+	"tzdata"
 	"unzip"
+	"uuid-dev"
 	"yarn"
+	"zlib1g-dev"
 )
+
+
+
+
 
 export DEBIAN_FRONTEND=noninteractive
 
