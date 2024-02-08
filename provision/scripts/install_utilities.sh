@@ -15,7 +15,7 @@ header_banner "$active_title" "$script_name" "$updated_date"
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-SWIFT_VERSION=$1    # false - "5.9.2" if Swift is required
+SWIFT_VERSION=$1    # "" - "5.9.2" if Swift is required
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 PACKAGE_LIST=(
@@ -112,7 +112,7 @@ LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
 
 install_packages $PACKAGE_LIST
 
-if [ "$SWIFT_VERSION" != "false" ]; then
+if [ -n "$SWIFT_VERSION" ]; then
 	install_swift
 fi
 

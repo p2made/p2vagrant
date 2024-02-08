@@ -11,81 +11,28 @@ Updated: 2024-02-02
 
 # 02 Upgrade VM
 
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🚀 Upgrading VM 🚀"
-echo "🇺🇿    📜 Script Name:  upgrade_vm.sh"
-echo "🇹🇲    📅 Last Updated: 2024-01-27"
-echo "🇹🇯"
-echo "🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯"
-echo ""
+script_name="upgrade_vm.sh"
+updated_date="2024-02-08"
+
+active_title="Upgrading VM"
+job_complete="Upgrade completed successfully"
+
+# Source common functions
+source /var/www/provision/scripts/common_functions.sh
+
+header_banner "$active_title" "$script_name" "$updated_date"
+# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# NONE!"
-
-# Function for error handling
-# Usage: handle_error "Error message"
-handle_error() {
-	echo "⚠️ Error: $1 💥"
-	echo "Run `vagrant halt` then restore the last snapshot before trying again."
-	exit 1
-}
-
-# Function to announce success
-# Usage: announce_success "Task completed successfully."
-announce_success() {
-	echo "✅ $1"
-}
-
-# Function to announce a job not needing to be done
-# Usage: announce_no_job "Nothing to do."
-announce_no_job() {
-	echo "👍 $1"
-}
+TIMEZONE=$1         # "Australia/Brisbane"
 
 export DEBIAN_FRONTEND=noninteractive
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-update_package_lists() {
-	echo "🔄 Updating package lists 🔄"
-	if ! apt-get -q update 2>&1; then
-		handle_error "Failed to update package lists"
-	fi
-}
-
-# Function to upgrade packages if updates are available
-upgrade_packages() {
-	if ! apt-get -q -s upgrade 2>&1 | grep -q '^[[:digit:]]\+ upgraded'; then
-		announce_no_job "No packages to upgrade."
-		return
-	fi
-
-	echo "⬆️ Upgrading packages ⬆️"
-	if ! apt-get -qy upgrade 2>&1; then
-		handle_error "Failed to upgrade packages"
-	fi
-
-	announce_success "Packages successfully upgraded."
-}
-
-# Function to remove unnecessary packages
-remove_unnecessary_packages() {
-	if ! apt-get autoremove --dry-run | grep -q '^[[:digit:]]\+ packages will be removed'; then
-		announce_no_job "No unnecessary packages to remove."
-		return
-	fi
-
-	echo "🧹 Removing unnecessary packages 🧹"
-
-	if ! apt-get -qy autoremove; then
-		handle_error "Failed to remove unnecessary packages"
-	fi
-
-	announce_success "Unnecessary packages removed."
-}
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# Set timezone
+echo "🕤 Setting timezone to $1 🕓"
+timedatectl set-timezone $1 --no-ask-password
 
 update_package_lists
 upgrade_packages
@@ -97,15 +44,11 @@ cat /etc/os-release
 
 announce_success "System update complete! ✅"
 
-echo ""
-echo "🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇰🇿 🇰🇬 🇹🇯 🇹🇲"
-echo "🇲🇳"
-echo "🇦🇿    🏆 Upgrade completed successfully ‼️"
-echo "🇺🇿"
-echo "🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿 🇹🇲 🇹🇯 🇰🇬 🇰🇿 🇲🇳 🇦🇿 🇺🇿"
+# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
+footer_banner "$job_complete"
 ```
 
-The `echo` lines at the top on the script (& others throughout) are to show in Terminal output which script is running. They can be removed when you're comfortable without them.
+That's nice & short because I've put everything that could be reused into an include file, `provision/scripts/common_functions.sh`.
 
 ### Update `Vagrantfile`
 
