@@ -15,7 +15,7 @@ HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
-SWIFT_VERSION       = "5.9.2"
+SWIFT_VERSION       = false                # "5.9.2" - if Swift is required
 PHP_VERSION         = "8.3"
 MYSQL_VERSION       = "8.0"
 

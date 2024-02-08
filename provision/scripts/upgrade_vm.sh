@@ -15,11 +15,15 @@ header_banner "$active_title" "$script_name" "$updated_date"
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# NONE!"
+TIMEZONE=$1         # "Australia/Brisbane"
 
 export DEBIAN_FRONTEND=noninteractive
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+# Set timezone
+echo "🕤 Setting timezone to $1 🕓"
+timedatectl set-timezone $1 --no-ask-password
 
 update_package_lists
 upgrade_packages
