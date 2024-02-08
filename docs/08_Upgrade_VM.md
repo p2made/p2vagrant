@@ -180,7 +180,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh"
+#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_apache.fish"
 #	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
