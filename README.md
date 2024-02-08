@@ -39,7 +39,7 @@ All files you are directed to create are in...
 
 01. [Create Bare VM](./docs/01_Create_Bare_VM.md)
 02. [Upgrade VM](./docs/02_Upgrade_VM.md)
-03. [Install Utilities](./docs/03_Install_Utilities.md)
+03. [Install Utilities (& Swift)](./docs/03_Install_Utilities.md)
 04. [Install Apache (with SSL)](./docs/04_Install_Apache.md)
 05. [Install PHP (with Composer)](./docs/05_Install_PHP.md)
 06. [Install MySQL](./docs/06_Install_MySQL.md)

@@ -62,7 +62,7 @@ upgrade_packages() {
 install_packages() {
 	echo "🔄 Installing Packages 🔄"
 
-	for package in "$@"; do
+	for package in "${PACKAGE_LIST[@]}"; do
 		if ! apt-get -qy install "$package"; then
 			handle_error "Failed to install packages"
 		fi
