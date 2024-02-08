@@ -11,8 +11,10 @@
 /html
 
 # SSL
-/ssl
 /provision/ssl
+
+# Swift
+/Swift
 
 # logs
 /provision/logs
@@ -21,7 +23,6 @@
 !/html/.p2m_keep_folder
 !/provision/logs/.p2m_keep_folder
 !/provision/ssl/.p2m_keep_folder
-!/ssl/.p2m_keep_folder
 
 # Exclude folders completely
 /provision/notes/

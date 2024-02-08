@@ -4,19 +4,6 @@
 # Updated: 2024-02-08
 
 # Script constants...
-
-# TODAYS_DATE         $(date "+%Y-%m-%d")
-# VM_FOLDER           /var/www
-# SHARED_HTML         $VM_FOLDER/html
-# PROVISION_FOLDER    $VM_FOLDER/provision
-# PROVISION_DATA      $VM_FOLDER/provision/data
-# PROVISION_HTML      $VM_FOLDER/provision/html
-# PROVISION_LOGS      $VM_FOLDER/provision/logs
-# PROVISION_SCRIPTS   $VM_FOLDER/provision/scripts
-# PROVISION_SSL       $VM_FOLDER/provision/ssl
-# PROVISION_TEMPLATES $VM_FOLDER/provision/templates
-# PROVISION_VHOSTS    $VM_FOLDER/provision/vhosts
-
 TODAYS_DATE=$(date "+%Y-%m-%d")
 VM_FOLDER=/var/www
 SHARED_HTML=$VM_FOLDER/html
@@ -124,8 +111,6 @@ announce_no_job() {
 # -- -- /%/ -- -- /%/       Header & Footer Banners       /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-
-#!/bin/bash
 
 # Banner flags
 ua="🇺🇦"

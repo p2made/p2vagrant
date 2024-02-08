@@ -87,7 +87,9 @@ sed -i 's/display_startup_errors = .*/display_startup_errors = on/' $PHP_INI
 cp $PROVISION_HTML/phpinfo.php $SHARED_HTML/
 sudo chmod -R 755 $SHARED_HTML/*
 
-a2enmod "php$PHP_VERSION"
+a2enmod php$PHP_VERSION proxy_fcgi setenvif
+a2enconf php$PHP_VERSION-fpm
+
 
 # Restart Apache to apply changes
 systemctl restart apache2
