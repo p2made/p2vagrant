@@ -1,14 +1,15 @@
-# 07 Install phpMyAdmin (manual)
+# 08 Install phpMyAdmin (manual)
 
 Updated: 2024-02-03
 
 --
 
-I'm installing phpMyAdmin manually.
+No script & no `Vagrantfile` here, because I'm installing phpMyAdmin manually.
 
-### Enter the Vagrant shell
+### Start the VM & enter the Vagrant shell
 
 ```
+vagrant up
 vagrant ssh
 ```
 

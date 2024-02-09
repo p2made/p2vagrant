@@ -1,4 +1,4 @@
-# 08 Install MySQL
+# 07 Install MySQL
 
 Updated: 2024-02-03
 
