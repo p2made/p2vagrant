@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 04 Install Apache (with SSL)
+# 01 Create Bare VM
 # Updated: 2024-02-07
 
 # Machine Variables
@@ -13,9 +13,6 @@ VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
-
-# Software Versions
-SWIFT_VERSION       = ""                   # "5.9.2" - if Swift is required
 
 Vagrant.configure("2") do |config|
 
@@ -32,10 +29,5 @@ Vagrant.configure("2") do |config|
 
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
-
-	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [SWIFT_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_IP]
 
 end

@@ -19,7 +19,6 @@ sudo LC_ALL=C.UTF-8 apt-add-repository -yu ppa:phpmyadmin/ppa
 
 sudo apt-get update
 sudo apt-get -qy install phpmyadmin
-sudo rm -rf /usr/share/phpmyadmin
 ```
 
 The installer prompts, accept the defaults & enter a password of your choosing.
