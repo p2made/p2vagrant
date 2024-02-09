@@ -337,7 +337,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [08 Upgrade VM (revisited)](./08_Upgrade_VM.md)
+<!-- 09 Configure Sites -->
+| [08 Install phpMyAdmin](./08_Install_phpMyAdmin.md)
 | [**Back to Steps**](../README.md)
 | [10 Page Title](./10_Page_Title.md)
 |

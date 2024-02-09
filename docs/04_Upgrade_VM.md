@@ -205,7 +205,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [07 Install phpMyAdmin](./07_Install_phpMyAdmin.md)
+<!-- 04 Upgrade VM (revisited) -->
+| [03 Install Utilities](./03_Install_Utilities.md)
 | [**Back to Steps**](../README.md)
-| [09 Configure Sites](./09_Configure_Sites.md)
+| [05 Install Apache (with SSL)](./05_Install_Apache.md)
 |

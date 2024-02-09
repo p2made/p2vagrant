@@ -215,7 +215,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [05 Install PHP (with Composer)](./05_Install_PHP.md)
+<!-- 07 Install MySQL -->
+| [06 Install PHP (with Composer)](./06_Install_PHP.md)
 | [**Back to Steps**](../README.md)
-| [07 Install phpMyAdmin](./07_Install_phpMyAdmin.md)
+| [08 Install phpMyAdmin](./08_Install_phpMyAdmin.md)
 |

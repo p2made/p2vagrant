@@ -72,7 +72,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [06 Install MySQL](./06_Install_MySQL.md)
+<!-- 08 Install phpMyAdmin -->
+| [07 Install MySQL](./07_Install_MySQL.md)
 | [**Back to Steps**](../README.md)
-| [08 Upgrade VM (revisited)](./08_Upgrade_VM.md)
+| [09 Configure Sites](./09_Configure_Sites.md)
 |

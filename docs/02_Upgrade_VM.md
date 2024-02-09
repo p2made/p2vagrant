@@ -114,6 +114,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
+<!-- 02 Upgrade VM -->
 | [01 Create Bare VM](./01_Create_Bare_VM.md)
 | [**Back to Steps**](../README.md)
 | [03 Install Utilities](./03_Install_Utilities.md)

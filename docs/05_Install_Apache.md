@@ -518,7 +518,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-| [03 Install Utilities](./03_Install_Utilities.md)
+<!-- 05 Install Apache (with SSL) -->
+| [04 Upgrade VM (revisited)](./04_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
-| [05 Install PHP (with Composer)](./05_Install_PHP.md)
+| [06 Install PHP (with Composer)](./06_Install_PHP.md)
 |
