@@ -9,7 +9,7 @@ Updated: 2024-02-03
 ```
 #!/bin/fish
 
-# 05 Install PHP (with Composer)
+# 06 Install PHP (with Composer)
 
 set script_name     "install_php.fish"
 set updated_date    "2024-02-02"
@@ -127,7 +127,7 @@ phpinfo();
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 05 Install PHP
+# 06 Install PHP (with Composer)
 # Updated: 2024-02-07
 
 # Machine Variables
@@ -141,6 +141,7 @@ HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
+SWIFT_VERSION       = ""                   # "5.9.2" - if Swift is required
 PHP_VERSION         = "8.3"
 
 Vagrant.configure("2") do |config|
@@ -159,10 +160,13 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"
+
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish"
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [SWIFT_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_IP]
 	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
 
 end

@@ -327,7 +327,7 @@ I had gone some way with this approach before updating these docs, so `common_fu
 ```
 #!/bin/fish
 
-# 04 Install Apache (with SSL)
+# 05 Install Apache (with SSL)
 
 set script_name     "install_apache.fish"
 set updated_date    "2024-02-07"
@@ -443,7 +443,7 @@ The page is a simple `index.html` located within your VM in the `/var/www/html` 
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# 04 Install Apache (with SSL)
+# 05 Install Apache (with SSL)
 # Updated: 2024-02-07
 
 # Machine Variables
@@ -474,6 +474,9 @@ Vagrant.configure("2") do |config|
 
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"
 
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
