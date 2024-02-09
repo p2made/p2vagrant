@@ -36,29 +36,26 @@ set -x DEBIAN_FRONTEND noninteractive
 # Update package lists & install packages
 update_and_install_packages $PACKAGE_LIST
 
-sudo mkdir -p /var/www/provision/logs
-sudo touch /var/www/provision/logs/mysql_output.log
-sudo chmod -R 755 /var/www/provision/logs
-
 # Set root password
 mysqladmin -u root password $ROOT_PASSWORD || handle_error "Failed to set root password."
 
 # Create the database and grant privileges
 set -a sql_string (echo "CREATE USER '$DB_USERNAME'@'%' IDENTIFIED BY '$DB_PASSWORD'")
-set -a err_string (echo "Failed to create MySQL user")
 set -a sql_string (echo "CREATE DATABASE IF NOT EXISTS $DB_NAME")
-set -a err_string (echo "Failed to create MySQL database $DB_NAME")
 set -a sql_string (echo "CREATE DATABASE IF NOT EXISTS $DB_NAME_TEST")
-set -a err_string (echo "Failed to create MySQL database $DB_NAME_TEST")
 set -a sql_string (echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USERNAME'@'%';")
-set -a err_string (echo "Failed to grant privileges on $DB_NAME")
 set -a sql_string (echo "GRANT ALL PRIVILEGES ON $DB_NAME_TEST.* TO '$DB_USERNAME'@'%';")
-set -a err_string (echo "Failed to grant privileges on $DB_NAME_TEST")
 set -a sql_string (echo "flush privileges")
+
+set -a err_string (echo "Failed to create MySQL user")
+set -a err_string (echo "Failed to create MySQL database $DB_NAME")
+set -a err_string (echo "Failed to create MySQL database $DB_NAME_TEST")
+set -a err_string (echo "Failed to grant privileges on $DB_NAME")
+set -a err_string (echo "Failed to grant privileges on $DB_NAME_TEST")
 set -a err_string (echo "Failed to flush privileges")
 
 for i in (seq 1 6)
-	echo $sql_string[$i] | mysql -u root -p$ROOT_PASSWORD > /var/www/provision/logs/mysql_output.log 2>&1 || \
+	echo $sql_string[$i] | mysql -u root -p$ROOT_PASSWORD || \
 		handle_error $err_string[$i]
 end
 
