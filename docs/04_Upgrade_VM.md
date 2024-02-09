@@ -9,7 +9,7 @@ Updated: 2024-02-03
 ```
 #!/bin/fish
 
-# 08 Upgrade VM (revisited)
+# 04 Upgrade VM (revisited)
 
 set script_name     "upgrade_vm.fish"
 set updated_date    "2024-02-03"
@@ -136,7 +136,7 @@ footer_banner $job_complete
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 08 Upgrade VM (revisited)
+# 04 Upgrade VM (revisited)
 # Updated: 2024-02-07
 
 # Machine Variables
@@ -150,15 +150,7 @@ HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
-PHP_VERSION         = "8.3"
-MYSQL_VERSION       = "8.1"
-
-# Database Variables
-ROOT_PASSWORD       = "RootPassw0rd"
-DB_USERNAME         = "fredspotty"
-DB_PASSWORD         = "Passw0rd"
-DB_NAME             = "example_db"
-DB_NAME_TEST        = "example_db_test"
+SWIFT_VERSION       = ""                   # "5.9.2" - if Swift is required
 
 Vagrant.configure("2") do |config|
 
@@ -182,9 +174,6 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish"
-#	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
-#	config.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
 ```
