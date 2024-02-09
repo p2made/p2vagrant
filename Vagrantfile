@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby
+# vi: set ft=ruby :
 
-# 04 Upgrade VM (revisited)
+# 06 Install PHP (with Composer)
 # Updated: 2024-02-07
 
 # Machine Variables
@@ -16,6 +16,7 @@ REMOTE_FOLDER       = "/var/www"
 
 # Software Versions
 SWIFT_VERSION       = ""                   # "5.9.2" - if Swift is required
+PHP_VERSION         = "8.3"
 
 Vagrant.configure("2") do |config|
 
@@ -38,6 +39,8 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [SWIFT_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_IP]
+	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
 
 end
