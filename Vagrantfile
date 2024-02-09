@@ -5,10 +5,11 @@
 # Updated: 2024-02-07
 
 # Machine Variables
+VM_HOSTNAME         = "p2vagrant"
+VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
+TIMEZONE            = "Australia/Brisbane" # "Europe/London"
 MEMORY              = 4096
 CPUS                = 1
-TIMEZONE            = "Australia/Brisbane" # "Europe/London"
-VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
 
 # Synced Folders
 HOST_FOLDER         = "."
@@ -31,9 +32,10 @@ Vagrant.configure("2") do |config|
 	config.vm.box = "bento/ubuntu-20.04-arm64"
 
 	config.vm.provider "vmware_desktop" do |v|
-		v.memory = MEMORY
-		v.cpus   = CPUS
-		v.gui    = true
+		v.hostname  = VM_HOSTNAME
+		v.memory    = MEMORY
+		v.cpus      = CPUS
+		v.gui       = true
 	end
 
 	# Configure network...
