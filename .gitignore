@@ -11,11 +11,8 @@
 # web folder
 /html
 
-# SSL
 /provision/ssl
-
-# Swift
-/Swift
+/provision/vhosts
 
 # Exclude folders completely
 /provision/notes/
