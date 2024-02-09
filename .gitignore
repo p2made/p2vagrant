@@ -2,6 +2,7 @@
 
 # Mac DS_Store Files
 .DS_Store
+.localized
 
 # Vagrant
 /.vagrant
@@ -15,11 +16,6 @@
 
 # Swift
 /Swift
-
-# Preserve empty folders
-!/html/.p2m_keep_folder
-!/provision/logs/.p2m_keep_folder
-!/provision/ssl/.p2m_keep_folder
 
 # Exclude folders completely
 /provision/notes/
