@@ -1,6 +1,6 @@
 #!/bin/fish
 
-# 05 Install PHP (with Composer)
+# 06 Install PHP (with Composer)
 # Updated: 2024-02-07
 
 set script_name     "install_php.fish"
