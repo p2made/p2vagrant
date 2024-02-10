@@ -6,8 +6,8 @@
 # Generates Vagrantfile for the step specified by an integer argument.
 
 # Machine Variables
-VM_HOSTNAME="p-squared"
-VM_IP="192.168.22.3"                    # 22=titanium, 3=lithium
+VM_HOSTNAME="p2vagrant"
+VM_IP="192.168.22.42"                   # 22 = titanium, 42 = Douglas Adams's number
 TIMEZONE="Australia/Brisbane"           # "Europe/London"
 MEMORY=4096
 CPUS=1
@@ -19,7 +19,7 @@ REMOTE_FOLDER="/var/www"
 # Software Versions
 PHP_VERSION="8.3"
 MYSQL_VERSION="8.1"
-SWIFT_VERSION="5.9.2"                   # if Swift is required
+SWIFT_VERSION="5.9.2"                   # For installing Swift (optional)
 
 # Database Variables
 ROOT_PASSWORD="RootPassw0rd"
