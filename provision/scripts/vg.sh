@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # vg.sh
-# Updated: 2024-02-10
+# Updated: 2024-02-11
 
 # Generates Vagrantfile for the step specified by an integer argument.
 
@@ -71,7 +71,6 @@ read_and_parse_data() {
 		# Skip lines starting with #
 		[[ "$one_line" =~ ^# ]] && continue
 
-		local split_line
 		split_line=(${(s:|:)one_line})  # Split the line by |
 
 		if [[ "${split_line[1]}" -eq "$vm_step" ]]; then
@@ -158,16 +157,37 @@ set_config_opening_lines () {
 	file_parts+=( "\tconfig.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: [\"actimeo=2\"]" )
 }
 
+
+# Function to set the comment on a VM config provisioning line
+# Usage: set_provisioning_line $prov_temp $i $n
+set_provisioning_line () {
+	local prov_string=$1
+
+	if (( $2 > $3 )); then
+		prov_string="#$prov_string"
+	fi
+
+	file_parts+=( "$prov_string" )
+}
+
 # Function to set VM config provisioning lines
-# Usage: set_config_provisioning_lines $vm_step
-set_config_provisioning_lines () {
+# Usage: set_provisioning_lines $vm_step
+set_provisioning_lines () {
 	local i=$1
 
 	if (( i >= 4 )); then
 		file_parts+=( "" )
-		file_parts+=( "# Upgrade check..." )
-		file_parts+=( 'config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' )
+		file_parts+=( "\t# Upgrade check..." )
+		file_parts+=( '\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' )
 	fi
+	if (( i >= 2 )); then
+		file_parts+=( "" )
+		file_parts+=( "\t# Provisioning..." )
+	fi
+
+	prov_temp='\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]'
+	n=2
+	set_provisioning_line $prov_temp $i $n
 }
 
 # Function to set VM config closing lines
@@ -184,7 +204,7 @@ read_and_parse_data $vm_step $data_file
 set_header_lines $vm_step $step_title
 set_variables_lines $vm_step
 set_config_opening_lines
-set_config_provisioning_lines $vm_step
+set_provisioning_lines $vm_step
 set_config_closing_lines
 
 # Write file_parts to a file (e.g., Vagrantfile_test) with line breaks and actual tabs
