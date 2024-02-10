@@ -16,11 +16,13 @@ Updated: 2024-02-10
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
-All versions of `Vagrantfile` are in `/Vagrantfiles` as `Vagrantfile_nn`, where `nn` is the step that Vagrantfile is for. You can restore any version of `Vagrantfile` with...
+I'm scripting the generation of Vagrantfiles, so you can have any Vagrantfile with...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_nn ./Vagrantfile
+./provision/scripts/vg.sh n
 ```
+
+Where `n` is the step in this setup.
 
 All files you are directed to create are in...
 
