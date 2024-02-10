@@ -188,6 +188,9 @@ set_provisioning_lines () {
 	prov_temp='\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]'
 	n=2
 	set_provisioning_line $prov_temp $i $n
+	prov_temp='\tconfig.vm.provision :shell, path: "provision/scripts/install_utilities.sh"'
+	n=3
+	set_provisioning_line $prov_temp $i $n
 }
 
 # Function to set VM config closing lines
