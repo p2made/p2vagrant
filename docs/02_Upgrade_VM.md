@@ -54,16 +54,17 @@ That's nice & short because I've put everything that could be reused into an inc
 
 ```
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vi: set ft=ruby
 
-# 01 Create Bare VM
-# Updated: 2024-02-07
+# 02 Upgrade VM
+# Generated: 2024-02-11
 
 # Machine Variables
+VM_HOSTNAME         = "p2vagrant"
+VM_IP               = "192.168.22.42"
+TIMEZONE            = "Australia/Brisbane"
 MEMORY              = 4096
 CPUS                = 1
-TIMEZONE            = "Australia/Brisbane" # "Europe/London"
-VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
 
 # Synced Folders
 HOST_FOLDER         = "."
@@ -74,9 +75,9 @@ Vagrant.configure("2") do |config|
 	config.vm.box = "bento/ubuntu-20.04-arm64"
 
 	config.vm.provider "vmware_desktop" do |v|
-		v.memory = MEMORY
-		v.cpus   = CPUS
-		v.gui    = true
+		v.memory    = MEMORY
+		v.cpus      = CPUS
+		v.gui       = true
 	end
 
 	# Configure network...
@@ -85,13 +86,16 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
+
 end
 ```
 
-Or copy this file...
+Or run..
 
 ```
-cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
+./provision/scripts/vg.sh 2
 ```
 
 ### Provision the VM...
