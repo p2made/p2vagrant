@@ -1,4 +1,4 @@
-# 03 Install Utilities (& optionally Swift)
+# 03 Install Utilities
 
 Updated: 2024-02-08
 
