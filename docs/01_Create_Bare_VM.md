@@ -104,10 +104,10 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Or copy this file...
+Or run..
 
 ```
-cp ./Vagrantfiles/Vagrantfile_01 ./Vagrantfile
+./provision/scripts/vg.sh 1
 ```
 
 ### Launch the VM
