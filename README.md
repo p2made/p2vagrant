@@ -47,10 +47,10 @@ All files you are directed to create are in...
 06. [Install PHP (with Composer)](./docs/06_Install_PHP.md)
 07. [Install MySQL](./docs/07_Install_MySQL.md)
 08. [Install phpMyAdmin](./docs/08_Install_phpMyAdmin.md)
-09. [Configure Sites](./docs/09_Configure_Sites.md)
+09. [Install Swift (optional)](./docs/09_Install_Swift.md)
+10. [Configure Sites](./docs/10_Configure_Sites.md)
 
 <!--
-10. [Page Title](./docs/10_Page_Title.md)
 11. [Page Title](./docs/11_Page_Title.md)
 12. [Page Title](./docs/12_Page_Title.md)
 13. [Page Title](./docs/13_Page_Title.md)
