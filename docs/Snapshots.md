@@ -4,6 +4,8 @@
 
 By making regular snapshots you can go back to any previous machine state in an instant. For this project I make a snapshot at the successful completion of every step, named for that step. Using `vagrant snapshot` has failed for me, which I assume it is because I'm using Vmware as providor. So I've developed an approach using Vmware.
 
+**Note:** When you create a new VM, upwards of 100 snapshots are generated. These can be deleted, & doing so will save a lot of drive space.
+
 ## Taking Snapshots
 
 First make sure your VM isn't running…

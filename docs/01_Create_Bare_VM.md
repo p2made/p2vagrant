@@ -1,10 +1,10 @@
 # 01 Create Bare VM
 
-Updated: 2024-02-02
+Updated: 2024-02-11
 
 --
 
-Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell, & Swift. After that fish is the shell in `ssh` sessions, & provisioning scripts are in Swift (this is a Mac project after all 🙃).
+Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell. After that fish is the shell in `ssh` sessions & provisioning scripts.
 
 The instructions given assume the use of [Homebrew](https://brew.sh). If you don't have it installed, run...
 
@@ -69,16 +69,17 @@ If you change nothing else in these `Vagrantfile`s, take a hard look at `VM_IP`.
 
 ```
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vi: set ft=ruby
 
 # 01 Create Bare VM
-# Updated: 2024-02-07
+# Generated: 2024-02-11
 
 # Machine Variables
+VM_HOSTNAME         = "p2vagrant"
+VM_IP               = "192.168.22.42"
+TIMEZONE            = "Australia/Brisbane"
 MEMORY              = 4096
 CPUS                = 1
-TIMEZONE            = "Australia/Brisbane" # "Europe/London"
-VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
 
 # Synced Folders
 HOST_FOLDER         = "."
@@ -89,9 +90,9 @@ Vagrant.configure("2") do |config|
 	config.vm.box = "bento/ubuntu-20.04-arm64"
 
 	config.vm.provider "vmware_desktop" do |v|
-		v.memory = MEMORY
-		v.cpus   = CPUS
-		v.gui    = true
+		v.memory    = MEMORY
+		v.cpus      = CPUS
+		v.gui       = true
 	end
 
 	# Configure network...
