@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 01 Create Bare VM
+# 02 Upgrade VM
 # Generated: 2024-02-11
 
 # Machine Variables
@@ -30,5 +30,8 @@ Vagrant.configure("2") do |config|
 
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
 
 end
