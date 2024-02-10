@@ -157,7 +157,6 @@ set_config_opening_lines () {
 	file_parts+=( "\tconfig.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: [\"actimeo=2\"]" )
 }
 
-
 # Function to set the comment on a VM config provisioning line
 # Usage: set_provisioning_line $prov_temp $i $n
 set_provisioning_line () {
