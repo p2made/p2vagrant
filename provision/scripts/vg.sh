@@ -185,11 +185,14 @@ set_provisioning_lines () {
 	fi
 
 	prov_temp='\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]'
-	n=2
-	set_provisioning_line $prov_temp $i $n
+	set_provisioning_line $prov_temp $i 2
 	prov_temp='\tconfig.vm.provision :shell, path: "provision/scripts/install_utilities.sh"'
-	n=3
-	set_provisioning_line $prov_temp $i $n
+	set_provisioning_line $prov_temp $i 3
+	prov_temp='\tconfig.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_IP]'
+	set_provisioning_line $prov_temp $i 5
+
+
+
 }
 
 # Function to set VM config closing lines

@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 04 Upgrade VM (revisited)
+# 05 Install Apache (with SSL)
 # Generated: 2024-02-11
 
 # Machine Variables
@@ -37,5 +37,6 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_IP]
 
 end
