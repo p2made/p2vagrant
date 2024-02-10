@@ -15,7 +15,7 @@ header_banner "$active_title" "$script_name" "$updated_date"
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-SWIFT_VERSION=$1    # "" - "5.9.2" if Swift is required
+# NONE!"
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 PACKAGE_LIST=(
@@ -43,25 +43,6 @@ PACKAGE_LIST=(
 	"software-properties-common"
 	"unzip"
 	"yarn"
-)
-SWIFT_PACKAGES=(
-	"binutils"
-	"libc6-dev"
-	"libcurl4-openssl-dev"
-	"libcurl4"
-	"libedit2"
-	"libgcc-9-dev"
-	"libpython2.7"
-	"libpython3.8"
-	"libsqlite3-0"
-	"libstdc++-9-dev"
-	"libxml2-dev"
-	"libxml2"
-	"libz3-dev"
-	"pkg-config"
-	"tzdata"
-	"uuid-dev"
-	"zlib1g-dev"
 )
 
 export DEBIAN_FRONTEND=noninteractive
