@@ -173,7 +173,7 @@ set_provisioning_line () {
 		prov_string="#$prov_string"
 	fi
 
-	ret+=( $prov_string )
+	ret+=( "$prov_string" )
 }
 
 # Function to set VM config provisioning lines
