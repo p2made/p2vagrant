@@ -1,0 +1,11 @@
+# Sites data
+# one step per pipe | separated line
+# step_num "title"
+1|Create Bare VM
+2|Upgrade VM
+3|Install Utilities
+4|Upgrade VM (revisited)
+5|Install Apache (with SSL)
+6|Install PHP (with Composer)
+7|Install MySQL
+9|Configure Sites
