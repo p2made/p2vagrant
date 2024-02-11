@@ -13,7 +13,6 @@ set job_complete    "PHP Installed (with Composer 🙃)"
 source /var/www/provision/scripts/common_functions.fish
 
 header_banner $active_title $script_name $updated_date
-
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
