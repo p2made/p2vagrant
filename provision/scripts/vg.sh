@@ -38,6 +38,15 @@ vm_step=$1
 step_title=""
 file_parts=()
 
+# Sparse array of provisioning script calls, indexed by setup step.
+prov_items[2]='\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]'
+prov_items[3]='\tconfig.vm.provision :shell, path: "provision/scripts/install_utilities.sh"'
+prov_items[5]='\tconfig.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]'
+prov_items[6]='\tconfig.vm.provision :shell, path: "provision/scripts/install_apache.fish"'
+prov_items[7]='\tconfig.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]'
+prov_items[8]='\tconfig.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]'
+prov_items[10]='\tconfig.vm.provision :shell, path: "provision/scripts/configure_sites.fish"'
+
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function for error handling
@@ -162,17 +171,12 @@ set_config_opening_lines () {
 set_provisioning_line () {
 	local prov_string=$1
 
-	if (( $2 = $3 )); then
-		prov_string="#$prov_string"
+	if (( $2 == $3 )); then
+		prov_string="$prov_string"
+		return 1
 	fi
 
-	file_parts+=( "$prov_string" )
-
-	if (( $2 > $3 )); then
-		prov_string="#$prov_string"
-	fi
-
-	file_parts+=( "$prov_string" )
+	file_parts+=( "#$prov_string" )
 }
 
 # Function to set VM config provisioning lines
@@ -185,20 +189,19 @@ set_provisioning_lines () {
 		file_parts+=( "\t# Upgrade check..." )
 		file_parts+=( '\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' )
 	fi
+
 	if (( i >= 2 )); then
 		file_parts+=( "" )
 		file_parts+=( "\t# Provisioning..." )
+
+		for n in "${(@k)prov_items}"; do
+			prov_temp=${prov_items[$n]}
+			set_provisioning_line $prov_temp $i $n
+			if [ $? -ne 0 ]; then
+				return
+			fi
+		done
 	fi
-
-	prov_temp='\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]'
-	set_provisioning_line $prov_temp $i 2
-	prov_temp='\tconfig.vm.provision :shell, path: "provision/scripts/install_utilities.sh"'
-	set_provisioning_line $prov_temp $i 3
-	prov_temp='\tconfig.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_IP]'
-	set_provisioning_line $prov_temp $i 5
-
-
-
 }
 
 # Function to set VM config closing lines
