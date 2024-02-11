@@ -43,11 +43,11 @@ All files you are directed to create are in...
 02. [Upgrade VM](./docs/02_Upgrade_VM.md)
 03. [Install Utilities](./docs/03_Install_Utilities.md)
 04. [Upgrade VM (revisited)](./docs/04_Upgrade_VM.md)
-05. [Install Apache (with SSL)](./docs/05_Install_Apache.md)
-06. [Install PHP (with Composer)](./docs/06_Install_PHP.md)
-07. [Install MySQL](./docs/07_Install_MySQL.md)
-08. [Install phpMyAdmin](./docs/08_Install_phpMyAdmin.md)
-09. [Install Swift (optional)](./docs/09_Install_Swift.md)
+05. [Install Swift (optional)](./docs/05_Install_Swift.md)
+06. [Install Apache (with SSL)](./docs/06_Install_Apache.md)
+07. [Install PHP (with Composer)](./docs/07_Install_PHP.md)
+08. [Install MySQL](./docs/08_Install_MySQL.md)
+09. [Install phpMyAdmin](./docs/09_Install_phpMyAdmin.md)
 10. [Configure Sites](./docs/10_Configure_Sites.md)
 
 <!--

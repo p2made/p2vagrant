@@ -162,6 +162,12 @@ set_config_opening_lines () {
 set_provisioning_line () {
 	local prov_string=$1
 
+	if (( $2 = $3 )); then
+		prov_string="#$prov_string"
+	fi
+
+	file_parts+=( "$prov_string" )
+
 	if (( $2 > $3 )); then
 		prov_string="#$prov_string"
 	fi
