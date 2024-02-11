@@ -1,4 +1,4 @@
-# 05 Install Apache (with SSL 🙃)
+# 06 Install Apache (with SSL 🙃)
 
 Updated: 2024-02-02
 
@@ -487,7 +487,7 @@ end
 Or run..
 
 ```
-./provision/scripts/vg.sh 5
+./provision/scripts/vg.sh 6
 ```
 
 ### Provision the VM...

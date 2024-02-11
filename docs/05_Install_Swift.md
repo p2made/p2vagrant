@@ -1,4 +1,4 @@
-# 05 Install Swift
+# 06 Install Swift
 
 Updated: 2024-02-11
 
