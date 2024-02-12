@@ -229,18 +229,21 @@ There is a copy of the Ubuntu guest `hosts` file, with these edits made, in `/pr
 
 ### Visit
 
-* [example.test/index.php](http://example.test/index.php)
-* [example.test/phpinfo.php](http://example.test/phpinfo.php)
-* [example.test/db.php](http://example.test/db.php)
-* [example.test/index.html](http://example.test/index.html)
-* [subdomain1.example.test/index.php](http://subdomain1.example.test/index.php)
-* [subdomain1.example.test/phpinfo.php](http://subdomain1.example.test/phpinfo.php)
-* [subdomain1.example.test/db.php](http://subdomain1.example.test/db.php)
-* [subdomain1.example.test/index.html](http://subdomain1.example.test/index.html)
-* [subdomain2.example.test/index.php](http://subdomain2.example.test/index.php)
-* [subdomain2.example.test/phpinfo.php](http://subdomain2.example.test/phpinfo.php)
-* [subdomain2.example.test/db.php](http://subdomain2.example.test/db.php)
-* [subdomain2.example.test/index.html](http://subdomain2.example.test/index.html)
+* example.test
+	* [example.test/index.php](http://example.test/index.php) - Shaka bom!
+	* [example.test/phpinfo.php](http://example.test/phpinfo.php) - PHP Info
+	* [example.test/db.php](http://example.test/db.php) - MySQL db test
+	* [example.test/index.html](http://example.test/index.html) - Apache default page
+* subdomain1.example.test
+	* [subdomain1.example.test/index.php](http://subdomain1.example.test/index.php)
+	* [subdomain1.example.test/phpinfo.php](http://subdomain1.example.test/phpinfo.php)
+	* [subdomain1.example.test/db.php](http://subdomain1.example.test/db.php)
+	* [subdomain1.example.test/index.html](http://subdomain1.example.test/index.html)
+* subdomain2.example.test
+	* [subdomain2.example.test/index.php](http://subdomain2.example.test/index.php)
+	* [subdomain2.example.test/phpinfo.php](http://subdomain2.example.test/phpinfo.php)
+	* [subdomain2.example.test/db.php](http://subdomain2.example.test/db.php)
+	* [subdomain2.example.test/index.html](http://subdomain2.example.test/index.html)
 
 Or for the `https` versions...
 
