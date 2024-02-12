@@ -22,7 +22,7 @@ PROVISION_VHOSTS=$VM_FOLDER/provision/vhosts
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-update_package_lists() {
+function update_package_lists () {
 	echo "🔄 Updating package lists 🔄"
 	if ! apt-get -q update 2>&1; then
 		handle_error "Failed to update package lists"
@@ -30,7 +30,7 @@ update_package_lists() {
 }
 
 # Function to upgrade packages if updates are available
-upgrade_packages() {
+function upgrade_packages () {
 	if ! apt-get -q -s upgrade 2>&1 | grep -q '^[[:digit:]]\+ upgraded'; then
 		announce_no_job "No packages to upgrade."
 		return
@@ -46,7 +46,7 @@ upgrade_packages() {
 
 # Function to install packages with error handling
 # Usage: install_packages "$@"
-install_packages() {
+function install_packages () {
 	echo "🔄 Installing Packages 🔄"
 
 	for package in "${PACKAGE_LIST[@]}"; do
@@ -59,7 +59,7 @@ install_packages() {
 }
 
 # Function to remove unnecessary packages
-remove_unnecessary_packages() {
+function remove_unnecessary_packages () {
 	if ! apt-get autoremove --dry-run | grep -q '^[[:digit:]]\+ packages will be removed'; then
 		announce_no_job "No unnecessary packages to remove."
 		return
@@ -82,7 +82,7 @@ remove_unnecessary_packages() {
 
 # Function for error handling
 # Usage: handle_error "Error message"
-handle_error() {
+function handle_error () {
 	echo "⚠️ Error: $1 💥"
 	echo "Run `vagrant halt` then restore the last snapshot before trying again."
 	exit 1
@@ -90,7 +90,7 @@ handle_error() {
 
 # Function to announce success
 # Usage: announce_success "Task completed successfully." [use_alternate_icon]
-announce_success() {
+function announce_success () {
 	icon="✅"
 
 	if [ -n "$2" ] && [ "$2" -eq 1 ]; then
@@ -102,7 +102,7 @@ announce_success() {
 
 # Function to announce a job not needing to be done
 # Usage: announce_no_job "Nothing to do."
-announce_no_job() {
+function announce_no_job () {
 	echo "👍 $1"
 }
 
@@ -119,7 +119,7 @@ bt="$btbu$btbu$btbu$btbu$btbu"
 
 # Function to write shalom peace salam banner
 # Usage: peace_banner i - where i is 1 to 4
-peace_banner() {
+function peace_banner () {
 	case $1 in
 		1) # Binary
 			echo "$ua      🕊️  01110011 01101000 01100001 01101100 01101111 01101101 🕊️"
@@ -146,7 +146,7 @@ peace_banner() {
 
 # Function to write header banner
 # Usage: header_banner $active_title $script_name $updated_date
-header_banner() {
+function header_banner () {
 	echo "$ua$bt"
 	echo "$ua"
 	echo "$ua                        ___"
@@ -170,7 +170,7 @@ header_banner() {
 
 # Function to write footer banner
 # Usage: footer_banner $job_complete
-footer_banner() {
+function footer_banner () {
 	echo ""
 	echo "$ua$bt"
 	echo "$ua"

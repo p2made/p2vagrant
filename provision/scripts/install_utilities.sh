@@ -12,9 +12,6 @@ job_complete="Utilities Installed"
 # Source common functions
 source /var/www/provision/scripts/common_functions.sh
 
-header_banner "$active_title" "$script_name" "$updated_date"
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
-
 # Arguments...
 # NONE!"
 
@@ -46,12 +43,8 @@ PACKAGE_LIST=(
 	"yarn"
 )
 
-export DEBIAN_FRONTEND=noninteractive
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-
 # Function to set Fish as the default shell
-set_fish_as_default_shell() {
+function set_fish_as_default_shell () {
 	if ! sudo usermod -s /usr/bin/fish vagrant; then
 		handle_error "Failed to set Fish shell as default"
 	fi
@@ -61,18 +54,26 @@ set_fish_as_default_shell() {
 	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
 }
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+function advance_vm () {
 
-# Add Fish Shell repository
-LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
+	# Header banner
+	header_banner "$active_title" "$script_name" "$updated_date"
 
-install_packages $PACKAGE_LIST
+	export DEBIAN_FRONTEND=noninteractive
 
-set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
+	# Add Fish Shell repository
+	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
 
-# Append the 'cd /var/www' line to .profile if it doesn't exist
-grep -qxF 'cd /var/www' /home/vagrant/.profile || \
-	echo 'cd /var/www' >> /home/vagrant/.profile
+	install_packages $PACKAGE_LIST
 
-# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
-footer_banner "$job_complete"
+	set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
+
+	# Append the 'cd /var/www' line to .profile if it doesn't exist
+	grep -qxF 'cd /var/www' /home/vagrant/.profile || \
+		echo 'cd /var/www' >> /home/vagrant/.profile
+
+	# Footer banner
+	footer_banner "$job_complete"
+}
+
+advance_vm
