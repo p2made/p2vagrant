@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 02 Upgrade VM
+# 03 Install Utilities
 # Generated: 2024-02-12
 
 # Machine Variables
@@ -32,6 +32,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
 
 end

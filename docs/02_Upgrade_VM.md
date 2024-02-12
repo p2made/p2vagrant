@@ -32,7 +32,7 @@ function advance_vm () {
 	export DEBIAN_FRONTEND=noninteractive
 
 	# Set timezone
-	echo "🕤 Setting timezone to $1 🕓"
+	echo "🕤 Setting timezone to $TIMEZONE 🕓"
 	timedatectl set-timezone "$TIMEZONE" --no-ask-password
 
 	update_package_lists
@@ -42,6 +42,10 @@ function advance_vm () {
 	# Display OS information
 	echo "📄 Displaying OS information 📄"
 	cat /etc/os-release
+
+	# Display Time Zone information
+	echo "📄 Displaying Time Zone information 📄"
+	timedatectl
 
 	announce_success "System update complete! ✅"
 
