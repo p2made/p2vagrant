@@ -14,7 +14,19 @@ Updated: 2024-02-10
 🇺🇦                             |_|           |__/
 ```
 
-Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
+Out of the box, `P2Vagrant` gives you...
+
+```
+|-- p2vagrant
+	|-- fish shell
+	|-- the ability to install Swift
+	|-- Apache2
+	|-- SSL
+	|-- PHP
+	|-- MySQL
+	|-- phpMyAdmin
+	|-- the ability to configure unlimited websites
+```
 
 ### `./vg n`
 
