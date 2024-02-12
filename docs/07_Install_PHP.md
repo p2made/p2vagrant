@@ -190,10 +190,10 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Or copy this file...
+Or run...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_05 ./Vagrantfile
+./vg 7
 ```
 
 ### Provision the VM
