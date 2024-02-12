@@ -293,7 +293,7 @@ Add these lines...
 192.168.22.42   subdomain2.example.test
 ```
 
-If you've used a different IP address, &/or different TLD, substitute accordingly. If you use more than one TLD, you will need one line like this for each. The `*.` parts should match the depth of subdomains used. So if you have `subdomain2. subdomain1.example.test` you will need to add `*.*.*.test`.
+If you've used a different IP address, &/or different domains, substitute accordingly. If you use more than one TLD, you will need one line like this for each. The `*.` parts should match the depth of subdomains used. So if you have `subdomain2. subdomain1.example.test` you will need to add `*.*.*.test`.
 
 
 **DO NOT** edit anything already in the `hosts` file unless you are supremely confident of knowing what you are doing. I separate the original from my additions with this comment...
