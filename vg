@@ -99,18 +99,18 @@ function write_header_lines () {
 	local title=$2
 
 	# Write the Vagrantfile header
-	cat "# -*- mode: ruby -*-" > ./Vagrantfile
-	cat "# vi: set ft=ruby" >> ./Vagrantfile
-	cat "" >> ./Vagrantfile
-	cat "# $i $title" >> ./Vagrantfile
-	cat "# Generated: $(date "+%Y-%m-%d")" >> ./Vagrantfile
-	cat "" >> ./Vagrantfile
-	cat "# Machine Variables" >> ./Vagrantfile
-	cat "VM_HOSTNAME         = \"$VM_HOSTNAME\"" >> ./Vagrantfile
-	cat "VM_IP               = \"$VM_IP\"" >> ./Vagrantfile
-	cat "TIMEZONE            = \"$TIMEZONE\"" >> ./Vagrantfile
-	cat "MEMORY              = $MEMORY" >> ./Vagrantfile
-	cat "CPUS                = $CPUS" >> ./Vagrantfile
+	echo "# -*- mode: ruby -*-" > ./Vagrantfile
+	echo "# vi: set ft=ruby" >> ./Vagrantfile
+	echo "" >> ./Vagrantfile
+	echo "# $i $title" >> ./Vagrantfile
+	echo "# Generated: $(date "+%Y-%m-%d")" >> ./Vagrantfile
+	echo "" >> ./Vagrantfile
+	echo "# Machine Variables" >> ./Vagrantfile
+	echo "VM_HOSTNAME         = \"$VM_HOSTNAME\"" >> ./Vagrantfile
+	echo "VM_IP               = \"$VM_IP\"" >> ./Vagrantfile
+	echo "TIMEZONE            = \"$TIMEZONE\"" >> ./Vagrantfile
+	echo "MEMORY              = $MEMORY" >> ./Vagrantfile
+	echo "CPUS                = $CPUS" >> ./Vagrantfile
 }
 
 # Function to set the Vagrantfile variable lines
@@ -118,52 +118,52 @@ function write_header_lines () {
 function write_variables_lines () {
 	local vm_step=$1
 
-	cat "" >> ./Vagrantfile
-	cat "# Synced Folders" >> ./Vagrantfile
-	cat "HOST_FOLDER         = \"$HOST_FOLDER\"" >> ./Vagrantfile
-	cat "REMOTE_FOLDER       = \"$REMOTE_FOLDER\"" >> ./Vagrantfile
+	echo "" >> ./Vagrantfile
+	echo "# Synced Folders" >> ./Vagrantfile
+	echo "HOST_FOLDER         = \"$HOST_FOLDER\"" >> ./Vagrantfile
+	echo "REMOTE_FOLDER       = \"$REMOTE_FOLDER\"" >> ./Vagrantfile
 
 	if (( vm_step >= 5 )); then
-		cat "" >> ./Vagrantfile
-		cat "# Software Versions" >> ./Vagrantfile
-		cat "SWIFT_VERSION       = \"$SWIFT_VERSION\"" >> ./Vagrantfile
+		echo "" >> ./Vagrantfile
+		echo "# Software Versions" >> ./Vagrantfile
+		echo "SWIFT_VERSION       = \"$SWIFT_VERSION\"" >> ./Vagrantfile
 	fi
 	if (( vm_step >= 7 )); then
-		cat "PHP_VERSION         = \"$PHP_VERSION\"" >> ./Vagrantfile
+		echo "PHP_VERSION         = \"$PHP_VERSION\"" >> ./Vagrantfile
 	fi
 	if (( vm_step >= 8 )); then
-		cat "MYSQL_VERSION       = \"$MYSQL_VERSION\"" >> ./Vagrantfile
+		echo "MYSQL_VERSION       = \"$MYSQL_VERSION\"" >> ./Vagrantfile
 	fi
 	if (( vm_step >= 7 )); then
-		cat "" >> ./Vagrantfile
-		cat "# Database Variables" >> ./Vagrantfile
-		cat "ROOT_PASSWORD       = \"$ROOT_PASSWORD\"" >> ./Vagrantfile
-		cat "DB_USERNAME         = \"$DB_USERNAME\"" >> ./Vagrantfile
-		cat "DB_PASSWORD         = \"$DB_PASSWORD\"" >> ./Vagrantfile
-		cat "DB_NAME             = \"$DB_NAME\"" >> ./Vagrantfile
-		cat "DB_NAME_TEST        = \"$DB_NAME_TEST\"" >> ./Vagrantfile
+		echo "" >> ./Vagrantfile
+		echo "# Database Variables" >> ./Vagrantfile
+		echo "ROOT_PASSWORD       = \"$ROOT_PASSWORD\"" >> ./Vagrantfile
+		echo "DB_USERNAME         = \"$DB_USERNAME\"" >> ./Vagrantfile
+		echo "DB_PASSWORD         = \"$DB_PASSWORD\"" >> ./Vagrantfile
+		echo "DB_NAME             = \"$DB_NAME\"" >> ./Vagrantfile
+		echo "DB_NAME_TEST        = \"$DB_NAME_TEST\"" >> ./Vagrantfile
 	fi
 }
 
 # Function to set VM config opening lines
 # Usage: set_config_opening_lines
 function write_config_opening_lines () {
-	cat "" >> ./Vagrantfile
-	cat "Vagrant.configure(\"2\") do |config|" >> ./Vagrantfile
-	cat "" >> ./Vagrantfile
-	cat "	config.vm.box = \"bento/ubuntu-20.04-arm64\"" >> ./Vagrantfile
-	cat "" >> ./Vagrantfile
-	cat "	config.vm.provider \"vmware_desktop\" do |v|" >> ./Vagrantfile
-	cat "		v.memory    = MEMORY" >> ./Vagrantfile
-	cat "		v.cpus      = CPUS" >> ./Vagrantfile
-	cat "		v.gui       = true" >> ./Vagrantfile
-	cat "	end" >> ./Vagrantfile
-	cat "" >> ./Vagrantfile
-	cat "	# Configure network..." >> ./Vagrantfile
-	cat "	config.vm.network \"private_network\", ip: VM_IP" >> ./Vagrantfile
-	cat "" >> ./Vagrantfile
-	cat "	# Set a synced folder..." >> ./Vagrantfile
-	cat "	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: [\"actimeo=2\"]" >> ./Vagrantfile
+	echo "" >> ./Vagrantfile
+	echo "Vagrant.configure(\"2\") do |config|" >> ./Vagrantfile
+	echo "" >> ./Vagrantfile
+	echo "	config.vm.box = \"bento/ubuntu-20.04-arm64\"" >> ./Vagrantfile
+	echo "" >> ./Vagrantfile
+	echo "	config.vm.provider \"vmware_desktop\" do |v|" >> ./Vagrantfile
+	echo "		v.memory    = MEMORY" >> ./Vagrantfile
+	echo "		v.cpus      = CPUS" >> ./Vagrantfile
+	echo "		v.gui       = true" >> ./Vagrantfile
+	echo "	end" >> ./Vagrantfile
+	echo "" >> ./Vagrantfile
+	echo "	# Configure network..." >> ./Vagrantfile
+	echo "	config.vm.network \"private_network\", ip: VM_IP" >> ./Vagrantfile
+	echo "" >> ./Vagrantfile
+	echo "	# Set a synced folder..." >> ./Vagrantfile
+	echo "	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: [\"actimeo=2\"]" >> ./Vagrantfile
 }
 
 # Function to set VM config provisioning lines
@@ -172,25 +172,25 @@ function write_provisioning_lines () {
 	local vm_step=$1
 
 	if (( vm_step >= 4 )); then
-		cat "" >> ./Vagrantfile
-		cat "	# Upgrade check..." >> ./Vagrantfile
-		cat '	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' >> ./Vagrantfile
+		echo "" >> ./Vagrantfile
+		echo "	# Upgrade check..." >> ./Vagrantfile
+		echo '	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' >> ./Vagrantfile
 	fi
 
 	if (( vm_step >= 2 )); then
-		cat "" >> ./Vagrantfile
-		cat "	# Provisioning..." >> ./Vagrantfile
+		echo "" >> ./Vagrantfile
+		echo "	# Provisioning..." >> ./Vagrantfile
 
 		# Loop through keys of the associative array in sorted order
 		for prov_step in "${provisioning_indexes[@]}"; do
 			prov_string=$provisioning_items[$prov_step]
 			if (( $vm_step <= $prov_step )); then
 				if (( $vm_step == $prov_step )); then
-					cat "$prov_string" >> ./Vagrantfile
+					echo "$prov_string" >> ./Vagrantfile
 				fi
 				return
 			fi
-			cat "#$prov_string" >> ./Vagrantfile
+			echo "#$prov_string" >> ./Vagrantfile
 		done
 	fi
 }
@@ -198,8 +198,8 @@ function write_provisioning_lines () {
 # Function to set VM config closing lines
 # Usage: set_config_closing_lines
 function write_config_closing_lines () {
-	cat "" >> ./Vagrantfile
-	cat "end" >> ./Vagrantfile
+	echo "" >> ./Vagrantfile
+	echo "end" >> ./Vagrantfile
 }
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
