@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 06 Install Apache (with SSL)
+# 04 Upgrade VM (revisited)
 # Generated: 2024-02-13
 
 # Machine Variables
@@ -14,9 +14,6 @@ CPUS                = 1
 # Synced Folders
 HOST_FOLDER         = "."
 REMOTE_FOLDER       = "/var/www"
-
-# Software Versions
-SWIFT_VERSION       = "5.9.2"
 
 Vagrant.configure("2") do |config|
 
@@ -40,7 +37,5 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
-#	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_HOSTNAME, VM_IP]
 
 end
