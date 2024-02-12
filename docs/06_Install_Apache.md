@@ -239,6 +239,8 @@ If the VM is running
 vagrant reload --provision
 ```
 
+`index.htm` will be copied to `HOST_FOLDER/html/`.
+
 ### Import SSL certificate to System Keychain
 
 SSL is enabled from the get-go, & Safari will make you jump through hoops to access the site. To avoid this, import the certificate at `./provision/ssl/` to you System Keychain. Strap in, you'll need to authenticate repeatedly...
