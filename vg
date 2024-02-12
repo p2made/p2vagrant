@@ -134,8 +134,6 @@ function write_variables_lines () {
 	fi
 	if (( vm_step >= 8 )); then
 		echo "MYSQL_VERSION       = \"$MYSQL_VERSION\"" >> ./Vagrantfile
-	fi
-	if (( vm_step >= 7 )); then
 		echo "" >> ./Vagrantfile
 		echo "# Database Variables" >> ./Vagrantfile
 		echo "ROOT_PASSWORD       = \"$ROOT_PASSWORD\"" >> ./Vagrantfile
