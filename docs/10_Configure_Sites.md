@@ -280,14 +280,17 @@ If the VM is running
 vagrant reload --provision
 ```
 
-### Edit the `hosts` file of you Mac
+### Edit the `hosts` file of your Mac
 
 Open the file `/etc/hosts` in your preferred text editor. I use [BBEdit](https://www.barebones.com/products/bbedit/), with which I can open the file from Terminal with `BBEdit /etc/hosts`, or by navigating to it in the open file dialog of BBEdit. You will need to confirm for editing the file, then authenticate as an admin user to save it.
 
-Add this line...
+Add these lines...
 
 ```
-192.168.22.42 test *.test *.*.test
+192.168.22.42   p2vagrant
+192.168.22.42   example.test
+192.168.22.42   subdomain1.example.test
+192.168.22.42   subdomain2.example.test
 ```
 
 If you've used a different IP address, &/or different TLD, substitute accordingly. If you use more than one TLD, you will need one line like this for each. The `*.` parts should match the depth of subdomains used. So if you have `subdomain2. subdomain1.example.test` you will need to add `*.*.*.test`.
