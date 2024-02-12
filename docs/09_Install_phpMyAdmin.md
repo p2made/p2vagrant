@@ -1,10 +1,10 @@
-# 08 Install phpMyAdmin (manual)
+# 09 Install phpMyAdmin (manual)
 
 Updated: 2024-02-10
 
 --
 
-No script & no `Vagrantfile` here, because I'm installing phpMyAdmin manually.
+No script & no `Vagrantfile` here, because I'm installing phpMyAdmin manually. If anybody seeing this project knows how to het `debconf-set-selections` right for phpMyAdmin, I welcome you contribution.
 
 ### Start the VM & enter the Vagrant shell
 
