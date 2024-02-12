@@ -187,9 +187,14 @@ function configure_website
 	# Create site root if it doesn't already exist
 	mkdir -p $site_folder
 
-	# Copy files only if they do not exist
-	set files_to_copy "index.html" "index.php" "phpinfo.php" "db.php"
-	for file in $files_to_copy
+	set web_files "index.htm" "index.html"
+
+	# Check if argv[2] is not "html"
+	if not test "$argv[2]" = "html"
+		set web_files $web_files "index.php" "phpinfo.php" "db.php"
+	end
+
+	for file in $web_files
 		cp -u $PROVISION_HTML/$file $site_folder/
 	end
 
