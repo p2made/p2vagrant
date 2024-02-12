@@ -1,6 +1,6 @@
 # 09 Install phpMyAdmin (manual)
 
-Updated: 2024-02-10
+Updated: 2024-02-13
 
 --
 
