@@ -210,7 +210,7 @@ vagrant provision
 
 ### Visit
 
-* [http://192.168.22.42/phpinfo.php](http://192.168.22.42/phpinfo.php)
+* [https://p2vagrant/phpinfo.php](https://p2vagrant/phpinfo.php)
 
 ... which should successfully display the PHP info page.
 
@@ -220,8 +220,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 06 Install PHP (with Composer) -->
-| [05 Install Apache (with SSL)](./05_Install_Apache.md)
+<!-- 07 Install PHP (with Composer) -->
+| [06 Install Apache (with SSL)](./06_Install_Apache.md)
 | [**Back to Steps**](../README.md)
-| [07 Install MySQL](./07_Install_MySQL.md)
+| [08 Install MySQL](./08_Install_MySQL.md)
 |
