@@ -18,11 +18,11 @@ Out of the box, `P2Vagrant` gives you...
 
 * [fish shell](https://fishshell.com)
 * the ability to install [Swift](https://www.swift.org)
-* Apache2
-* SSL
-* PHP
-* MySQL Community Server
-* phpMyAdmin
+* [Apache2](https://www.apache.org)
+* [self-signed SSL](https://en.wikipedia.org/wiki/Self-signed_certificate)
+* [PHP](https://www.php.net)
+* [MySQL Community Server](https://www.mysql.com/products/community/)
+* [phpMyAdmin](https://www.phpmyadmin.net)
 * the ability to configure unlimited websites
 
 ### `./vg n`
