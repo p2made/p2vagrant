@@ -16,17 +16,14 @@ Updated: 2024-02-10
 
 Out of the box, `P2Vagrant` gives you...
 
-```
-|-- p2vagrant
-	|-- fish shell
-	|-- the ability to install Swift
-	|-- Apache2
-	|-- SSL
-	|-- PHP
-	|-- MySQL
-	|-- phpMyAdmin
-	|-- the ability to configure unlimited websites
-```
+* [fish shell](https://fishshell.com)
+* the ability to install [Swift](https://www.swift.org)
+* Apache2
+* SSL
+* PHP
+* MySQL Community Server
+* phpMyAdmin
+* the ability to configure unlimited websites
 
 ### `./vg n`
 
