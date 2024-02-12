@@ -51,13 +51,13 @@ Apart from the `Vagrantfile `, all files you are directed to create are in...
 
 ```
 /provision
-	/data
-	/etc
-	/html
-	/scripts
-	/ssl
-	/templates
-	/vhosts
+    /data
+    /etc
+    /html
+    /scripts
+    /ssl
+    /templates
+    /vhosts
 ```
 
 ### <a id="steps"></a> Steps Taken to build this macOS/M2/Ubuntu VM
