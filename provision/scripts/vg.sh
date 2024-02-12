@@ -95,7 +95,7 @@ read_and_parse_data() {
 
 # Function to set the Vagrantfile header
 # Usage: set_header_lines $vm_step $step_title
-set_header_lines () {
+function set_header_lines () {
 	local i=$(printf "%02d" $1)
 	local title=$2
 
@@ -116,7 +116,7 @@ set_header_lines () {
 
 # Function to set the Vagrantfile variable lines
 # Usage: set_variables_lines $vm_step
-set_variables_lines () {
+function set_variables_lines () {
 	local vm_step=$1
 
 	file_parts+=( "" )
@@ -148,7 +148,7 @@ set_variables_lines () {
 
 # Function to set VM config opening lines
 # Usage: set_config_opening_lines
-set_config_opening_lines () {
+function set_config_opening_lines () {
 	file_parts+=( "" )
 	file_parts+=( 'Vagrant.configure("2") do |config|' )
 	file_parts+=( "" )
@@ -169,7 +169,7 @@ set_config_opening_lines () {
 
 # Function to set VM config provisioning lines
 # Usage: set_provisioning_lines $vm_step
-set_provisioning_lines () {
+function set_provisioning_lines () {
 	local vm_step=$1
 
 	if (( vm_step >= 4 )); then
@@ -198,7 +198,7 @@ set_provisioning_lines () {
 
 # Function to set VM config closing lines
 # Usage: set_config_closing_lines
-set_config_closing_lines () {
+function set_config_closing_lines () {
 	file_parts+=( "" )
 	file_parts+=( "end" )
 }

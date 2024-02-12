@@ -16,13 +16,15 @@ Updated: 2024-02-10
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
-I'm scripting the generation of Vagrantfiles, so you can have any Vagrantfile with...
+I'm scripting the generation of Vagrantfiles, with a symbolic link to the project folder, so you can have any Vagrantfile with...
 
 ```
-./provision/scripts/vg.sh n
+./vg n
 ```
 
 Where `n` is the step in this setup.
+
+**Note:** Moving or renaming `./provision/scripts/vg.sh` will break the symbolic link. You have been warned.
 
 All files you are directed to create are in...
 

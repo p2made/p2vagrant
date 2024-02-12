@@ -107,7 +107,7 @@ end
 Or run..
 
 ```
-./provision/scripts/vg.sh 1
+./vg 1
 ```
 
 ### Launch the VM
