@@ -38,14 +38,15 @@ vm_step=$1
 step_title=""
 file_parts=()
 
-# Sparse array of provisioning script calls, indexed by setup step.
-prov_items[2]='\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]'
-prov_items[3]='\tconfig.vm.provision :shell, path: "provision/scripts/install_utilities.sh"'
-prov_items[5]='\tconfig.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]'
-prov_items[6]='\tconfig.vm.provision :shell, path: "provision/scripts/install_apache.fish"'
-prov_items[7]='\tconfig.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]'
-prov_items[8]='\tconfig.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]'
-prov_items[10]='\tconfig.vm.provision :shell, path: "provision/scripts/configure_sites.fish"'
+# Sparse array of provisioning script calls, indexed by setup step...
+provisioning_indexes=(2 3 5 6 7 8 10)
+provisioning_items[2]='\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]'
+provisioning_items[3]='\tconfig.vm.provision :shell, path: "provision/scripts/install_utilities.sh"'
+provisioning_items[5]='\tconfig.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]'
+provisioning_items[6]='\tconfig.vm.provision :shell, path: "provision/scripts/install_apache.fish"'
+provisioning_items[7]='\tconfig.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]'
+provisioning_items[8]='\tconfig.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]'
+provisioning_items[10]='\tconfig.vm.provision :shell, path: "provision/scripts/configure_sites.fish"'
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
@@ -116,7 +117,7 @@ set_header_lines () {
 # Function to set the Vagrantfile variable lines
 # Usage: set_variables_lines $vm_step
 set_variables_lines () {
-	local i=$1
+	local step_idx=$1
 
 	file_parts+=( "" )
 	file_parts+=( "# Synced Folders" )
@@ -166,23 +167,10 @@ set_config_opening_lines () {
 	file_parts+=( "\tconfig.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: [\"actimeo=2\"]" )
 }
 
-# Function to set the comment on a VM config provisioning line
-# Usage: set_provisioning_line $prov_temp $i $n
-set_provisioning_line () {
-	local prov_string=$1
-
-	if (( $2 == $3 )); then
-		prov_string="$prov_string"
-		return 1
-	fi
-
-	file_parts+=( "#$prov_string" )
-}
-
 # Function to set VM config provisioning lines
 # Usage: set_provisioning_lines $vm_step
 set_provisioning_lines () {
-	local i=$1
+	local step_idx=$1
 
 	if (( i >= 4 )); then
 		file_parts+=( "" )
@@ -194,12 +182,16 @@ set_provisioning_lines () {
 		file_parts+=( "" )
 		file_parts+=( "\t# Provisioning..." )
 
-		for n in "${(@k)prov_items}"; do
-			prov_temp=${prov_items[$n]}
-			set_provisioning_line $prov_temp $i $n
-			if [ $? -ne 0 ]; then
+		# Loop through keys of the associative array in sorted order
+		for prov_idx in "${provisioning_indexes[@]}"; do
+			prov_string=$provisioning_items[$prov_idx]
+			if (( $step_idx <= $prov_idx )); then
+				if (( $step_idx == $prov_idx )); then
+					file_parts+="$prov_string"
+				fi
 				return
 			fi
+			file_parts+=( "#$prov_string" )
 		done
 	fi
 }

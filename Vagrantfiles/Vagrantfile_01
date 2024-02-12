@@ -1,13 +1,13 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vi: set ft=ruby
 
 # 01 Create Bare VM
-# Updated: 2024-02-07
+# Generated: 2024-02-11
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
-VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
-TIMEZONE            = "Australia/Brisbane" # "Europe/London"
+VM_IP               = "192.168.22.42"
+TIMEZONE            = "Australia/Brisbane"
 MEMORY              = 4096
 CPUS                = 1
 
@@ -20,7 +20,6 @@ Vagrant.configure("2") do |config|
 	config.vm.box = "bento/ubuntu-20.04-arm64"
 
 	config.vm.provider "vmware_desktop" do |v|
-		v.hostname  = VM_HOSTNAME
 		v.memory    = MEMORY
 		v.cpus      = CPUS
 		v.gui       = true
