@@ -5,28 +5,8 @@
 
 # Generates Vagrantfile for the step specified by an integer argument.
 
-# Machine Variables
-VM_HOSTNAME="p2vagrant"
-VM_IP="192.168.22.42"                   # 22 = titanium, 42 = Douglas Adams's number
-TIMEZONE="Australia/Brisbane"           # "Europe/London"
-MEMORY=4096
-CPUS=1
-
-# Synced Folders
-HOST_FOLDER="."
-VM_FOLDER="/var/www"
-
-# Software Versions
-PHP_VERSION="8.3"
-MYSQL_VERSION="8.3"
-SWIFT_VERSION="5.9.2"                   # For installing Swift (optional)
-
-# Database Variables
-ROOT_PASSWORD="RootPassw0rd"
-DB_USERNAME="fredspotty"
-DB_PASSWORD="Passw0rd"
-DB_NAME="example_db"
-DB_NAME_TEST="example_db_test"
+# Source data
+source ./provision/data/vagrantfiles_data.sh
 
 # Vagrantfile data...
 data_file="./provision/data/vagrant_data"
@@ -70,27 +50,14 @@ announce_success() {
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-# Function to read and parse the data file
-# Usage: read_and_parse_data $vm_step $data_file
-read_and_parse_data() {
-	local vm_step=$1
-	local i=$(printf "%02d" $1)
-	local file_temp=$2
+# Function to get the step title from sparse array in data
+# Usage: get_step_title $vm_step
+function get_step_title () {
+	if [[ -z ${vagrantfiles[$1]:-} ]]; then
+		handle_error "Step does not require a new Vagrantfile, or is out of range of steps"
+	fi
 
-	while IFS= read -r one_line; do
-		# Skip lines starting with #
-		[[ "$one_line" =~ ^# ]] && continue
-
-		split_line=(${(s:|:)one_line})  # Split the line by |
-
-		if [[ "${split_line[1]}" -eq "$vm_step" ]]; then
-			step_title="${split_line[2]}"
-			announce_success "Generating Vagrantfile for $i: $step_title."
-			return 0  # Valid step found in the data file
-		fi
-	done < "$file_temp"
-
-	handle_error "Step not found in the data file"
+	step_title=$vagrantfiles[$1]
 }
 
 # Function to set the Vagrantfile header
@@ -203,7 +170,7 @@ function write_config_closing_lines () {
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-read_and_parse_data $vm_step $data_file
+get_step_title $vm_step
 
 write_header_lines $vm_step $step_title
 write_variables_lines $vm_step
