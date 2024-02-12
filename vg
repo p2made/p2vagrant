@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# vg.sh
+# vg
 # Updated: 2024-02-12
 
 # Generates Vagrantfile for the step specified by an integer argument.
