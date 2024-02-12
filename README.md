@@ -1,4 +1,4 @@
-# P2Vagrant (Apple Silicon)
+# P2Vagrant\* (Apple Silicon)
 
 Updated: 2024-02-10
 
@@ -73,3 +73,5 @@ Apart from the `Vagrantfile `, all files you are directed to create are in...
 * [Vagrant Commands](./docs/Commands.md)
 
 --
+
+\* `P2` is for `P squared` because my initials are PP.
