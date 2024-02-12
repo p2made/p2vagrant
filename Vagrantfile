@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 01 Create Bare VM
+# 10 Configure Sites
 # Generated: 2024-02-13
 
 # Machine Variables
@@ -14,6 +14,18 @@ CPUS                = 1
 # Synced Folders
 HOST_FOLDER         = "."
 VM_FOLDER           = "/var/www"
+
+# Software Versions
+SWIFT_VERSION       = "5.9.2"
+PHP_VERSION         = "8.3"
+MYSQL_VERSION       = "8.3"
+
+# Database Variables
+ROOT_PASSWORD       = "RootPassw0rd"
+DB_USERNAME         = "fredspotty"
+DB_PASSWORD         = "Passw0rd"
+DB_NAME             = "example_db"
+DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
@@ -30,5 +42,17 @@ Vagrant.configure("2") do |config|
 
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, VM_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
+
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"
+
+	# Provisioning...
+#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
+#	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_HOSTNAME, VM_IP]
+#	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/configure_sites.fish"
 
 end
