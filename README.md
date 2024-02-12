@@ -1,4 +1,4 @@
-# P2Vagrant (Apple Silicon)
+# P2Vagrant\* (Apple Silicon)
 
 Updated: 2024-02-10
 
@@ -14,17 +14,40 @@ Updated: 2024-02-10
 🇺🇦                             |_|           |__/
 ```
 
-Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
-
-I'm scripting the generation of Vagrantfiles, so you can have any Vagrantfile with...
+Out of the box, `P2Vagrant` gives you...
 
 ```
-./provision/scripts/vg.sh n
+|-- p2vagrant
+	|-- fish shell
+	|-- the ability to install Swift
+	|-- Apache2
+	|-- SSL
+	|-- PHP
+	|-- MySQL
+	|-- phpMyAdmin
+	|-- the ability to configure unlimited websites
 ```
 
-Where `n` is the step in this setup.
+### `./vg n`
 
-All files you are directed to create are in...
+`Vagrantfile`s are generated as they are needed  by a script in the project root, `vg`  (for `Vagrantfile Generator`... works for me 🙃). `vg` takes one argument,  `n` the step in this setup. So any `Vagrantfile` can be generated with...
+
+```
+./vg n
+```
+
+### Data
+
+All of the data that defines this Vagrant machine ai contained within `./provision/scripts/vg.sh`, with two exceptions...
+
+1. The value of `REMOTE_FOLDER` , `/var/www` is stored in the two common functions files. This simplified matters enough to be worth the cost of the data duplication. Whan I have this project as a `v1.0.0` I may go back to look at changing this.
+2. Sites configuration data is stored in `./provision/data/sites_data`. This allows adding sites without editing the script.
+
+I plan to move the data within `vg` to a data file (which may itself be a script) in an update.
+
+### Files
+
+Apart from the `Vagrantfile `, all files you are directed to create are in...
 
 ```
 /provision
@@ -43,11 +66,11 @@ All files you are directed to create are in...
 02. [Upgrade VM](./docs/02_Upgrade_VM.md)
 03. [Install Utilities](./docs/03_Install_Utilities.md)
 04. [Upgrade VM (revisited)](./docs/04_Upgrade_VM.md)
-05. [Install Apache (with SSL)](./docs/05_Install_Apache.md)
-06. [Install PHP (with Composer)](./docs/06_Install_PHP.md)
-07. [Install MySQL](./docs/07_Install_MySQL.md)
-08. [Install phpMyAdmin](./docs/08_Install_phpMyAdmin.md)
-09. [Install Swift (optional)](./docs/09_Install_Swift.md)
+05. [Install Swift (optional)](./docs/05_Install_Swift.md)
+06. [Install Apache (with SSL)](./docs/06_Install_Apache.md)
+07. [Install PHP (with Composer)](./docs/07_Install_PHP.md)
+08. [Install MySQL](./docs/08_Install_MySQL.md)
+09. [Install phpMyAdmin](./docs/09_Install_phpMyAdmin.md)
 10. [Configure Sites](./docs/10_Configure_Sites.md)
 
 <!--
@@ -62,3 +85,5 @@ All files you are directed to create are in...
 * [Vagrant Commands](./docs/Commands.md)
 
 --
+
+\* `P2` is for `P squared` because my initials are PP.

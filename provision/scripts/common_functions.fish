@@ -1,7 +1,7 @@
 #!/bin/fish
 
 # common_functions.fish
-# Updated: 2024-02-08
+# Updated: 2024-02-12
 
 # Script constants...
 set TODAYS_DATE         (date "+%Y-%m-%d")
@@ -173,7 +173,7 @@ function generate_ssl_files
 end
 
 # Function to configure a website with everything done so far
-# Usage: configure_website $site_info
+# Usage: configure_website $domain $underscore_domain $vhosts_filename $ssl_base_filename
 function configure_website
 	set domain            $argv[1]
 	set site_folder       $VM_FOLDER/$argv[2]
@@ -187,9 +187,14 @@ function configure_website
 	# Create site root if it doesn't already exist
 	mkdir -p $site_folder
 
-	# Copy files only if they do not exist
-	set files_to_copy "index.html" "index.php" "phpinfo.php" "db.php"
-	for file in $files_to_copy
+	set web_files "index.htm" "index.html"
+
+	# Check if argv[2] is not "html"
+	if not test "$argv[2]" = "html"
+		set web_files $web_files "index.php" "phpinfo.php" "db.php"
+	end
+
+	for file in $web_files
 		cp -u $PROVISION_HTML/$file $site_folder/
 	end
 

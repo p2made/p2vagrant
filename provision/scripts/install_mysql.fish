@@ -1,10 +1,9 @@
 #!/bin/fish
 
-# 07 Install MySQL
-# Updated: 2024-02-07
+# 08 Install MySQL
 
 set script_name     "install_mysql.fish"
-set updated_date    "2024-02-02"
+set updated_date    "2024-02-12"
 
 set active_title    "Installing MySQL"
 set job_complete    "MySQL Installed"
@@ -25,21 +24,7 @@ set DB_PASSWORD     $argv[5] # ⚠️ See Vagrantfile
 set DB_NAME         $argv[6] # "example_db"
 set DB_NAME_TEST    $argv[7] # "example_db_test"
 
-# Always set PACKAGE_LIST when using install_packages or update_and_install_packages
-set PACKAGE_LIST \
-	mysql-server
-
-set -x DEBIAN_FRONTEND noninteractive
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
-
-# Update package lists & install packages
-update_and_install_packages $PACKAGE_LIST
-
-# Set root password
-mysqladmin -u root password $ROOT_PASSWORD || handle_error "Failed to set root password."
-
-# Create the database and grant privileges
+# Script variables...
 set -a sql_string (echo "CREATE USER '$DB_USERNAME'@'%' IDENTIFIED BY '$DB_PASSWORD'")
 set -a sql_string (echo "CREATE DATABASE IF NOT EXISTS $DB_NAME")
 set -a sql_string (echo "CREATE DATABASE IF NOT EXISTS $DB_NAME_TEST")
@@ -54,25 +39,55 @@ set -a err_string (echo "Failed to grant privileges on $DB_NAME")
 set -a err_string (echo "Failed to grant privileges on $DB_NAME_TEST")
 set -a err_string (echo "Failed to flush privileges")
 
-for i in (seq 1 6)
-	echo $sql_string[$i] | mysql -u root -p$ROOT_PASSWORD || \
-		handle_error $err_string[$i]
+# Always set PACKAGE_LIST when using install_packages or update_and_install_packages
+set PACKAGE_LIST \
+	mysql-server
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+# Function to install MySQL
+# Usage: install_mysql
+function install_mysql
+	# Update package lists & install packages
+	update_and_install_packages $PACKAGE_LIST
+
+	# Set root password
+	mysqladmin -u root password $ROOT_PASSWORD || handle_error "Failed to set root password."
+
+	# Create the database and grant privileges
+	for i in (seq 1 6)
+		echo $sql_string[$i] | mysql -u root -p$ROOT_PASSWORD || \
+			handle_error $err_string[$i]
+	end
+
+	# Update MySQL configuration
+	if test -f /etc/mysql/mysql.conf.d/mysqld.cnf
+		sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
+	else
+		handle_error "mysqld.cnf file not found."
+	end
+
+	# Copy database file
+	cp $PROVISION_HTML/db.php $SHARED_HTML/ || \
+		handle_error "Failed to copy db.php file"
+
+	# Set permissions
+	sudo chmod -R 755 $SHARED_HTML/ || \
+		handle_error "Failed to set permissions on $SHARED_HTML/"
 end
 
-# Update MySQL configuration
-if test -f /etc/mysql/mysql.conf.d/mysqld.cnf
-	sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
-else
-	handle_error "mysqld.cnf file not found."
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+function advance_vm
+	# Header banner
+	header_banner "$active_title" "$script_name" "$updated_date"
+
+	set -x DEBIAN_FRONTEND noninteractive
+
+	install_mysql
+
+	# Footer banner
+	footer_banner "$job_complete"
 end
 
-# Copy database file
-cp $PROVISION_HTML/db.php $SHARED_HTML/ || \
-	handle_error "Failed to copy db.php file"
-
-# Set permissions
-sudo chmod -R 755 $SHARED_HTML/ || \
-	handle_error "Failed to set permissions on $SHARED_HTML/"
-
-# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
-footer_banner $job_complete
+advance_vm

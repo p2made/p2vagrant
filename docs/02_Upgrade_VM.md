@@ -1,6 +1,6 @@
 # 02 Upgrade VM
 
-Updated: 2024-02-02
+Updated: 2024-02-11
 
 --
 
@@ -12,7 +12,7 @@ Updated: 2024-02-02
 # 02 Upgrade VM
 
 script_name="upgrade_vm.sh"
-updated_date="2024-02-08"
+updated_date="2024-02-12"
 
 active_title="Upgrading VM"
 job_complete="Upgrade completed successfully"
@@ -20,50 +20,59 @@ job_complete="Upgrade completed successfully"
 # Source common functions
 source /var/www/provision/scripts/common_functions.sh
 
-header_banner "$active_title" "$script_name" "$updated_date"
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
-
 # Arguments...
 TIMEZONE=$1         # "Australia/Brisbane"
 
-export DEBIAN_FRONTEND=noninteractive
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+function advance_vm () {
+	# Header banner
+	header_banner "$active_title" "$script_name" "$updated_date"
 
-# Set timezone
-echo "🕤 Setting timezone to $1 🕓"
-timedatectl set-timezone $1 --no-ask-password
+	export DEBIAN_FRONTEND=noninteractive
 
-update_package_lists
-upgrade_packages
-remove_unnecessary_packages
+	# Set timezone
+	echo "🕤 Setting timezone to $TIMEZONE 🕓"
+	timedatectl set-timezone "$TIMEZONE" --no-ask-password
 
-# Display OS information
-echo "📄 Displaying OS information 📄"
-cat /etc/os-release
+	update_package_lists
+	upgrade_packages
+	remove_unnecessary_packages
 
-announce_success "System update complete! ✅"
+	# Display OS information
+	echo "📄 Displaying OS information 📄"
+	cat /etc/os-release
 
-# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
-footer_banner "$job_complete"
+	# Display Time Zone information
+	echo "📄 Displaying Time Zone information 📄"
+	timedatectl
+
+	announce_success "System update complete! ✅"
+
+	# Footer banner
+	footer_banner "$job_complete"
+}
+
+advance_vm
 ```
 
-That's nice & short because I've put everything that could be reused into an include file, `provision/scripts/common_functions.sh`.
+That's nice & short because I've put everything that could be reused into a [Common Functions](./Common_Functions.md) include file, `provision/scripts/common_functions.sh`
 
 ### Update `Vagrantfile`
 
 ```
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vi: set ft=ruby
 
-# 01 Create Bare VM
-# Updated: 2024-02-07
+# 02 Upgrade VM
+# Generated: 2024-02-12
 
 # Machine Variables
+VM_HOSTNAME         = "p2vagrant"
+VM_IP               = "192.168.22.42"
+TIMEZONE            = "Australia/Brisbane"
 MEMORY              = 4096
 CPUS                = 1
-TIMEZONE            = "Australia/Brisbane" # "Europe/London"
-VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's number
 
 # Synced Folders
 HOST_FOLDER         = "."
@@ -74,9 +83,9 @@ Vagrant.configure("2") do |config|
 	config.vm.box = "bento/ubuntu-20.04-arm64"
 
 	config.vm.provider "vmware_desktop" do |v|
-		v.memory = MEMORY
-		v.cpus   = CPUS
-		v.gui    = true
+		v.memory    = MEMORY
+		v.cpus      = CPUS
+		v.gui       = true
 	end
 
 	# Configure network...
@@ -85,13 +94,16 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
+
 end
 ```
 
-Or copy this file...
+Or run...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_02 ./Vagrantfile
+./vg 2
 ```
 
 ### Provision the VM...

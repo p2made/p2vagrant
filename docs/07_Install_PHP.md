@@ -1,6 +1,6 @@
-# 06 Install PHP (with Composer 🙃)
+# 07 Install PHP (with Composer 🙃)
 
-Updated: 2024-02-03
+Updated: 2024-02-13
 
 --
 
@@ -12,7 +12,7 @@ Updated: 2024-02-03
 # 06 Install PHP (with Composer)
 
 set script_name     "install_php.fish"
-set updated_date    "2024-02-02"
+set updated_date    "2024-02-12"
 
 set active_title    "Installing PHP (with Composer 🙃)"
 set job_complete    "PHP Installed (with Composer 🙃)"
@@ -21,15 +21,12 @@ set job_complete    "PHP Installed (with Composer 🙃)"
 source /var/www/provision/scripts/common_functions.fish
 
 header_banner $active_title $script_name $updated_date
-
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - PHP_VERSION     = "8.3"
+set PHP_VERSION    $argv[1]
 
 # Script variables...
-
-set PHP_VERSION    $argv[1]
 set PHP_INI        /etc/php/$PHP_VERSION/apache2/php.ini
 
 # Always set PACKAGE_LIST when using update_and_install_packages
@@ -76,42 +73,63 @@ set PACKAGE_LIST \
 	php$PHP_VERSION-zstd \
 	libapache2-mod-php$PHP_VERSION
 
-set -x DEBIAN_FRONTEND noninteractive
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
+# Function to install PHP
+# Usage: install_php
+function install_php
+	# Add repository for ondrej/php
+	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
+
+	# Update package lists & install packages
+	update_and_install_packages $PACKAGE_LIST
+
+	sed -i 's/max_execution_time = .*/max_execution_time = 60/'         $PHP_INI
+	sed -i 's/post_max_size = .*/post_max_size = 64M/'                  $PHP_INI
+	sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/'       $PHP_INI
+	sed -i 's/memory_limit = .*/memory_limit = 512M/'                   $PHP_INI
+	sed -i 's/display_errors = .*/display_errors = on/'                 $PHP_INI
+	sed -i 's/display_startup_errors = .*/display_startup_errors = on/' $PHP_INI
+
+	cp $PROVISION_HTML/phpinfo.php $SHARED_HTML/
+	sudo chmod -R 755 $SHARED_HTML/*
+
+	a2enmod php$PHP_VERSION proxy_fcgi setenvif
+	a2enconf php$PHP_VERSION-fpm
+
+	# Restart Apache to apply changes
+	systemctl restart apache2
+
+	announce_success "PHP Installed Successfully! ✅"
+end
+
+# Function to install Composer
+# Usage: install_composer
+function install_composer
+	if not curl -sS https://getcomposer.org/installer | \
+		sudo php -- --install-dir=/usr/local/bin --filename=composer
+		handle_error "Failed to install Composer"
+	end
+
+	announce_success "Composer Installed Successfully! ✅"
+end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-# Add repository for ondrej/php
-LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
+function advance_vm
+	# Header banner
+	header_banner "$active_title" "$script_name" "$updated_date"
 
-# Update package lists & install packages
-update_and_install_packages $PACKAGE_LIST
+	set -x DEBIAN_FRONTEND noninteractive
 
-sed -i 's/max_execution_time = .*/max_execution_time = 60/' $PHP_INI
-sed -i 's/post_max_size = .*/post_max_size = 64M/' $PHP_INI
-sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' $PHP_INI
-sed -i 's/memory_limit = .*/memory_limit = 512M/' $PHP_INI
-sed -i 's/display_errors = .*/display_errors = on/' $PHP_INI
-sed -i 's/display_startup_errors = .*/display_startup_errors = on/' $PHP_INI
+	install_php
+	install_composer
 
-cp $PROVISION_HTML/phpinfo.php $SHARED_HTML/
-sudo chmod -R 755 $SHARED_HTML/*
-
-a2enmod "php$PHP_VERSION"
-
-# Restart Apache to apply changes
-systemctl restart apache2
-
-announce_success "PHP Installed Successfully! ✅"
-
-if not curl -sS https://getcomposer.org/installer | \
-	sudo php -- --install-dir=/usr/local/bin --filename=composer
-	handle_error "Failed to install Composer"
+	# Footer banner
+	footer_banner "$job_complete"
 end
 
-announce_success "Composer Installed Successfully! ✅"
-
-# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
-footer_banner $job_complete
+advance_vm
 ```
 
 ### Create `provision/html/phpinfo.php`
@@ -172,10 +190,10 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Or copy this file...
+Or run...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_05 ./Vagrantfile
+./vg 7
 ```
 
 ### Provision the VM
@@ -190,9 +208,11 @@ Or (*only if the VM is running*)...
 vagrant provision
 ```
 
+`phpinfo.php` will be copied to `HOST_FOLDER/html/`.
+
 ### Visit
 
-* [http://192.168.22.42/phpinfo.php](http://192.168.22.42/phpinfo.php)
+* [https://p2vagrant/phpinfo.php](https://p2vagrant/phpinfo.php)
 
 ... which should successfully display the PHP info page.
 
@@ -202,8 +222,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 06 Install PHP (with Composer) -->
-| [05 Install Apache (with SSL)](./05_Install_Apache.md)
+<!-- 07 Install PHP (with Composer) -->
+| [06 Install Apache (with SSL)](./06_Install_Apache.md)
 | [**Back to Steps**](../README.md)
-| [07 Install MySQL](./07_Install_MySQL.md)
+| [08 Install MySQL](./08_Install_MySQL.md)
 |
