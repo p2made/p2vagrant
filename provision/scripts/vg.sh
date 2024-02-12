@@ -117,25 +117,25 @@ set_header_lines () {
 # Function to set the Vagrantfile variable lines
 # Usage: set_variables_lines $vm_step
 set_variables_lines () {
-	local step_idx=$1
+	local vm_step=$1
 
 	file_parts+=( "" )
 	file_parts+=( "# Synced Folders" )
 	file_parts+=( "HOST_FOLDER         = \"$HOST_FOLDER\"" )
 	file_parts+=( "REMOTE_FOLDER       = \"$REMOTE_FOLDER\"" )
 
-	if (( i >= 6 )); then
+	if (( vm_step >= 5 )); then
 		file_parts+=( "" )
 		file_parts+=( "# Software Versions" )
-		file_parts+=( "PHP_VERSION         = \"$PHP_VERSION\"" )
-	fi
-	if (( i >= 7 )); then
-		file_parts+=( "MYSQL_VERSION       = \"$MYSQL_VERSION\"" )
-	fi
-	if (( i >= 10 )); then
 		file_parts+=( "SWIFT_VERSION       = \"$SWIFT_VERSION\"" )
 	fi
-	if (( i >= 7 )); then
+	if (( vm_step >= 7 )); then
+		file_parts+=( "PHP_VERSION         = \"$PHP_VERSION\"" )
+	fi
+	if (( vm_step >= 8 )); then
+		file_parts+=( "MYSQL_VERSION       = \"$MYSQL_VERSION\"" )
+	fi
+	if (( vm_step >= 7 )); then
 		file_parts+=( "" )
 		file_parts+=( "# Database Variables" )
 		file_parts+=( "ROOT_PASSWORD       = \"$ROOT_PASSWORD\"" )
@@ -170,23 +170,23 @@ set_config_opening_lines () {
 # Function to set VM config provisioning lines
 # Usage: set_provisioning_lines $vm_step
 set_provisioning_lines () {
-	local step_idx=$1
+	local vm_step=$1
 
-	if (( step_idx >= 4 )); then
+	if (( vm_step >= 4 )); then
 		file_parts+=( "" )
 		file_parts+=( "\t# Upgrade check..." )
 		file_parts+=( '\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' )
 	fi
 
-	if (( step_idx >= 2 )); then
+	if (( vm_step >= 2 )); then
 		file_parts+=( "" )
 		file_parts+=( "\t# Provisioning..." )
 
 		# Loop through keys of the associative array in sorted order
-		for prov_idx in "${provisioning_indexes[@]}"; do
-			prov_string=$provisioning_items[$prov_idx]
-			if (( $step_idx <= $prov_idx )); then
-				if (( $step_idx == $prov_idx )); then
+		for prov_step in "${provisioning_indexes[@]}"; do
+			prov_string=$provisioning_items[$prov_step]
+			if (( $vm_step <= $prov_step )); then
+				if (( $vm_step == $prov_step )); then
 					file_parts+="$prov_string"
 				fi
 				return
