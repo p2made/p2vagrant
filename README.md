@@ -16,6 +16,8 @@ Updated: 2024-02-10
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
+### `./vg n`
+
 The generation of Vagrantfiles is stipted in `./vg` (for `Vagrantfile Generator`... works for me 🙃), so you can have any Vagrantfile with...
 
 ```
