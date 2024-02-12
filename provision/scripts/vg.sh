@@ -172,13 +172,13 @@ set_config_opening_lines () {
 set_provisioning_lines () {
 	local step_idx=$1
 
-	if (( i >= 4 )); then
+	if (( step_idx >= 4 )); then
 		file_parts+=( "" )
 		file_parts+=( "\t# Upgrade check..." )
 		file_parts+=( '\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' )
 	fi
 
-	if (( i >= 2 )); then
+	if (( step_idx >= 2 )); then
 		file_parts+=( "" )
 		file_parts+=( "\t# Provisioning..." )
 
