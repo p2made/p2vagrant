@@ -255,6 +255,17 @@ SSL is enabled from the get-go, & Safari will make you jump through hoops to acc
 
 When setting more sites up later, do the same with the new certificates.
 
+### Edit the `hosts` file of your Mac
+
+Open the file `/etc/hosts` in your preferred text editor. I use [BBEdit](https://www.barebones.com/products/bbedit/), with which I can open the file from Terminal with `BBEdit /etc/hosts`, or by navigating to it in the open file dialog of BBEdit. You will need to confirm for editing the file, then authenticate as an admin user to save it.
+
+Add this line...
+
+```
+192.168.22.42   p2vagrant
+```
+
+
 ### Visit
 
 * [https://p2vagrant/](https://p2vagrant/)
