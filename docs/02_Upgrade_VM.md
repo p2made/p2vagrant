@@ -33,7 +33,7 @@ function advance_vm () {
 
 	# Set timezone
 	echo "🕤 Setting timezone to $1 🕓"
-	timedatectl set-timezone $1 --no-ask-password
+	timedatectl set-timezone "$TIMEZONE" --no-ask-password
 
 	update_package_lists
 	upgrade_packages

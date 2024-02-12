@@ -25,10 +25,11 @@ header_banner $active_title $script_name $updated_date
 # -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
-# 1 - VM_IP = "192.168.22.42"
+set VM_HOSTNAME     $argv[1]
+set VM_IP           $argv[2]
 
 # Script variables...
-# NONE!"
+# NONE!
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 set PACKAGE_LIST \
@@ -49,14 +50,36 @@ function install_apache
 	update_and_install_packages $PACKAGE_LIST
 
 	announce_success "Apache packages installed successfully!"
+end
 
-	set domain            $VM_IP
-	set ssl_base_filename "$VM_IP"_"$TODAYS_DATE"
+# Function to configure the default website
+# Usage: configure_default_website
+function configure_default_website
+	# We have the data all as we want it, but in a global variable
+	# Put it in local variables, & erase the global variable
+	set domain            $VM_HOSTNAME
+	set template_filename "0.conf"
+	set vhosts_filename   "local.conf"
+	set ssl_base_filename "$domain"_"$TODAYS_DATE"
 
-	generate_ssl_files $domain $ssl_base_filename
+	# Now go configure some web sites
+	write_vhosts_file \
+		$domain \
+		$domain \
+		$template_filename \
+		$vhosts_filename \
+		$ssl_base_filename
+	generate_ssl_files \
+		$domain \
+		$ssl_base_filename
+	configure_website \
+		$domain \
+		$domain \
+		$vhosts_filename \
+		$ssl_base_filename
 
 	# Copy web server files into place
-	yes | cp $PROVISION_VHOSTS/local.conf /etc/apache2/sites-available/
+	yes | cp $PROVISION_VHOSTS/$vhosts_filename /etc/apache2/sites-available/
 	yes | cp $PROVISION_SSL/* /etc/apache2/sites-available/
 	yes | cp $PROVISION_HTML/index.htm $SHARED_HTML/
 
@@ -73,9 +96,6 @@ function install_apache
 	a2dissite 000-default
 	a2enmod rewrite
 	a2enmod ssl
-
-	# Restart Apache to apply changes
-	systemctl restart apache2
 end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
@@ -87,6 +107,10 @@ function advance_vm
 	set -x DEBIAN_FRONTEND noninteractive
 
 	install_apache
+	configure_default_website
+
+	# Restart Apache to apply changes
+	systemctl restart apache2
 
 	# Footer banner
 	footer_banner "$job_complete"
@@ -177,7 +201,7 @@ Vagrant.configure("2") do |config|
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/install_apache.fish"
+	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_HOSTNAME, VM_IP]
 
 end
 ```
@@ -205,12 +229,12 @@ vagrant reload --provision
 ### Visit
 
 * [http://192.168.22.42/](http://192.168.22.42/)
-* [http://192.168.22.42/](http://192.168.22.42/)
+* [http://p2vagrant/](http://p2vagrant/)
 
 You should see a minimal page that I put there. For the Apache default page of your VM visit...
 
 * [http://192.168.22.42/index.html](http://192.168.22.42/index.html)
-* [http://192.168.22.42/index.html](http://192.168.22.42/index.html)
+* [http://p2vagrant/index.html](http://p2vagrant/index.html)
 
 
 ### All good?
