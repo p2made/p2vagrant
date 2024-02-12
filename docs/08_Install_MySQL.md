@@ -214,7 +214,7 @@ vagrant provision
 
 ### Visit:
 
-* [http://192.168.22.42/db.php](http://192.168.22.42/db.php)
+* [https://p2vagrant/db.php](https://p2vagrant/db.php)
 
 ... if all went well you should be seeing the "*Connected!*" message.
 
