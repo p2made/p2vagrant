@@ -10,5 +10,7 @@ ff02::2 ip6-allrouters
 
 # original above, additions below
 
-192.168.22.42 *.test
-192.168.22.42 *.*.test
+192.168.22.42   p2vagrant
+192.168.22.42   example.test
+192.168.22.42   subdomain1.example.test
+192.168.22.42   subdomain2.example.test
