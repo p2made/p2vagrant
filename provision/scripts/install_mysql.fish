@@ -1,6 +1,6 @@
 #!/bin/fish
 
-# 07 Install MySQL
+# 08 Install MySQL
 
 set script_name     "install_mysql.fish"
 set updated_date    "2024-02-12"
