@@ -233,7 +233,7 @@ There is a copy of the Ubuntu guest `hosts` file, with these edits made, in `/pr
 	* [example.test/index.php](http://example.test/index.php)
 	* [subdomain1.example.test/index.php](http://subdomain1.example.test/index.php)
 	* [subdomain2.example.test/index.php](http://subdomain2.example.test/index.php)
-* PHP Info
+* PHP info
 	* [example.test/phpinfo.php](http://example.test/phpinfo.php)
 	* [subdomain1.example.test/phpinfo.php](http://subdomain1.example.test/phpinfo.php)
 	* [subdomain2.example.test/phpinfo.php](http://subdomain2.example.test/phpinfo.php)
@@ -252,7 +252,7 @@ Those redirect to the `https` versions at...
 	* [example.test/index.php](https://example.test/index.php)
 	* [subdomain1.example.test/index.php](https://subdomain1.example.test/index.php)
 	* [subdomain2.example.test/index.php](https://subdomain2.example.test/index.php)
-* PHP Info
+* PHP info
 	* [example.test/phpinfo.php](https://example.test/phpinfo.php)
 	* [subdomain1.example.test/phpinfo.php](https://subdomain1.example.test/phpinfo.php)
 	* [subdomain2.example.test/phpinfo.php](https://subdomain2.example.test/phpinfo.php)
