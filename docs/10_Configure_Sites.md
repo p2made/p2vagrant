@@ -203,6 +203,10 @@ If the VM is running
 vagrant reload --provision
 ```
 
+### Import SSL certificates to System Keychain
+
+Just the same PITA process as before.
+
 ### Edit the `hosts` file of your Mac
 
 Edit `/etc/hosts` again to add these lines...
