@@ -267,8 +267,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 05 Install Apache (with SSL) -->
-| [04 Upgrade VM (revisited)](./04_Upgrade_VM.md)
+<!-- 06 Install Apache (with SSL) -->
+| [05 Install Swift (optional)](./05_Install_Swift.md)
 | [**Back to Steps**](../README.md)
-| [06 Install PHP (with Composer)](./06_Install_PHP.md)
+| [07 Install PHP (with Composer)](./07_Install_PHP.md)
 |
