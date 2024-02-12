@@ -18,15 +18,13 @@ Following are the steps taken to get to where I am. Because it's primarily for s
 
 ### `./vg n`
 
-The file in the project root, `vg`, is a script to generate `Vagrantfile`s as they are needed (so the name means `Vagrantfile Generator`... works for me 🙃).
-
-Where `n` is the step in this setup, the `Vagrantfile` for any step can be generated with...
+`Vagrantfile`s are generated as they are needed  by a script in the project root, `vg`  (for `Vagrantfile Generator`... works for me 🙃). `vg` takes one argument,  `n` the step in this setup. So any `Vagrantfile` can be generated with...
 
 ```
 ./vg n
 ```
 
-I plan to move the datawithin `vg` to a data file (which may itself be a script) in an update.
+I plan to move the data within `vg` to a data file (which may itself be a script) in an update.
 
 ### Data
 
