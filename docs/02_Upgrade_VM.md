@@ -12,7 +12,7 @@ Updated: 2024-02-11
 # 02 Upgrade VM
 
 script_name="upgrade_vm.sh"
-updated_date="2024-02-08"
+updated_date="2024-02-12"
 
 active_title="Upgrading VM"
 job_complete="Upgrade completed successfully"
@@ -20,35 +20,39 @@ job_complete="Upgrade completed successfully"
 # Source common functions
 source /var/www/provision/scripts/common_functions.sh
 
-header_banner "$active_title" "$script_name" "$updated_date"
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
-
 # Arguments...
 TIMEZONE=$1         # "Australia/Brisbane"
 
-export DEBIAN_FRONTEND=noninteractive
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+function advance_vm () {
+	# Header banner
+	header_banner "$active_title" "$script_name" "$updated_date"
 
-# Set timezone
-echo "🕤 Setting timezone to $1 🕓"
-timedatectl set-timezone $1 --no-ask-password
+	export DEBIAN_FRONTEND=noninteractive
 
-update_package_lists
-upgrade_packages
-remove_unnecessary_packages
+	# Set timezone
+	echo "🕤 Setting timezone to $1 🕓"
+	timedatectl set-timezone $1 --no-ask-password
 
-# Display OS information
-echo "📄 Displaying OS information 📄"
-cat /etc/os-release
+	update_package_lists
+	upgrade_packages
+	remove_unnecessary_packages
 
-announce_success "System update complete! ✅"
+	# Display OS information
+	echo "📄 Displaying OS information 📄"
+	cat /etc/os-release
 
-# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
-footer_banner "$job_complete"
+	announce_success "System update complete! ✅"
+
+	# Footer banner
+	footer_banner "$job_complete"
+}
+
+advance_vm
 ```
 
-That's nice & short because I've put everything that could be reused into an include file, `provision/scripts/common_functions.sh`.
+That's nice & short because I've put everything that could be reused into a [Common Functions](./Common_Functions.md) include file, `provision/scripts/common_functions.sh`
 
 ### Update `Vagrantfile`
 
@@ -57,7 +61,7 @@ That's nice & short because I've put everything that could be reused into an inc
 # vi: set ft=ruby
 
 # 02 Upgrade VM
-# Generated: 2024-02-11
+# Generated: 2024-02-12
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -92,10 +96,10 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Or run..
+Or run...
 
 ```
-./provision/scripts/vg.sh 2
+./vg 2
 ```
 
 ### Provision the VM...

@@ -1,6 +1,6 @@
 # 01 Create Bare VM
 
-Updated: 2024-02-11
+Updated: 2024-02-12
 
 --
 
@@ -104,7 +104,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Or run..
+Or run...
 
 ```
 ./vg 1

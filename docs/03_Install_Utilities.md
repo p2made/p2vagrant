@@ -1,6 +1,6 @@
 # 03 Install Utilities
 
-Updated: 2024-02-11
+Updated: 2024-02-12
 
 --
 
@@ -10,10 +10,9 @@ Updated: 2024-02-11
 #!/bin/bash
 
 # 03 Install Utilities
-# Updated: 2024-02-11
 
 script_name="install_utilities.sh"
-updated_date="2024-02-08"
+updated_date="2024-02-12"
 
 active_title="Installing Utilities"
 job_complete="Utilities Installed"
@@ -21,11 +20,8 @@ job_complete="Utilities Installed"
 # Source common functions
 source /var/www/provision/scripts/common_functions.sh
 
-header_banner "$active_title" "$script_name" "$updated_date"
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
-
 # Arguments...
-# NONE!"
+# NONE!
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 PACKAGE_LIST=(
@@ -55,12 +51,10 @@ PACKAGE_LIST=(
 	"yarn"
 )
 
-export DEBIAN_FRONTEND=noninteractive
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Function to set Fish as the default shell
-set_fish_as_default_shell() {
+function set_fish_as_default_shell () {
 	if ! sudo usermod -s /usr/bin/fish vagrant; then
 		handle_error "Failed to set Fish shell as default"
 	fi
@@ -70,21 +64,28 @@ set_fish_as_default_shell() {
 	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
 }
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+function advance_vm () {
+	# Header banner
+	header_banner "$active_title" "$script_name" "$updated_date"
 
-# Add Fish Shell repository
-LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
+	export DEBIAN_FRONTEND=noninteractive
 
-install_packages $PACKAGE_LIST
+	# Add Fish Shell repository
+	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
 
-set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
+	install_packages $PACKAGE_LIST
 
-# Append the 'cd /var/www' line to .profile if it doesn't exist
-grep -qxF 'cd /var/www' /home/vagrant/.profile || \
-	echo 'cd /var/www' >> /home/vagrant/.profile
+	set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
 
-# -- -- /%/ -- -- /%/ -- script footer -- /%/ -- -- /%/ -- --
-footer_banner "$job_complete"
+	# Append the 'cd /var/www' line to .profile if it doesn't exist
+	grep -qxF 'cd /var/www' /home/vagrant/.profile || \
+		echo 'cd /var/www' >> /home/vagrant/.profile
+
+	# Footer banner
+	footer_banner "$job_complete"
+}
+
+advance_vm
 ```
 
 That function `set_fish_as_default_shell() { ... }` is just as described on the label. It sets [🐟fish🐠](https://fishshell.com) as the default shell. After this step, all the scripts will be 🐠`.fish`🐟, so let's go swimming 🏊🏊‍♀️🏊‍♂️
@@ -96,7 +97,7 @@ That function `set_fish_as_default_shell() { ... }` is just as described on the 
 # vi: set ft=ruby
 
 # 03 Install Utilities
-# Generated: 2024-02-11
+# Generated: 2024-02-12
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -132,10 +133,10 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Or run..
+Or run...
 
 ```
-./provision/scripts/vg.sh 3
+./vg 3
 ```
 
 * **Note:** From here on, all but the last provisioning script call will be commented out. If you want to run more than one step at once, simply uncomment the earlier lines.

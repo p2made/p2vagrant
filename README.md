@@ -22,9 +22,14 @@ I'm scripting the generation of Vagrantfiles, with a symbolic link to the projec
 ./vg n
 ```
 
-Where `n` is the step in this setup.
+Where `n` is the step in this setup. `vg` stands for `Vagrantfile Generator`... works for me 🙃
 
-**Note:** Moving or renaming `./provision/scripts/vg.sh` will break the symbolic link. You have been warned.
+All of the data that defines this Vagrant machine ai contained within `./provision/scripts/vg.sh`, with two exceptions...
+
+1. The value of `REMOTE_FOLDER` , `/var/www` is stored in the two common functions files. This simplified matters enough to be worth the cost of the data duplication. Whan I have this project as a `v1.0.0` I may go back to look at changing this.
+2. Sites configuration data is stored in `./provision/data/sites_data`. This allows adding sites without editing the script.
+
+**⚠️ Warning:** Moving or renaming `./provision/scripts/vg.sh` will break the symbolic link.
 
 All files you are directed to create are in...
 
