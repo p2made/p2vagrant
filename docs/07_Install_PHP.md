@@ -208,6 +208,8 @@ Or (*only if the VM is running*)...
 vagrant provision
 ```
 
+`phpinfo.php` will be copied to `HOST_FOLDER/html/`.
+
 ### Visit
 
 * [https://p2vagrant/phpinfo.php](https://p2vagrant/phpinfo.php)
