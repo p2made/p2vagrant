@@ -156,7 +156,7 @@ VM_IP               = "192.168.22.42"      # 22 = titanium, 42 = Douglas Adams's
 
 # Synced Folders
 HOST_FOLDER         = "."
-REMOTE_FOLDER       = "/var/www"
+VM_FOLDER       = "/var/www"
 
 # Software Versions
 SWIFT_VERSION       = ""                   # "5.9.2" - if Swift is required
@@ -176,7 +176,7 @@ Vagrant.configure("2") do |config|
 	config.vm.network "private_network", ip: VM_IP
 
 	# Set a synced folder...
-	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
+	config.vm.synced_folder HOST_FOLDER, VM_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", run: "always"

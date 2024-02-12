@@ -112,7 +112,7 @@ CPUS                = 1
 
 # Synced Folders
 HOST_FOLDER         = "."
-REMOTE_FOLDER       = "/var/www"
+VM_FOLDER       = "/var/www"
 
 Vagrant.configure("2") do |config|
 
@@ -128,7 +128,7 @@ Vagrant.configure("2") do |config|
 	config.vm.network "private_network", ip: VM_IP
 
 	# Set a synced folder...
-	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
+	config.vm.synced_folder HOST_FOLDER, VM_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"

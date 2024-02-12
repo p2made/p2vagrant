@@ -14,7 +14,7 @@ CPUS=1
 
 # Synced Folders
 HOST_FOLDER="."
-REMOTE_FOLDER="/var/www"
+VM_FOLDER="/var/www"
 
 # Software Versions
 PHP_VERSION="8.3"
@@ -122,7 +122,7 @@ function write_variables_lines () {
 	echo "" >> ./Vagrantfile
 	echo "# Synced Folders" >> ./Vagrantfile
 	echo "HOST_FOLDER         = \"$HOST_FOLDER\"" >> ./Vagrantfile
-	echo "REMOTE_FOLDER       = \"$REMOTE_FOLDER\"" >> ./Vagrantfile
+	echo "VM_FOLDER           = \"$VM_FOLDER\"" >> ./Vagrantfile
 
 	if (( vm_step >= 5 )); then
 		echo "" >> ./Vagrantfile
@@ -162,7 +162,7 @@ function write_config_opening_lines () {
 	echo "	config.vm.network \"private_network\", ip: VM_IP" >> ./Vagrantfile
 	echo "" >> ./Vagrantfile
 	echo "	# Set a synced folder..." >> ./Vagrantfile
-	echo "	config.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: [\"actimeo=2\"]" >> ./Vagrantfile
+	echo "	config.vm.synced_folder HOST_FOLDER, VM_FOLDER, create: true, nfs: true, mount_options: [\"actimeo=2\"]" >> ./Vagrantfile
 }
 
 # Function to set VM config provisioning lines
