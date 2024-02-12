@@ -1,7 +1,7 @@
 #!/bin/fish
 
 # common_functions.fish
-# Updated: 2024-02-08
+# Updated: 2024-02-12
 
 # Script constants...
 set TODAYS_DATE         (date "+%Y-%m-%d")

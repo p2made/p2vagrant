@@ -1,10 +1,9 @@
 #!/bin/bash
 
 # 02 Upgrade VM
-# Updated: 2024-02-12
 
 script_name="upgrade_vm.sh"
-updated_date="2024-02-08"
+updated_date="2024-02-12"
 
 active_title="Upgrading VM"
 job_complete="Upgrade completed successfully"
@@ -15,8 +14,9 @@ source /var/www/provision/scripts/common_functions.sh
 # Arguments...
 TIMEZONE=$1         # "Australia/Brisbane"
 
-function advance_vm () {
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
+function advance_vm () {
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 

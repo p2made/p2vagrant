@@ -1,10 +1,9 @@
 #!/bin/bash
 
 # 03 Install Utilities
-# Updated: 2024-02-11
 
 script_name="install_utilities.sh"
-updated_date="2024-02-08"
+updated_date="2024-02-12"
 
 active_title="Installing Utilities"
 job_complete="Utilities Installed"
@@ -13,7 +12,7 @@ job_complete="Utilities Installed"
 source /var/www/provision/scripts/common_functions.sh
 
 # Arguments...
-# NONE!"
+# NONE!
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 PACKAGE_LIST=(
@@ -43,6 +42,8 @@ PACKAGE_LIST=(
 	"yarn"
 )
 
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+
 # Function to set Fish as the default shell
 function set_fish_as_default_shell () {
 	if ! sudo usermod -s /usr/bin/fish vagrant; then
@@ -55,7 +56,6 @@ function set_fish_as_default_shell () {
 }
 
 function advance_vm () {
-
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
