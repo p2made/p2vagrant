@@ -74,6 +74,7 @@ announce_success() {
 # Usage: read_and_parse_data $vm_step $data_file
 read_and_parse_data() {
 	local vm_step=$1
+	local i=$(printf "%02d" $1)
 	local file_temp=$2
 
 	while IFS= read -r one_line; do
@@ -84,7 +85,7 @@ read_and_parse_data() {
 
 		if [[ "${split_line[1]}" -eq "$vm_step" ]]; then
 			step_title="${split_line[2]}"
-			announce_success "Generating Vagrantfile for $vm_step: $step_title."
+			announce_success "Generating Vagrantfile for $i: $step_title."
 			return 0  # Valid step found in the data file
 		fi
 	done < "$file_temp"
