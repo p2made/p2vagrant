@@ -68,11 +68,6 @@ function configure_default_website
 		$vhosts_filename \
 		$ssl_base_filename
 
-	# Copy web server files into place
-	yes | cp $PROVISION_VHOSTS/$vhosts_filename /etc/apache2/sites-available/
-	yes | cp $PROVISION_SSL/* /etc/apache2/sites-available/
-	yes | cp $PROVISION_HTML/index.htm $SHARED_HTML/
-
 	# Check if index.html exists in the html folder
 	if not test -e $SHARED_HTML/index.html
 		cp $PROVISION_HTML/index.html $SHARED_HTML/
@@ -80,7 +75,6 @@ function configure_default_website
 
 	# Set permissions on web server files
 	chmod -R 755 $SHARED_HTML/*
-	chmod 600 /etc/apache2/sites-available/$ssl_base_filename.key
 
 	a2ensite local.conf
 	a2dissite 000-default
