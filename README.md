@@ -29,6 +29,8 @@ All of the data that defines this Vagrant machine ai contained within `./provisi
 1. The value of `REMOTE_FOLDER` , `/var/www` is stored in the two common functions files. This simplified matters enough to be worth the cost of the data duplication. Whan I have this project as a `v1.0.0` I may go back to look at changing this.
 2. Sites configuration data is stored in `./provision/data/sites_data`. This allows adding sites without editing the script.
 
+I plan to move the datawithin `./provision/scripts/vg.sh` to a data file (which may itself be a script) in an update.
+
 **⚠️ Warning:** Moving or renaming `./provision/scripts/vg.sh` will break the symbolic link.
 
 All files you are directed to create are in...
