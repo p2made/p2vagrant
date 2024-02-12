@@ -1,6 +1,6 @@
 # 09 Configure Sites
 
-Updated: 2024-02-04
+Updated: 2024-02-13
 
 --
 
@@ -12,8 +12,8 @@ Updated: 2024-02-04
 # domain template_num [vhosts_prefix]
 example.test 1 000
 # subdomains
-#subdomain1.example.test 0
-#subdomain2.example.test 0
+subdomain1.example.test 0
+subdomain2.example.test 0
 ```
 
 Using a data file means that more sites can be added simply by updating the data file & running this provisioning script again. **Do not** do this to change sites already created.
