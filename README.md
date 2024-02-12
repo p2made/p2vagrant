@@ -16,21 +16,18 @@ Updated: 2024-02-10
 
 Out of the box, `P2Vagrant` gives you...
 
-```
-|-- p2vagrant
-	|-- fish shell
-	|-- the ability to install Swift
-	|-- Apache2
-	|-- SSL
-	|-- PHP
-	|-- MySQL
-	|-- phpMyAdmin
-	|-- the ability to configure unlimited websites
-```
+* [fish shell](https://fishshell.com)
+* the ability to install [Swift](https://www.swift.org)
+* [Apache2](https://www.apache.org)
+* [self-signed SSL](https://en.wikipedia.org/wiki/Self-signed_certificate)
+* [PHP](https://www.php.net)
+* [MySQL Community Server](https://www.mysql.com/products/community/)
+* [phpMyAdmin](https://www.phpmyadmin.net)
+* the ability to configure unlimited websites
 
 ### `./vg n`
 
-`Vagrantfile`s are generated as they are needed  by a script in the project root, `vg`  (for `Vagrantfile Generator`... works for me 🙃). `vg` takes one argument,  `n` the step in this setup. So any `Vagrantfile` can be generated with...
+`Vagrantfile`s are generated as they are needed  by a script in the project root, `vg`  (for `Vagrantfile Generator`... works for me 🙃). `vg` takes one argument,  `n`, the step in this setup. So any `Vagrantfile` can be generated with...
 
 ```
 ./vg n
@@ -87,3 +84,5 @@ Apart from the `Vagrantfile `, all files you are directed to create are in...
 --
 
 \* `P2` is for `P squared` because my initials are PP.
+
+--
