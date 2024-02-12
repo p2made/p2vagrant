@@ -36,7 +36,7 @@ vm_step=$1
 
 # Script variables...
 step_title=""
-file_parts=()
+file_lines=()
 
 # Sparse array of provisioning script calls, indexed by setup step...
 provisioning_indexes=(2 3 5 6 7 8 10)
@@ -99,19 +99,19 @@ function set_header_lines () {
 	local i=$(printf "%02d" $1)
 	local title=$2
 
-	# Add the Vagrantfile header to the file_parts array
-	file_parts+=( "# -*- mode: ruby -*-" )
-	file_parts+=( "# vi: set ft=ruby" )
-	file_parts+=( "" )
-	file_parts+=( "# $i $title" )
-	file_parts+=( "# Generated: $(date "+%Y-%m-%d")" )
-	file_parts+=( "" )
-	file_parts+=( "# Machine Variables" )
-	file_parts+=( "VM_HOSTNAME         = \"$VM_HOSTNAME\"" )
-	file_parts+=( "VM_IP               = \"$VM_IP\"" )
-	file_parts+=( "TIMEZONE            = \"$TIMEZONE\"" )
-	file_parts+=( "MEMORY              = $MEMORY" )
-	file_parts+=( "CPUS                = $CPUS" )
+	# Add the Vagrantfile header to the file_lines array
+	file_lines+=( "# -*- mode: ruby -*-" )
+	file_lines+=( "# vi: set ft=ruby" )
+	file_lines+=( "" )
+	file_lines+=( "# $i $title" )
+	file_lines+=( "# Generated: $(date "+%Y-%m-%d")" )
+	file_lines+=( "" )
+	file_lines+=( "# Machine Variables" )
+	file_lines+=( "VM_HOSTNAME         = \"$VM_HOSTNAME\"" )
+	file_lines+=( "VM_IP               = \"$VM_IP\"" )
+	file_lines+=( "TIMEZONE            = \"$TIMEZONE\"" )
+	file_lines+=( "MEMORY              = $MEMORY" )
+	file_lines+=( "CPUS                = $CPUS" )
 }
 
 # Function to set the Vagrantfile variable lines
@@ -119,52 +119,52 @@ function set_header_lines () {
 function set_variables_lines () {
 	local vm_step=$1
 
-	file_parts+=( "" )
-	file_parts+=( "# Synced Folders" )
-	file_parts+=( "HOST_FOLDER         = \"$HOST_FOLDER\"" )
-	file_parts+=( "REMOTE_FOLDER       = \"$REMOTE_FOLDER\"" )
+	file_lines+=( "" )
+	file_lines+=( "# Synced Folders" )
+	file_lines+=( "HOST_FOLDER         = \"$HOST_FOLDER\"" )
+	file_lines+=( "REMOTE_FOLDER       = \"$REMOTE_FOLDER\"" )
 
 	if (( vm_step >= 5 )); then
-		file_parts+=( "" )
-		file_parts+=( "# Software Versions" )
-		file_parts+=( "SWIFT_VERSION       = \"$SWIFT_VERSION\"" )
+		file_lines+=( "" )
+		file_lines+=( "# Software Versions" )
+		file_lines+=( "SWIFT_VERSION       = \"$SWIFT_VERSION\"" )
 	fi
 	if (( vm_step >= 7 )); then
-		file_parts+=( "PHP_VERSION         = \"$PHP_VERSION\"" )
+		file_lines+=( "PHP_VERSION         = \"$PHP_VERSION\"" )
 	fi
 	if (( vm_step >= 8 )); then
-		file_parts+=( "MYSQL_VERSION       = \"$MYSQL_VERSION\"" )
+		file_lines+=( "MYSQL_VERSION       = \"$MYSQL_VERSION\"" )
 	fi
 	if (( vm_step >= 7 )); then
-		file_parts+=( "" )
-		file_parts+=( "# Database Variables" )
-		file_parts+=( "ROOT_PASSWORD       = \"$ROOT_PASSWORD\"" )
-		file_parts+=( "DB_USERNAME         = \"$DB_USERNAME\"" )
-		file_parts+=( "DB_PASSWORD         = \"$DB_PASSWORD\"" )
-		file_parts+=( "DB_NAME             = \"$DB_NAME\"" )
-		file_parts+=( "DB_NAME_TEST        = \"$DB_NAME_TEST\"" )
+		file_lines+=( "" )
+		file_lines+=( "# Database Variables" )
+		file_lines+=( "ROOT_PASSWORD       = \"$ROOT_PASSWORD\"" )
+		file_lines+=( "DB_USERNAME         = \"$DB_USERNAME\"" )
+		file_lines+=( "DB_PASSWORD         = \"$DB_PASSWORD\"" )
+		file_lines+=( "DB_NAME             = \"$DB_NAME\"" )
+		file_lines+=( "DB_NAME_TEST        = \"$DB_NAME_TEST\"" )
 	fi
 }
 
 # Function to set VM config opening lines
 # Usage: set_config_opening_lines
 function set_config_opening_lines () {
-	file_parts+=( "" )
-	file_parts+=( 'Vagrant.configure("2") do |config|' )
-	file_parts+=( "" )
-	file_parts+=( "\tconfig.vm.box = \"bento/ubuntu-20.04-arm64\"" )
-	file_parts+=( "" )
-	file_parts+=( "\tconfig.vm.provider \"vmware_desktop\" do |v|" )
-	file_parts+=( "\t\tv.memory    = MEMORY" )
-	file_parts+=( "\t\tv.cpus      = CPUS" )
-	file_parts+=( "\t\tv.gui       = true" )
-	file_parts+=( "\tend" )
-	file_parts+=( "" )
-	file_parts+=( "\t# Configure network..." )
-	file_parts+=( "\tconfig.vm.network \"private_network\", ip: VM_IP" )
-	file_parts+=( "" )
-	file_parts+=( "\t# Set a synced folder..." )
-	file_parts+=( "\tconfig.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: [\"actimeo=2\"]" )
+	file_lines+=( "" )
+	file_lines+=( 'Vagrant.configure("2") do |config|' )
+	file_lines+=( "" )
+	file_lines+=( "\tconfig.vm.box = \"bento/ubuntu-20.04-arm64\"" )
+	file_lines+=( "" )
+	file_lines+=( "\tconfig.vm.provider \"vmware_desktop\" do |v|" )
+	file_lines+=( "\t\tv.memory    = MEMORY" )
+	file_lines+=( "\t\tv.cpus      = CPUS" )
+	file_lines+=( "\t\tv.gui       = true" )
+	file_lines+=( "\tend" )
+	file_lines+=( "" )
+	file_lines+=( "\t# Configure network..." )
+	file_lines+=( "\tconfig.vm.network \"private_network\", ip: VM_IP" )
+	file_lines+=( "" )
+	file_lines+=( "\t# Set a synced folder..." )
+	file_lines+=( "\tconfig.vm.synced_folder HOST_FOLDER, REMOTE_FOLDER, create: true, nfs: true, mount_options: [\"actimeo=2\"]" )
 }
 
 # Function to set VM config provisioning lines
@@ -173,25 +173,25 @@ function set_provisioning_lines () {
 	local vm_step=$1
 
 	if (( vm_step >= 4 )); then
-		file_parts+=( "" )
-		file_parts+=( "\t# Upgrade check..." )
-		file_parts+=( '\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' )
+		file_lines+=( "" )
+		file_lines+=( "\t# Upgrade check..." )
+		file_lines+=( '\tconfig.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' )
 	fi
 
 	if (( vm_step >= 2 )); then
-		file_parts+=( "" )
-		file_parts+=( "\t# Provisioning..." )
+		file_lines+=( "" )
+		file_lines+=( "\t# Provisioning..." )
 
 		# Loop through keys of the associative array in sorted order
 		for prov_step in "${provisioning_indexes[@]}"; do
 			prov_string=$provisioning_items[$prov_step]
 			if (( $vm_step <= $prov_step )); then
 				if (( $vm_step == $prov_step )); then
-					file_parts+="$prov_string"
+					file_lines+="$prov_string"
 				fi
 				return
 			fi
-			file_parts+=( "#$prov_string" )
+			file_lines+=( "#$prov_string" )
 		done
 	fi
 }
@@ -199,8 +199,8 @@ function set_provisioning_lines () {
 # Function to set VM config closing lines
 # Usage: set_config_closing_lines
 function set_config_closing_lines () {
-	file_parts+=( "" )
-	file_parts+=( "end" )
+	file_lines+=( "" )
+	file_lines+=( "end" )
 }
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
@@ -213,5 +213,5 @@ set_config_opening_lines
 set_provisioning_lines $vm_step
 set_config_closing_lines
 
-# Write file_parts to a file (e.g., Vagrantfile_test) with line breaks and actual tabs
-printf "%s\n" "${file_parts[@]}" | sed 's/\\t/'$'\t'/g > ./Vagrantfile
+# Write file_lines to a file (e.g., Vagrantfile_test) with line breaks and actual tabs
+printf "%s\n" "${file_lines[@]}" | sed 's/\\t/'$'\t'/g > ./Vagrantfile

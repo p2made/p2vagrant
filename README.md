@@ -16,13 +16,13 @@ Updated: 2024-02-10
 
 Following are the steps taken to get to where I am. Because it's primarily for self-consumption explanations are little if any.
 
-I'm scripting the generation of Vagrantfiles, with a symbolic link to the project folder, so you can have any Vagrantfile with...
+The generation of Vagrantfiles is stipted in `./vg` (for `Vagrantfile Generator`... works for me 🙃), so you can have any Vagrantfile with...
 
 ```
 ./vg n
 ```
 
-Where `n` is the step in this setup. `vg` stands for `Vagrantfile Generator`... works for me 🙃
+Where `n` is the step in this setup.
 
 All of the data that defines this Vagrant machine ai contained within `./provision/scripts/vg.sh`, with two exceptions...
 
