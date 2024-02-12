@@ -51,7 +51,8 @@ sudo phpenmod mbstring
 sudo service apache2 restart
 ```
 
-* Visit [http://192.168.22.42/phpmyadmin/](http://192.168.22.42/phpmyadmin/), log in with 'phpmyadmin' & the password you entered.
+* [https://p2vagrant/phpmyadmin/](https://p2vagrant/phpmyadmin/)
+* log in with 'phpmyadmin' & the password you entered.
 
 #### Accessing the Database from Outside the VM
 
@@ -73,8 +74,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 08 Install phpMyAdmin -->
-| [07 Install MySQL](./07_Install_MySQL.md)
+<!-- 09 Install phpMyAdmin -->
+| [08 Install MySQL](./08_Install_MySQL.md)
 | [**Back to Steps**](../README.md)
-| [09 Configure Sites](./09_Configure_Sites.md)
+| [10 Configure Sites](./10_Configure_Sites.md)
 |
