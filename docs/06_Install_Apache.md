@@ -1,6 +1,6 @@
 # 06 Install Apache (with SSL 🙃)
 
-Updated: 2024-02-12
+Updated: 2024-02-13
 
 --
 
@@ -9,7 +9,7 @@ Updated: 2024-02-12
 ```
 #!/bin/fish
 
-# 05 Install Apache (with SSL)
+# 06 Install Apache (with SSL)
 
 set script_name     "install_apache.fish"
 set updated_date    "2024-02-12"
@@ -19,10 +19,6 @@ set job_complete    "Apache Installed (with SSL 🙃)"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
-
-header_banner $active_title $script_name $updated_date
-
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
 set VM_HOSTNAME     $argv[1]
@@ -58,30 +54,28 @@ function configure_default_website
 	# We have the data all as we want it, but in a global variable
 	# Put it in local variables, & erase the global variable
 	set domain            $VM_HOSTNAME
+	set underscore_domain "html"
 	set template_filename "0.conf"
 	set vhosts_filename   "local.conf"
 	set ssl_base_filename "$domain"_"$TODAYS_DATE"
 
 	# Now go configure some web sites
+	# Usage: write_vhosts_file $domain $underscore_domain $template_filename $vhosts_filename $ssl_base_filename
 	write_vhosts_file \
 		$domain \
-		$domain \
+		$underscore_domain \
 		$template_filename \
 		$vhosts_filename \
 		$ssl_base_filename
+	# Usage: generate_ssl_files $domain $ssl_base_filename
 	generate_ssl_files \
 		$domain \
 		$ssl_base_filename
 	configure_website \
 		$domain \
-		$domain \
+		$underscore_domain \
 		$vhosts_filename \
 		$ssl_base_filename
-
-	# Copy web server files into place
-	yes | cp $PROVISION_VHOSTS/$vhosts_filename /etc/apache2/sites-available/
-	yes | cp $PROVISION_SSL/* /etc/apache2/sites-available/
-	yes | cp $PROVISION_HTML/index.htm $SHARED_HTML/
 
 	# Check if index.html exists in the html folder
 	if not test -e $SHARED_HTML/index.html
@@ -90,7 +84,6 @@ function configure_default_website
 
 	# Set permissions on web server files
 	chmod -R 755 $SHARED_HTML/*
-	chmod 600 /etc/apache2/sites-available/$ssl_base_filename.key
 
 	a2ensite local.conf
 	a2dissite 000-default
