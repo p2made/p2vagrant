@@ -184,10 +184,10 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Or copy this file...
+Or run...
 
 ```
-cp ./Vagrantfiles/Vagrantfile_06 ./Vagrantfile
+./vg 8
 ```
 
 **Customise**
