@@ -45,23 +45,26 @@ function configure_default_website
 	# We have the data all as we want it, but in a global variable
 	# Put it in local variables, & erase the global variable
 	set domain            $VM_HOSTNAME
+	set underscore_domain "html"
 	set template_filename "0.conf"
 	set vhosts_filename   "local.conf"
 	set ssl_base_filename "$domain"_"$TODAYS_DATE"
 
 	# Now go configure some web sites
+	# Usage: write_vhosts_file $domain $underscore_domain $template_filename $vhosts_filename $ssl_base_filename
 	write_vhosts_file \
 		$domain \
-		$domain \
+		$underscore_domain \
 		$template_filename \
 		$vhosts_filename \
 		$ssl_base_filename
+	# Usage: generate_ssl_files $domain $ssl_base_filename
 	generate_ssl_files \
 		$domain \
 		$ssl_base_filename
 	configure_website \
 		$domain \
-		$domain \
+		$underscore_domain \
 		$vhosts_filename \
 		$ssl_base_filename
 

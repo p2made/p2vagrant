@@ -173,7 +173,7 @@ function generate_ssl_files
 end
 
 # Function to configure a website with everything done so far
-# Usage: configure_website $site_info
+# Usage: configure_website $domain $underscore_domain $vhosts_filename $ssl_base_filename
 function configure_website
 	set domain            $argv[1]
 	set site_folder       $VM_FOLDER/$argv[2]
