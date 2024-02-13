@@ -1,12 +1,12 @@
 #!/bin/fish
 
-# 06 Install Apache (with SSL)
+# 06 Install Apache (with SSL & Markdown)
 
 set script_name     "install_apache.fish"
-set updated_date    "2024-02-12"
+set updated_date    "2024-02-13"
 
-set active_title    "Installing Apache (with SSL 🙃)"
-set job_complete    "Apache Installed (with SSL 🙃)"
+set active_title    "Installing Apache (with SSL 🔐 & Markdown 📄 🎊)"
+set job_complete    "Apache Installed (with SSL 🔐 & Markdown 📄 🎊)"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
@@ -62,14 +62,12 @@ function configure_default_website
 	set ssl_base_filename "$domain"_"$TODAYS_DATE"
 
 	# Now go configure some web sites
-	# Usage: write_vhosts_file $domain $underscore_domain $template_filename $vhosts_filename $ssl_base_filename
 	write_vhosts_file \
 		$domain \
 		$underscore_domain \
 		$template_filename \
 		$vhosts_filename \
 		$ssl_base_filename
-	# Usage: generate_ssl_files $domain $ssl_base_filename
 	generate_ssl_files \
 		$domain \
 		$ssl_base_filename

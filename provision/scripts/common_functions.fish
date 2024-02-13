@@ -187,7 +187,7 @@ function configure_website
 	# Create site root if it doesn't already exist
 	mkdir -p $site_folder
 
-	set web_files "index.htm" "index.html"
+	set web_files "index.md" "index.htm" "index.html"
 
 	# Check if argv[2] is not "html"
 	if not test "$argv[2]" = "html"

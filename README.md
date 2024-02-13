@@ -21,7 +21,7 @@ Updated: 2024-02-10
 03. [Install Utilities](./docs/03_Install_Utilities.md)
 04. [Upgrade VM (revisited)](./docs/04_Upgrade_VM.md)
 05. [Install Swift (optional)](./docs/05_Install_Swift.md)
-06. [Install Apache (with SSL)](./docs/06_Install_Apache.md)
+06. [Install Apache (with SSL & Markdown)](./docs/06_Install_Apache.md)
 07. [Install PHP (with Composer)](./docs/07_Install_PHP.md)
 08. [Install MySQL](./docs/08_Install_MySQL.md)
 09. [Install phpMyAdmin](./docs/09_Install_phpMyAdmin.md)
@@ -44,9 +44,9 @@ Out of the box, `P2Vagrant` gives you...
 
 * [fish shell](https://fishshell.com)
 * the ability to install [Swift](https://www.swift.org)
-* [Apache2](https://www.apache.org)
+* [Apache2](https://www.apache.org) (with SSL & [Markdown](https://en.wikipedia.org/wiki/Markdown))
 * [self-signed SSL](https://en.wikipedia.org/wiki/Self-signed_certificate)
-* [PHP](https://www.php.net)
+* [PHP](https://www.php.net) (with [Composer](https://getcomposer.org))
 * [MySQL Community Server](https://www.mysql.com/products/community/)
 * [phpMyAdmin](https://www.phpmyadmin.net)
 * the ability to configure unlimited websites

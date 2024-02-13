@@ -1,4 +1,5 @@
-# 06 Install Apache (with SSL 🙃)
+# 06 Install Apache
+# (with SSL 🔐 & Markdown 📄 🎊)
 
 Updated: 2024-02-13
 
@@ -9,13 +10,13 @@ Updated: 2024-02-13
 ```
 #!/bin/fish
 
-# 06 Install Apache (with SSL)
+# 06 Install Apache (with SSL & Markdown)
 
 set script_name     "install_apache.fish"
-set updated_date    "2024-02-12"
+set updated_date    "2024-02-13"
 
-set active_title    "Installing Apache (with SSL 🙃)"
-set job_complete    "Apache Installed (with SSL 🙃)"
+set active_title    "Installing Apache (with SSL 🔐 & Markdown 📄 🎊)"
+set job_complete    "Apache Installed (with SSL 🔐 & Markdown 📄 🎊)"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
@@ -34,6 +35,12 @@ set PACKAGE_LIST \
 	apache2-data \
 	apache2-utils
 
+
+set MARKDOWN_PACKAGES \
+	libcgi-pm-perl \
+	libcgi-fast-perl \
+	markdown
+
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Function to install Apache
@@ -46,6 +53,11 @@ function install_apache
 	update_and_install_packages $PACKAGE_LIST
 
 	announce_success "Apache packages installed successfully!"
+
+	# Install Markdown rendering packages
+	update_and_install_packages $MARKDOWN_PACKAGES
+
+	announce_success "Markdown rendering packages installed successfully!"
 end
 
 # Function to configure the default website
@@ -60,14 +72,12 @@ function configure_default_website
 	set ssl_base_filename "$domain"_"$TODAYS_DATE"
 
 	# Now go configure some web sites
-	# Usage: write_vhosts_file $domain $underscore_domain $template_filename $vhosts_filename $ssl_base_filename
 	write_vhosts_file \
 		$domain \
 		$underscore_domain \
 		$template_filename \
 		$vhosts_filename \
 		$ssl_base_filename
-	# Usage: generate_ssl_files $domain $ssl_base_filename
 	generate_ssl_files \
 		$domain \
 		$ssl_base_filename
@@ -85,8 +95,18 @@ function configure_default_website
 	# Set permissions on web server files
 	chmod -R 755 $SHARED_HTML/*
 
+	# Add handler for .md files
+	echo "AddHandler cgi-script .md" \
+		>> /etc/apache2/conf-available/markdown.conf
+	a2enconf markdown
+
+	# Enable the new site
 	a2ensite local.conf
+
+	# Disable the default site
 	a2dissite 000-default
+
+	# Enable required Apache modules
 	a2enmod rewrite
 	a2enmod ssl
 end
@@ -127,6 +147,18 @@ advance_vm
 ```
 
 The page is a simple `index.html` located within your VM in the `/var/www/html` directory, the so-called document root. This document root is the directory that's available from the outside to your server.
+
+### Create `provision/html/index.md`
+
+```
+# Shaka Bom!
+
+How cool is this?
+
+**BTW:** this is in [Markdown](https://www.markdownguide.org)
+```
+
+This is the same page in Markdown. Because of the file type ordering in `local.conf`, `index.md` will load in preference to `index.html` or `index.htm` files if it is present. You can change that by editing the `DirectoryIndex` entries in `0.conf` & `1.conf`.
 
 ### Create `provision/vhosts/local.conf`
 
