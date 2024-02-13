@@ -85,9 +85,11 @@ function configure_default_website
 	# Set permissions on web server files
 	chmod -R 755 $SHARED_HTML/*
 
+	# Add configuration for handling Markdown files
+	echo "AddType text/html .md" >> /etc/apache2/apache2.conf
+
 	# Add handler for .md files
-	echo "AddHandler cgi-script .md" \
-		>> /etc/apache2/conf-available/markdown.conf
+	echo "AddHandler cgi-script .md" >> /etc/apache2/conf-available/markdown.conf
 	a2enconf markdown
 
 	# Enable the new site
