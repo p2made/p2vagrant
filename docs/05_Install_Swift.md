@@ -1,6 +1,6 @@
 # 05 Install Swift (optional)
 
-Updated: 2024-02-12
+Updated: 2024-02-13
 
 --
 
@@ -59,8 +59,8 @@ function install_swift
 	update_and_install_packages $SWIFT_PACKAGES
 
 	echo "⬇️ Downloading Swift ⬇️"
-	SWIFT_FILENAME_BASE="swift-$SWIFT_VERSION-RELEASE-ubuntu20.04-aarch64"
-	SWIFT_URL_BASE="https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004-aarch64/swift-$SWIFT_VERSION-RELEASE"
+	set SWIFT_FILENAME_BASE "swift-$SWIFT_VERSION-RELEASE-ubuntu20.04-aarch64"
+	set SWIFT_URL_BASE "https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004-aarch64/swift-$SWIFT_VERSION-RELEASE"
 	curl -L -O $SWIFT_URL_BASE/$SWIFT_FILENAME_BASE.tar.gz
 	curl -L -O $SWIFT_URL_BASE/$SWIFT_FILENAME_BASE.tar.gz.sig
 
