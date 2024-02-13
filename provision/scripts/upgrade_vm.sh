@@ -12,7 +12,9 @@ job_complete="Upgrade completed successfully"
 source /var/www/provision/scripts/common_functions.sh
 
 # Arguments...
-TIMEZONE=$1         # "Australia/Brisbane"
+
+# Script variables...
+# NONE!
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
@@ -22,10 +24,6 @@ function advance_vm () {
 
 	export DEBIAN_FRONTEND=noninteractive
 
-	# Set timezone
-	echo "🕤 Setting timezone to $TIMEZONE 🕓"
-	timedatectl set-timezone "$TIMEZONE" --no-ask-password
-
 	update_package_lists
 	upgrade_packages
 	remove_unnecessary_packages
@@ -33,10 +31,6 @@ function advance_vm () {
 	# Display OS information
 	echo "📄 Displaying OS information 📄"
 	cat /etc/os-release
-
-	# Display Time Zone information
-	echo "📄 Displaying Time Zone information 📄"
-	timedatectl
 
 	announce_success "System update complete! ✅"
 
