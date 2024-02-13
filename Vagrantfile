@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 02 Upgrade VM
+# 03 Install Utilities
 # Generated: 2024-02-14
 
 # Machine Variables
@@ -33,5 +33,8 @@ Vagrant.configure("2") do |config|
 
 	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
+
+	# Provisioning...
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 
 end

@@ -148,6 +148,8 @@ Vagrant.configure("2") do |config|
 end
 ```
 
+* **Note:** From here on, all but the last provisioning script call will be commented out. If you want to run more than one step at once, simply uncomment the earlier lines.
+
 Or run...
 
 ```

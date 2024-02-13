@@ -1,6 +1,6 @@
 # 03 Install Utilities
 
-Updated: 2024-02-12
+Updated: 2024-02-14
 
 --
 
@@ -12,16 +12,19 @@ Updated: 2024-02-12
 # 03 Install Utilities
 
 script_name="install_utilities.sh"
-updated_date="2024-02-12"
+updated_date="2024-02-14"
 
 active_title="Installing Utilities"
 job_complete="Utilities Installed"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.sh
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
 
 # Arguments...
-# NONE!
+TIMEZONE=$1         # "Australia/Brisbane"
+
+# Script variables...
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 PACKAGE_LIST=(
@@ -70,6 +73,10 @@ function advance_vm () {
 
 	export DEBIAN_FRONTEND=noninteractive
 
+	# Set timezone
+	echo "🕤 Setting timezone to $TIMEZONE 🕓"
+	timedatectl set-timezone "$TIMEZONE" --no-ask-password
+
 	# Add Fish Shell repository
 	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
 
@@ -80,6 +87,10 @@ function advance_vm () {
 	# Append the 'cd /var/www' line to .profile if it doesn't exist
 	grep -qxF 'cd /var/www' /home/vagrant/.profile || \
 		echo 'cd /var/www' >> /home/vagrant/.profile
+
+	# Display Time Zone information
+	echo "📄 Displaying Time Zone information 📄"
+	timedatectl
 
 	# Footer banner
 	footer_banner "$job_complete"
@@ -97,7 +108,7 @@ That function `set_fish_as_default_shell() { ... }` is just as described on the 
 # vi: set ft=ruby
 
 # 03 Install Utilities
-# Generated: 2024-02-12
+# Generated: 2024-02-14
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -108,7 +119,7 @@ CPUS                = 1
 
 # Synced Folders
 HOST_FOLDER         = "."
-VM_FOLDER       = "/var/www"
+VM_FOLDER           = "/var/www"
 
 Vagrant.configure("2") do |config|
 
@@ -126,9 +137,11 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, VM_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
+
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
-	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
 
 end
 ```
@@ -138,8 +151,6 @@ Or run...
 ```
 ./vg 3
 ```
-
-* **Note:** From here on, all but the last provisioning script call will be commented out. If you want to run more than one step at once, simply uncomment the earlier lines.
 
 ### Provision the VM...
 

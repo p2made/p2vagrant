@@ -1,6 +1,6 @@
 # 02 Upgrade VM
 
-Updated: 2024-02-11
+Updated: 2024-02-14
 
 --
 
@@ -12,28 +12,28 @@ Updated: 2024-02-11
 # 02 Upgrade VM
 
 script_name="upgrade_vm.sh"
-updated_date="2024-02-12"
+updated_date="2024-02-14"
 
 active_title="Upgrading VM"
 job_complete="Upgrade completed successfully"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.sh
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
 
 # Arguments...
-TIMEZONE=$1         # "Australia/Brisbane"
+# NONE!
+
+# Script variables...
+# NONE!
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 function advance_vm () {
 	# Header banner
-	header_banner "$active_title" "$script_name" "$updated_date"
+	upgrade_banner "$active_title" "$script_name" "$updated_date"
 
 	export DEBIAN_FRONTEND=noninteractive
-
-	# Set timezone
-	echo "🕤 Setting timezone to $TIMEZONE 🕓"
-	timedatectl set-timezone "$TIMEZONE" --no-ask-password
 
 	update_package_lists
 	upgrade_packages
@@ -42,10 +42,6 @@ function advance_vm () {
 	# Display OS information
 	echo "📄 Displaying OS information 📄"
 	cat /etc/os-release
-
-	# Display Time Zone information
-	echo "📄 Displaying Time Zone information 📄"
-	timedatectl
 
 	announce_success "System update complete! ✅"
 
@@ -56,7 +52,7 @@ function advance_vm () {
 advance_vm
 ```
 
-That's nice & short because I've put everything that could be reused into a [Common Functions](./Common_Functions.md) include file, `provision/scripts/common_functions.sh`
+That's nice & short because I've put everything that could be reused into a [Common Functions](./Common_Functions.md) include file, `provision/scripts/_common.sh`
 
 ### Update `Vagrantfile`
 
@@ -65,7 +61,7 @@ That's nice & short because I've put everything that could be reused into a [Com
 # vi: set ft=ruby
 
 # 02 Upgrade VM
-# Generated: 2024-02-12
+# Generated: 2024-02-14
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -76,7 +72,7 @@ CPUS                = 1
 
 # Synced Folders
 HOST_FOLDER         = "."
-VM_FOLDER       = "/var/www"
+VM_FOLDER           = "/var/www"
 
 Vagrant.configure("2") do |config|
 
@@ -94,8 +90,8 @@ Vagrant.configure("2") do |config|
 	# Set a synced folder...
 	config.vm.synced_folder HOST_FOLDER, VM_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
-	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
+	# Upgrade check...
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 
 end
 ```
@@ -111,14 +107,16 @@ Or run...
 If the VM is **not** running
 
 ```
-vagrant up --provision
+vagrant up
 ```
 
 If the VM is running
 
 ```
-vagrant reload --provision
+vagrant reload
 ```
+
+‼️ `run: "always"`, means the script will run every time `vagrant up` is run. If you don't want it running, comment the line out. That's also why `--provision` isn't needed here.
 
 ### All good?
 

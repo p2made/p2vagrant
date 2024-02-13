@@ -3,13 +3,14 @@
 # 03 Install Utilities
 
 script_name="install_utilities.sh"
-updated_date="2024-02-12"
+updated_date="2024-02-14"
 
 active_title="Installing Utilities"
 job_complete="Utilities Installed"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.sh
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
 
 # Arguments...
 TIMEZONE=$1         # "Australia/Brisbane"
