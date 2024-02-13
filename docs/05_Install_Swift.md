@@ -24,9 +24,6 @@ set job_complete    "Swift Installed"
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
 
-header_banner $active_title $script_name $updated_date
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
-
 # Arguments...
 set SWIFT_VERSION  $argv[1]
 
