@@ -18,21 +18,20 @@ vm_step=$1
 step_title=""
 
 # Sparse array of provisioning script calls, indexed by setup step...
-provisioning_indexes=(2 3 5 6 7 8 10)
-provisioning_items[2]='	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]'
-provisioning_items[3]='	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"'
-provisioning_items[5]='	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]'
-provisioning_items[6]='	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_HOSTNAME, VM_IP]'
-provisioning_items[7]='	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]'
-provisioning_items[8]='	config.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]'
-provisioning_items[10]='	config.vm.provision :shell, path: "provision/scripts/configure_sites.fish"'
+provisioning_indexes=(3 4 5 6 7 9)
+provisioning_items[3]='	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]'
+provisioning_items[4]='	config.vm.provision :shell, path: "provision/scripts/install_swift.sh", args: [SWIFT_VERSION]'
+provisioning_items[5]='	config.vm.provision :shell, path: "provision/scripts/install_apache.sh", args: [VM_HOSTNAME]'
+provisioning_items[6]='	config.vm.provision :shell, path: "provision/scripts/install_php.sh", args: [PHP_VERSION]'
+provisioning_items[7]='	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]'
+provisioning_items[9]='	config.vm.provision :shell, path: "provision/scripts/configure_sites.sh"'
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function for error handling
 # Usage: handle_error "Error message"
 handle_error() {
-	echo "⚠️ Error: $1 💥"
+	echo "⚠️  Error: $1 💥"
 	exit 1
 }
 
@@ -93,15 +92,15 @@ function write_variables_lines () {
 	echo "HOST_FOLDER         = \"$HOST_FOLDER\"" >> ./Vagrantfile
 	echo "VM_FOLDER           = \"$VM_FOLDER\"" >> ./Vagrantfile
 
-	if (( vm_step >= 5 )); then
+	if (( vm_step >= 4 )); then
 		echo "" >> ./Vagrantfile
 		echo "# Software Versions" >> ./Vagrantfile
 		echo "SWIFT_VERSION       = \"$SWIFT_VERSION\"" >> ./Vagrantfile
 	fi
-	if (( vm_step >= 7 )); then
+	if (( vm_step >= 6 )); then
 		echo "PHP_VERSION         = \"$PHP_VERSION\"" >> ./Vagrantfile
 	fi
-	if (( vm_step >= 8 )); then
+	if (( vm_step >= 7 )); then
 		echo "MYSQL_VERSION       = \"$MYSQL_VERSION\"" >> ./Vagrantfile
 		echo "" >> ./Vagrantfile
 		echo "# Database Variables" >> ./Vagrantfile
@@ -139,13 +138,13 @@ function write_config_opening_lines () {
 function write_provisioning_lines () {
 	local vm_step=$1
 
-	if (( vm_step >= 4 )); then
+	if (( vm_step >= 2 )); then
 		echo "" >> ./Vagrantfile
 		echo "	# Upgrade check..." >> ./Vagrantfile
-		echo '	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"' >> ./Vagrantfile
+		echo '	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"' >> ./Vagrantfile
 	fi
 
-	if (( vm_step >= 2 )); then
+	if (( vm_step >= 3 )); then
 		echo "" >> ./Vagrantfile
 		echo "	# Provisioning..." >> ./Vagrantfile
 

@@ -142,7 +142,7 @@ function configure_website {
 # Function for error handling
 # Usage: handle_error "Error message"
 function handle_error () {
-	echo "⚠️ Error: $1 💥"
+	echo "⚠️  Error: $1 💥"
 	echo "Run `vagrant halt` then restore the last snapshot before trying again."
 	exit 1
 }

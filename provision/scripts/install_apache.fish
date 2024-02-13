@@ -13,7 +13,6 @@ source /var/www/provision/scripts/common_functions.fish
 
 # Arguments...
 set VM_HOSTNAME     $argv[1]
-set VM_IP           $argv[2]
 
 # Script variables...
 # NONE!
