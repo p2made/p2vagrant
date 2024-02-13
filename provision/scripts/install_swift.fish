@@ -3,16 +3,13 @@
 # 05 Install Swift (optional)
 
 set script_name     "install_swift.fish"
-set updated_date    "2024-02-12"
+set updated_date    "2024-02-13"
 
 set active_title    "Installing Swift"
 set job_complete    "Swift Installed"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
-
-header_banner $active_title $script_name $updated_date
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
 set SWIFT_VERSION  $argv[1]
@@ -48,8 +45,8 @@ function install_swift
 	update_and_install_packages $SWIFT_PACKAGES
 
 	echo "⬇️ Downloading Swift ⬇️"
-	SWIFT_FILENAME_BASE="swift-$SWIFT_VERSION-RELEASE-ubuntu20.04-aarch64"
-	SWIFT_URL_BASE="https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004-aarch64/swift-$SWIFT_VERSION-RELEASE"
+	set SWIFT_FILENAME_BASE "swift-$SWIFT_VERSION-RELEASE-ubuntu20.04-aarch64"
+	set SWIFT_URL_BASE "https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004-aarch64/swift-$SWIFT_VERSION-RELEASE"
 	curl -L -O $SWIFT_URL_BASE/$SWIFT_FILENAME_BASE.tar.gz
 	curl -L -O $SWIFT_URL_BASE/$SWIFT_FILENAME_BASE.tar.gz.sig
 

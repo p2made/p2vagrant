@@ -1,10 +1,12 @@
 # 05 Install Swift (optional)
 
-Updated: 2024-02-12
+Updated: 2024-02-13
 
 --
 
 Swift can be installed at any time after this, so I'm putting it here. It can be skipped entirely, or come back to later.
+
+🚨 Swift adds more than `5 GB` to the size of your VM, so think about installing it.
 
 ### Create `provision/scripts/install_swift.fish`
 
@@ -14,16 +16,13 @@ Swift can be installed at any time after this, so I'm putting it here. It can be
 # 05 Install Swift (optional)
 
 set script_name     "install_swift.fish"
-set updated_date    "2024-02-12"
+set updated_date    "2024-02-13"
 
 set active_title    "Installing Swift"
 set job_complete    "Swift Installed"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
-
-header_banner $active_title $script_name $updated_date
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
 set SWIFT_VERSION  $argv[1]
@@ -59,8 +58,8 @@ function install_swift
 	update_and_install_packages $SWIFT_PACKAGES
 
 	echo "⬇️ Downloading Swift ⬇️"
-	SWIFT_FILENAME_BASE="swift-$SWIFT_VERSION-RELEASE-ubuntu20.04-aarch64"
-	SWIFT_URL_BASE="https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004-aarch64/swift-$SWIFT_VERSION-RELEASE"
+	set SWIFT_FILENAME_BASE "swift-$SWIFT_VERSION-RELEASE-ubuntu20.04-aarch64"
+	set SWIFT_URL_BASE "https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004-aarch64/swift-$SWIFT_VERSION-RELEASE"
 	curl -L -O $SWIFT_URL_BASE/$SWIFT_FILENAME_BASE.tar.gz
 	curl -L -O $SWIFT_URL_BASE/$SWIFT_FILENAME_BASE.tar.gz.sig
 
@@ -169,6 +168,31 @@ If the VM is running
 vagrant reload --provision
 ```
 
+### Check that Swift is Working
+
+```
+vagrant ssh
+swift -v
+```
+
+For output like...
+
+```
+Swift version 5.9.2 (swift-5.9.2-RELEASE)
+Target: aarch64-unknown-linux-gnu
+/usr/share/swift/usr/bin/swift-help intro
+
+Welcome to Swift!
+
+Subcommands:
+
+  swift build      Build Swift packages
+  swift package    Create and work on packages
+  swift run        Run a program from a package
+  swift test       Run package tests
+  swift repl       Experiment with Swift code interactively
+```
+
 ### All good?
 
 Save the moment with a [Snapshot](./Snapshots.md).
@@ -178,5 +202,5 @@ Save the moment with a [Snapshot](./Snapshots.md).
 <!-- 05 Install Swift (optional) -->
 | [04 Upgrade VM (revisited)](./04_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
-| [06 Install Apache (with SSL)](./06_Install_Apache.md)
+| [06 Install Apache (with SSL & Markdown)](./06_Install_Apache.md)
 |

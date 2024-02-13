@@ -63,8 +63,8 @@ end
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 function advance_vm
-	# Header banner
-	header_banner "$active_title" "$script_name" "$updated_date"
+	# Update banner
+	update_banner "$active_title" "$script_name" "$updated_date"
 
 	set -x DEBIAN_FRONTEND noninteractive
 
