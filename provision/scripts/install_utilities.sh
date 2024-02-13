@@ -12,7 +12,9 @@ job_complete="Utilities Installed"
 source /var/www/provision/scripts/common_functions.sh
 
 # Arguments...
-# NONE!
+TIMEZONE=$1         # "Australia/Brisbane"
+
+# Script variables...
 
 # Always set PACKAGE_LIST when using update_and_install_packages
 PACKAGE_LIST=(
@@ -61,6 +63,10 @@ function advance_vm () {
 
 	export DEBIAN_FRONTEND=noninteractive
 
+	# Set timezone
+	echo "🕤 Setting timezone to $TIMEZONE 🕓"
+	timedatectl set-timezone "$TIMEZONE" --no-ask-password
+
 	# Add Fish Shell repository
 	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
 
@@ -71,6 +77,10 @@ function advance_vm () {
 	# Append the 'cd /var/www' line to .profile if it doesn't exist
 	grep -qxF 'cd /var/www' /home/vagrant/.profile || \
 		echo 'cd /var/www' >> /home/vagrant/.profile
+
+	# Display Time Zone information
+	echo "📄 Displaying Time Zone information 📄"
+	timedatectl
 
 	# Footer banner
 	footer_banner "$job_complete"
