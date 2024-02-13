@@ -6,7 +6,7 @@ Updated: 2024-02-13
 
 Swift can be installed at any time after this, so I'm putting it here. It can be skipped entirely, or come back to later.
 
-🚨 If you think you want to install Swift, think about it hard. It adds more than `5 GB` to the size of your VM.
+🚨 Swift adds more than `5 GB` to the size of your VM, so think about installing it.
 
 ### Create `provision/scripts/install_swift.fish`
 
@@ -16,7 +16,7 @@ Swift can be installed at any time after this, so I'm putting it here. It can be
 # 05 Install Swift (optional)
 
 set script_name     "install_swift.fish"
-set updated_date    "2024-02-12"
+set updated_date    "2024-02-13"
 
 set active_title    "Installing Swift"
 set job_complete    "Swift Installed"
