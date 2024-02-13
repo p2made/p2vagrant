@@ -178,5 +178,5 @@ Save the moment with a [Snapshot](./Snapshots.md).
 <!-- 05 Install Swift (optional) -->
 | [04 Upgrade VM (revisited)](./04_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
-| [06 Install Apache (with SSL)](./06_Install_Apache.md)
+| [06 Install Apache (with SSL & Markdown)](./06_Install_Apache.md)
 |
