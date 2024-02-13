@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 04 Upgrade VM (revisited)
+# 05 Install Swift
 # Generated: 2024-02-13
 
 # Machine Variables
@@ -14,6 +14,9 @@ CPUS                = 1
 # Synced Folders
 HOST_FOLDER         = "."
 VM_FOLDER           = "/var/www"
+
+# Software Versions
+SWIFT_VERSION       = "5.9.2"
 
 Vagrant.configure("2") do |config|
 
@@ -37,5 +40,6 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
+	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]
 
 end
