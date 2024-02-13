@@ -18,6 +18,38 @@ PROVISION_VHOSTS=$VM_FOLDER/provision/vhosts
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/          Utility Functions          /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+# Function for error handling
+# Usage: handle_error "Error message"
+function handle_error () {
+	echo "⚠️  Error: $1 💥"
+	echo "Run `vagrant halt` then restore the last snapshot before trying again."
+	exit 1
+}
+
+# Function to announce success
+# Usage: announce_success "Task completed successfully." [use_alternate_icon]
+function announce_success () {
+	icon="✅"
+
+	if [ -n "$2" ] && [ "$2" -eq 1 ]; then
+		icon="👍"
+	fi
+
+	echo "$icon $1"
+}
+
+# Function to announce a job not needing to be done
+# Usage: announce_no_job "Nothing to do."
+function announce_no_job () {
+	echo "👍 $1"
+}
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/         Packages Management         /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
@@ -99,7 +131,7 @@ function remove_unnecessary_packages () {
 # We can't return a value, so we put them in a global
 # variable that we will quickly use & then erase.
 # Usage: setup_site_variables $one_site
-function setup_site_variables {
+function setup_site_variables () {
 	# Use the passed string $one_site to set a temporary global...
 	# $site_info_temp[1-6], where...
 	# $site_info_temp[1] is the domain
@@ -113,17 +145,17 @@ function setup_site_variables {
 
 # Function to write the vhosts file from a template
 # Usage: write_vhosts_file $domain $underscore_domain $template_filename $vhosts_filename $ssl_base_filename
-function write_vhosts_file {
+function write_vhosts_file () {
 }
 
 # Function to generate SSL files
 # Usage: generate_ssl_files $domain $ssl_base_filename
-function generate_ssl_files {
+function generate_ssl_files () {
 }
 
 # Function to configure a website with everything done so far
 # Usage: configure_website $domain $underscore_domain $vhosts_filename $ssl_base_filename
-function configure_website {
+function configure_website () {
 }
 
 # Example usage:
@@ -132,38 +164,6 @@ function configure_website {
 # write_vhosts_file "${site_info_temp[@]}"
 # generate_ssl_files "${site_info_temp[@]}"
 # configure_website "${site_info_temp[@]}"
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/          Utility Functions          /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-
-# Function for error handling
-# Usage: handle_error "Error message"
-function handle_error () {
-	echo "⚠️  Error: $1 💥"
-	echo "Run `vagrant halt` then restore the last snapshot before trying again."
-	exit 1
-}
-
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
-function announce_success () {
-	icon="✅"
-
-	if [ -n "$2" ] && [ "$2" -eq 1 ]; then
-		icon="👍"
-	fi
-
-	echo "$icon $1"
-}
-
-# Function to announce a job not needing to be done
-# Usage: announce_no_job "Nothing to do."
-function announce_no_job () {
-	echo "👍 $1"
-}
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
