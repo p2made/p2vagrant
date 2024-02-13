@@ -42,10 +42,22 @@ function install_apache
 	# Update package lists & install packages
 	update_and_install_packages $PACKAGE_LIST
 
+	# Enable required Apache modules
+	a2enmod rewrite
+	a2enmod ext_filter
+	a2enmod ssl
+
 	announce_success "Apache packages installed successfully!"
 
 	# Install Markdown rendering packages
 	update_and_install_packages $MARKDOWN_PACKAGES
+
+	# Add configuration for handling Markdown files
+	echo "AddType text/html .md" >> /etc/apache2/apache2.conf
+
+	# Add handler for .md files
+	echo "AddHandler cgi-script .md" >> /etc/apache2/conf-available/markdown.conf
+	a2enconf markdown
 
 	announce_success "Markdown rendering packages installed successfully!"
 end
@@ -85,23 +97,11 @@ function configure_default_website
 	# Set permissions on web server files
 	chmod -R 755 $SHARED_HTML/*
 
-	# Add configuration for handling Markdown files
-	echo "AddType text/html .md" >> /etc/apache2/apache2.conf
-
-	# Add handler for .md files
-	echo "AddHandler cgi-script .md" >> /etc/apache2/conf-available/markdown.conf
-	a2enconf markdown
-
 	# Enable the new site
 	a2ensite local.conf
 
 	# Disable the default site
 	a2dissite 000-default
-
-	# Enable required Apache modules
-	a2enmod ext_filter
-	a2enmod rewrite
-	a2enmod ssl
 end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
