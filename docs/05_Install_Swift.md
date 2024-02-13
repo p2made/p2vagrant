@@ -6,6 +6,8 @@ Updated: 2024-02-13
 
 Swift can be installed at any time after this, so I'm putting it here. It can be skipped entirely, or come back to later.
 
+🚨 If you think you want to install Swift, think about it hard. It adds more than `5 GB` to the size of your VM. 
+
 ### Create `provision/scripts/install_swift.fish`
 
 ```
