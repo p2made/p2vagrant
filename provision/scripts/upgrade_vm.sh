@@ -12,6 +12,7 @@ job_complete="Upgrade completed successfully"
 source /var/www/provision/scripts/common_functions.sh
 
 # Arguments...
+# NONE!
 
 # Script variables...
 # NONE!
