@@ -333,7 +333,6 @@ function update_banner
 	banner_p2project
 	echo "$ua"
 	banner_details $argv
-	#banner_details $argv[1] $argv[2] $argv[3]
 	banner_close
 	echo ""
 end

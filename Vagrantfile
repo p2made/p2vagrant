@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 06 Install Apache (with SSL & Markdown)
-# Generated: 2024-02-13
+# 07 Install PHP (with Composer)
+# Generated: 2024-02-14
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -17,6 +17,7 @@ VM_FOLDER           = "/var/www"
 
 # Software Versions
 SWIFT_VERSION       = "5.9.2"
+PHP_VERSION         = "8.3"
 
 Vagrant.configure("2") do |config|
 
@@ -41,6 +42,7 @@ Vagrant.configure("2") do |config|
 #	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_HOSTNAME, VM_IP]
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_HOSTNAME, VM_IP]
+	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
 
 end
