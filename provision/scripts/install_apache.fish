@@ -99,6 +99,7 @@ function configure_default_website
 	a2dissite 000-default
 
 	# Enable required Apache modules
+	a2enmod ext_filter
 	a2enmod rewrite
 	a2enmod ssl
 end
