@@ -25,10 +25,10 @@ set PACKAGE_LIST \
 	apache2-data \
 	apache2-utils
 
-
 set MARKDOWN_PACKAGES \
 	libcgi-pm-perl \
 	libcgi-fast-perl \
+	pandoc \
 	markdown
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
