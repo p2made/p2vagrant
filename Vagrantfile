@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 07 Install PHP (with Composer)
+# 08 Install MySQL
 # Generated: 2024-02-14
 
 # Machine Variables
@@ -18,6 +18,14 @@ VM_FOLDER           = "/var/www"
 # Software Versions
 SWIFT_VERSION       = "5.9.2"
 PHP_VERSION         = "8.3"
+MYSQL_VERSION       = "8.3"
+
+# Database Variables
+ROOT_PASSWORD       = "RootPassw0rd"
+DB_USERNAME         = "fredspotty"
+DB_PASSWORD         = "Passw0rd"
+DB_NAME             = "example_db"
+DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
@@ -43,6 +51,7 @@ Vagrant.configure("2") do |config|
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
 #	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]
 #	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_HOSTNAME, VM_IP]
-	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
