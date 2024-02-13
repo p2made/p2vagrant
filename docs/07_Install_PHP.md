@@ -223,7 +223,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 --
 
 <!-- 07 Install PHP (with Composer) -->
-| [06 Install Apache (with SSL)](./06_Install_Apache.md)
+| [06 Install Apache (with SSL & Markdown)](./06_Install_Apache.md)
 | [**Back to Steps**](../README.md)
 | [08 Install MySQL](./08_Install_MySQL.md)
 |
