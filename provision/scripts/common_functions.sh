@@ -103,123 +103,21 @@ function setup_site_variables {
 	# $site_info_temp[5] is the vhosts filename
 	# $site_info_temp[6] is the SSL filename
 
-	IFS=' ' read -ra split_string <<< "$1"
-
-	site_info_temp[1]=${split_string[1]}                          # 1 domain name
-
-	IFS='.' read -ra parts <<< "${split_string[1]}"
-	reversed=""
-	for part in "${parts[@]}"; do
-		reversed="$part $reversed"
-	done
-
-	site_info_temp[2]=$(echo "$reversed" | sed 's/ $//')          # 2 reverse domain
-	site_info_temp[3]=$(echo "$reversed" | sed 's/ /_/g')         # 3 underscore domain
-
-	site_info_temp[4]="${split_string[2]}.conf"                   # 4 template filename
-
-	if [ -n "${split_string[3]}" ]; then
-		site_info_temp[5]="${split_string[3]}_"
-	else
-		site_info_temp[5]=""
-	fi
-
-	site_info_temp[5]="${site_info_temp[5]}${site_info_temp[3]}.conf"  # 5 vhosts filename
-	site_info_temp[6]="${site_info_temp[3]}_$TODAYS_DATE"             # 6 SSL base filename
 }
 
 # Function to write the vhosts file from a template
 # Usage: write_vhosts_file $domain $underscore_domain $template_filename $vhosts_filename $ssl_base_filename
 function write_vhosts_file {
-	domain=$1
-	underscore_domain=$2
-	template_filename=$3
-	vhosts_filename=$4
-	ssl_base_filename=$5
-
-	# Check if the template file exists
-	if [ ! -f "$PROVISION_TEMPLATES/$template_filename" ]; then
-		handle_error "Template file $template_filename.conf not found in $PROVISION_TEMPLATES"
-	fi
-
-	# Use sed to replace placeholders in the template and save it to the new file
-	sed -e "s|{{DOMAIN}}|$domain|g" \
-		-e "s|{{UNDERSCORE_DOMAIN}}|$underscore_domain|g" \
-		-e "s|{{SSL_BASE_FILENAME}}|$ssl_base_filename|g" \
-		-e "s|{{TODAYS_DATE}}|$TODAYS_DATE|g" \
-		"$PROVISION_TEMPLATES/$template_filename" > "$PROVISION_VHOSTS/$vhosts_filename"
-
-	# Output progress message
-	announce_success "Vhosts file for $domain created at $PROVISION_VHOSTS/$vhosts_filename"
 }
 
 # Function to generate SSL files
 # Usage: generate_ssl_files $domain $ssl_base_filename
 function generate_ssl_files {
-	domain=$1
-	ssl_key="$PROVISION_SSL/$2.key"
-	ssl_cert="$PROVISION_SSL/$2.cert"
-
-	# Check if SSL folder exists
-	if [ ! -d "$PROVISION_SSL" ]; then
-		handle_error "SSL folder $PROVISION_SSL not found"
-	fi
-
-	# Generate SSL key
-	echo "🔄 Generating SSL key 🔄"
-	if ! openssl genrsa -out "$ssl_key" 2048; then
-		handle_error "Failed to generate SSL key for $domain"
-	fi
-
-	# Output progress message
-	announce_success "SSL key for $domain generated at $ssl_key."
-
-	# Generate self-signed SSL certificate
-	echo "🔄 Generating self-signed SSL certificate 🔄"
-	if ! openssl req -nodes -x509 -key "$ssl_key" -out "$ssl_cert" -days 3650 -subj "/CN=$domain"; then
-		handle_error "Failed to generate self-signed SSL certificate for $domain"
-	fi
-
-	# Output progress message
-	announce_success "Self-signed SSL certificate for $domain generated at $ssl_cert."
-
-	announce_success "SSL files for $domain generated successfully!"
-
-	# Display information about the generated certificate
-	openssl x509 -noout -text -in "$ssl_cert"
 }
 
 # Function to configure a website with everything done so far
 # Usage: configure_website $domain $underscore_domain $vhosts_filename $ssl_base_filename
 function configure_website {
-	domain=$1
-	site_folder="$VM_FOLDER/$2"
-	vhosts_filename=$3
-	ssl_base_filename=$4
-
-	# Put `conf` & SSL files into place
-	sudo cp -f "$PROVISION_VHOSTS/$vhosts_filename" /etc/apache2/sites-available/
-	sudo cp -f "$PROVISION_SSL/$ssl_base_filename".* /etc/apache2/sites-available/
-
-	# Create site root if it doesn't already exist
-	mkdir -p "$site_folder"
-
-	web_files=("index.md" "index.htm" "index.html")
-
-	# Check if argv[2] is not "html"
-	if [ "$2" != "html" ]; then
-		web_files+=("index.php" "phpinfo.php" "db.php")
-	fi
-
-	for file in "${web_files[@]}"; do
-		cp -u "$PROVISION_HTML/$file" "$site_folder/"
-	done
-
-	# Enable site
-	sudo a2ensite "$vhosts_filename"
-
-	# Output progress message
-	echo "Website configured for $domain"
 }
 
 # Example usage:
