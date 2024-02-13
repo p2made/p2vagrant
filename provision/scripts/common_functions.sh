@@ -34,12 +34,15 @@ function update_package_lists () {
 # Function to upgrade packages if updates are available
 # Usage: upgrade_packages
 function upgrade_packages () {
+	echo "⬆️ Upgrading packages ⬆️"
+
+	# Check if there are packages to upgrade
 	if ! apt-get -q -s upgrade 2>&1 | grep -q '^[[:digit:]]\+ upgraded'; then
 		announce_no_job "No packages to upgrade."
 		return
 	fi
 
-	echo "⬆️ Upgrading packages ⬆️"
+	# Actually perform the upgrade
 	if ! apt-get -qy upgrade 2>&1; then
 		handle_error "Failed to upgrade packages"
 	fi
@@ -70,12 +73,15 @@ function update_and_install_packages () {
 
 # Function to remove unnecessary packages
 function remove_unnecessary_packages () {
+	echo "🧹 Removing unnecessary packages 🧹"
+
+	# Check if there are packages to remove
 	if ! apt-get autoremove --dry-run | grep -q '^[[:digit:]]\+ packages will be removed'; then
 		announce_no_job "No unnecessary packages to remove."
 		return
 	fi
 
-	echo "🧹 Removing unnecessary packages 🧹"
+	# Actually remove them
 	if ! apt-get -qy autoremove; then
 		handle_error "Failed to remove unnecessary packages"
 	fi
