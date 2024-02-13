@@ -6,7 +6,7 @@ Updated: 2024-02-13
 
 Swift can be installed at any time after this, so I'm putting it here. It can be skipped entirely, or come back to later.
 
-🚨 If you think you want to install Swift, think about it hard. It adds more than `5 GB` to the size of your VM. 
+🚨 If you think you want to install Swift, think about it hard. It adds more than `5 GB` to the size of your VM.
 
 ### Create `provision/scripts/install_swift.fish`
 
@@ -169,6 +169,31 @@ If the VM is running
 
 ```
 vagrant reload --provision
+```
+
+### Check that Swift is Working
+
+```
+vagrant ssh
+swift -v
+```
+
+For output like...
+
+```
+Swift version 5.9.2 (swift-5.9.2-RELEASE)
+Target: aarch64-unknown-linux-gnu
+/usr/share/swift/usr/bin/swift-help intro
+
+Welcome to Swift!
+
+Subcommands:
+
+  swift build      Build Swift packages
+  swift package    Create and work on packages
+  swift run        Run a program from a package
+  swift test       Run package tests
+  swift repl       Experiment with Swift code interactively
 ```
 
 ### All good?
