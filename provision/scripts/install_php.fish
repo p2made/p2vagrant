@@ -3,16 +3,13 @@
 # 07 Install PHP (with Composer)
 
 set script_name     "install_php.fish"
-set updated_date    "2024-02-12"
+set updated_date    "2024-02-13"
 
 set active_title    "Installing PHP (with Composer 🙃)"
 set job_complete    "PHP Installed (with Composer 🙃)"
 
 # Source common functions
 source /var/www/provision/scripts/common_functions.fish
-
-header_banner $active_title $script_name $updated_date
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
 
 # Arguments...
 set PHP_VERSION    $argv[1]

@@ -25,6 +25,12 @@ set PACKAGE_LIST \
 	apache2-data \
 	apache2-utils
 
+
+set MARKDOWN_PACKAGES \
+	libcgi-pm-perl \
+	libcgi-fast-perl \
+	markdown
+
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Function to install Apache
@@ -37,6 +43,11 @@ function install_apache
 	update_and_install_packages $PACKAGE_LIST
 
 	announce_success "Apache packages installed successfully!"
+
+	# Install Markdown rendering packages
+	update_and_install_packages $MARKDOWN_PACKAGES
+
+	announce_success "Markdown rendering packages installed successfully!"
 end
 
 # Function to configure the default website
@@ -76,8 +87,18 @@ function configure_default_website
 	# Set permissions on web server files
 	chmod -R 755 $SHARED_HTML/*
 
+	# Add handler for .md files
+	echo "AddHandler cgi-script .md" \
+		>> /etc/apache2/conf-available/markdown.conf
+	a2enconf markdown
+
+	# Enable the new site
 	a2ensite local.conf
+
+	# Disable the default site
 	a2dissite 000-default
+
+	# Enable required Apache modules
 	a2enmod rewrite
 	a2enmod ssl
 end
