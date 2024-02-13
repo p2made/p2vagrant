@@ -3,7 +3,7 @@
 # 05 Install Swift (optional)
 
 set script_name     "install_swift.fish"
-set updated_date    "2024-02-12"
+set updated_date    "2024-02-13"
 
 set active_title    "Installing Swift"
 set job_complete    "Swift Installed"
