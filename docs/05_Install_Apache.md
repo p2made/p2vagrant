@@ -293,6 +293,11 @@ Add this line...
 192.168.22.42   p2vagrant
 ```
 
+⚠️ **DO NOT** change anything already in your `hosts` file unless you are supremely confident of what you are doing. I use a separator line, & only edit below it...
+
+```
+# original above, additions below
+```
 
 ### Visit
 

@@ -6,12 +6,6 @@ Updated: 2024-02-12
 
 Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell. After that fish is the shell in `ssh` sessions & provisioning scripts.
 
-The instructions given assume the use of [Homebrew](https://brew.sh). If you don't have it installed, run...
-
-```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
 ### Install VMware Fusion
 
 Go to the [VMware Fusion evaluation page](https://www.vmware.com/au/products/fusion/fusion-evaluation.html) & click [REGISTER FOR A PERSONAL USE LICENSE](https://www.vmware.com/go/getfusionplayer). There either log in, if you already have a VMware user account, or register. Once logged in, you automatically be redirected to the download page for the VMware universal installer.
@@ -123,7 +117,10 @@ Save the moment with a [Snapshot](./Snapshots.md).
 --
 
 <!-- 01 Create Bare VM -->
-| [00 blank](./00_blank.md)
+| [00 Getting Ready](./00_Getting_Ready.md)
 | [**Back to Steps**](../README.md)
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 |
+
+--
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺
