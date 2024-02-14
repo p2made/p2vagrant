@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 04 Install Swift
+# 05 Install Apache (with SSL & Markdown)
 # Generated: 2024-02-14
 
 # Machine Variables
@@ -39,6 +39,7 @@ Vagrant.configure("2") do |config|
 
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
-	config.vm.provision :shell, path: "provision/scripts/install_swift.sh", args: [SWIFT_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_swift.sh", args: [SWIFT_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh", args: [VM_HOSTNAME]
 
 end

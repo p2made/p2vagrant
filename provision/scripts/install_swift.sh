@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 05 Install Swift (optional)
+# 04 Install Swift (optional)
 
 script_name="install_swift.sh"
 updated_date="2024-02-13"
