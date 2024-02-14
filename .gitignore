@@ -26,4 +26,4 @@ vm_logs/*
 /Vagrantfile
 
 # z_gitignore folder
-z_gitignore
+/z_gitignore
