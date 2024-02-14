@@ -1,7 +1,5 @@
 # 01 Create Bare VM
 
-Updated: 2024-02-12
-
 --
 
 Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell. After that fish is the shell in `ssh` sessions.

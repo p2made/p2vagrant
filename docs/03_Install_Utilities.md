@@ -1,7 +1,5 @@
 # 03 Install Utilities
 
-Updated: 2024-02-14
-
 --
 
 ### Create `provision/scripts/install_utilities.sh`
@@ -26,7 +24,8 @@ TIMEZONE=$1         # "Australia/Brisbane"
 
 # Script variables...
 
-# Always set package_list when using update_and_install_packages
+# Always set package_list when using...
+# install_packages() or update_and_install_packages()
 package_list=(
 	"apt-transport-https"
 	"bzip2"
@@ -54,7 +53,7 @@ package_list=(
 	"yarn"
 )
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to set Fish as the default shell
 function set_fish_as_default_shell() {
@@ -67,6 +66,8 @@ function set_fish_as_default_shell() {
 	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
 }
 
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
 function provision() {
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
@@ -75,7 +76,14 @@ function provision() {
 
 	# Set timezone
 	echo "🕤 Setting timezone to $TIMEZONE 🕓"
-	timedatectl set-timezone "$TIMEZONE" --no-ask-password
+	sudo timedatectl set-timezone "$TIMEZONE" --no-ask-password
+
+	# Set the hostname using hostnamectl
+	echo "🕤 Setting hostname to $VM_HOSTNAME 🕓"
+	sudo hostnamectl set-hostname $VM_HOSTNAME
+
+	# Update /etc/hosts to include the new hostname
+	sudo sed -i "s/127.0.1.1.*/127.0.1.1\t$VM_HOSTNAME/" /etc/hosts
 
 	# Add Fish Shell repository
 	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
@@ -94,6 +102,9 @@ function provision() {
 
 	# Footer banner
 	footer_banner "$job_complete"
+
+	# Reboot the system
+	sudo reboot
 }
 
 provision
@@ -185,3 +196,9 @@ Save the moment with a [Snapshot](./Snapshots.md).
 | [**Back to Steps**](../README.md)
 | [04 Install Swift (optional)](./04_Install_Swift.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 05 Install Apache (with SSL & Markdown)
+# 03 Install Utilities
 # Generated: 2024-02-15
 
 # Machine Variables
@@ -14,9 +14,6 @@ CPUS                = 1
 # Synced Folders
 HOST_FOLDER         = "."
 VM_FOLDER           = "/var/www"
-
-# Software Versions
-SWIFT_VERSION       = "5.9.2"
 
 Vagrant.configure("2") do |config|
 
@@ -38,8 +35,6 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_swift.sh", args: [SWIFT_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/install_apache.sh", args: [VM_HOSTNAME]
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [VM_HOSTNAME, TIMEZONE]
 
 end

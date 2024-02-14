@@ -1,7 +1,5 @@
 # 00 Geting Ready
 
-Updated: 2024-02-15
-
 --
 
 Building this VM assumes the use of [Homebrew](https://brew.sh). If you don't have it installed, run...

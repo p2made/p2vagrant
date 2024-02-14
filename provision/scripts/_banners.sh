@@ -125,7 +125,7 @@ function footer_banner() {
 	echo "$ua"
 	peace_banner $(( (RANDOM % 4) + 1 ))
 	echo "$ua"
-	echo "$ua p2vagrant - (c) Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
+	echo "$ua           p2vagrant - (c) Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
 	banner_close
 }
 

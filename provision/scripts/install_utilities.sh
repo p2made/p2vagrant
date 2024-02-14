@@ -13,7 +13,8 @@ source /var/www/provision/scripts/_banners.sh
 source /var/www/provision/scripts/_common.sh
 
 # Arguments...
-TIMEZONE=$1         # "Australia/Brisbane"
+VM_HOSTNAME=$1      # "p2vagrant"
+TIMEZONE=$2         # "Australia/Brisbane"
 
 # Script variables...
 
@@ -69,11 +70,11 @@ function provision() {
 
 	# Set timezone
 	echo "🕤 Setting timezone to $TIMEZONE 🕓"
-	sudo timedatectl set-timezone "$TIMEZONE" --no-ask-password
+	sudo timedatectl set-timezone "$TIMEZONE"
 
 	# Set the hostname using hostnamectl
-	echo "🕤 Setting hostname to $VM_HOSTNAME 🕓"
-	sudo hostnamectl set-hostname $VM_HOSTNAME
+	echo "⚙️ Setting hostname to $VM_HOSTNAME ⚙️"
+	sudo hostnamectl set-hostname "$VM_HOSTNAME"
 
 	# Update /etc/hosts to include the new hostname
 	sudo sed -i "s/127.0.1.1.*/127.0.1.1\t$VM_HOSTNAME/" /etc/hosts
@@ -90,8 +91,12 @@ function provision() {
 		echo 'cd /var/www' >> /home/vagrant/.profile
 
 	# Display Time Zone information
-	echo "📄 Displaying Time Zone information 📄"
+	echo "🕤 Displaying Time Zone information 🕤"
 	timedatectl
+
+	# Display hostname information
+	echo "⚙️ Displaying Time Zone information ⚙️"
+	hostnamectl
 
 	# Footer banner
 	footer_banner "$job_complete"
@@ -101,7 +106,3 @@ function provision() {
 }
 
 provision
-
-
-
-
