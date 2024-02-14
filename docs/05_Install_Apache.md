@@ -53,17 +53,13 @@ function install_apache() {
 	install_packages $package_list
 
 	# Enable required Apache modules
-	a2enmod rewrite ||
-		handle_error "Failed to enable mod_rewrite"
-	a2enmod ssl ||
-		handle_error "Failed to enable mod_ssl"
+	a2enmod rewrite
+	a2enmod ext_filter
+	a2enmod ssl
 
 	announce_success "Apache packages installed successfully!"
 
 	install_packages $markdown_packages
-
-	a2enmod ext_filter ||
-		handle_error "Failed to enable mod_ext_filter"
 
 	announce_success "Markdown rendering packages installed successfully!"
 }

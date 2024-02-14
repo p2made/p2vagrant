@@ -87,7 +87,7 @@ function provision() {
 	sudo sed -i "s/127.0.1.1.*/127.0.1.1\t$VM_HOSTNAME/" /etc/hosts
 
 	# Add Fish Shell repository
-	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
+	LC_ALL=C.UTF-8 add-apt-repository -yu ppa:fish-shell/release-3
 
 	install_packages $package_list
 
