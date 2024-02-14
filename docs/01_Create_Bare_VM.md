@@ -4,7 +4,7 @@ Updated: 2024-02-12
 
 --
 
-Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell. After that fish is the shell in `ssh` sessions & provisioning scripts.
+Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell. After that fish is the shell in `ssh` sessions.
 
 ### Install VMware Fusion
 
@@ -58,8 +58,6 @@ started with an older version of Vagrant.
 * `v.gui` needs to be set to `true`.
 * `v.memory` & `v.cpus` might as well be set now.
 * Same for `config.vm.network`.
-
-If you change nothing else in these `Vagrantfile`s, take a hard look at `VM_IP`.  That must be an IP address in the `192.168.x.x` range, that is not in use on your host Mac, or any LAN that you connect to. If you deploy more than one VM on your Mac, they **must** have different settings for `VM_IP`.
 
 ```
 # -*- mode: ruby -*-
