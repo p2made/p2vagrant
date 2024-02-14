@@ -207,3 +207,9 @@ Save the moment with a [Snapshot](./Snapshots.md).
 | [**Back to Steps**](../README.md)
 | [05 Install Apache (with SSL & Markdown)](./05_Install_Apache.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

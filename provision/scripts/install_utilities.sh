@@ -100,9 +100,9 @@ function provision() {
 
 	# Footer banner
 	footer_banner "$job_complete"
-
-	# Reboot the system
-	sudo reboot
 }
 
 provision
+
+# Reboot the system
+sudo reboot

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # _common.sh
-# Updated: 2024-02-14
 
 # Script constants...
 TODAYS_DATE=$(env TZ=Australia/Brisbane date "+%Y-%m-%d")

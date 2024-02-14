@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # _banners.sh
-# Updated: 2024-02-14
 
 # Script constants...
 au="🇦🇺"

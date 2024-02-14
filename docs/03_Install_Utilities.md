@@ -177,7 +177,9 @@ If the VM is running
 vagrant reload --provision
 ```
 
-### Cgeck the VM...
+Get a ☕️, grab some 🍿, go walk the 🦮. A whole lot of dependancies get installed, so it takes a while.
+
+### Check the VM...
 
 A good check for this step is to simply `ssh` into the VM to see whether `fish` is actually the shell.
 
