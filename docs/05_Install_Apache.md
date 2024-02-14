@@ -19,7 +19,8 @@ set active_title    "Installing Apache (with SSL 🔐 & Markdown 📄 🎊)"
 set job_complete    "Apache Installed (with SSL 🔐 & Markdown 📄 🎊)"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.fish
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
 
 # Arguments...
 set VM_HOSTNAME     $argv[1]

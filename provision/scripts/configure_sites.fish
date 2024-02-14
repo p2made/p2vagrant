@@ -9,7 +9,8 @@ set active_title    "Configuring Websites"
 set job_complete    "Websites Configured"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.fish
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
 
 # Arguments...
 # NONE!"

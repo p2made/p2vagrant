@@ -1,6 +1,6 @@
 #!/bin/fish
 
-# 06 Install Apache (with SSL & Markdown)
+# 05 Install Apache (with SSL & Markdown)
 
 set script_name     "install_apache.fish"
 set updated_date    "2024-02-13"
@@ -9,7 +9,8 @@ set active_title    "Installing Apache (with SSL 🔐 & Markdown 📄 🎊)"
 set job_complete    "Apache Installed (with SSL 🔐 & Markdown 📄 🎊)"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.fish
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
 
 # Arguments...
 set VM_HOSTNAME     $argv[1]
@@ -24,7 +25,7 @@ set package_list \
 	apache2-data \
 	apache2-utils
 
-set MARKDOWN_PACKAGES \
+set markdown_packages \
 	markdown \
 	pandoc
 
@@ -47,7 +48,7 @@ function install_apache
 	announce_success "Apache packages installed successfully!"
 
 	# Install Markdown rendering packages
-	update_and_install_packages $MARKDOWN_PACKAGES
+	update_and_install_packages $markdown_packages
 
 	# Add configuration for handling Markdown files
 	echo "AddType text/html .md" >> /etc/apache2/apache2.conf
