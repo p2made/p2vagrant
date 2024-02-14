@@ -1,10 +1,10 @@
-# 07 Install PHP (with Composer 🙃)
+# 06 Install PHP (with Composer 🙃)
 
 Updated: 2024-02-13
 
 --
 
-### Create `provision/scripts/install_php.fish`
+### Create `provision/scripts/install_php.sh`
 
 ```
 #!/bin/fish
@@ -194,7 +194,7 @@ end
 Or run...
 
 ```
-./vg 7
+./vg 6
 ```
 
 ### Provision the VM
