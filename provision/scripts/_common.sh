@@ -25,8 +25,8 @@ VM_LOGS_FOLDER=$VM_FOLDER/vm_logs
 # Function for error handling
 # Usage: handle_error "Error message"
 function handle_error() {
-	echo "⚠️  Error: $1 💥"
-	echo "Run `vagrant halt` then restore the last snapshot before trying again."
+	echo "⚠️   Error: $1 💥"
+	echo "Run 'vagrant halt' then restore the last snapshot before trying again."
 	exit 1
 }
 
@@ -39,13 +39,13 @@ function announce_success() {
 		icon="👍"
 	fi
 
-	echo "$icon $1"
+	echo "$icon  $1"
 }
 
 # Function to announce a job not needing to be done
 # Usage: announce_no_job "Nothing to do."
 function announce_no_job() {
-	echo "👍 $1"
+	echo "👍  $1"
 }
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
@@ -56,6 +56,7 @@ function announce_no_job() {
 
 function update_package_lists() {
 	echo "🔄 Updating package lists 🔄"
+
 	if ! apt-get -q update 2>&1; then
 		handle_error "Failed to update package lists"
 	fi
@@ -83,24 +84,17 @@ function upgrade_packages() {
 }
 
 # Function to install packages with error handling
-# Usage: install_packages "$@"
+# Usage: install_packages "${package_list[@]}"
 function install_packages() {
 	echo "🔄 Installing Packages 🔄"
-	for package in "${package_list[@]}"; do
+
+	for package in "${@}"; do
 		if ! apt-get -qy install "$package"; then
 			handle_error "Failed to install packages"
 		fi
 	done
 
 	announce_success "Packages installed successfully!"
-}
-
-# Function to update package lists the install packages with error handling
-# invokes update_package_lists & install_packages in a single call
-# Usage: update_and_install_packages $package_list
-function update_and_install_packages() {
-	update_package_lists
-	install_packages $argv
 }
 
 # Function to remove unnecessary packages

@@ -25,6 +25,9 @@ package_list=(
 	"apache2-bin"
 	"apache2-data"
 	"apache2-utils"
+)
+
+markdown_packages=(
 	"markdown"
 	"pandoc"
 )
@@ -35,25 +38,27 @@ package_list=(
 # Usage: install_apache
 function install_apache() {
 	# Add repository for ondrej/apache2
-	LC_ALL=C.UTF-8 add-apt-repository -yu ppa:ondrej/apache2
+	LC_ALL=C.UTF-8 add-apt-repository -yu ppa:ondrej/apache2 ||
+		handle_error "Failed to add Apache repository"
 
 	# Update package lists & install packages
-	update_and_install_packages "${package_list[@]}"
+	update_package_lists
+	install_packages $package_list
 
 	# Enable required Apache modules
-	a2enmod rewrite
-	a2enmod mod_md
-	a2enmod ext_filter
-	a2enmod ssl
+	a2enmod rewrite ||
+		handle_error "Failed to enable mod_rewrite"
+	a2enmod ssl ||
+		handle_error "Failed to enable mod_ssl"
 
-	# Add configuration for handling Markdown files
-	echo "AddType text/html .md" >> /etc/apache2/apache2.conf
+	announce_success "Apache packages installed successfully!"
 
-	# Add handler for .md files
-	echo "AddHandler cgi-script .md" >> /etc/apache2/conf-available/markdown.conf
-	a2enconf markdown
+	install_packages $markdown_packages
 
-	announce_success "pache & Markdown packages installed successfully!"
+	a2enmod ext_filter ||
+		handle_error "Failed to enable mod_ext_filter"
+
+	announce_success "Markdown rendering packages installed successfully!"
 }
 
 # Function to configure the default website

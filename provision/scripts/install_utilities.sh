@@ -82,6 +82,7 @@ function provision() {
 	# Add Fish Shell repository
 	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
 
+	update_package_lists
 	install_packages $package_list
 
 	set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
