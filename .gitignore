@@ -6,9 +6,6 @@
 
 # Vagrant
 .vagrant/*
-!.vagrant/.p2vagrant
-vagrant/*
-!vagrant/.p2vagrant
 
 # folders to preserve empty
 html/*
