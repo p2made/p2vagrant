@@ -116,8 +116,8 @@ function setup_site_variables
 end
 
 # Function to write the vhosts file from a template
-# Usage: write_vhosts_file $domain $underscore_domain $template_filename $vhosts_filename $ssl_base_filename
-function write_vhosts_file
+# Usage: generate_vhosts_file $domain $underscore_domain $template_filename $vhosts_filename $ssl_base_filename
+function generate_vhosts_file
 	set domain            $argv[1]
 	set underscore_domain $argv[2]
 	set template_filename $argv[3]

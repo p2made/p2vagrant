@@ -73,7 +73,7 @@ function configure_default_website
 	set ssl_base_filename "$domain"_"$TODAYS_DATE"
 
 	# Now go configure some web sites
-	write_vhosts_file \
+	generate_vhosts_file \
 		$domain \
 		$underscore_domain \
 		$template_filename \

@@ -46,7 +46,7 @@ package_list=(
 	"yarn"
 )
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to set Fish as the default shell
 function set_fish_as_default_shell() {
@@ -58,6 +58,8 @@ function set_fish_as_default_shell() {
 
 	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
 }
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 function provision() {
 	# Header banner
