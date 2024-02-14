@@ -154,7 +154,7 @@ end
 Or run...
 
 ```
-./vg 5
+./vg 4
 ```
 
 ### Provision the VM...
@@ -202,8 +202,8 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 05 Install Swift (optional) -->
-| [04 Upgrade VM (revisited)](./04_Upgrade_VM.md)
+<!-- 04 Install Swift (optional) -->
+| [03 Install Utilities](./03_Install_Utilities.md)
 | [**Back to Steps**](../README.md)
-| [06 Install Apache (with SSL & Markdown)](./06_Install_Apache.md)
+| [05 Install Apache (with SSL & Markdown)](./05_Install_Apache.md)
 |

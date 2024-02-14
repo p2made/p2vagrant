@@ -183,5 +183,5 @@ Save the moment with a [Snapshot](./Snapshots.md).
 <!-- 03 Install Utilities -->
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 | [**Back to Steps**](../README.md)
-| [04 Upgrade VM (revisited)](./04_Upgrade_VM.md)
+| [04 Install Swift (optional)](./04_Install_Swift.md)
 |
