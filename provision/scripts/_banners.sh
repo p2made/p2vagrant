@@ -128,5 +128,18 @@ function footer_banner() {
 	banner_close
 }
 
+# Function to write footer banner
+# Usage: footer_banner $job_complete
+function footer_reboot() {
+	echo ""
+	banner_open
+	echo "$ua           🏆 $1 ‼️"
+	echo "$ua"
+	peace_banner $(( (RANDOM % 4) + 1 ))
+	echo "$ua"
+	echo "$ua           p2vagrant must reboot now 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
+	banner_close
+}
+
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 

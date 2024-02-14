@@ -99,7 +99,7 @@ function provision() {
 	hostnamectl
 
 	# Footer banner
-	footer_banner "$job_complete"
+	footer_reboot "$job_complete"
 }
 
 provision
