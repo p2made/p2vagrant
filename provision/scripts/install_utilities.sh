@@ -69,7 +69,14 @@ function provision() {
 
 	# Set timezone
 	echo "🕤 Setting timezone to $TIMEZONE 🕓"
-	timedatectl set-timezone "$TIMEZONE" --no-ask-password
+	sudo timedatectl set-timezone "$TIMEZONE" --no-ask-password
+
+	# Set the hostname using hostnamectl
+	echo "🕤 Setting hostname to $VM_HOSTNAME 🕓"
+	sudo hostnamectl set-hostname $VM_HOSTNAME
+
+	# Update /etc/hosts to include the new hostname
+	sudo sed -i "s/127.0.1.1.*/127.0.1.1\t$VM_HOSTNAME/" /etc/hosts
 
 	# Add Fish Shell repository
 	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
@@ -88,6 +95,13 @@ function provision() {
 
 	# Footer banner
 	footer_banner "$job_complete"
+
+	# Reboot the system
+	sudo reboot
 }
 
 provision
+
+
+
+
