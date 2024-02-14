@@ -5,18 +5,20 @@
 .localized
 
 # Vagrant
-/.vagrant
-/vagrant
+.vagrant/*
+!.vagrant/.p2vagrant
+vagrant/*
+!vagrant/.p2vagrant
 
 # folders to preserve empty
 html/*
 !html/.p2vagrant
+provision/notes/*
+!provision/notes/.p2vagrant
 provision/ssl/*
 !provision/ssl/.p2vagrant
 provision/vhosts/*
 !provision/vhosts/.p2vagrant
-provision/notes/*
-!provision/notes/.p2vagrant
 vm_logs/*
 !vm_logs/.p2vagrant
 
@@ -24,8 +26,8 @@ vm_logs/*
 **_/
 
 # Exclude the Vagrantfile
-/Vagrantfile
+Vagrantfile/*
+!Vagrantfile/.p2vagrant
 
 # z_gitignore folder
 z_gitignore
-
