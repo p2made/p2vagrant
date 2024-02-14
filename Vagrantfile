@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 03 Install Utilities
+# 04 Install Swift
 # Generated: 2024-02-14
 
 # Machine Variables
@@ -14,6 +14,9 @@ CPUS                = 1
 # Synced Folders
 HOST_FOLDER         = "."
 VM_FOLDER           = "/var/www"
+
+# Software Versions
+SWIFT_VERSION       = "5.9.2"
 
 Vagrant.configure("2") do |config|
 
@@ -35,6 +38,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_swift.sh", args: [SWIFT_VERSION]
 
 end

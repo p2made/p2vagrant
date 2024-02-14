@@ -26,8 +26,8 @@ TIMEZONE=$1         # "Australia/Brisbane"
 
 # Script variables...
 
-# Always set PACKAGE_LIST when using update_and_install_packages
-PACKAGE_LIST=(
+# Always set package_list when using update_and_install_packages
+package_list=(
 	"apt-transport-https"
 	"bzip2"
 	"ca-certificates"
@@ -57,7 +57,7 @@ PACKAGE_LIST=(
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
 # Function to set Fish as the default shell
-function set_fish_as_default_shell () {
+function set_fish_as_default_shell() {
 	if ! sudo usermod -s /usr/bin/fish vagrant; then
 		handle_error "Failed to set Fish shell as default"
 	fi
@@ -67,7 +67,7 @@ function set_fish_as_default_shell () {
 	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
 }
 
-function advance_vm () {
+function provision() {
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
@@ -80,7 +80,7 @@ function advance_vm () {
 	# Add Fish Shell repository
 	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
 
-	install_packages $PACKAGE_LIST
+	install_packages $package_list
 
 	set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
 
@@ -96,10 +96,10 @@ function advance_vm () {
 	footer_banner "$job_complete"
 }
 
-advance_vm
+provision
 ```
 
-That function `set_fish_as_default_shell() { ... }` is just as described on the label. It sets [🐟fish🐠](https://fishshell.com) as the default shell. After this step, all the scripts will be 🐠`.fish`🐟, so let's go swimming 🏊🏊‍♀️🏊‍♂️
+That function `set_fish_as_default_shell() { ... }` is just as described on the label. It sets [🐟fish🐠](https://fishshell.com) as the default shell, so let's go swimming 🏊🏊‍♀️🏊‍♂️
 
 ### Update `Vagrantfile`
 
@@ -164,6 +164,14 @@ If the VM is running
 
 ```
 vagrant reload --provision
+```
+
+### Cgeck the VM...
+
+A good check for this step is to simply `ssh` into the VM to see whether `fish` is actually the shell.
+
+```
+vagrant ssh
 ```
 
 ### All good?

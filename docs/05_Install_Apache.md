@@ -28,8 +28,8 @@ set VM_IP           $argv[2]
 # Script variables...
 # NONE!
 
-# Always set PACKAGE_LIST when using update_and_install_packages
-set PACKAGE_LIST \
+# Always set package_list when using update_and_install_packages
+set package_list \
 	apache2 \
 	apache2-bin \
 	apache2-data \
@@ -50,7 +50,7 @@ function install_apache
 	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
 
 	# Update package lists & install packages
-	update_and_install_packages $PACKAGE_LIST
+	update_and_install_packages $package_list
 
 	announce_success "Apache packages installed successfully!"
 
@@ -113,7 +113,7 @@ end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-function advance_vm
+function provision
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
@@ -129,7 +129,7 @@ function advance_vm
 	footer_banner "$job_complete"
 end
 
-advance_vm
+provision
 ```
 
 ### Create `provision/html/index.htm`

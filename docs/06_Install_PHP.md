@@ -29,8 +29,8 @@ set PHP_VERSION    $argv[1]
 # Script variables...
 set PHP_INI        /etc/php/$PHP_VERSION/apache2/php.ini
 
-# Always set PACKAGE_LIST when using update_and_install_packages
-set PACKAGE_LIST \
+# Always set package_list when using update_and_install_packages
+set package_list \
 	php$PHP_VERSION \
 	php-pear \
 	php$PHP_VERSION-bcmath \
@@ -82,7 +82,7 @@ function install_php
 	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/php
 
 	# Update package lists & install packages
-	update_and_install_packages $PACKAGE_LIST
+	update_and_install_packages $package_list
 
 	sed -i 's/max_execution_time = .*/max_execution_time = 60/'         $PHP_INI
 	sed -i 's/post_max_size = .*/post_max_size = 64M/'                  $PHP_INI
@@ -116,7 +116,7 @@ end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-function advance_vm
+function provision
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
@@ -129,7 +129,7 @@ function advance_vm
 	footer_banner "$job_complete"
 end
 
-advance_vm
+provision
 ```
 
 ### Create `provision/html/phpinfo.php`

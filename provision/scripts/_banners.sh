@@ -10,20 +10,20 @@ btb="$btbu$btbu$btbu$btbu$btbu"
 
 # Function to write banner opening
 # Usage: banner_open
-function banner_open () {
+function banner_open() {
 	echo "$ua$btb"
 	echo "$ua"
 }
 
 # Function to write banner closing
 # Usage: banner_close
-function banner_close () {
+function banner_close() {
 	echo "$ua"
 	echo "$ua$btb"
 }
 
 # Usage: banner_p2vagrant
-function banner_p2vagrant () {
+function banner_p2vagrant() {
 	echo "$ua                     ___                                     __"
 	echo "$ua               ____ |__ \_   ______ _____ __________ _____  / /_"
 	echo "$ua              / __ \__/ / | / / __ \`/ __ \`/ ___/ __ \`/ __ \/ __/"
@@ -33,7 +33,7 @@ function banner_p2vagrant () {
 }
 
 # Usage: banner_p2project
-function banner_p2project () {
+function banner_p2project() {
 	echo "$ua                             _"
 	echo "$ua                            (_)____   ____ _"
 	echo "$ua                           / / ___/  / __ \`/"
@@ -52,7 +52,7 @@ function banner_p2project () {
 }
 
 # Usage: banner_details $active_title $script_name $updated_date
-function banner_details () {
+function banner_details() {
 	echo "$ua           🚀 $1 🚀"
 	echo "$ua           📅     on $TODAYS_DATE"
 	echo "$ua"
@@ -62,7 +62,7 @@ function banner_details () {
 
 # Function to write shalom peace salam banner
 # Usage: peace_banner i - where i is 1 to 4
-function peace_banner () {
+function peace_banner() {
 	case $1 in
 		1) # Binary
 			echo "$ua           🕊️  01110011 01101000 01100001 01101100 01101111 01101101 🕊️"
@@ -89,7 +89,7 @@ function peace_banner () {
 
 # Function to write update banner
 # Usage: upgrade_banner $active_title $script_name $updated_date
-function upgrade_banner () {
+function upgrade_banner() {
 	banner_open
 	banner_p2vagrant
 	echo "$ua"
@@ -102,7 +102,7 @@ function upgrade_banner () {
 
 # Function to write header banner
 # Usage: header_banner $active_title $script_name $updated_date
-function header_banner () {
+function header_banner() {
 	banner_open
 	banner_p2vagrant
 	echo "$ua"
@@ -113,7 +113,7 @@ function header_banner () {
 
 # Function to write footer banner
 # Usage: footer_banner $job_complete
-function footer_banner () {
+function footer_banner() {
 	echo ""
 	banner_open
 	echo "$ua           🏆 $1 ‼️"

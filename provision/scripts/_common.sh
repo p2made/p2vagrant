@@ -24,7 +24,7 @@ PROVISION_VHOSTS=$VM_FOLDER/provision/vhosts
 
 # Function for error handling
 # Usage: handle_error "Error message"
-function handle_error () {
+function handle_error() {
 	echo "⚠️  Error: $1 💥"
 	echo "Run `vagrant halt` then restore the last snapshot before trying again."
 	exit 1
@@ -32,7 +32,7 @@ function handle_error () {
 
 # Function to announce success
 # Usage: announce_success "Task completed successfully." [use_alternate_icon]
-function announce_success () {
+function announce_success() {
 	icon="✅"
 
 	if [ -n "$2" ] && [ "$2" -eq 1 ]; then
@@ -44,7 +44,7 @@ function announce_success () {
 
 # Function to announce a job not needing to be done
 # Usage: announce_no_job "Nothing to do."
-function announce_no_job () {
+function announce_no_job() {
 	echo "👍 $1"
 }
 
@@ -54,7 +54,7 @@ function announce_no_job () {
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-function update_package_lists () {
+function update_package_lists() {
 	echo "🔄 Updating package lists 🔄"
 	if ! apt-get -q update 2>&1; then
 		handle_error "Failed to update package lists"
@@ -65,7 +65,7 @@ function update_package_lists () {
 
 # Function to upgrade packages if updates are available
 # Usage: upgrade_packages
-function upgrade_packages () {
+function upgrade_packages() {
 	echo "⬆️ Upgrading packages ⬆️"
 
 	# Check if there are packages to upgrade
@@ -84,9 +84,9 @@ function upgrade_packages () {
 
 # Function to install packages with error handling
 # Usage: install_packages "$@"
-function install_packages () {
+function install_packages() {
 	echo "🔄 Installing Packages 🔄"
-	for package in "${PACKAGE_LIST[@]}"; do
+	for package in "${package_list[@]}"; do
 		if ! apt-get -qy install "$package"; then
 			handle_error "Failed to install packages"
 		fi
@@ -98,13 +98,13 @@ function install_packages () {
 # Function to update package lists the install packages with error handling
 # invokes update_package_lists & install_packages in a single call
 # Usage: update_and_install_packages $package_list
-function update_and_install_packages () {
+function update_and_install_packages() {
 	update_package_lists
 	install_packages $argv
 }
 
 # Function to remove unnecessary packages
-function remove_unnecessary_packages () {
+function remove_unnecessary_packages() {
 	echo "🧹 Removing unnecessary packages 🧹"
 
 	# Check if there are packages to remove

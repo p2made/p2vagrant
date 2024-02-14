@@ -105,7 +105,7 @@ end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-function advance_vm
+function provision
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
@@ -117,7 +117,7 @@ function advance_vm
 	footer_banner "$job_complete"
 end
 
-advance_vm
+provision
 ```
 
 ### Update `Vagrantfile`

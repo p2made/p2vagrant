@@ -39,8 +39,8 @@ set -a err_string (echo "Failed to grant privileges on $DB_NAME")
 set -a err_string (echo "Failed to grant privileges on $DB_NAME_TEST")
 set -a err_string (echo "Failed to flush privileges")
 
-# Always set PACKAGE_LIST when using install_packages or update_and_install_packages
-set PACKAGE_LIST \
+# Always set package_list when using install_packages or update_and_install_packages
+set package_list \
 	mysql-server
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
@@ -49,7 +49,7 @@ set PACKAGE_LIST \
 # Usage: install_mysql
 function install_mysql
 	# Update package lists & install packages
-	update_and_install_packages $PACKAGE_LIST
+	update_and_install_packages $package_list
 
 	# Set root password
 	mysqladmin -u root password $ROOT_PASSWORD || handle_error "Failed to set root password."
@@ -78,7 +78,7 @@ end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-function advance_vm
+function provision
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
@@ -90,4 +90,4 @@ function advance_vm
 	footer_banner "$job_complete"
 end
 
-advance_vm
+provision

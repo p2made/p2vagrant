@@ -18,26 +18,22 @@ source /var/www/provision/scripts/_common.sh
 # Script variables...
 # NONE!
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-function advance_vm () {
-	# Header banner
-	upgrade_banner "$active_title" "$script_name" "$updated_date"
+# Header banner
+upgrade_banner "$active_title" "$script_name" "$updated_date"
 
-	export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
-	update_package_lists
-	upgrade_packages
-	remove_unnecessary_packages
+update_package_lists
+upgrade_packages
+remove_unnecessary_packages
 
-	# Display OS information
-	echo "📄 Displaying OS information 📄"
-	cat /etc/os-release
+# Display OS information
+echo "📄 Displaying OS information 📄"
+cat /etc/os-release
 
-	announce_success "System update complete! ✅"
+announce_success "System update complete! ✅"
 
-	# Footer banner
-	footer_banner "$job_complete"
-}
-
-advance_vm
+# Footer banner
+footer_banner "$job_complete"
