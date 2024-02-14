@@ -1,4 +1,4 @@
-#!/bin/fish
+#!/bin/bash
 
 # 07 Install PHP (with Composer)
 
