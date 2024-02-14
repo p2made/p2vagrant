@@ -223,8 +223,14 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 07 Install PHP (with Composer) -->
-| [06 Install Apache (with SSL & Markdown)](./06_Install_Apache.md)
+<!-- 06 Install PHP (with Composer) -->
+| [05 Install Apache (with SSL & Markdown)](./05_Install_Apache.md)
 | [**Back to Steps**](../README.md)
-| [08 Install MySQL](./08_Install_MySQL.md)
+| [07 Install MySQL](./07_Install_MySQL.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

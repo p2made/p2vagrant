@@ -74,8 +74,14 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 09 Install phpMyAdmin -->
-| [08 Install MySQL](./08_Install_MySQL.md)
+<!-- 08 Install phpMyAdmin -->
+| [07 Install MySQL](./07_Install_MySQL.md)
 | [**Back to Steps**](../README.md)
-| [10 Configure Sites](./10_Configure_Sites.md)
+| [09 Configure Sites](./09_Configure_Sites.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

@@ -42,6 +42,7 @@ function install_apache() {
 
 	# Enable required Apache modules
 	a2enmod rewrite
+	a2enmod mod_md
 	a2enmod ext_filter
 	a2enmod ssl
 

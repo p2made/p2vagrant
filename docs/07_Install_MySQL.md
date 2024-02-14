@@ -225,8 +225,14 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 08 Install MySQL -->
-| [07 Install PHP (with Composer)](./07_Install_PHP.md)
+<!-- 07 Install MySQL -->
+| [06 Install PHP (with Composer)](./06_Install_PHP.md)
 | [**Back to Steps**](../README.md)
-| [09 Install phpMyAdmin](./09_Install_phpMyAdmin.md)
+| [08 Install phpMyAdmin](./08_Install_phpMyAdmin.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--
