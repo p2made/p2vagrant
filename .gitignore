@@ -8,14 +8,17 @@
 /.vagrant
 /vagrant
 
-# web folder
-/html
-
-/provision/ssl
-/provision/vhosts
-
-# Exclude folders completely
-/provision/notes/
+# folders to preserve empty
+html/*
+!html/.p2vagrant
+provision/ssl/*
+!provision/ssl/.p2vagrant
+provision/vhosts/*
+!provision/vhosts/.p2vagrant
+provision/notes/*
+!provision/notes/.p2vagrant
+vm_logs/*
+!vm_logs/.p2vagrant
 
 # Exclude folders ending with '_'
 **_/
@@ -25,3 +28,4 @@
 
 # z_gitignore folder
 z_gitignore
+
