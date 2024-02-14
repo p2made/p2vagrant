@@ -44,8 +44,8 @@ function install_apache() {
 	update_and_install_packages "${package_list[@]}"
 
 	# Enable required Apache modules
-	a2enmod ext_filter
 	a2enmod rewrite
+	a2enmod ext_filter
 	a2enmod ssl
 
 	announce_success "Apache packages installed successfully!"
