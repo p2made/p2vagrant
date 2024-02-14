@@ -15,6 +15,7 @@ PROVISION_SCRIPTS=$VM_FOLDER/provision/scripts
 PROVISION_SSL=$VM_FOLDER/provision/ssl
 PROVISION_TEMPLATES=$VM_FOLDER/provision/templates
 PROVISION_VHOSTS=$VM_FOLDER/provision/vhosts
+VM_LOGS_FOLDER=$VM_FOLDER/vm_logs
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
