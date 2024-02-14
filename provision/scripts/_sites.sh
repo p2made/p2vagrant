@@ -45,6 +45,7 @@ function generate_vhosts_file() {
 		-e "s|{{UNDERSCORE_DOMAIN}}|$underscore_domain|g" \
 		-e "s|{{SSL_BASE_FILENAME}}|$ssl_base_filename|g" \
 		-e "s|{{TODAYS_DATE}}|$TODAYS_DATE|g" \
+		-e "s|{{VM_LOGS_FOLDER}}|$VM_LOGS_FOLDER|g" \
 		"$PROVISION_TEMPLATES/$template_filename" > "$PROVISION_VHOSTS/$vhosts_filename"
 
 	# Output progress message
