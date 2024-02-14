@@ -16,7 +16,6 @@
 
 # Exclude folders completely
 /provision/notes/
-/test*
 
 # Exclude folders ending with '_'
 **_/
@@ -25,4 +24,4 @@
 /Vagrantfile
 
 # z_gitignore folder
-/z_gitignore
+z_gitignore
