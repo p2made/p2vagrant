@@ -23,8 +23,7 @@ vm_logs/*
 **_/
 
 # Exclude the Vagrantfile
-Vagrantfile/*
-!Vagrantfile/.p2vagrant
+Vagrantfile
 
 # z_gitignore folder
 z_gitignore
