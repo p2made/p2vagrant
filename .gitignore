@@ -23,7 +23,7 @@ vm_logs/*
 **_/
 
 # Exclude the Vagrantfile
-Vagrantfile
+/Vagrantfile
 
 # z_gitignore folder
 z_gitignore
