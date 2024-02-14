@@ -1,6 +1,6 @@
-# 01 Create Bare VM
+# 00 Geting Ready
 
-Updated: 2024-02-12
+Updated: 2024-02-15
 
 --
 

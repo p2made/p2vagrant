@@ -27,13 +27,3 @@ DB_USERNAME="fredspotty"
 DB_PASSWORD="Passw0rd"
 DB_NAME="example_db"
 DB_NAME_TEST="example_db_test"
-
-# Sparse array of Vagrantfiles, indexed by setup step...
-vagrantfiles[1]="Create Bare VM"
-vagrantfiles[2]="Upgrade VM"
-vagrantfiles[3]="Install Utilities"
-vagrantfiles[4]="Install Swift (optional)"
-vagrantfiles[5]="Install Apache (with SSL & Markdown)"
-vagrantfiles[6]="Install PHP (with Composer)"
-vagrantfiles[7]="Install MySQL"
-vagrantfiles[9]="Configure Sites"
