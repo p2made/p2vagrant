@@ -44,8 +44,8 @@ function install_apache() {
 	update_and_install_packages "${package_list[@]}"
 
 	# Enable required Apache modules
-	a2enmod rewrite
 	a2enmod ext_filter
+	a2enmod rewrite
 	a2enmod ssl
 
 	announce_success "Apache packages installed successfully!"
@@ -89,17 +89,6 @@ function configure_default_website() {
 		"$underscore_domain" \
 		"$vhosts_filename" \
 		"$ssl_base_filename"
-
-	# Check if index.html exists in the html folder
-	if [ ! -e "$SHARED_HTML/index.html" ]; then
-		cp "$PROVISION_HTML/index.html" "$SHARED_HTML/"
-	fi
-
-	# Set permissions on web server files
-	chmod -R 755 "$SHARED_HTML"/*
-
-	# Enable the new site
-	a2ensite "$vhosts_filename"
 
 	# Disable the default site
 	a2dissite 000-default
