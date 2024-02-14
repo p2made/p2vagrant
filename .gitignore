@@ -27,3 +27,5 @@ vm_logs/*
 
 # z_gitignore folder
 /z_gitignore
+
+/vset

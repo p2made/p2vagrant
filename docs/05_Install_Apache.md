@@ -1,7 +1,4 @@
-# 05 Install Apache
-# (with SSL 🔐 & Markdown 📄 🎊)
-
-Updated: 2024-02-13
+# 05 Install Apache (with SSL 🔐 & Markdown 📄)
 
 --
 
@@ -307,7 +304,9 @@ For the same as `html` visit...
 
 * [https://p2vagrant/index.htm](https://p2vagrant/index.htm)
 
-You should see that minimal page. For the Apache default page of your VM visit...
+You should see that minimal page in each case.
+
+For the Apache default page of your VM visit...
 
 * [https://p2vagrant/index.html](https://p2vagrant/index.html)
 
@@ -317,8 +316,14 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 06 Install Apache (with SSL) -->
-| [05 Install Swift (optional)](./05_Install_Swift.md)
+<!-- 05 Install Apache (with SSL & Markdown) -->
+| [04 Install Swift (optional)](./04_Install_Swift.md)
 | [**Back to Steps**](../README.md)
-| [07 Install PHP (with Composer)](./07_Install_PHP.md)
+| [06 Install PHP (with Composer)](./06_Install_PHP.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

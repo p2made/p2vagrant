@@ -3,7 +3,7 @@
 # 03 Install Utilities
 
 script_name="install_utilities.sh"
-updated_date="2024-02-14"
+updated_date="2024-02-15"
 
 active_title="Installing Utilities"
 job_complete="Utilities Installed"
@@ -69,11 +69,11 @@ function provision() {
 	export DEBIAN_FRONTEND=noninteractive
 
 	# Set timezone
-	echo "🕤 Setting timezone to $TIMEZONE 🕓"
+	echo "🕤  Setting timezone to $TIMEZONE 🕓"
 	sudo timedatectl set-timezone "$TIMEZONE"
 
 	# Set the hostname using hostnamectl
-	echo "⚙️ Setting hostname to $VM_HOSTNAME ⚙️"
+	echo "⚙️  Setting hostname to $VM_HOSTNAME ⚙️"
 	sudo hostnamectl set-hostname "$VM_HOSTNAME"
 
 	# Update /etc/hosts to include the new hostname
@@ -91,11 +91,11 @@ function provision() {
 		echo 'cd /var/www' >> /home/vagrant/.profile
 
 	# Display Time Zone information
-	echo "🕤 Displaying Time Zone information 🕤"
+	echo "🕤  Displaying Time Zone information 🕤"
 	timedatectl
 
 	# Display hostname information
-	echo "⚙️ Displaying Time Zone information ⚙️"
+	echo "⚙️  Displaying Time Zone information ⚙️"
 	hostnamectl
 
 	# Footer banner

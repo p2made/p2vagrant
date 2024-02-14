@@ -10,7 +10,7 @@
 # 03 Install Utilities
 
 script_name="install_utilities.sh"
-updated_date="2024-02-14"
+updated_date="2024-02-15"
 
 active_title="Installing Utilities"
 job_complete="Utilities Installed"
@@ -20,7 +20,8 @@ source /var/www/provision/scripts/_banners.sh
 source /var/www/provision/scripts/_common.sh
 
 # Arguments...
-TIMEZONE=$1         # "Australia/Brisbane"
+VM_HOSTNAME=$1      # "p2vagrant"
+TIMEZONE=$2         # "Australia/Brisbane"
 
 # Script variables...
 
@@ -75,12 +76,12 @@ function provision() {
 	export DEBIAN_FRONTEND=noninteractive
 
 	# Set timezone
-	echo "🕤 Setting timezone to $TIMEZONE 🕓"
-	sudo timedatectl set-timezone "$TIMEZONE" --no-ask-password
+	echo "🕤  Setting timezone to $TIMEZONE 🕓"
+	sudo timedatectl set-timezone "$TIMEZONE"
 
 	# Set the hostname using hostnamectl
-	echo "🕤 Setting hostname to $VM_HOSTNAME 🕓"
-	sudo hostnamectl set-hostname $VM_HOSTNAME
+	echo "⚙️  Setting hostname to $VM_HOSTNAME ⚙️"
+	sudo hostnamectl set-hostname "$VM_HOSTNAME"
 
 	# Update /etc/hosts to include the new hostname
 	sudo sed -i "s/127.0.1.1.*/127.0.1.1\t$VM_HOSTNAME/" /etc/hosts
@@ -97,17 +98,21 @@ function provision() {
 		echo 'cd /var/www' >> /home/vagrant/.profile
 
 	# Display Time Zone information
-	echo "📄 Displaying Time Zone information 📄"
+	echo "🕤  Displaying Time Zone information 🕤"
 	timedatectl
 
-	# Footer banner
-	footer_banner "$job_complete"
+	# Display hostname information
+	echo "⚙️  Displaying Time Zone information ⚙️"
+	hostnamectl
 
-	# Reboot the system
-	sudo reboot
+	# Footer banner
+	footer_reboot "$job_complete"
 }
 
 provision
+
+# Reboot the system
+sudo reboot
 ```
 
 That function `set_fish_as_default_shell() { ... }` is just as described on the label. It sets [🐟fish🐠](https://fishshell.com) as the default shell, so let's go swimming 🏊🏊‍♀️🏊‍♂️
@@ -119,7 +124,7 @@ That function `set_fish_as_default_shell() { ... }` is just as described on the 
 # vi: set ft=ruby
 
 # 03 Install Utilities
-# Generated: 2024-02-14
+# Generated: 2024-02-15
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -152,7 +157,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 
 	# Provisioning...
-	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [VM_HOSTNAME, TIMEZONE]
 
 end
 ```

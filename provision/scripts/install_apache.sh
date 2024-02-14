@@ -3,10 +3,10 @@
 # 05 Install Apache (with SSL & Markdown)
 
 script_name="install_apache.sh"
-updated_date="2024-02-13"
+updated_date="2024-02-15"
 
-active_title="Installing Apache (with SSL 🔐 & Markdown 📄 🎊)"
-job_complete="Apache Installed (with SSL 🔐 & Markdown 📄 🎊)"
+active_title="Installing Apache (with SSL 🔐 & Markdown 📄)"
+job_complete="Apache Installed (with SSL 🔐 & Markdown 📄)"
 
 # Source common functions
 source /var/www/provision/scripts/_banners.sh
@@ -25,9 +25,6 @@ package_list=(
 	"apache2-bin"
 	"apache2-data"
 	"apache2-utils"
-)
-
-markdown_packages=(
 	"markdown"
 	"pandoc"
 )
@@ -48,11 +45,6 @@ function install_apache() {
 	a2enmod ext_filter
 	a2enmod ssl
 
-	announce_success "Apache packages installed successfully!"
-
-	# Install Markdown rendering packages
-	update_and_install_packages "${markdown_packages[@]}"
-
 	# Add configuration for handling Markdown files
 	echo "AddType text/html .md" >> /etc/apache2/apache2.conf
 
@@ -60,7 +52,7 @@ function install_apache() {
 	echo "AddHandler cgi-script .md" >> /etc/apache2/conf-available/markdown.conf
 	a2enconf markdown
 
-	announce_success "Markdown rendering packages installed successfully!"
+	announce_success "pache & Markdown packages installed successfully!"
 }
 
 # Function to configure the default website
