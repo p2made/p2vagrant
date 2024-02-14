@@ -104,4 +104,4 @@ Apart from the `Vagrantfile `, all files you are directed to create are in...
 \* `P2` is for `P squared` because my initials are PP.
 
 --
-p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳

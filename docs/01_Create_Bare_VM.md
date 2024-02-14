@@ -121,4 +121,7 @@ Save the moment with a [Snapshot](./Snapshots.md).
 |
 
 --
-p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

@@ -82,4 +82,7 @@ Variable | Default | Change?
 |
 
 --
-p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

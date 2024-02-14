@@ -125,3 +125,9 @@ Save the moment with a [Snapshot](./Snapshots.md).
 | [**Back to Steps**](../README.md)
 | [03 Install Utilities](./03_Install_Utilities.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

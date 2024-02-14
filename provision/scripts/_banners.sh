@@ -4,14 +4,19 @@
 # Updated: 2024-02-14
 
 # Script constants...
+au="🇦🇺"
 ua="🇺🇦"
 btbu=" 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳 🇺🇦"
-btb="$btbu$btbu$btbu$btbu$btbu"
+btb="$au$btbu$btbu$btbu$btbu$btbu"
+
+
+
+
 
 # Function to write banner opening
 # Usage: banner_open
 function banner_open() {
-	echo "$ua$btb"
+	echo "$btb"
 	echo "$ua"
 }
 
@@ -19,7 +24,7 @@ function banner_open() {
 # Usage: banner_close
 function banner_close() {
 	echo "$ua"
-	echo "$ua$btb"
+	echo "$btb"
 }
 
 # Usage: banner_p2vagrant
@@ -119,6 +124,8 @@ function footer_banner() {
 	echo "$ua           🏆 $1 ‼️"
 	echo "$ua"
 	peace_banner $(( (RANDOM % 4) + 1 ))
+	echo "$ua"
+	echo "$ua p2vagrant - (c) Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳"
 	banner_close
 }
 
