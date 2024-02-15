@@ -4,6 +4,7 @@
 
 # Script constants...
 TODAYS_DATE=$(env TZ=Australia/Brisbane date "+%Y-%m-%d")
+VM_HOSTNAME=$(hostname)
 VM_FOLDER=/var/www
 SHARED_HTML=$VM_FOLDER/html
 PROVISION_FOLDER=$VM_FOLDER/provision

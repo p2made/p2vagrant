@@ -1,104 +1,104 @@
 # 07 Install MySQL
 
-Updated: 2024-02-13
-
 --
 
 ### Create `provision/scripts/install_mysql.fish`
 
 ```
-#!/bin/fish
+#!/bin/bash
 
-# 08 Install MySQL
+# 07 Install MySQL
 
-set script_name     "install_mysql.fish"
-set updated_date    "2024-02-12"
+script_name="install_mysql.sh"
+updated_date="2024-02-15"
 
-set active_title    "Installing MySQL"
-set job_complete    "MySQL Installed"
+active_title="Installing MySQL"
+job_complete="MySQL Installed"
 
 # Source common functions
 source /var/www/provision/scripts/_banners.sh
 source /var/www/provision/scripts/_common.sh
 
-header_banner $active_title $script_name $updated_date
-
-# -- -- /%/ -- -- /%/ -- / script header -- /%/ -- -- /%/ -- --
-
 # Arguments...
-set MYSQL_VERSION   $argv[1] # "8.0"
-set PHP_VERSION     $argv[2] # "8.3"
-set ROOT_PASSWORD   $argv[3] # ⚠️ See Vagrantfile
-set DB_USERNAME     $argv[4] # ⚠️ See Vagrantfile
-set DB_PASSWORD     $argv[5] # ⚠️ See Vagrantfile
-set DB_NAME         $argv[6] # "example_db"
-set DB_NAME_TEST    $argv[7] # "example_db_test"
+MYSQL_VERSION=$1    # "8.0"
+PHP_VERSION=$2      # "8.3"
+ROOT_PASSWORD=$3    # ⚠️ See Vagrantfile
+DB_USERNAME=$4      # ⚠️ See Vagrantfile
+DB_PASSWORD=$5      # ⚠️ See Vagrantfile
+DB_NAME=$6          # "example_db"
+DB_NAME_TEST=$7     # "example_db_test"
 
 # Script variables...
-set -a sql_string (echo "CREATE USER '$DB_USERNAME'@'%' IDENTIFIED BY '$DB_PASSWORD'")
-set -a sql_string (echo "CREATE DATABASE IF NOT EXISTS $DB_NAME")
-set -a sql_string (echo "CREATE DATABASE IF NOT EXISTS $DB_NAME_TEST")
-set -a sql_string (echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USERNAME'@'%';")
-set -a sql_string (echo "GRANT ALL PRIVILEGES ON $DB_NAME_TEST.* TO '$DB_USERNAME'@'%';")
-set -a sql_string (echo "flush privileges")
+sql_string=(
+	"CREATE USER '$DB_USERNAME'@'%' IDENTIFIED BY '$DB_PASSWORD';"
+	"CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+	"CREATE DATABASE IF NOT EXISTS $DB_NAME_TEST;"
+	"GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USERNAME'@'%';"
+	"GRANT ALL PRIVILEGES ON $DB_NAME_TEST.* TO '$DB_USERNAME'@'%';"
+	"FLUSH PRIVILEGES;"
+)
 
-set -a err_string (echo "Failed to create MySQL user")
-set -a err_string (echo "Failed to create MySQL database $DB_NAME")
-set -a err_string (echo "Failed to create MySQL database $DB_NAME_TEST")
-set -a err_string (echo "Failed to grant privileges on $DB_NAME")
-set -a err_string (echo "Failed to grant privileges on $DB_NAME_TEST")
-set -a err_string (echo "Failed to flush privileges")
+err_string=(
+	"Failed to create MySQL user"
+	"Failed to create MySQL database $DB_NAME"
+	"Failed to create MySQL database $DB_NAME_TEST"
+	"Failed to grant privileges on $DB_NAME"
+	"Failed to grant privileges on $DB_NAME_TEST"
+	"Failed to flush privileges"
+)
 
-# Always set package_list when using install_packages or update_and_install_packages
-set package_list \
-	mysql-server
+# Always set package_list when using update_and_install_packages
+package_list=(
+	"mysql-server"
+)
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to install MySQL
 # Usage: install_mysql
-function install_mysql
+function install_mysql() {
 	# Update package lists & install packages
-	update_and_install_packages $package_list
+	update_package_lists
+	install_packages "$package_list"
 
 	# Set root password
-	mysqladmin -u root password $ROOT_PASSWORD || handle_error "Failed to set root password."
+	mysqladmin -u root password "$ROOT_PASSWORD" ||
+		handle_error "Failed to set root password."
 
 	# Create the database and grant privileges
-	for i in (seq 1 6)
-		echo $sql_string[$i] | mysql -u root -p$ROOT_PASSWORD || \
-			handle_error $err_string[$i]
-	end
+	for ((i = 0; i < ${#sql_string[@]}; i++)); do
+		echo "${sql_string[i]}" | mysql -u root -p"$ROOT_PASSWORD" ||
+			handle_error "${err_string[i]}"
+	done
 
 	# Update MySQL configuration
-	if test -f /etc/mysql/mysql.conf.d/mysqld.cnf
+	if [[ -f /etc/mysql/mysql.conf.d/mysqld.cnf ]]; then
 		sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 	else
 		handle_error "mysqld.cnf file not found."
-	end
+	fi
 
 	# Copy database file
-	cp $PROVISION_HTML/db.php $SHARED_HTML/ || \
-		handle_error "Failed to copy db.php file"
+	cp "$PROVISION_HTML/db.php" "$SHARED_HTML/"
 
 	# Set permissions
-	sudo chmod -R 755 $SHARED_HTML/ || \
+	sudo chmod -R 755 "$SHARED_HTML/" ||
 		handle_error "Failed to set permissions on $SHARED_HTML/"
-end
+}
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-function provision
+function provision() {
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
-	set -x DEBIAN_FRONTEND noninteractive
+	export DEBIAN_FRONTEND=noninteractive
 
 	install_mysql
 
 	# Footer banner
 	footer_banner "$job_complete"
-end
+}
 
 provision
 ```
@@ -129,8 +129,8 @@ Replace `db_user `, `db_password `, & `db `, with values from your `Vagrantfile`
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 08 Install MySQL
-# Generated: 2024-02-13
+# 07 Install MySQL
+# Generated: 2024-02-15
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -141,7 +141,7 @@ CPUS                = 1
 
 # Synced Folders
 HOST_FOLDER         = "."
-VM_FOLDER       = "/var/www"
+VM_FOLDER           = "/var/www"
 
 # Software Versions
 SWIFT_VERSION       = "5.9.2"
@@ -172,15 +172,14 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, VM_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
-	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
-#	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]
-#	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_HOSTNAME, VM_IP]
-#	config.vm.provision :shell, path: "provision/scripts/install_php.fish", args: [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/install_mysql.fish", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [VM_HOSTNAME, TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/install_swift.sh", args: [SWIFT_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_apache.sh", args: [VM_HOSTNAME]
+#	config.vm.provision :shell, path: "provision/scripts/install_php.sh", args: [PHP_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
 
 end
 ```
@@ -188,7 +187,7 @@ end
 Or run...
 
 ```
-./vg 8
+./vg 7
 ```
 
 **Customise**

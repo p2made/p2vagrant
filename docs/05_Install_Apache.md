@@ -21,7 +21,7 @@ source /var/www/provision/scripts/_common.sh
 source /var/www/provision/scripts/_sites.sh
 
 # Arguments...
-VM_HOSTNAME="$1"
+# NONE!
 
 # Script variables...
 # NONE!
