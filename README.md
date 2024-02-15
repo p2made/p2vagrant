@@ -1,36 +1,17 @@
 # P2Vagrant (Apple Silicon)
 
-Updated: 2024-02-10
+## About `P2Vagrant`\*
 
-```
-🇺🇦🇰🇿🇰🇬🇹🇯🇹🇲🇺🇿🇦🇿🇲🇳🇺🇦🇰🇿🇰🇬🇹🇯🇹🇲🇺🇿🇦🇿🇲🇳🇺🇦🇰🇿🇰🇬🇹🇯🇹🇲🇺🇿🇦🇿🇲🇳🇺🇦🇰🇿🇰🇬🇹🇯🇹🇲🇺🇿🇦🇿🇲🇳🇺🇦
-🇺🇦
-🇺🇦                ___                                     __
-🇺🇦          ____ |__ \_   ______ _____ __________ _____  / /_
-🇺🇦         / __ \__/ / | / / __ `/ __ `/ ___/ __ `/ __ \/ __/
-🇺🇦        / /_/ / __/| |/ / /_/ / /_/ / /  / /_/ / / / / /_
-🇺🇦       / .___/____/|___/\__,_/\__, /_/   \__,_/_/ /_/\__/
-🇺🇦      /_/                    /____/
-🇺🇦
-🇺🇦                        _
-🇺🇦                       (_)____   ____ _
-🇺🇦                      / / ___/  / __ `/
-🇺🇦                     / (__  )  / /_/ /   _ _ _
-🇺🇦                    /_/____/   \__,_/   (_|_|_)
-🇺🇦
-🇺🇦                        ___
-🇺🇦                  _____|_  )                   _           _
-🇺🇦         /\      |  __ \/ /                   (_)         | |
-🇺🇦        /  \     | |__)/___|   _ __  _ __ ___  _  ___  ___| |_
-🇺🇦       / /\ \    |  ___/      | '_ \| '__/ _ \| |/ _ \/ __| __|
-🇺🇦      / ____ \   | |          | |_) | | | (_) | |  __/ (__| |_
-🇺🇦     /_/    \_\  |_|          | .__/|_|  \___/| |\___|\___|\__|
-🇺🇦                              | |            _/ |
-🇺🇦                              |_|           |__/
-🇺🇦
-🇺🇦
-🇺🇦🇰🇿🇰🇬🇹🇯🇹🇲🇺🇿🇦🇿🇲🇳🇺🇦🇰🇿🇰🇬🇹🇯🇹🇲🇺🇿🇦🇿🇲🇳🇺🇦🇰🇿🇰🇬🇹🇯🇹🇲🇺🇿🇦🇿🇲🇳🇺🇦🇰🇿🇰🇬🇹🇯🇹🇲🇺🇿🇦🇿🇲🇳🇺🇦
-```
+Out of the box, `P2Vagrant` gives you...
+
+* [fish shell](https://fishshell.com)
+* the ability to install [Swift](https://www.swift.org)
+* [Apache2](https://www.apache.org) (with SSL & [Markdown](https://en.wikipedia.org/wiki/Markdown))
+* [self-signed SSL](https://en.wikipedia.org/wiki/Self-signed_certificate)
+* [PHP](https://www.php.net) (with [Composer](https://getcomposer.org))
+* [MySQL Community Server](https://www.mysql.com/products/community/)
+* [phpMyAdmin](https://www.phpmyadmin.net)
+* the ability to configure unlimited websites
 
 ## Steps Taken to build this macOS/M2/Ubuntu VM
 
@@ -57,20 +38,7 @@ Updated: 2024-02-10
 * [Snapshots](./docs/Snapshots.md)
 * [Vagrant Commands](./docs/Commands.md)
 
-## About `P2Vagrant`\*
-
-Out of the box, `P2Vagrant` gives you...
-
-* [fish shell](https://fishshell.com)
-* the ability to install [Swift](https://www.swift.org)
-* [Apache2](https://www.apache.org) (with SSL & [Markdown](https://en.wikipedia.org/wiki/Markdown))
-* [self-signed SSL](https://en.wikipedia.org/wiki/Self-signed_certificate)
-* [PHP](https://www.php.net) (with [Composer](https://getcomposer.org))
-* [MySQL Community Server](https://www.mysql.com/products/community/)
-* [phpMyAdmin](https://www.phpmyadmin.net)
-* the ability to configure unlimited websites
-
-### `./vg n`
+## `./vg n`
 
 `Vagrantfile`s are generated as they are needed  by a script in the project root, `vg`  (for `Vagrantfile Generator`... works for me 🙃). `vg` takes one argument,  `n`, the step in this setup. So any `Vagrantfile` can be generated with...
 
@@ -78,13 +46,13 @@ Out of the box, `P2Vagrant` gives you...
 ./vg n
 ```
 
-### Data
+## Data
 
 All of the data that defines this Vagrant machine is contained within `./provision/data/vagrantfiles_data.sh`, with one exception...
 
 * The value of `VM_FOLDER` , `/var/www`, is stored in the two common functions files. This simplified matters enough to be worth the cost of the data duplication. Whan I have this project as a `v1.0.0` I may go back to look at changing this.
 
-### Files
+## Files
 
 Apart from the `Vagrantfile `, all files you are directed to create are in...
 
@@ -104,4 +72,7 @@ Apart from the `Vagrantfile `, all files you are directed to create are in...
 \* `P2` is for `P squared` because my initials are PP.
 
 --
+
 p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

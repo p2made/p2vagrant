@@ -1,4 +1,4 @@
-# 00 Geting Ready
+# 00 Getting Ready
 
 --
 

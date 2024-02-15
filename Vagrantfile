@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 07 Install MySQL
-# Generated: 2024-02-15
+# 05 Install Apache (with SSL & Markdown)
+# Generated: 2024-02-16
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -17,15 +17,6 @@ VM_FOLDER           = "/var/www"
 
 # Software Versions
 SWIFT_VERSION       = "5.9.2"
-PHP_VERSION         = "8.3"
-MYSQL_VERSION       = "8.3"
-
-# Database Variables
-ROOT_PASSWORD       = "RootPassw0rd"
-DB_USERNAME         = "fredspotty"
-DB_PASSWORD         = "Passw0rd"
-DB_NAME             = "example_db"
-DB_NAME_TEST        = "example_db_test"
 
 Vagrant.configure("2") do |config|
 
@@ -49,8 +40,6 @@ Vagrant.configure("2") do |config|
 	# Provisioning...
 #	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [VM_HOSTNAME, TIMEZONE]
 #	config.vm.provision :shell, path: "provision/scripts/install_swift.sh", args: [SWIFT_VERSION]
-#	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
-#	config.vm.provision :shell, path: "provision/scripts/install_php.sh", args: [PHP_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh"
 
 end
