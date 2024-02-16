@@ -1,43 +1,91 @@
 #!/bin/zsh
 
 # vm
-# Updated: 2024-02-12
+# Updated: 2024-02-16
 
 # Generates Vagrantfile for the step specified by an integer argument.
-
-#!/bin/zsh
+# &/or deletes previously generated files
 
 # Define flags
 FLAG_GENERATE_FILE=false
-FLAG_OTHER_OPERATION=false
+FLAG_RESET=false
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function for error handling
-# ... (your existing code)
+# Usage: handle_error "Error message"
+handle_error() {
+	echo "⚠️  Error: $1 💥"
+	exit 1
+}
+
+# Function to announce success
+# Usage: announce_success "Task completed successfully." [use_alternate_icon]
+announce_success() {
+	icon="✅"
+
+	if [ -n "$2" ] && [ "$2" -eq 1 ]; then
+		icon="👍"
+	fi
+
+	echo "$icon $1"
+}
 
 # Function to display usage information
 display_usage() {
-	echo "Usage: $0 [-g] [-o] <integer>"
+	echo "Usage: $0 [-g] [-r] <integer>"
 	echo "Options:"
 	echo "  -g    Generate Vagrantfile based on the specified integer."
-	echo "  -o    Perform some other operation before generating Vagrantfile."
+	echo "  -r    Reset: Delete any generated or copied files from earlier Vagrant provisioning."
 	echo "  <integer>   Step number for Vagrantfile generation."
 	exit 1
 }
 
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+# Function to display a map of files to be deleted
+display_reset_map() {
+	echo "Files to be deleted:"
+	echo "p2vagrant/html/*"
+	echo "p2vagrant/provision/html/db.php"
+	echo "p2vagrant/provision/html/index.htm"
+	echo "p2vagrant/provision/html/index.md"
+	echo "p2vagrant/provision/html/index.php"
+	echo "p2vagrant/provision/ssl/*.cert"
+	echo "p2vagrant/provision/ssl/*.key"
+	echo "p2vagrant/provision/vhosts/*.conf"
+	echo "p2vagrant/vm_logs/*"
+}
+
+# Function to prompt for confirmation
+confirm_reset() {
+	display_reset_map
+	read -p "Warning: This will delete any generated or copied files. Are you sure? (y/n): " answer
+	case $answer in
+		[Yy]*)
+			FLAG_RESET=true
+			;;
+		*)
+			echo "Reset operation canceled."
+			exit 0
+			;;
+	esac
+}
+
 # Process flags
-while getopts ":go" opt; do
+while getopts ":gr" opt; do
 	case $opt in
 		g)
 			FLAG_GENERATE_FILE=true
 			;;
-		o)
-			FLAG_OTHER_OPERATION=true
+		r)
+			confirm_reset
 			;;
 		\?)
 			handle_error "Invalid option: -$OPTARG"
 			;;
 		:)
-			handle_error "Option -$OPTARG requires an argument."
+			handle_error "Option -$OPTARG requires an argument"
 			;;
 	esac
 done
@@ -47,7 +95,7 @@ shift $((OPTIND - 1))
 
 # Check if an integer argument is provided
 if [ $# -eq 0 ]; then
-	handle_error "Please provide an integer argument."
+	handle_error "Please provide an integer argument"
 fi
 
 # Extract the integer argument
@@ -59,9 +107,10 @@ if [[ ! $vm_step =~ ^[0-9]+$ ]]; then
 fi
 
 # Handle flags based on the provided options
-if $FLAG_OTHER_OPERATION; then
-	echo "Performing some other operation without generating Vagrantfile..."
-	# Your code for the other operation here
+if $FLAG_RESET; then
+	# Reset: Delete any generated or copied files
+	echo "Resetting: Deleting any generated or copied files..."
+	# Your code for reset operation here
 fi
 
 if $FLAG_GENERATE_FILE || !$FLAG_OTHER_OPERATION; then
@@ -69,4 +118,8 @@ if $FLAG_GENERATE_FILE || !$FLAG_OTHER_OPERATION; then
 	echo "Generating Vagrantfile based on step: $vm_step"
 fi
 
-# Rest of your script...
+if $FLAG_GENERATE_FILE || !$FLAG_RESET; then
+	# Continue with your Vagrantfile generation logic here
+	echo "Generating Vagrantfile based on step: $vm_step"
+fi
+
