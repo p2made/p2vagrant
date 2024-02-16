@@ -1,0 +1,72 @@
+#!/bin/zsh
+
+# vm
+# Updated: 2024-02-12
+
+# Generates Vagrantfile for the step specified by an integer argument.
+
+#!/bin/zsh
+
+# Define flags
+FLAG_GENERATE_FILE=false
+FLAG_OTHER_OPERATION=false
+
+# Function for error handling
+# ... (your existing code)
+
+# Function to display usage information
+display_usage() {
+	echo "Usage: $0 [-g] [-o] <integer>"
+	echo "Options:"
+	echo "  -g    Generate Vagrantfile based on the specified integer."
+	echo "  -o    Perform some other operation before generating Vagrantfile."
+	echo "  <integer>   Step number for Vagrantfile generation."
+	exit 1
+}
+
+# Process flags
+while getopts ":go" opt; do
+	case $opt in
+		g)
+			FLAG_GENERATE_FILE=true
+			;;
+		o)
+			FLAG_OTHER_OPERATION=true
+			;;
+		\?)
+			handle_error "Invalid option: -$OPTARG"
+			;;
+		:)
+			handle_error "Option -$OPTARG requires an argument."
+			;;
+	esac
+done
+
+# Shift to the next argument after processing flags
+shift $((OPTIND - 1))
+
+# Check if an integer argument is provided
+if [ $# -eq 0 ]; then
+	handle_error "Please provide an integer argument."
+fi
+
+# Extract the integer argument
+vm_step=$1
+
+# Check if it's an integer
+if [[ ! $vm_step =~ ^[0-9]+$ ]]; then
+	handle_error "Invalid integer argument: $vm_step"
+fi
+
+# Handle flags based on the provided options
+if $FLAG_OTHER_OPERATION; then
+	echo "Performing some other operation without generating Vagrantfile..."
+	# Your code for the other operation here
+fi
+
+if $FLAG_GENERATE_FILE || !$FLAG_OTHER_OPERATION; then
+	# Continue with your Vagrantfile generation logic here
+	echo "Generating Vagrantfile based on step: $vm_step"
+fi
+
+# Rest of your script...
