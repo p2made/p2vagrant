@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # vagrantfiles_data.sh
-# Updated: 2024-02-13
+# Updated: 2024-02-15
 
 # Data for Vagrantfil generation.
 
@@ -27,14 +27,3 @@ DB_USERNAME="fredspotty"
 DB_PASSWORD="Passw0rd"
 DB_NAME="example_db"
 DB_NAME_TEST="example_db_test"
-
-# Sparse array of Vagrantfiles, indexed by setup step...
-vagrantfiles[1]="Create Bare VM"
-vagrantfiles[2]="Upgrade VM"
-vagrantfiles[3]="Install Utilities"
-vagrantfiles[4]="Upgrade VM (revisited)"
-vagrantfiles[5]="Install Swift"
-vagrantfiles[6]="Install Apache (with SSL & Markdown)"
-vagrantfiles[7]="Install PHP (with Composer)"
-vagrantfiles[8]="Install MySQL"
-vagrantfiles[10]="Configure Sites"

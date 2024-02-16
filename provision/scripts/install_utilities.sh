@@ -3,19 +3,24 @@
 # 03 Install Utilities
 
 script_name="install_utilities.sh"
-updated_date="2024-02-12"
+updated_date="2024-02-15"
 
 active_title="Installing Utilities"
 job_complete="Utilities Installed"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.sh
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
 
 # Arguments...
-# NONE!
+VM_HOSTNAME=$1      # "p2vagrant"
+TIMEZONE=$2         # "Australia/Brisbane"
 
-# Always set PACKAGE_LIST when using update_and_install_packages
-PACKAGE_LIST=(
+# Script variables...
+
+# Always set package_list when using...
+# install_packages() or update_and_install_packages()
+package_list=(
 	"apt-transport-https"
 	"bzip2"
 	"ca-certificates"
@@ -42,10 +47,10 @@ PACKAGE_LIST=(
 	"yarn"
 )
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to set Fish as the default shell
-function set_fish_as_default_shell () {
+function set_fish_as_default_shell() {
 	if ! sudo usermod -s /usr/bin/fish vagrant; then
 		handle_error "Failed to set Fish shell as default"
 	fi
@@ -55,16 +60,30 @@ function set_fish_as_default_shell () {
 	echo "🐟 Default shell set to Fish shell https://fishshell.com 🐠"
 }
 
-function advance_vm () {
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+function provision() {
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
 	export DEBIAN_FRONTEND=noninteractive
 
-	# Add Fish Shell repository
-	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:fish-shell/release-3
+	# Set timezone
+	echo "🕤  Setting timezone to $TIMEZONE 🕓"
+	sudo timedatectl set-timezone "$TIMEZONE"
 
-	install_packages $PACKAGE_LIST
+	# Set the hostname using hostnamectl
+	echo "⚙️  Setting hostname to $VM_HOSTNAME ⚙️"
+	sudo hostnamectl set-hostname "$VM_HOSTNAME"
+
+	# Update /etc/hosts to include the new hostname
+	sudo sed -i "s/127.0.1.1.*/127.0.1.1\t$VM_HOSTNAME/" /etc/hosts
+
+	# Add Fish Shell repository
+	LC_ALL=C.UTF-8 add-apt-repository -yu ppa:fish-shell/release-3
+
+	update_package_lists
+	install_packages $package_list
 
 	set_fish_as_default_shell # Let's swim 🐟🐠🐟🐠🐟🐠
 
@@ -72,8 +91,19 @@ function advance_vm () {
 	grep -qxF 'cd /var/www' /home/vagrant/.profile || \
 		echo 'cd /var/www' >> /home/vagrant/.profile
 
+	# Display Time Zone information
+	echo "🕤  Displaying Time Zone information 🕤"
+	timedatectl
+
+	# Display hostname information
+	echo "⚙️  Displaying Time Zone information ⚙️"
+	hostnamectl
+
 	# Footer banner
-	footer_banner "$job_complete"
+	footer_reboot "$job_complete"
 }
 
-advance_vm
+provision
+
+# Reboot the system
+sudo reboot

@@ -1,123 +1,107 @@
-# 06 Install Apache
-# (with SSL 🔐 & Markdown 📄 🎊)
-
-Updated: 2024-02-13
+# 05 Install Apache (with SSL 🔐 & Markdown 📄)
 
 --
 
-### Create `provision/scripts/install_apache.fish`
+### Create `provision/scripts/install_apache.sh`
 
 ```
-#!/bin/fish
+#!/bin/bash
 
-# 06 Install Apache (with SSL & Markdown)
+# 05 Install Apache (with SSL & Markdown)
 
-set script_name     "install_apache.fish"
-set updated_date    "2024-02-13"
+script_name="install_apache.sh"
+updated_date="2024-02-15"
 
-set active_title    "Installing Apache (with SSL 🔐 & Markdown 📄 🎊)"
-set job_complete    "Apache Installed (with SSL 🔐 & Markdown 📄 🎊)"
+active_title="Installing Apache (with SSL 🔐 & Markdown 📄)"
+job_complete="Apache Installed (with SSL 🔐 & Markdown 📄)"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.fish
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
+source /var/www/provision/scripts/_sites.sh
 
 # Arguments...
-set VM_HOSTNAME     $argv[1]
-set VM_IP           $argv[2]
+# NONE!
 
 # Script variables...
 # NONE!
 
-# Always set PACKAGE_LIST when using update_and_install_packages
-set PACKAGE_LIST \
-	apache2 \
-	apache2-bin \
-	apache2-data \
-	apache2-utils
+# Always set package_list when using update_and_install_packages
+package_list=(
+	"apache2"
+	"apache2-bin"
+	"apache2-data"
+	"apache2-utils"
+)
 
+markdown_packages=(
+	"markdown"
+	"pandoc"
+)
 
-set MARKDOWN_PACKAGES \
-	libcgi-pm-perl \
-	libcgi-fast-perl \
-	markdown
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to install Apache
 # Usage: install_apache
-function install_apache
+function install_apache() {
 	# Add repository for ondrej/apache2
-	LC_ALL=C.UTF-8 apt-add-repository -yu ppa:ondrej/apache2
+	LC_ALL=C.UTF-8 add-apt-repository -yu ppa:ondrej/apache2 ||
+		handle_error "Failed to add Apache repository"
 
 	# Update package lists & install packages
-	update_and_install_packages $PACKAGE_LIST
-
-	announce_success "Apache packages installed successfully!"
-
-	# Install Markdown rendering packages
-	update_and_install_packages $MARKDOWN_PACKAGES
-
-	announce_success "Markdown rendering packages installed successfully!"
-end
-
-# Function to configure the default website
-# Usage: configure_default_website
-function configure_default_website
-	# We have the data all as we want it, but in a global variable
-	# Put it in local variables, & erase the global variable
-	set domain            $VM_HOSTNAME
-	set underscore_domain "html"
-	set template_filename "0.conf"
-	set vhosts_filename   "local.conf"
-	set ssl_base_filename "$domain"_"$TODAYS_DATE"
-
-	# Now go configure some web sites
-	write_vhosts_file \
-		$domain \
-		$underscore_domain \
-		$template_filename \
-		$vhosts_filename \
-		$ssl_base_filename
-	generate_ssl_files \
-		$domain \
-		$ssl_base_filename
-	configure_website \
-		$domain \
-		$underscore_domain \
-		$vhosts_filename \
-		$ssl_base_filename
-
-	# Check if index.html exists in the html folder
-	if not test -e $SHARED_HTML/index.html
-		cp $PROVISION_HTML/index.html $SHARED_HTML/
-	end
-
-	# Set permissions on web server files
-	chmod -R 755 $SHARED_HTML/*
-
-	# Add handler for .md files
-	echo "AddHandler cgi-script .md" \
-		>> /etc/apache2/conf-available/markdown.conf
-	a2enconf markdown
-
-	# Enable the new site
-	a2ensite local.conf
-
-	# Disable the default site
-	a2dissite 000-default
+	update_package_lists
+	install_packages $package_list
 
 	# Enable required Apache modules
 	a2enmod rewrite
+	a2enmod ext_filter
 	a2enmod ssl
-end
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+	announce_success "Apache packages installed successfully!"
 
-function advance_vm
+	install_packages $markdown_packages
+
+	announce_success "Markdown rendering packages installed successfully!"
+}
+
+# Function to configure the default website
+# Usage: configure_default_website
+function configure_default_website() {
+	# We have the data all as we want it, but in a global variable
+	# Put it in local variables, & erase the global variable
+	domain=$VM_HOSTNAME
+	underscore_domain="html"
+	template_filename="0.conf"
+	vhosts_filename="local.conf"
+	ssl_base_filename="$domain"_"$TODAYS_DATE"
+
+	# Now go configure some web sites
+	generate_vhosts_file \
+		"$domain" \
+		"$underscore_domain" \
+		"$template_filename" \
+		"$vhosts_filename" \
+		"$ssl_base_filename"
+	generate_ssl_files \
+		"$domain" \
+		"$ssl_base_filename"
+	configure_website \
+		"$domain" \
+		"$underscore_domain" \
+		"$vhosts_filename" \
+		"$ssl_base_filename"
+
+	# Disable the default site
+	a2dissite 000-default
+}
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+function provision() {
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
-	set -x DEBIAN_FRONTEND noninteractive
+	export DEBIAN_FRONTEND=noninteractive
 
 	install_apache
 	configure_default_website
@@ -127,9 +111,9 @@ function advance_vm
 
 	# Footer banner
 	footer_banner "$job_complete"
-end
+}
 
-advance_vm
+provision
 ```
 
 ### Create `provision/html/index.htm`
@@ -158,7 +142,7 @@ How cool is this?
 **BTW:** this is in [Markdown](https://www.markdownguide.org)
 ```
 
-This is the same page in Markdown. Because of the file type ordering in `local.conf`, `index.md` will load in preference to `index.html` or `index.htm` files if it is present. You can change that by editing the `DirectoryIndex` entries in `0.conf` & `1.conf`.
+This is the same page (except for that extra line) in Markdown. Because of the file type ordering in `local.conf`, `index.md` will load in preference to `index.html` or `index.htm` files if it is present. You can change that by editing the `DirectoryIndex` entries in `0.conf` & `1.conf`.
 
 ### Create `provision/vhosts/local.conf`
 
@@ -168,7 +152,7 @@ Actually, no. This file is generated by the provisioning script, & looks like...
 #
 # html.conf
 # Domain:    p2vagrant
-# Generated: 2024-02-13
+# Generated: 2024-02-15
 #
 
 <VirtualHost *:80>
@@ -185,26 +169,29 @@ Actually, no. This file is generated by the provisioning script, & looks like...
 	DirectoryIndex index.php index.md index.htm index.html
 
 	SSLEngine on
-	SSLCertificateFile /etc/apache2/sites-available/p2vagrant_2024-02-13.cert
-	SSLCertificateKeyFile /etc/apache2/sites-available/p2vagrant_2024-02-13.key
+	SSLCertificateFile /etc/apache2/sites-available/p2vagrant_2024-02-15.cert
+	SSLCertificateKeyFile /etc/apache2/sites-available/p2vagrant_2024-02-15.key
+
+	ExtFilterDefine md-to-html mode=output \
+		intype=text/markdown outtype=text/html \
+		cmd="/usr/bin/markdown"
 
 	<Directory /var/www/html>
 		# Allow .htaccess rewrite rules
 		Options Indexes FollowSymLinks
 		AllowOverride All
 		Require all granted
-
-		<FilesMatch "\\.(html|htm|php|md)$">
-			SetHandler cgi-script
-			Options +ExecCGI
-			AddHandler cgi-script .cgi .pl .md
-		</FilesMatch>
+		SetOutputFilter md-to-html
+		AddType text/markdown .md
 	</Directory>
 
-	ErrorLog "/var/log/apache2/html_error_log"
-	CustomLog "/var/log/apache2/html_access_log" common
+	ErrorLog "/var/www/vm_logs/html_error_log"
+	CustomLog "/var/www/vm_logs/html_access_log" common
 </VirtualHost>
 ```
+
+‼️ Note the logs location, `/var/www/vm_logs`. That's in the project folder, so those logs can be read directly on your Mac.
+
 
 ### Update `Vagrantfile`
 
@@ -212,8 +199,8 @@ Actually, no. This file is generated by the provisioning script, & looks like...
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 06 Install Apache (with SSL & Markdown)
-# Generated: 2024-02-13
+# 05 Install Apache (with SSL & Markdown)
+# Generated: 2024-02-15
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -246,13 +233,12 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, VM_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
-	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
-#	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]
-	config.vm.provision :shell, path: "provision/scripts/install_apache.fish", args: [VM_HOSTNAME, VM_IP]
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [VM_HOSTNAME, TIMEZONE]
+#	config.vm.provision :shell, path: "provision/scripts/install_swift.sh", args: [SWIFT_VERSION]
+	config.vm.provision :shell, path: "provision/scripts/install_apache.sh", args: [VM_HOSTNAME]
 
 end
 ```
@@ -260,7 +246,7 @@ end
 Or run...
 
 ```
-./vg 6
+./vg 5
 ```
 
 ### Provision the VM...
@@ -303,6 +289,11 @@ Add this line...
 192.168.22.42   p2vagrant
 ```
 
+⚠️ **DO NOT** change anything already in your `hosts` file unless you are supremely confident of what you are doing. I use a separator line, & only edit below it...
+
+```
+# original above, additions below
+```
 
 ### Visit
 
@@ -312,7 +303,9 @@ For the same as `html` visit...
 
 * [https://p2vagrant/index.htm](https://p2vagrant/index.htm)
 
-You should see that minimal page. For the Apache default page of your VM visit...
+You should see that minimal page in each case.
+
+For the Apache default page of your VM visit...
 
 * [https://p2vagrant/index.html](https://p2vagrant/index.html)
 
@@ -322,8 +315,14 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 06 Install Apache (with SSL) -->
-| [05 Install Swift (optional)](./05_Install_Swift.md)
+<!-- 05 Install Apache (with SSL & Markdown) -->
+| [04 Install Swift (optional)](./04_Install_Swift.md)
 | [**Back to Steps**](../README.md)
-| [07 Install PHP (with Composer)](./07_Install_PHP.md)
+| [06 Install PHP (with Composer)](./06_Install_PHP.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

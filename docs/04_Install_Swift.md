@@ -1,6 +1,6 @@
-# 05 Install Swift (optional)
+# 04 Install Swift (optional)
 
-Updated: 2024-02-13
+Updated: 2024-02-14
 
 --
 
@@ -11,91 +11,93 @@ Swift can be installed at any time after this, so I'm putting it here. It can be
 ### Create `provision/scripts/install_swift.fish`
 
 ```
-#!/bin/fish
+#!/bin/bash
 
-# 05 Install Swift (optional)
+# 04 Install Swift (optional)
 
-set script_name     "install_swift.fish"
-set updated_date    "2024-02-13"
+script_name="install_swift.sh"
+updated_date="2024-02-13"
 
-set active_title    "Installing Swift"
-set job_complete    "Swift Installed"
+active_title="Installing Swift"
+job_complete="Swift Installed"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.fish
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
 
 # Arguments...
-set SWIFT_VERSION  $argv[1]
+SWIFT_VERSION="$1"
 
 # Script variables...
 # NONE!"
 
-# Always set PACKAGE_LIST when using update_and_install_packages
-set PACKAGE_LIST \
-	binutils \
-	libc6-dev \
-	libcurl4-openssl-dev \
-	libcurl4 \
-	libedit2 \
-	libgcc-9-dev \
-	libpython2.7 \
-	libpython3.8 \
-	libsqlite3-0 \
-	libstdc++-9-dev \
-	libxml2-dev \
-	libxml2 \
-	libz3-dev \
-	pkg-config \
-	tzdata \
-	uuid-dev \
-	zlib1g-dev
+# Always set package_list when using...
+# install_packages() or update_and_install_packages()
+package_list=(
+	"binutils"
+	"libc6-dev"
+	"libcurl4-openssl-dev"
+	"libcurl4"
+	"libedit2"
+	"libgcc-9-dev"
+	"libpython2.7"
+	"libpython3.8"
+	"libsqlite3-0"
+	"libstdc++-9-dev"
+	"libxml2-dev"
+	"libxml2"
+	"libz3-dev"
+	"pkg-config"
+	"tzdata"
+	"uuid-dev"
+	"zlib1g-dev"
+)
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to install Swift
 # Usage: install_swift
-function install_swift
-	update_and_install_packages $SWIFT_PACKAGES
-
+function install_swift() {
 	echo "⬇️ Downloading Swift ⬇️"
-	set SWIFT_FILENAME_BASE "swift-$SWIFT_VERSION-RELEASE-ubuntu20.04-aarch64"
-	set SWIFT_URL_BASE "https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004-aarch64/swift-$SWIFT_VERSION-RELEASE"
-	curl -L -O $SWIFT_URL_BASE/$SWIFT_FILENAME_BASE.tar.gz
-	curl -L -O $SWIFT_URL_BASE/$SWIFT_FILENAME_BASE.tar.gz.sig
+	swift_filename_base="swift-$SWIFT_VERSION-RELEASE-ubuntu20.04-aarch64"
+	swift_url_base="https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004-aarch64/swift-$SWIFT_VERSION-RELEASE"
+	curl -L -O "$swift_url_base/$swift_filename_base.tar.gz"
+	curl -L -O "$swift_url_base/$swift_filename_base.tar.gz.sig"
 
 	echo "🕵️ Verifying download 🕵️"
 	wget -q -O - https://swift.org/keys/release-key-swift-5.x.asc | gpg --import -
 	gpg --keyserver hkp://keyserver.ubuntu.com --refresh-keys Swift
-	gpg --verify $SWIFT_FILENAME_BASE.tar.gz.sig
+	gpg --verify "$swift_filename_base.tar.gz.sig"
 
 	echo "🔄 Installing Swift 🔄"
-	tar xzf swift-5.9.2-RELEASE-ubuntu20.04-aarch64.tar.gz
-	mv swift-5.9.2-RELEASE-ubuntu20.04-aarch64 /usr/share/swift
-	ln -s /usr/share/swift/usr/bin/swift /usr/bin/swift
+	tar xzf "$swift_filename_base.tar.gz"
+	mv "$swift_filename_base" /usr/share/swift
+	ln -s "/usr/share/swift/usr/bin/swift" /usr/bin/swift
 
 	# Add Swift binary path to PATH
 	echo "export PATH=/usr/share/swift/usr/bin:$PATH" >> /home/vagrant/.bashrc
 	source /home/vagrant/.bashrc
 
 	# Cleanup
-	rm -f swift-5.9.2-RELEASE-ubuntu20.04-aarch64.*
-end
+	rm -f "$swift_filename_base".*
+}
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-function advance_vm
+function provision() {
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
-	set -x DEBIAN_FRONTEND noninteractive
+	export DEBIAN_FRONTEND=noninteractive
 
+	update_and_install_packages $package_list
 	install_swift
 
 	# Footer banner
 	footer_banner "$job_complete"
-end
+}
 
-advance_vm
+provision
 ```
 
 ### Update `Vagrantfile`
@@ -104,8 +106,8 @@ advance_vm
 # -*- mode: ruby -*-
 # vi: set ft=ruby
 
-# 05 Install Swift
-# Generated: 2024-02-12
+# 04 Install Swift (optional)
+# Generated: 2024-02-14
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -116,7 +118,7 @@ CPUS                = 1
 
 # Synced Folders
 HOST_FOLDER         = "."
-VM_FOLDER       = "/var/www"
+VM_FOLDER           = "/var/www"
 
 # Software Versions
 SWIFT_VERSION       = "5.9.2"
@@ -138,20 +140,21 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder HOST_FOLDER, VM_FOLDER, create: true, nfs: true, mount_options: ["actimeo=2"]
 
 	# Upgrade check...
-	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.fish", args: [VM_HOSTNAME], run: "always"
+	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 
 	# Provisioning...
-#	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", args: [TIMEZONE]
-#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh"
-	config.vm.provision :shell, path: "provision/scripts/install_swift.fish", args: [SWIFT_VERSION]
+#	config.vm.provision :shell, path: "provision/scripts/install_utilities.sh", args: [TIMEZONE]
+	config.vm.provision :shell, path: "provision/scripts/install_swift.sh", args: [SWIFT_VERSION]
 
 end
 ```
 
+* **Note:** From here on, all but the last provisioning script call will be commented out. If you want to run more than one step at once, simply uncomment the earlier lines.
+
 Or run...
 
 ```
-./vg 5
+./vg 4
 ```
 
 ### Provision the VM...
@@ -199,8 +202,14 @@ Save the moment with a [Snapshot](./Snapshots.md).
 
 --
 
-<!-- 05 Install Swift (optional) -->
-| [04 Upgrade VM (revisited)](./04_Upgrade_VM.md)
+<!-- 04 Install Swift (optional) -->
+| [03 Install Utilities](./03_Install_Utilities.md)
 | [**Back to Steps**](../README.md)
-| [06 Install Apache (with SSL & Markdown)](./06_Install_Apache.md)
+| [05 Install Apache (with SSL & Markdown)](./05_Install_Apache.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

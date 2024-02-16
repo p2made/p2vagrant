@@ -9,7 +9,8 @@ set active_title    "Configuring Websites"
 set job_complete    "Websites Configured"
 
 # Source common functions
-source /var/www/provision/scripts/common_functions.fish
+source /var/www/provision/scripts/_banners.sh
+source /var/www/provision/scripts/_common.sh
 
 # Arguments...
 # NONE!"
@@ -50,7 +51,7 @@ function onfigure_websites
 		echo "\$ssl_base_filename $ssl_base_filename"
 
 		# Now go configure some web sites
-		write_vhosts_file \
+		generate_vhosts_file \
 			$domain \
 			$underscore_domain \
 			$template_filename \
@@ -76,7 +77,7 @@ end
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- --
 
-function advance_vm
+function provision
 	# Header banner
 	header_banner "$active_title" "$script_name" "$updated_date"
 
@@ -88,4 +89,4 @@ function advance_vm
 	footer_banner "$job_complete"
 end
 
-advance_vm
+provision

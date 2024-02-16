@@ -1,16 +1,8 @@
 # 01 Create Bare VM
 
-Updated: 2024-02-12
-
 --
 
-Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell. After that fish is the shell in `ssh` sessions & provisioning scripts.
-
-The instructions given assume the use of [Homebrew](https://brew.sh). If you don't have it installed, run...
-
-```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+Here I create a bare VM with an ARM build of Ubuntu & `vmware_desktop` as the Vagrant provider. In step 3 I install fish shell. After that fish is the shell in `ssh` sessions.
 
 ### Install VMware Fusion
 
@@ -64,8 +56,6 @@ started with an older version of Vagrant.
 * `v.gui` needs to be set to `true`.
 * `v.memory` & `v.cpus` might as well be set now.
 * Same for `config.vm.network`.
-
-If you change nothing else in these `Vagrantfile`s, take a hard look at `VM_IP`.  That must be an IP address in the `192.168.x.x` range, that is not in use on your host Mac, or any LAN that you connect to. If you deploy more than one VM on your Mac, they **must** have different settings for `VM_IP`.
 
 ```
 # -*- mode: ruby -*-
@@ -123,7 +113,13 @@ Save the moment with a [Snapshot](./Snapshots.md).
 --
 
 <!-- 01 Create Bare VM -->
-| [00 blank](./00_blank.md)
+| [00 Getting Ready](./00_Getting_Ready.md)
 | [**Back to Steps**](../README.md)
 | [02 Upgrade VM](./02_Upgrade_VM.md)
 |
+
+--
+
+p2vagrant - &copy; 2024, Pedro Plowman, Australia 🇦🇺 🇺🇦 🇰🇿 🇰🇬 🇹🇯 🇹🇲 🇺🇿 🇦🇿 🇲🇳
+
+--

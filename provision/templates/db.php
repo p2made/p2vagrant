@@ -1,11 +1,11 @@
 <?php
 /*
- * Generated: 2024-02-16
+ * Generated: {{TODAYS_DATE}}
  */
-$host       = "p2vagrant";
-$username   = "fredspotty";
-$password   = "Passw0rd";
-$database   = "example_db";
+$host       = "{{VM_HOSTNAME}}";
+$username   = "{{DB_USERNAME}}";
+$password   = "{{DB_PASSWORD}}";
+$database   = "{{DB_NAME}}";
 
 $conn = mysqli_connect($host, $username, $password, $database);
 
