@@ -4,13 +4,22 @@
 # Updated: 2024-02-16
 
 # Generates Vagrantfile for the step specified by an integer argument.
-# &/or deletes previously generated files
+# &/or deletes previously generated & copied files
+
+# Source data
+source ./provision/data/vagrantfiles_data.sh
 
 # Define flags
-FLAG_GENERATE_FILE=false
+FLAG_GENERATE=false
 FLAG_RESET=false
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# Script variables
+vm_step=0
+step_title=""
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/     Utility Functions     /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function for error handling
 # Usage: handle_error "Error message"
@@ -41,7 +50,9 @@ display_usage() {
 	exit 1
 }
 
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/       Confirm Reset       /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to display a map of files to be deleted
 display_reset_map() {
@@ -72,11 +83,15 @@ confirm_reset() {
 	esac
 }
 
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/      _section_label_      /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
 # Process flags
 while getopts ":gr" opt; do
 	case $opt in
 		g)
-			FLAG_GENERATE_FILE=true
+			FLAG_GENERATE=true
 			;;
 		r)
 			confirm_reset
@@ -93,9 +108,12 @@ done
 # Shift to the next argument after processing flags
 shift $((OPTIND - 1))
 
-# Check if an integer argument is provided
-if [ $# -eq 0 ]; then
-	handle_error "Please provide an integer argument"
+# Check if the number of arguments (excluding flags) is less than 1
+if [ "$#" -lt 1 ]; then
+	# If only -r is set, it's okay to have no integer argument
+	if ! $FLAG_RESET || ($FLAG_RESET && $FLAG_GENERATE); then
+		handle_error "Please provide an integer argument."
+	fi
 fi
 
 # Extract the integer argument
@@ -106,6 +124,11 @@ if [[ ! $vm_step =~ ^[0-9]+$ ]]; then
 	handle_error "Invalid integer argument: $vm_step"
 fi
 
+# If an integer is provided, and only -r is set, imply -g as well
+if $FLAG_RESET && [ "$#" -ge 1 ]; then
+	FLAG_GENERATE=true
+fi
+
 # Handle flags based on the provided options
 if $FLAG_RESET; then
 	# Reset: Delete any generated or copied files
@@ -113,13 +136,14 @@ if $FLAG_RESET; then
 	# Your code for reset operation here
 fi
 
-if $FLAG_GENERATE_FILE || !$FLAG_OTHER_OPERATION; then
+if $FLAG_GENERATE || !$FLAG_RESET; then
 	# Continue with your Vagrantfile generation logic here
 	echo "Generating Vagrantfile based on step: $vm_step"
 fi
 
-if $FLAG_GENERATE_FILE || !$FLAG_RESET; then
-	# Continue with your Vagrantfile generation logic here
-	echo "Generating Vagrantfile based on step: $vm_step"
-fi
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/      _section_label_      /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+# Rest of your script...
 
