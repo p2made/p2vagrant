@@ -23,14 +23,14 @@ step_title=""
 
 # Function for error handling
 # Usage: handle_error "Error message"
-handle_error() {
+function handle_error() {
 	echo "⚠️  Error: $1 💥"
 	exit 1
 }
 
 # Function to announce success
 # Usage: announce_success "Task completed successfully." [use_alternate_icon]
-announce_success() {
+function announce_success() {
 	icon="✅"
 
 	if [ -n "$2" ] && [ "$2" -eq 1 ]; then
@@ -41,7 +41,7 @@ announce_success() {
 }
 
 # Function to display usage information
-display_usage() {
+function display_usage() {
 	script_name="$1"
 	echo "Usage: $script_name [-g] [-r] <integer>"
 	echo "Options:"
@@ -62,45 +62,92 @@ display_usage() {
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to display a map of files to be deleted
-display_reset_map() {
+function display_reset_map() {
 	echo "Files to be deleted:"
 
-	if [ $vm_step -le 5 ]; then
-		# Largest set
-		# Add files to the set that match the condition
-		files_to_delete+=(
-			"p2vagrant/html/*"
-			"p2vagrant/provision/html/db.php"
-			"p2vagrant/provision/html/index.htm"
-			"p2vagrant/provision/html/index.md"
-			"p2vagrant/provision/html/index.php"
-			"p2vagrant/provision/ssl/*.cert"
-			"p2vagrant/provision/ssl/*.key"
-			"p2vagrant/provision/vhosts/*.conf"
-		)
-	elif [ $vm_step -le 9 ]; then
-		# SSL & vhosts files other than the VM hostname files
-		files_to_delete+=(
-			$(find p2vagrant/provision/ssl -maxdepth 1 -type f -name '*.cert' -not -name '*p2vagrant*')
-			$(find p2vagrant/provision/ssl -maxdepth 1 -type f -name '*.key' -not -name '*p2vagrant*')
-			$(find p2vagrant/provision/vhosts -maxdepth 1 -type f -name '*.conf' -not -name '*p2vagrant*' -not -name 'local.conf')
-		)
+	local -a html
+	local -a provision_html
+	local -a provision_ssl
+	local -a provision_vhosts
 
-		if [ $vm_step -le 8 ]; then
-			# plus phpMyAdmin
-			files_to_delete+=("p2vagrant/html/phpmyadmin")
-		fi
+	if [ $vm_step -le 9 ]; then
+		# Resetting from configuring websites
+		provision_ssl+=(
+			$(find ./provision/ssl -maxdepth 1 -type f -name '*.cert' -not -name '*p2vagrant*')
+			$(find ./provision/ssl -maxdepth 1 -type f -name '*.key' -not -name '*p2vagrant*')
+		)
+		provision_vhosts+=(
+			$(find ./provision/vhosts -maxdepth 1 -type f -name '*.conf' -not -name '*p2vagrant*' -not -name 'local.conf')
+		)
+		domains_to_delete+=(
+			$(find ./ -maxdepth 1 -type d -name "$VM_TLD*")
+		)
 	fi
+	if [ $vm_step -le 8 ]; then
+		# Resetting from installing phpMyAdmin
+		html+=(
+			$(find ./html -maxdepth 1 -type d -name 'phpmyadmin')
+		)
+	fi
+	if [ $vm_step -le 7 ]; then
+		# Resetting from installing MySQL
+		html+=(
+			$(find ./html -maxdepth 1 -type f -name 'db.php')
+		)
+		provision_html+=(
+			$(find ./provision/html -maxdepth 1 -type f -name 'db.php')
+		)
+	fi
+	if [ $vm_step -le 6 ]; then
+		# Resetting from installing php
+		html+=(
+			$(find ./html -maxdepth 1 -type f -name 'index.php')
+			$(find ./html -maxdepth 1 -type f -name 'phpinfo.php')
+		)
+		provision_html+=(
+			$(find ./provision/html -maxdepth 1 -type f -name 'index.php')
+		)
+	fi
+	if [ $vm_step -le 5 ]; then
+		# Resetting from installing Apache - which is everything for this job!
+		html+=(
+			$(find ./html -maxdepth 1 -type f -name 'index.htm')
+			$(find ./html -maxdepth 1 -type f -name 'index.html')
+			$(find ./html -maxdepth 1 -type f -name 'index.md')
+		)
+		provision_html+=(
+			$(find ./provision/html -maxdepth 1 -type f -name 'index.htm')
+			$(find ./provision/html -maxdepth 1 -type f -name 'index.md')
+		)
+		provision_ssl=(
+			$(find ./provision/ssl -maxdepth 1 -type f -name '*.cert')
+			$(find ./provision/ssl -maxdepth 1 -type f -name '*.key')
+		)
+		provision_vhosts=(
+			$(find ./provision/vhosts -maxdepth 1 -type f -name '*.conf')
+		)
+	fi
+
+	files_to_delete=(
+		"${html[@]}"
+		"${provision_html[@]}"
+		"${provision_ssl[@]}"
+		"${provision_vhosts[@]}"
+	)
 
 	# Display the found files
 	for file in "${files_to_delete[@]}"; do
-		echo "$file"
+		echo "$file" | sed "s|^./|p2vagrant/|"
+	done
+	for file in "${domains_to_delete[@]}"; do
+		echo "$file" | sed "s|^./|p2vagrant/|"
 	done
 }
 
 # Function to prompt for confirmation
-confirm_reset() {
+function confirm_reset() {
 	declare -a files_to_delete
+	declare -a domains_to_delete
 
 	display_reset_map
 
@@ -110,6 +157,7 @@ confirm_reset() {
 			FLAG_RESET=true # we are here because FLAG_RESET is already set to true
 			# Call a function to delete the files
 			delete_files "${files_to_delete[@]}"
+			delete_folders "${domains_to_delete[@]}"
 			;;
 		*)
 			FLAG_RESET=false # Setting this is redundant because we are exiting
@@ -120,16 +168,19 @@ confirm_reset() {
 }
 
 # Function to delete files
-# Usage delete_files $files_to_delete
-delete_files() {
-	# Implement the logic to delete files based on the array passed as an argument
-	# For example, you can use 'rm' command
+# Usage: delete_files "${files_to_delete[@]}"
+function delete_files() {
+	rm -f "${@}"
+}
+
+# Function to delete folders
+# Usage: delete_files "${domains_to_delete[@]}"
+function delete_folders() {
 	rm -f "${@}"
 
 	# Specific deletion for phpmyadmin folder if it exists
-	if [ -d "p2vagrant/html/phpmyadmin" ]; then
-		rm -rf "p2vagrant/html/phpmyadmin"
-		echo "Deleted p2vagrant/html/phpmyadmin"
+	if [ -d "./html/phpmyadmin" ]; then
+		rm -rf "./html/phpmyadmin"
 	fi
 }
 
