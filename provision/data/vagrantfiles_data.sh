@@ -5,6 +5,8 @@
 
 # Data for Vagrantfil generation.
 
+VM_TLD="test"                           # Whatever is chosen as the dev TLD
+
 # Machine Variables
 VM_HOSTNAME="p2vagrant"
 VM_IP="192.168.22.42"                   # 22 = titanium, 42 = Douglas Adams's number

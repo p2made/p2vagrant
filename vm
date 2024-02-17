@@ -42,49 +42,99 @@ announce_success() {
 
 # Function to display usage information
 display_usage() {
-	echo "Usage: $0 [-g] [-r] <integer>"
+	script_name="$1"
+	echo "Usage: $script_name [-g] [-r] <integer>"
 	echo "Options:"
 	echo "  -g    Generate Vagrantfile based on the specified integer."
 	echo "  -r    Reset: Delete any generated or copied files from earlier Vagrant provisioning."
 	echo "  <integer>   Step number for Vagrantfile generation."
-	exit 1
+	echo "--"
+	echo "Usage examples:"
+	echo "  $script_name -g <integer>    # Generate Vagrantfile based on the specified integer."
+	echo "  $script_name -r              # Reset: Delete any generated or copied files from earlier Vagrant provisioning."
+	echo "  $script_name -r <integer>    # Reset and generate Vagrantfile based on the specified integer."
+	echo "  $script_name -gr <integer>   # Reset and generate Vagrantfile based on the specified integer."
+	exit 0
 }
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/ -- -- /%/       Confirm Reset       /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/        Reset Logic        /%/ -- -- /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to display a map of files to be deleted
 display_reset_map() {
 	echo "Files to be deleted:"
-	echo "p2vagrant/html/*"
-	echo "p2vagrant/provision/html/db.php"
-	echo "p2vagrant/provision/html/index.htm"
-	echo "p2vagrant/provision/html/index.md"
-	echo "p2vagrant/provision/html/index.php"
-	echo "p2vagrant/provision/ssl/*.cert"
-	echo "p2vagrant/provision/ssl/*.key"
-	echo "p2vagrant/provision/vhosts/*.conf"
-	echo "p2vagrant/vm_logs/*"
+
+	if [ $vm_step -le 5 ]; then
+		# Largest set
+		# Add files to the set that match the condition
+		files_to_delete+=(
+			"p2vagrant/html/*"
+			"p2vagrant/provision/html/db.php"
+			"p2vagrant/provision/html/index.htm"
+			"p2vagrant/provision/html/index.md"
+			"p2vagrant/provision/html/index.php"
+			"p2vagrant/provision/ssl/*.cert"
+			"p2vagrant/provision/ssl/*.key"
+			"p2vagrant/provision/vhosts/*.conf"
+		)
+	elif [ $vm_step -le 9 ]; then
+		# SSL & vhosts files other than the VM hostname files
+		files_to_delete+=(
+			$(find p2vagrant/provision/ssl -maxdepth 1 -type f -name '*.cert' -not -name '*p2vagrant*')
+			$(find p2vagrant/provision/ssl -maxdepth 1 -type f -name '*.key' -not -name '*p2vagrant*')
+			$(find p2vagrant/provision/vhosts -maxdepth 1 -type f -name '*.conf' -not -name '*p2vagrant*' -not -name 'local.conf')
+		)
+
+		if [ $vm_step -le 8 ]; then
+			# plus phpMyAdmin
+			files_to_delete+=("p2vagrant/html/phpmyadmin")
+		fi
+	fi
+
+	# Display the found files
+	for file in "${files_to_delete[@]}"; do
+		echo "$file"
+	done
 }
 
 # Function to prompt for confirmation
 confirm_reset() {
+	declare -a files_to_delete
+
 	display_reset_map
-	read -p "Warning: This will delete any generated or copied files. Are you sure? (y/n): " answer
+
+	read "?Warning: This will delete any generated or copied files. Are you sure? (y/n): " answer
 	case $answer in
 		[Yy]*)
-			FLAG_RESET=true
+			FLAG_RESET=true # we are here because FLAG_RESET is already set to true
+			# Call a function to delete the files
+			delete_files "${files_to_delete[@]}"
 			;;
 		*)
+			FLAG_RESET=false # Setting this is redundant because we are exiting
 			echo "Reset operation canceled."
 			exit 0
 			;;
 	esac
 }
 
+# Function to delete files
+# Usage delete_files $files_to_delete
+delete_files() {
+	# Implement the logic to delete files based on the array passed as an argument
+	# For example, you can use 'rm' command
+	rm -f "${@}"
+
+	# Specific deletion for phpmyadmin folder if it exists
+	if [ -d "p2vagrant/html/phpmyadmin" ]; then
+		rm -rf "p2vagrant/html/phpmyadmin"
+		echo "Deleted p2vagrant/html/phpmyadmin"
+	fi
+}
+
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/ -- -- /%/      _section_label_      /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/       Input Section       /%/ -- -- /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Process flags
@@ -94,7 +144,7 @@ while getopts ":gr" opt; do
 			FLAG_GENERATE=true
 			;;
 		r)
-			confirm_reset
+			FLAG_RESET=true
 			;;
 		\?)
 			handle_error "Invalid option: -$OPTARG"
@@ -108,42 +158,38 @@ done
 # Shift to the next argument after processing flags
 shift $((OPTIND - 1))
 
-# Check if the number of arguments (excluding flags) is less than 1
-if [ "$#" -lt 1 ]; then
-	# If only -r is set, it's okay to have no integer argument
-	if ! $FLAG_RESET || ($FLAG_RESET && $FLAG_GENERATE); then
-		handle_error "Please provide an integer argument."
+# Check if there are no flags or arguments
+if [ "$#" -eq 0 ] && ! $FLAG_RESET && ! $FLAG_GENERATE; then
+	display_usage "$0"
+fi
+
+# Check if an argument is provided
+if [ $# -gt 0 ]; then
+	# Check if the argument is an integer
+	if [[ $1 =~ ^[0-9]+$ ]]; then
+		vm_step=$1
+	else
+		handle_error "$vm_step is not an integer"
 	fi
 fi
 
-# Extract the integer argument
-vm_step=$1
-
-# Check if it's an integer
-if [[ ! $vm_step =~ ^[0-9]+$ ]]; then
-	handle_error "Invalid integer argument: $vm_step"
-fi
-
-# If an integer is provided, and only -r is set, imply -g as well
-if $FLAG_RESET && [ "$#" -ge 1 ]; then
-	FLAG_GENERATE=true
-fi
-
-# Handle flags based on the provided options
+# If -r is set
 if $FLAG_RESET; then
-	# Reset: Delete any generated or copied files
-	echo "Resetting: Deleting any generated or copied files..."
-	# Your code for reset operation here
+	confirm_reset
+
+	if [ "$vm_step" -eq 0 ]; then
+		# Not generating a Vagrantfile
+		exit 0
+	fi
 fi
 
-if $FLAG_GENERATE || !$FLAG_RESET; then
-	# Continue with your Vagrantfile generation logic here
-	echo "Generating Vagrantfile based on step: $vm_step"
+# If -g is set
+if $FLAG_GENERATE; then
+	# Do 'FLAG_GENERATE' stuff
+	# taking 'vm_step' into account
 fi
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/      _section_label_      /%/ -- -- /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-
-# Rest of your script...
 
