@@ -2,7 +2,7 @@
 
 # provision/vm/vm_common.sh
 # Usage...
-# `source ./relative/path/to/vm_common.sh"`
+# `source ./relative/path/to/vm_common.sh`
 
 # Sparse array of Vagrantfiles, indexed by setup step...
 VAGRANTFILES_INDEXES=(1 2 3 4 5 6 7 9)

@@ -5,6 +5,7 @@
 
 # Generates Vagrantfile for the step specified by an integer argument.
 # &/or deletes previously generated & copied files
+# For usage run `./vm`
 
 # Common functions
 source ./provision/vm/vm_common.sh
@@ -18,7 +19,6 @@ FLAG_RESET=false
 
 # Script variables
 vm_step=0
-step_title=""
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
