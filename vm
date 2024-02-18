@@ -47,7 +47,7 @@ function display_usage() {
 
 # Process flags
 while getopts ":gr" opt; do
-	echo "‼️‼️Processing options"
+	debug_message "Processing options"
 	case $opt in
 		g)
 			FLAG_GENERATE=true
