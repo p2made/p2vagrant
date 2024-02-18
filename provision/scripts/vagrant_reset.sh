@@ -5,7 +5,7 @@
 # `./provision/scripts/vagrant_reset.sh "$(pwd)" "$vm_step"`
 
 # Source data
-source ./provision/data/vagrantfiles_data.sh
+source ../data/vagrantfiles_data.sh
 
 # Change working directory to the 'vm' directory
 cd "$1"
@@ -14,7 +14,7 @@ cd "$1"
 vm_step=$2
 
 # Function to display a map of files to be deleted
-function display_reset_map() {
+function construct_reset_map() {
 	echo "Files to be deleted:"
 
 	local -a html
@@ -22,7 +22,7 @@ function display_reset_map() {
 	local -a provision_ssl
 	local -a provision_vhosts
 
-	if [ $vm_step -le 9 ]; then
+	if (( $vm_step <= 9 )); then
 		# Resetting from configuring websites
 		provision_ssl+=(
 			$(find ./provision/ssl -maxdepth 1 -type f -name '*.cert' -not -name '*p2vagrant*')
@@ -36,14 +36,22 @@ function display_reset_map() {
 				$(find ./ -maxdepth 1 -type d -name "${tld}_*")
 			)
 		done
+	else
+		# '$vm_step' won't be <= any smaller value
+		return
 	fi
-	if [ $vm_step -le 8 ]; then
+
+	if (( $vm_step <= 8 )); then
 		# Resetting from installing phpMyAdmin
 		html+=(
 			$(find ./html -maxdepth 1 -type d -name 'phpmyadmin')
 		)
+	else
+		# '$vm_step' won't be <= any smaller value
+		return
 	fi
-	if [ $vm_step -le 7 ]; then
+
+	if (( $vm_step <= 7 )); then
 		# Resetting from installing MySQL
 		html+=(
 			$(find ./html -maxdepth 1 -type f -name 'db.php')
@@ -51,8 +59,12 @@ function display_reset_map() {
 		provision_html+=(
 			$(find ./provision/html -maxdepth 1 -type f -name 'db.php')
 		)
+	else
+		# '$vm_step' won't be <= any smaller value
+		return
 	fi
-	if [ $vm_step -le 6 ]; then
+
+	if (( $vm_step <= 6 )); then
 		# Resetting from installing php
 		html+=(
 			$(find ./html -maxdepth 1 -type f -name 'index.php')
@@ -61,8 +73,12 @@ function display_reset_map() {
 		provision_html+=(
 			$(find ./provision/html -maxdepth 1 -type f -name 'index.php')
 		)
+	else
+		# '$vm_step' won't be <= any smaller value
+		return
 	fi
-	if [ $vm_step -le 5 ]; then
+
+	if (( $vm_step <= 5 )); then
 		# Resetting from installing Apache - which is everything for this job!
 		html+=(
 			$(find ./html -maxdepth 1 -type f -name 'index.htm')
@@ -80,6 +96,9 @@ function display_reset_map() {
 		provision_vhosts=(
 			$(find ./provision/vhosts -maxdepth 1 -type f -name '*.conf')
 		)
+	else
+		# '$vm_step' won't be <= any smaller value
+		return
 	fi
 
 	files_to_delete=(
@@ -88,6 +107,14 @@ function display_reset_map() {
 		"${provision_ssl[@]}"
 		"${provision_vhosts[@]}"
 	)
+}
+
+# Function to prompt for confirmation
+function confirm_reset() {
+	declare -a files_to_delete
+	declare -a domains_to_delete
+
+	construct_reset_map
 
 	# Display the found files
 	for file in "${files_to_delete[@]}"; do
@@ -96,14 +123,6 @@ function display_reset_map() {
 	for file in "${domains_to_delete[@]}"; do
 		echo "$file" | sed "s|^./|p2vagrant/|"
 	done
-}
-
-# Function to prompt for confirmation
-function confirm_reset() {
-	declare -a files_to_delete
-	declare -a domains_to_delete
-
-	display_reset_map
 
 	read "?Warning: This will delete any generated or copied files. Are you sure? (y/n): " answer
 	case $answer in
