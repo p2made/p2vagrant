@@ -152,7 +152,7 @@ function delete_files() {
 # Function to delete folders
 # Usage: delete_files "${domains_to_delete[@]}"
 function delete_folders() {
-	rm -f "${@}"
+	rm -rf "${@}"
 
 	# Specific deletion for phpmyadmin folder if it exists
 	if [ -d "./html/phpmyadmin" ]; then
