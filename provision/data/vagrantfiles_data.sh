@@ -5,7 +5,9 @@
 
 # Data for Vagrantfil generation.
 
-VM_TLD="test"                           # Whatever is chosen as the dev TLD
+VM_TLDS=(
+	"test"                              # One line for every dev TLD used
+)
 
 # Machine Variables
 VM_HOSTNAME="p2vagrant"
