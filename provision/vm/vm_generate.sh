@@ -1,14 +1,14 @@
 #!/bin/zsh
 
-# provision/scripts/vagrant_generate.sh
+# provision/vm/vm_generate.sh
 # Usage...
-# `./provision/scripts/vagrant_generate.sh "$(pwd)" "$vm_step"`
+# `./provision/vm/vm_generate.sh "$(pwd)" "$vm_step"`
 
 # Common functions
 source ./vm_common.sh
 
 # Source data
-source ../data/vagrantfiles_data.sh
+source ../data/vm_data.sh
 
 # Change working directory to the 'vm' directory
 cd "$1"

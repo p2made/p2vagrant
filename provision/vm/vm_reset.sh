@@ -8,7 +8,7 @@
 source ./vm_common.sh
 
 # Source data
-source ../data/vagrantfiles_data.sh
+source ../data/vm_data.sh
 
 # Change working directory to the 'vm' directory
 cd "$1"
