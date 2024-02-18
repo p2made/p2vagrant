@@ -39,11 +39,15 @@ function display_usage() {
 	echo "  $script_name -r              # Reset: Delete any generated or copied files in earlier Vagrant provisioning."
 	echo "  $script_name -r <integer>    # Reset and generate Vagrantfile based on the specified integer."
 	echo "  $script_name -gr <integer>   # Reset and generate Vagrantfile based on the specified integer."
+	echo ""
+	echo "  -g is implied any time an integer argument is given, so only serves as"
+	echo "     'syntactic sugar' to make the intended use of './vm' explicitly clear."
 	exit 0
 }
 
 # Process flags
 while getopts ":gr" opt; do
+	echo "‼️‼️Processing options"
 	case $opt in
 		g)
 			FLAG_GENERATE=true
