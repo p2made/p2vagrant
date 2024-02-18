@@ -24,27 +24,6 @@ vm_step=0
 step_title=""
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/ -- -- /%/     Utility Functions     /%/ -- -- /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-
-# Function for error handling
-# Usage: handle_error "Error message"
-function handle_error() {
-	echo "⚠️  Error: $1 💥"
-	exit 1
-}
-
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
-function announce_success() {
-	icon="✅"
-
-	if [ -n "$2" ] && (( $2 == 1)); then
-		icon="👍"
-	fi
-
-	echo "$icon $1"
-}
 
 # Function to display usage information
 function display_usage() {
@@ -62,10 +41,6 @@ function display_usage() {
 	echo "  $script_name -gr <integer>   # Reset and generate Vagrantfile based on the specified integer."
 	exit 0
 }
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/ -- -- /%/      Input Handling       /%/ -- -- /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Process flags
 while getopts ":gr" opt; do
@@ -126,9 +101,9 @@ if $FLAG_GENERATE; then
 	fi
 
 	# Calling vagrant_generate.sh
-	echo "Dry run: Calling ./provision/scripts/vagrant_generate.sh $(pwd) $vm_step"
-	echo "vagrant_generate.sh generates the Vagrantfile for provisioning step $vm_step"
-	# ./provision/scripts/vagrant_generate.sh "$(pwd)" "$vm_step"
+	#echo "Dry run: Calling ./provision/scripts/vagrant_generate.sh $(pwd) $vm_step"
+	#echo "vagrant_generate.sh generates the Vagrantfile for provisioning step $vm_step"
+	./provision/scripts/vagrant_generate.sh "$(pwd)" "$vm_step"
 
 	announce_success "Vagrantfile for provisioning step $vm_step has been generated."
 fi
