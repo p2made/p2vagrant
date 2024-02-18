@@ -24,10 +24,6 @@ declare step_title
 # Function to get the step title from sparse array in data
 # Usage: get_step_title $vm_step
 function get_step_title () {
-	if [[ -z ${vagrantfiles[$1]:-} ]]; then
-		handle_error "Step does not require a new Vagrantfile, or is out of range of steps"
-	fi
-
 	local i=$(printf "%02d" $1)
 	step_title=$vagrantfiles[$1]
 	announce_success "Generating Vagrantfile for $i: $step_title."
