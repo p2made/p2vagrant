@@ -36,7 +36,7 @@ function display_usage() {
 	echo "--"
 	echo "Usage examples:"
 	echo "  $script_name -g <integer>    # Generate Vagrantfile based on the specified integer."
-	echo "  $script_name -r              # Reset: Delete any generated or copied files from earlier Vagrant provisioning."
+	echo "  $script_name -r              # Reset: Delete any generated or copied files in earlier Vagrant provisioning."
 	echo "  $script_name -r <integer>    # Reset and generate Vagrantfile based on the specified integer."
 	echo "  $script_name -gr <integer>   # Reset and generate Vagrantfile based on the specified integer."
 	exit 0
