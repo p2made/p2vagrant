@@ -33,7 +33,7 @@ function handle_error() {
 function announce_success() {
 	icon="✅"
 
-	if [ -n "$2" ] && [ "$2" -eq 1 ]; then
+	if [ -n "$2" ] && (( $2 == 1)); then
 		icon="👍"
 	fi
 
@@ -80,20 +80,20 @@ while getopts ":gr" opt; do
 done
 
 # Shift to the next argument after processing flags
-shift $((OPTIND - 1))
+shift $(( OPTIND - 1 ))
 
 # Check if there are no flags or arguments
-if [ "$#" -eq 0 ] && ! $FLAG_RESET && ! $FLAG_GENERATE; then
+if (( "$#" == 0 )) && ! $FLAG_RESET && ! $FLAG_GENERATE; then
 	display_usage "$0"
 fi
 
 # Check if an argument is provided
-if [ $# -gt 0 ]; then
+if (( $# > 0 )); then
 	# Check if the argument is an integer
 	if [[ $1 =~ ^[0-9]+$ ]]; then
 		vm_step=$1
 	else
-		handle_error "$vm_step is not an integer"
+		handle_error "$1 is not an integer"
 	fi
 fi
 
@@ -101,17 +101,28 @@ fi
 if $FLAG_RESET; then
 	# Calling vagrant_reset.sh
 	echo "Dry run: Calling ./provision/scripts/vagrant_reset.sh $(pwd) $vm_step"
+	echo "vagrant_reset.sh deletes all generated & copied files for provisioning step $vm_step"
 	# ./provision/scripts/vagrant_reset.sh "$(pwd)" "$vm_step"
 
-	if [ "$vm_step" -eq 0 ]; then
-		# Not generating a Vagrantfile
+	announce_success "Reset complete. Generated & copied files have been deleted."
+
+	if (( vm_step < 1 || vm_step == 8 || vm_step > 9 )); then
+		# All of those values are valid for 'vagrant_reset.sh' but not for 'vagrant_generate.sh'
+		# so we quietly exit without generating a Vagrantfile
 		exit 0
 	fi
 fi
 
 # If -g is set
 if $FLAG_GENERATE; then
+	if (( vm_step < 1 || vm_step == 8 || vm_step > 9 )); then
+		handle_error "Generating Vagrantfiles requires an integer argument greater than zero"
+	fi
+
 	# Calling vagrant_generate.sh
 	echo "Dry run: Calling ./provision/scripts/vagrant_generate.sh $(pwd) $vm_step"
+	echo "vagrant_generate.sh generates the Vagrantfile for provisioning step $vm_step"
 	# ./provision/scripts/vagrant_generate.sh "$(pwd)" "$vm_step"
+
+	announce_success "Vagrantfile for provisioning step $vm_step has been generated."
 fi
