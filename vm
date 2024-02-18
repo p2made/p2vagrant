@@ -25,20 +25,22 @@ vm_step=0
 # Function to display usage information
 function display_usage() {
 	script_name="$1"
-	echo "Usage: $script_name [-g] [-r] <integer>"
-	echo "Options:"
-	echo "  -g    Generate Vagrantfile based on the specified integer."
-	echo "  -r    Reset: Delete any generated or copied files from earlier Vagrant provisioning."
-	echo "  <integer>   Step number for Vagrantfile generation."
-	echo "--"
-	echo "Usage examples:"
-	echo "  $script_name -g <integer>    # Generate Vagrantfile based on the specified integer."
-	echo "  $script_name -r              # Reset: Delete any generated or copied files in earlier Vagrant provisioning."
-	echo "  $script_name -r <integer>    # Reset and generate Vagrantfile based on the specified integer."
-	echo "  $script_name -gr <integer>   # Reset and generate Vagrantfile based on the specified integer."
-	echo ""
-	echo "  -g is implied any time an integer argument is given, so only serves as"
-	echo "     'syntactic sugar' to make the intended use of './vm' explicitly clear."
+	cat <<EOF
+Usage: $script_name [-g] [-r] <integer>
+Options:
+  -g    Generate Vagrantfile based on the specified integer.
+  -r    Reset: Delete any generated or copied files from earlier Vagrant provisioning.
+  <integer>   Step number for Vagrantfile generation.
+--
+Usage examples:
+  $script_name -g <integer>    # Generate Vagrantfile based on the specified integer.
+  $script_name -r              # Reset: Delete any generated or copied files in earlier Vagrant provisioning.
+  $script_name -r <integer>    # Reset and generate Vagrantfile based on the specified integer.
+  $script_name -gr <integer>   # Reset and generate Vagrantfile based on the specified integer.
+
+  -g is implied any time an integer argument is given, so only serves as
+     'syntactic sugar' to make the intended use of './vm' explicitly clear.
+EOF
 	exit 0
 }
 
