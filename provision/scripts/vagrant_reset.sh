@@ -31,9 +31,11 @@ function display_reset_map() {
 		provision_vhosts+=(
 			$(find ./provision/vhosts -maxdepth 1 -type f -name '*.conf' -not -name '*p2vagrant*' -not -name 'local.conf')
 		)
-		domains_to_delete+=(
-			$(find ./ -maxdepth 1 -type d -name "$VM_TLD*")
-		)
+		for tld in "${VM_TLDS[@]}"; do
+			domains_to_delete+=(
+				$(find ./ -maxdepth 1 -type d -name "${tld}_*")
+			)
+		done
 	fi
 	if [ $vm_step -le 8 ]; then
 		# Resetting from installing phpMyAdmin
