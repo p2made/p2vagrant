@@ -4,11 +4,11 @@
 # Usage...
 # `./provision/scripts/vagrant_reset.sh "$(pwd)" "$vm_step"`
 
+# Common functions
+source ./vm_common.sh
+
 # Source data
 source ../data/vagrantfiles_data.sh
-
-# Common functions
-source ./_common.sh
 
 # Change working directory to the 'vm' directory
 cd "$1"
