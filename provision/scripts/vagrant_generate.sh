@@ -6,6 +6,7 @@
 
 # Source data
 source ../data/vagrantfiles_data.sh
+source ./_common.sh
 
 # Change working directory to the 'vm' directory
 cd "$1"
@@ -15,27 +16,6 @@ vm_step=$2
 
 # Script variables...
 declare step_title
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-
-# Function for error handling
-# Usage: handle_error "Error message"
-handle_error() {
-	echo "⚠️  Error: $1 💥"
-	exit 1
-}
-
-# Function to announce success
-# Usage: announce_success "Task completed successfully." [use_alternate_icon]
-announce_success() {
-	icon="✅"
-
-	if [ -n "$2" ] && [ "$2" -eq 1 ]; then
-		icon="👍"
-	fi
-
-	echo "$icon $1"
-}
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
