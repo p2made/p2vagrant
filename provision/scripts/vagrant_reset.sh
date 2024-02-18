@@ -2,10 +2,11 @@
 
 # provision/scripts/vagrant_reset.sh
 
-# Reset Logic
-source ../data/vagrantfiles_data.sh  # Adjust the path as needed
+# Access the value of $vm_step passed as an argument
+vm_step=$1
 
-vm_step=$1  # Access the value of $vm_step passed as an argument
+# Change working directory to the 'vm' directory
+cd ../../
 
 # Function to display a map of files to be deleted
 function display_reset_map() {
@@ -19,58 +20,58 @@ function display_reset_map() {
 	if [ $vm_step -le 9 ]; then
 		# Resetting from configuring websites
 		provision_ssl+=(
-			$(find ../ssl -maxdepth 1 -type f -name '*.cert' -not -name '*p2vagrant*')
-			$(find ../ssl -maxdepth 1 -type f -name '*.key' -not -name '*p2vagrant*')
+			$(find ./provision/ssl -maxdepth 1 -type f -name '*.cert' -not -name '*p2vagrant*')
+			$(find ./provision/ssl -maxdepth 1 -type f -name '*.key' -not -name '*p2vagrant*')
 		)
 		provision_vhosts+=(
-			$(find ../vhosts -maxdepth 1 -type f -name '*.conf' -not -name '*p2vagrant*' -not -name 'local.conf')
+			$(find ./provision/vhosts -maxdepth 1 -type f -name '*.conf' -not -name '*p2vagrant*' -not -name 'local.conf')
 		)
 		domains_to_delete+=(
-			$(find ../../ -maxdepth 1 -type d -name "$VM_TLD*")
+			$(find ./ -maxdepth 1 -type d -name "$VM_TLD*")
 		)
 	fi
 	if [ $vm_step -le 8 ]; then
 		# Resetting from installing phpMyAdmin
 		html+=(
-			$(find ../../html -maxdepth 1 -type d -name 'phpmyadmin')
+			$(find ./html -maxdepth 1 -type d -name 'phpmyadmin')
 		)
 	fi
 	if [ $vm_step -le 7 ]; then
 		# Resetting from installing MySQL
 		html+=(
-			$(find ../../html -maxdepth 1 -type f -name 'db.php')
+			$(find ./html -maxdepth 1 -type f -name 'db.php')
 		)
 		provision_html+=(
-			$(find ../html -maxdepth 1 -type f -name 'db.php')
+			$(find ./provision/html -maxdepth 1 -type f -name 'db.php')
 		)
 	fi
 	if [ $vm_step -le 6 ]; then
 		# Resetting from installing php
 		html+=(
-			$(find ../../html -maxdepth 1 -type f -name 'index.php')
-			$(find ../../html -maxdepth 1 -type f -name 'phpinfo.php')
+			$(find ./html -maxdepth 1 -type f -name 'index.php')
+			$(find ./html -maxdepth 1 -type f -name 'phpinfo.php')
 		)
 		provision_html+=(
-			$(find ../html -maxdepth 1 -type f -name 'index.php')
+			$(find ./provision/html -maxdepth 1 -type f -name 'index.php')
 		)
 	fi
 	if [ $vm_step -le 5 ]; then
 		# Resetting from installing Apache - which is everything for this job!
 		html+=(
-			$(find ../../html -maxdepth 1 -type f -name 'index.htm')
-			$(find ../../html -maxdepth 1 -type f -name 'index.html')
-			$(find ../../html -maxdepth 1 -type f -name 'index.md')
+			$(find ./html -maxdepth 1 -type f -name 'index.htm')
+			$(find ./html -maxdepth 1 -type f -name 'index.html')
+			$(find ./html -maxdepth 1 -type f -name 'index.md')
 		)
 		provision_html+=(
-			$(find ../html -maxdepth 1 -type f -name 'index.htm')
-			$(find ../html -maxdepth 1 -type f -name 'index.md')
+			$(find ./provision/html -maxdepth 1 -type f -name 'index.htm')
+			$(find ./provision/html -maxdepth 1 -type f -name 'index.md')
 		)
 		provision_ssl=(
-			$(find ../ssl -maxdepth 1 -type f -name '*.cert')
-			$(find ../ssl -maxdepth 1 -type f -name '*.key')
+			$(find ./provision/ssl -maxdepth 1 -type f -name '*.cert')
+			$(find ./provision/ssl -maxdepth 1 -type f -name '*.key')
 		)
 		provision_vhosts=(
-			$(find ../vhosts -maxdepth 1 -type f -name '*.conf')
+			$(find ./provision/vhosts -maxdepth 1 -type f -name '*.conf')
 		)
 	fi
 
@@ -90,6 +91,29 @@ function display_reset_map() {
 	done
 }
 
+# Function to prompt for confirmation
+function confirm_reset() {
+	declare -a files_to_delete
+	declare -a domains_to_delete
+
+	display_reset_map
+
+	read "?Warning: This will delete any generated or copied files. Are you sure? (y/n): " answer
+	case $answer in
+		[Yy]*)
+			FLAG_RESET=true # we are here because FLAG_RESET is already set to true
+			# Call a function to delete the files
+			delete_files "${files_to_delete[@]}"
+			delete_folders "${domains_to_delete[@]}"
+			;;
+		*)
+			FLAG_RESET=false # Setting this is redundant because we are exiting
+			echo "Reset operation canceled."
+			exit 0
+			;;
+	esac
+}
+
 # Function to delete files
 # Usage: delete_files "${files_to_delete[@]}"
 function delete_files() {
@@ -106,26 +130,3 @@ function delete_folders() {
 		rm -rf "./html/phpmyadmin"
 	fi
 }
-
-# Function to prompt for confirmation
-function confirm_reset() {
-	declare -a files_to_delete
-	declare -a domains_to_delete
-
-	display_reset_map
-
-	read "?Warning: This will delete any generated or copied files. Are you sure? (y/n): " answer
-	case $answer in
-		[Yy]*)
-			# Call a function to delete the files
-			delete_files "${files_to_delete[@]}"
-			delete_folders "${domains_to_delete[@]}"
-			;;
-		*)
-			echo "Reset operation canceled."
-			exit 0
-			;;
-	esac
-}
-
-confirm_reset
