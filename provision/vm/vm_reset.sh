@@ -112,6 +112,23 @@ function construct_reset_map() {
 	)
 }
 
+# Function to delete files
+# Usage: delete_files "${files_to_delete[@]}"
+function delete_files() {
+	rm -f "${@}"
+}
+
+# Function to delete folders
+# Usage: delete_files "${domains_to_delete[@]}"
+function delete_folders() {
+	rm -rf "${@}"
+
+	# Specific deletion for phpmyadmin folder if it exists
+	if [ -d "./html/phpmyadmin" ]; then
+		rm -rf "./html/phpmyadmin"
+	fi
+}
+
 # Function to prompt for confirmation
 function confirm_reset() {
 	declare -a files_to_delete
@@ -139,21 +156,4 @@ function confirm_reset() {
 			exit 0
 			;;
 	esac
-}
-
-# Function to delete files
-# Usage: delete_files "${files_to_delete[@]}"
-function delete_files() {
-	rm -f "${@}"
-}
-
-# Function to delete folders
-# Usage: delete_files "${domains_to_delete[@]}"
-function delete_folders() {
-	rm -rf "${@}"
-
-	# Specific deletion for phpmyadmin folder if it exists
-	if [ -d "./html/phpmyadmin" ]; then
-		rm -rf "./html/phpmyadmin"
-	fi
 }
