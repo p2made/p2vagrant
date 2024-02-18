@@ -1,18 +1,20 @@
 #!/bin/zsh
 
-# vg
-# Updated: 2024-02-12
-
-# Generates Vagrantfile for the step specified by an integer argument.
+# provision/scripts/vagrant_generate.sh
+# Usage...
+# `./provision/scripts/vagrant_generate.sh "$(pwd)" "$vm_step"`
 
 # Source data
-source ./provision/data/vagrantfiles_data.sh
+source ../data/vagrantfiles_data.sh
 
-# Argument...
-vm_step=$1
+# Change working directory to the 'vm' directory
+cd "$1"
+
+# Access the value of $vm_step passed as an argument
+vm_step=$2
 
 # Script variables...
-step_title=""
+declare step_title
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
