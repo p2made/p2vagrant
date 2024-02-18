@@ -1,12 +1,14 @@
 #!/bin/zsh
 
 # provision/scripts/vagrant_reset.sh
-
-# Access the value of $vm_step passed as an argument
-vm_step=$1
+# Usage...
+# `./provision/scripts/vagrant_reset.sh "$(pwd)" "$vm_step"`
 
 # Change working directory to the 'vm' directory
-cd ../../
+cd "$1"
+
+# Access the value of $vm_step passed as an argument
+vm_step=$2
 
 # Function to display a map of files to be deleted
 function display_reset_map() {
