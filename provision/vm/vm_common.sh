@@ -1,7 +1,6 @@
 #!/bin/zsh
 
-# provision/scripts/vm_common.sh
-
+# provision/vm/vm_common.sh
 # Usage...
 # `source ./relative/path/to/vm_common.sh"`
 
@@ -51,6 +50,8 @@ function announce_no_job() {
 	echo "👍  $1"
 }
 
+# Function to give a debugging message
+# Usage: debug_message "$FUNCNAME" "$LINENO" "Message."
 function debug_message() {
-	echo "‼️‼️  Debug: $1 🚨"
+	echo "‼️‼️  Debug in $1 at line $2: $3 🚨"
 }

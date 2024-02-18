@@ -1,8 +1,8 @@
 #!/bin/zsh
 
-# provision/scripts/vagrant_reset.sh
+# provision/vm/vm_reset.sh
 # Usage...
-# `./provision/scripts/vagrant_reset.sh "$(pwd)" "$vm_step"`
+# `./provision/vm/vm_reset.sh "$(pwd)" "$vm_step"`
 
 # Common functions
 source ./vm_common.sh
@@ -130,13 +130,11 @@ function confirm_reset() {
 	read "?Warning: This will delete any generated or copied files. Are you sure? (Y/n): " answer
 	case $answer in
 		[Y])
-			FLAG_RESET=true # we are here because FLAG_RESET is already set to true
 			# Call a function to delete the files
 			delete_files "${files_to_delete[@]}"
 			delete_folders "${domains_to_delete[@]}"
 			;;
 		*)
-			FLAG_RESET=false # Setting this is redundant because we are exiting
 			echo "Reset operation canceled."
 			exit 0
 			;;

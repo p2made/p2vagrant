@@ -6,18 +6,15 @@
 # Generates Vagrantfile for the step specified by an integer argument.
 # &/or deletes previously generated & copied files
 
-# Source data
-source ./provision/data/vagrantfiles_data.sh
-
 # Common functions
-source ./provision/scripts/_common.sh
+source ./provision/vm/vm_common.sh
+
+# Source data
+source ./provision/data/vm_data.sh
 
 # Define flags
 FLAG_GENERATE=false
 FLAG_RESET=false
-
-# Script constants
-VAGRANTFILE_STEPS=(1 2 3 4 5 6 7 9)
 
 # Script variables
 vm_step=0
@@ -91,7 +88,7 @@ if $FLAG_RESET; then
 
 	announce_success "Reset complete. Generated & copied files have been deleted."
 
-	if ! [[ "${vagrantfile_steps[@]}" =~ "${vm_step}" ]]; then
+	if ! [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${vm_step}" ]]; then
 		# There is no Vagrantfile to be generated so we quietly exit
 		exit 0
 	fi
@@ -99,7 +96,7 @@ fi
 
 # If -g is set
 if $FLAG_GENERATE; then
-	if ! [[ "${vagrantfile_steps[@]}" =~ "${vm_step}" ]]; then
+	if ! [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${vm_step}" ]]; then
 		echo "No Vagrantfile to be generated for the specified step"
 		exit 0
 	fi
