@@ -37,6 +37,7 @@ DB_NAME_TEST="example_db_test"
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Sparse array of Vagrantfiles, indexed by setup step...
+vagrantfiles_indexes=(1 2 3 4 5 6 7 9)
 vagrantfiles[1]="Create Bare VM"
 vagrantfiles[2]="Upgrade VM"
 vagrantfiles[3]="Install Utilities"
