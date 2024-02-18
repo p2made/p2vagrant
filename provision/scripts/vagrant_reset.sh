@@ -127,7 +127,7 @@ function confirm_reset() {
 		echo "$file" | sed "s|^./|p2vagrant/|"
 	done
 
-	read "?Warning: This will delete any generated or copied files. Are you sure? (y/n): " answer
+	read "?Warning: This will delete any generated or copied files. Are you sure? (Yy/n): " answer
 	case $answer in
 		[Yy]*)
 			FLAG_RESET=true # we are here because FLAG_RESET is already set to true
