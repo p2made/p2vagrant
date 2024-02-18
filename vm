@@ -9,6 +9,9 @@
 # Source data
 source ./provision/data/vagrantfiles_data.sh
 
+# Common functions
+source ./provision/scripts/_common.sh
+
 # Define flags
 FLAG_GENERATE=false
 FLAG_RESET=false
