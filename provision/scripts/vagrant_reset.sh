@@ -6,6 +6,7 @@
 
 # Source data
 source ../data/vagrantfiles_data.sh
+source ./_common.sh
 
 # Change working directory to the 'vm' directory
 cd "$1"
