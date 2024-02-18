@@ -226,7 +226,7 @@ fi
 
 # If -r is set
 if $FLAG_RESET; then
-	confirm_reset
+	./provision/scripts/vagrant_reset.sh $vm_step
 
 	if [ "$vm_step" -eq 0 ]; then
 		# Not generating a Vagrantfile
