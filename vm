@@ -16,6 +16,9 @@ source ./provision/scripts/_common.sh
 FLAG_GENERATE=false
 FLAG_RESET=false
 
+# Script constants
+VAGRANTFILE_STEPS=(1 2 3 4 5 6 7 9)
+
 # Script variables
 vm_step=0
 step_title=""
@@ -109,17 +112,17 @@ if $FLAG_RESET; then
 
 	announce_success "Reset complete. Generated & copied files have been deleted."
 
-	if (( vm_step < 1 || vm_step == 8 || vm_step > 9 )); then
-		# All of those values are valid for 'vagrant_reset.sh' but not for 'vagrant_generate.sh'
-		# so we quietly exit without generating a Vagrantfile
+	if ! [[ "${vagrantfile_steps[@]}" =~ "${vm_step}" ]]; then
+		# There is no Vagrantfile to be generated so we quietly exit
 		exit 0
 	fi
 fi
 
 # If -g is set
 if $FLAG_GENERATE; then
-	if (( vm_step < 1 || vm_step == 8 || vm_step > 9 )); then
-		handle_error "Generating Vagrantfiles requires an integer argument greater than zero"
+	if ! [[ "${vagrantfile_steps[@]}" =~ "${vm_step}" ]]; then
+		echo "No Vagrantfile to be generated for the specified step"
+		exit 0
 	fi
 
 	# Calling vagrant_generate.sh
