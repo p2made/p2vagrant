@@ -6,6 +6,8 @@
 
 # Source data
 source ../data/vagrantfiles_data.sh
+
+# Common functions
 source ./_common.sh
 
 # Change working directory to the 'vm' directory
