@@ -4,6 +4,9 @@
 # Usage...
 # `./provision/scripts/vagrant_reset.sh "$(pwd)" "$vm_step"`
 
+# Source data
+source ./provision/data/vagrantfiles_data.sh
+
 # Change working directory to the 'vm' directory
 cd "$1"
 
