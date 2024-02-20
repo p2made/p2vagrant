@@ -4,6 +4,8 @@
 # Usage...
 # `source ./relative/path/to/vm_common.sh`
 
+# Script constants
+
 # Sparse array of Vagrantfiles, indexed by setup step...
 VAGRANTFILES_INDEXES=(1 2 3 4 5 6 7 9)
 VAGRANTFILES[1]="Create Bare VM"
@@ -98,7 +100,7 @@ EOF
 
 # Function to write update banner
 # Usage: upgrade_banner $active_title $script_name $updated_date
-function manager_banner() {
+function show_manager_banner() {
     cat <<EOF
 🇦🇺$FLAGS$FLAGS$FLAGS$FLAGS$FLAGS
 🇺🇦

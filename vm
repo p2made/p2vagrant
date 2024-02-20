@@ -13,9 +13,13 @@ source ./provision/vm/vm_common.sh
 # Source data
 source ./provision/data/vm_data.sh
 
+# Script constants
+FLAGS="grv"
+
 # Define flags
 FLAG_GENERATE=false
 FLAG_RESET=false
+FLAG_VAGRANT=false
 
 # Script variables
 vm_step=0
@@ -23,63 +27,174 @@ vm_step=0
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to display usage information
+# Usage: display_usage
 function display_usage() {
 	script_name="$1"
 	cat <<EOF
-Usage: $script_name [-g] [-r] <integer>
+Usage: $script_name [-g] [-r] [-v] <integer>
 Options:
   -g    Generate Vagrantfile based on the specified integer.
   -r    Reset: Delete any generated or copied files from earlier Vagrant provisioning.
+  -v    Run `vagrant up` after generating the Vagrantfile.
   <integer>   Step number for Vagrantfile generation.
 --
 Usage examples:
   $script_name -g <integer>    # Generate Vagrantfile based on the specified integer.
-  $script_name -r              # Reset: Delete any generated or copied files in earlier Vagrant provisioning.
+  $script_name -r              # Reset: Delete any file generated or copied in earlier Vagrant provisioning.
   $script_name -r <integer>    # Reset and generate Vagrantfile based on the specified integer.
+  $script_name -v <integer>    # Generate Vagrantfile based on the specified integer then run `vagrant up`.
   $script_name -gr <integer>   # Reset and generate Vagrantfile based on the specified integer.
+  $script_name -gv <integer>   # Generate Vagrantfile based on the specified integer then run `vagrant up`.
+  $script_name -rv <integer>   # Reset and generate Vagrantfile based on the specified integer then run `vagrant up`.
+  $script_name -grv <integer>  # Reset and generate Vagrantfile based on the specified integer then run `vagrant up`.
 
   -g is implied any time an integer argument is given, so only serves as
      'syntactic sugar' to make the intended use of './vm' explicitly clear.
+  -g & -v are both invalid with a valid integer argument.
 EOF
 	exit 0
 }
 
-# Process flags
-while getopts ":gr" opt; do
-	debug_message "Processing options"
-	case $opt in
-		g)
-			FLAG_GENERATE=true
-			;;
-		r)
-			FLAG_RESET=true
-			;;
-		\?)
-			handle_error "Invalid option: -$OPTARG"
-			;;
-		:)
-			handle_error "Option -$OPTARG requires an argument"
-			;;
-	esac
-done
+# Function to process flags
+# Usage: process_flags [$FLAGS]
+function process_flags() {
+	# Process flags
+	while getopts ":$FLAGS" opt; do
+		debug_message "Processing options"
+		case $opt in
+			g)
+				FLAG_GENERATE=true
+				;;
+			r)
+				FLAG_RESET=true
+				;;
+			v)
+				FLAG_VAGRANT=true
+				;;
+			\?)
+				handle_error "Invalid option: -$OPTARG"
+				;;
+			:)
+				handle_error "Option -$OPTARG requires an argument"
+				;;
+		esac
+	done
+}
 
-# Shift to the next argument after processing flags
-shift $(( OPTIND - 1 ))
+# Function to check vagrant conditions
+# Usage: vagrant_check $step_has_vagrantfile $vm_step
+function vagrant_check() {
 
-# Check if there are no flags or arguments
-if (( "$#" == 0 )) && ! $FLAG_RESET && ! $FLAG_GENERATE; then
-	display_usage "$0"
-fi
 
-# Check if an argument is provided
-if (( $# > 0 )); then
-	# Check if the argument is an integer
-	if [[ $1 =~ ^[0-9]+$ ]]; then
-		vm_step=$1
-	else
-		handle_error "$1 is not an integer"
+}
+
+# Function to evaluate the argument
+# Usage: evaluate_argument $argument
+function evaluate_argument() {
+	local argument=$1
+	local step_has_vagrantfile=false
+	local current_vagrantfile=0
+
+	# Check if `$FLAG_RESET` is `false` AND no argument is provided
+	if [[ $FLAG_RESET ]] && (( ${#argument} == 0 )); then
+		handle_error "An integer argument must be passed unless -r is set."
 	fi
-fi
+
+	# Check if the argument is an integer
+	if ! [[ $argument =~ ^[0-9]+$ ]]; then
+		handle_error "$argument is not a valid integer"
+	fi
+
+	# Check is argument is out of range
+	if (( $argument > $VAGRANTFILES_INDEXES[-1] )); then
+		handle_error "$argument is out of range"
+	fi
+
+	# Now argument is valid for `-r` at minimum
+	vm_step=$argument
+
+	# Check whether a Vagrantfile is needed for this step
+	for index in "${VAGRANTFILES_INDEXES[@]}"; do
+		if (( "$index" == "$vm_step" )); then
+			step_has_vagrantfile=true
+			break
+		fi
+	done
+
+	# If not...
+	if (( $FLAG_GENERATE )) && ! (( $step_has_vagrantfile )); then
+		handle_error "No Vagrantfile needs to be generated for step $vm_step"
+	fi
+
+	if (( $FLAG_VAGRANT )) && ! (( $FLAG_GENERATE )); then
+		#
+	fi
+
+	if [[ -e ./Vagrantfile ]]; then
+		# Read the two digits from the Vagrantfile
+		vagrantfile_line=$(head -n 4 ./Vagrantfile | tail -n 1)
+		if [[ $vagrantfile_line =~ ([0-9]+) ]]; then
+			current_vagrantfile=${BASH_REMATCH[1]}
+			# Convert to an integer
+			current_vagrantfile=$((10#$current_vagrantfile))
+		fi
+	fi
+
+	#
+	#
+
+
+
+	FLAG_GENERATE=true
+}
+
+function reset_action() {
+}
+
+function generate_action() {
+}
+
+function vagrant_action() {
+}
+
+function vagrant_manager() {
+	# Check if there are no flags or arguments
+	# If none, display usage. Otherwise run script, starting with banner
+	if (( "$#" == 0 )); then
+		display_usage "$0"
+	fi
+
+	process_flags $FLAGS
+
+	# Shift to the next argument after processing flags
+	shift $(( OPTIND - 1 ))
+
+	show_manager_banner
+
+	# If we have come past the previous check, we have an argument to evaluate.
+	evaluate_argument "$1"
+
+	# if `-r` is set
+	if $FLAG_RESET; then
+		reset_action
+	fi
+
+	# if `-g` is set
+	if $FLAG_GENERATE; then
+		generate_action
+	fi
+
+	# if `-r` is set
+	if $FLAG_VAGRANT; then
+		vagrant_action
+	fi
+}
+
+vagrant_manager "$@"
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+#!/bin/zsh
 
 # If -r is set
 if $FLAG_RESET; then
