@@ -30,17 +30,7 @@ vm_step=0
 # Usage: display_usage
 function display_usage() {
 	script_name="$1"
-	cat <<EOF
-Usage: $script_name [-g] [-r] [-v] <integer>
-Options:
-  -g    Generate Vagrantfile based on the specified integer.
-  -r    Reset: Delete any generated or copied files from earlier Vagrant provisioning.
-  -v    Run `vagrant up` or `vagrant up --provision`.
-  <integer>   Step number for Vagrantfile generation.
---
-Usage examples:
-...
-EOF
+	cat ./provision/vm/vm_usage
 	exit 0
 }
 
