@@ -35,22 +35,11 @@ Usage: $script_name [-g] [-r] [-v] <integer>
 Options:
   -g    Generate Vagrantfile based on the specified integer.
   -r    Reset: Delete any generated or copied files from earlier Vagrant provisioning.
-  -v    Run `vagrant up` after generating the Vagrantfile.
+  -v    Run `vagrant up` or `vagrant up --provision`.
   <integer>   Step number for Vagrantfile generation.
 --
 Usage examples:
-  $script_name -g <integer>    # Generate Vagrantfile based on the specified integer.
-  $script_name -r              # Reset: Delete any file generated or copied in earlier Vagrant provisioning.
-  $script_name -r <integer>    # Reset and generate Vagrantfile based on the specified integer.
-  $script_name -v <integer>    # Generate Vagrantfile based on the specified integer then run `vagrant up`.
-  $script_name -gr <integer>   # Reset and generate Vagrantfile based on the specified integer.
-  $script_name -gv <integer>   # Generate Vagrantfile based on the specified integer then run `vagrant up`.
-  $script_name -rv <integer>   # Reset and generate Vagrantfile based on the specified integer then run `vagrant up`.
-  $script_name -grv <integer>  # Reset and generate Vagrantfile based on the specified integer then run `vagrant up`.
-
-  -g is implied any time an integer argument is given, so only serves as
-     'syntactic sugar' to make the intended use of './vm' explicitly clear.
-  -g & -v are both invalid with a valid integer argument.
+...
 EOF
 	exit 0
 }
