@@ -1,8 +1,9 @@
 #!/bin/zsh
 
 # provision/vm/vm_reset.sh
-# Usage...
-# `./provision/vm/vm_reset.sh "$(pwd)" "$vm_step"`
+
+# Usage:
+# ./provision/vm/vm_reset.sh "$(pwd)" "$vm_step"
 
 # Common functions
 source ./vm_common.sh

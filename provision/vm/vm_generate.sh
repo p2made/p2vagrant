@@ -1,8 +1,9 @@
 #!/bin/zsh
 
 # provision/vm/vm_generate.sh
-# Usage...
-# `./provision/vm/vm_generate.sh "$(pwd)" "$vm_step"`
+
+# Usage:
+# ./provision/vm/vm_generate.sh "$(pwd)" "$vm_step"
 
 # Common functions
 source ./vm_common.sh

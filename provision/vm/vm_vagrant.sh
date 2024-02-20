@@ -1,8 +1,9 @@
 #!/bin/zsh
 
 # provision/vm/vm_vagrant.sh
-# Usage...
-# `./provision/vm/vm_vagrant.sh "$(pwd)" "$provisioning_step"`
+
+# Usage:
+# ./provision/vm/vm_vagrant.sh "$(pwd)" "$provisioning_step" "$requires_vagrantfile"
 
 # Common functions
 source ./vm_common.sh
@@ -19,6 +20,7 @@ provisioning_step=$2
 # Function to display a map of files to be deleted
 function construct_reset_map() {
 	echo "Files to be deleted:"
+
 
 	local -a html
 	local -a provision_html
