@@ -30,7 +30,7 @@ vm_step=0
 # Usage: display_usage
 function display_usage() {
 	script_name="$1"
-	cat ./provision/vm/vm_usage
+	cat ./provision/vm/usage
 	exit 0
 }
 
