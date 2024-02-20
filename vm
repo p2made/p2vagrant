@@ -144,6 +144,7 @@ function vagrant_manager() {
 		fi
 
 		# vagrant_action $provisioning_step
+		./provision/vm/vm_vagrant.sh "$(pwd)" "$provisioning_step" "$requires_vagrantfile"
 		exit 0
 	fi
 
