@@ -1,7 +1,8 @@
 #!/bin/zsh
 
 # provision/vm/vm_common.sh
-# Usage...
+
+# Usage:
 # `source ./relative/path/to/vm_common.sh`
 
 # Script constants

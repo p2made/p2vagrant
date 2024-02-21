@@ -3,7 +3,7 @@
 # provision/vm/vm_reset.sh
 
 # Usage:
-# ./provision/vm/vm_reset.sh "$(pwd)" "$vm_step"
+# ./provision/vm/vm_reset.sh "$(pwd)" "$provisioning_step"
 
 # Common functions
 source ./vm_common.sh
@@ -14,8 +14,8 @@ source ../data/vm_data.sh
 # Change working directory to the 'vm' directory
 cd "$1"
 
-# Access the value of $vm_step passed as an argument
-vm_step=$2
+# Access the value of $provisioning_step passed as an argument
+provisioning_step=$2
 
 # Function to display a map of files to be deleted
 function construct_reset_map() {
@@ -26,7 +26,7 @@ function construct_reset_map() {
 	local -a provision_ssl
 	local -a provision_vhosts
 
-	if (( $vm_step <= 9 )); then
+	if (( $provisioning_step <= 9 )); then
 		# Resetting from configuring websites
 		provision_ssl+=(
 			$(find ./provision/ssl -maxdepth 1 -type f -name '*.cert' -not -name '*p2vagrant*')
@@ -41,21 +41,21 @@ function construct_reset_map() {
 			)
 		done
 	else
-		# '$vm_step' won't be <= any smaller value
+		# '$provisioning_step' won't be <= any smaller value
 		return
 	fi
 
-	if (( $vm_step <= 8 )); then
+	if (( $provisioning_step <= 8 )); then
 		# Resetting from installing phpMyAdmin
 		html+=(
 			$(find ./html -maxdepth 1 -type d -name 'phpmyadmin')
 		)
 	else
-		# '$vm_step' won't be <= any smaller value
+		# '$provisioning_step' won't be <= any smaller value
 		return
 	fi
 
-	if (( $vm_step <= 7 )); then
+	if (( $provisioning_step <= 7 )); then
 		# Resetting from installing MySQL
 		html+=(
 			$(find ./html -maxdepth 1 -type f -name 'db.php')
@@ -64,11 +64,11 @@ function construct_reset_map() {
 			$(find ./provision/html -maxdepth 1 -type f -name 'db.php')
 		)
 	else
-		# '$vm_step' won't be <= any smaller value
+		# '$provisioning_step' won't be <= any smaller value
 		return
 	fi
 
-	if (( $vm_step <= 6 )); then
+	if (( $provisioning_step <= 6 )); then
 		# Resetting from installing php
 		html+=(
 			$(find ./html -maxdepth 1 -type f -name 'index.php')
@@ -78,11 +78,11 @@ function construct_reset_map() {
 			$(find ./provision/html -maxdepth 1 -type f -name 'index.php')
 		)
 	else
-		# '$vm_step' won't be <= any smaller value
+		# '$provisioning_step' won't be <= any smaller value
 		return
 	fi
 
-	if (( $vm_step <= 5 )); then
+	if (( $provisioning_step <= 5 )); then
 		# Resetting from installing Apache - which is everything for this job!
 		html+=(
 			$(find ./html -maxdepth 1 -type f -name 'index.htm')
@@ -101,7 +101,7 @@ function construct_reset_map() {
 			$(find ./provision/vhosts -maxdepth 1 -type f -name '*.conf')
 		)
 	else
-		# '$vm_step' won't be <= any smaller value
+		# '$provisioning_step' won't be <= any smaller value
 		return
 	fi
 

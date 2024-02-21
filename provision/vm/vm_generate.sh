@@ -3,7 +3,7 @@
 # provision/vm/vm_generate.sh
 
 # Usage:
-# ./provision/vm/vm_generate.sh "$(pwd)" "$vm_step"
+# ./provision/vm/vm_generate.sh "$(pwd)" "$provisioning_step"
 
 # Common functions
 source ./vm_common.sh
@@ -14,10 +14,10 @@ source ../data/vm_data.sh
 # Change working directory to the 'vm' directory
 cd "$1"
 
-# Access the value of $vm_step passed as an argument
-vm_step=$2
-vm_two=$(printf "%02d" $vm_step)
-vm_title=$VAGRANTFILES[$vm_step]
+# Access the value of $provisioning_step passed as an argument
+provisioning_step=$2
+vm_two=$(printf "%02d" $provisioning_step)
+vm_title=$VAGRANTFILES[$provisioning_step]
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
@@ -44,20 +44,20 @@ HOST_FOLDER         = "$HOST_FOLDER"
 VM_FOLDER           = "$VM_FOLDER"
 EOF
 
-if (( vm_step >= 4 )); then
+if (( provisioning_step >= 4 )); then
     cat <<EOF >> ./Vagrantfile
 # Software Versions
 SWIFT_VERSION       = "$SWIFT_VERSION"
 EOF
 fi
 
-if (( vm_step >= 6 )); then
+if (( provisioning_step >= 6 )); then
     cat <<EOF >> ./Vagrantfile
 PHP_VERSION         = "$PHP_VERSION"
 EOF
 fi
 
-if (( vm_step >= 7 )); then
+if (( provisioning_step >= 7 )); then
     cat <<EOF >> ./Vagrantfile
 MYSQL_VERSION       = "$MYSQL_VERSION"
 
@@ -90,14 +90,14 @@ Vagrant.configure("2") do |config|
 EOF
 
 # VM config provisioning lines
-if (( vm_step >= 2 )); then
+if (( provisioning_step >= 2 )); then
     cat <<EOF >> ./Vagrantfile
 	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 EOF
 fi
 
-if (( vm_step >= 3 )); then
+if (( provisioning_step >= 3 )); then
     cat <<EOF >> ./Vagrantfile
 	# Provisioning...
 EOF
@@ -105,8 +105,8 @@ EOF
     # Loop through keys of the associative array in sorted order
     for prov_step in "${provisioning_indexes[@]}"; do
         prov_string=$provisioning_items[$prov_step]
-        if (( $vm_step <= $prov_step )); then
-            if (( $vm_step == $prov_step )); then
+        if (( $provisioning_step <= $prov_step )); then
+            if (( $provisioning_step == $prov_step )); then
                 cat <<EOF >> ./Vagrantfile
 	$prov_string
 EOF
