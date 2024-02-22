@@ -3,7 +3,7 @@
 # provision/vm/vm_generate.sh
 
 # Usage:
-# ./provision/vm/vm_generate.sh "$(pwd)" "$provisioning_step"
+# ./provision/vm/vm_generate.sh "$(pwd)" "$provisioning_step" "$requires_vagrantfile"
 
 # Common functions
 source ./vm_common.sh
