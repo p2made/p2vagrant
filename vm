@@ -143,7 +143,7 @@ function eliminate_zero_argument() {
 		handle_error "Resetting p2vagrant requires a non-zero integer argument"
 	fi
 
-	handle_error "`Generating a Vagrantfile requires a non-zero integer argument"
+	handle_error "Generating a Vagrantfile requires a non-zero integer argument"
 }
 
 function vagrant_manager() {
@@ -154,7 +154,7 @@ function vagrant_manager() {
 		exit 0
 	fi
 
-	show_manager_banner
+	vm_application_banner
 
 	# Set variables up
 	declare passed_step
