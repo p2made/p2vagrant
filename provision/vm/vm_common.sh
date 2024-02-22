@@ -101,7 +101,7 @@ EOF
 
 # Function to write update banner
 # Usage: upgrade_banner $active_title $script_name $updated_date
-function show_manager_banner() {
+function vm_application_banner() {
     cat <<EOF
 🇦🇺$FLAGS$FLAGS$FLAGS$FLAGS$FLAGS
 🇺🇦
