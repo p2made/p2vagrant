@@ -1,17 +1,13 @@
 #!/bin/zsh
 
-# vm
-# Updated: 2024-02-16
+# vm_application.sh
 
 # Generates Vagrantfile for the step specified by an integer argument.
 # &/or deletes previously generated & copied files
 # For usage run `./vm`
 
 # Common functions
-source ./provision/vm/vm_common.sh
-
-# Source data
-source ./provision/data/vm_data.sh
+source ./vm_common.sh
 
 # Script constants
 FLAGS="g:r:v"
@@ -147,13 +143,6 @@ function eliminate_zero_argument() {
 }
 
 function vagrant_manager() {
-	# Check if there are no flags or arguments
-	# If none, display usage. Otherwise run script, starting with banner
-	if (( "$#" == 0 )); then
-		cat ./provision/vm/vm_application_usage.txt
-		exit 0
-	fi
-
 	vm_application_banner
 
 	# Set variables up
@@ -197,5 +186,3 @@ function vagrant_manager() {
 		exit 0
 	fi
 }
-
-vagrant_manager "$@"
