@@ -1,4 +1,4 @@
-# usage
+# vm_application_usage.txt
 # This is a usage file for the VM script
 # It provides information on how to use the script and its options.
 
