@@ -31,7 +31,6 @@ PROVISIONING_ITEMS[9]='config.vm.provision :shell, path: "provision/scripts/conf
 # Usage: handle_error "Error message"
 function handle_error() {
 	echo "⚠️   Error: $1 💥"
-	echo "Run 'vagrant halt' then restore the last snapshot before trying again."
 	exit 1
 }
 
@@ -40,7 +39,7 @@ function handle_error() {
 function announce_success() {
 	icon="✅"
 
-	if [ -n "$2" ] && [ "$2" -eq 1 ]; then
+	if [ "$2" -eq 1 ]; then
 		icon="👍"
 	fi
 
@@ -64,5 +63,5 @@ function debug_message() {
 # Function to write update banner
 # Usage: vm_application_banner
 function vm_application_banner() {
-	cat "./provision/vm/files/banner$((1 + RANDOM % 4)).txt"
+	cat "./provision/vm/vm_application_banner$((1 + RANDOM % 4)).txt"
 }
