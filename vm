@@ -9,9 +9,6 @@
 # Vagrant Manager Application
 source ./provision/vm/vm_application.sh
 
-# Source data
-source ../data/vm_data.sh
-
 # Check if there are no flags or arguments
 # If none, display usage. Otherwise run script, starting with banner
 if (( "$#" == 0 )); then
