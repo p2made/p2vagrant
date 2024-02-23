@@ -3,7 +3,7 @@
 # provision/vm/vm_reset.sh
 
 # Usage:
-# ./provision/vm/vm_reset.sh "$(pwd)" "$provisioning_step" "$requires_vagrantfile"
+# `./provision/vm/vm_reset.sh "$(pwd)" "$passed_step"`
 
 # Common functions
 source ./vm_common.sh

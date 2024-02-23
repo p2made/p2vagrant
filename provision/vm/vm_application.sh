@@ -13,7 +13,7 @@ source ./provision/vm/vm_common.sh
 source ./provision/data/vm_data.sh
 
 # Script constants
-FLAGS="g:r:v"
+FLAGS="grv"
 
 # Define flags
 FLAG_GENERATE=false
@@ -27,16 +27,21 @@ provisioning_step=0
 
 # Function to process flags
 # Usage: process_flags [$FLAGS]
-function process_flags() {
+process_flags() {
 	# Use globals
-	# FLAGS="g:r:v"
+	# FLAGS="grv"
 	# FLAG_GENERATE=false
 	# FLAG_RESET=false
 	# FLAG_VAGRANT=false
 
+	# If no options are provided, set FLAG_GENERATE to true
+	if [ "$#" -eq 0 ]; then
+		FLAG_GENERATE=true
+		return
+	fi
+
 	# Process flags
 	while getopts ":$FLAGS" opt; do
-		debug_message "Processing options"
 		case $opt in
 			g)
 				FLAG_GENERATE=true
@@ -48,23 +53,15 @@ function process_flags() {
 				FLAG_VAGRANT=true
 				;;
 			\?)
-				handle_error "Invalid option: -$OPTARG"
+				echo "Invalid option: -$OPTARG" >&2
+				exit 1
 				;;
 			:)
-				if [ ${#OPTARG} -eq 0 ]; then
-				    handle_error "Option -$opt requires an argument"
-				else
-				    handle_error "Invalid option: -$opt"
-				fi
+				echo "Option -$OPTARG requires an argument." >&2
+				exit 1
 				;;
 		esac
 	done
-
-	# Check if there were no options
-	if (( $OPTIND == 1 )); then
-		# Set default behavior or handle as needed
-		FLAG_GENERATE=true
-	fi
 }
 
 # Function to evaluate the argument
@@ -73,7 +70,7 @@ function evaluate_argument() {
 	local argument=$1
 
 	# Check if the argument is an integer
-	if ! [[ $argument =~ ^[0-9]*$ ]]; then
+	if ! [[ $argument =~ ^[0-9]+$ ]]; then
 		handle_error "$argument is not a valid integer"
 	fi
 
@@ -82,12 +79,9 @@ function evaluate_argument() {
 		handle_error "$argument is out of range"
 	fi
 
-	if (( ${#argument} == 0 )); then
-		argument=0
-	fi
-
 	# Now argument is valid for `-r` at minimum
 	passed_step=$argument
+	step_vagrantfile=$argument
 
 	# Check whether a Vagrantfile is needed for this step
 	if ! [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${passed_step}" ]]; then
@@ -113,14 +107,13 @@ function reset_action() {
 	local reset_step=$1
 	local requires_vagrantfile=$2
 
-	./provision/vm/vm_reset.sh "$(pwd)" "$reset_step"
 
 	# `-g` is always implicit, but `$requires_vagrantfile` can change things
 	step_vagrantfile="$reset_step"
 	if ! $requires_vagrantfile; then
 		# This is a step that is manually provisioned,
 		# so we generate the Vagrantfile for the step before.
-		step_vagrantfile="$reset_step"-1
+		(( step_vagrantfile-- ))
 	fi
 }
 
@@ -161,6 +154,8 @@ function vagrant_manager() {
 
 	# If we have come past the previous check, we have an argument to evaluate.
 	evaluate_argument "$1"
+
+	./provision/vm/vm_reset.sh "$(pwd)" "$passed_step"
 
 	# if only `-v` is set
 	if $FLAG_VAGRANT && ! $FLAG_GENERATE && ! $FLAG_RESET; then
