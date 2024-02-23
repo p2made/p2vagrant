@@ -6,6 +6,12 @@
 # &/or deletes previously generated & copied files
 # For usage run `./vm`
 
+# Common Functions
+source ./provision/vm/vm_common.sh
+
+# Source data
+source ./provision/data/vm_data.sh
+
 # Script constants
 FLAGS="g:r:v"
 
