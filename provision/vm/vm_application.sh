@@ -16,12 +16,9 @@ source ./provision/data/vm_data.sh
 FLAGS="grv"
 
 # Define flags
-FLAG_GENERATE=false
+FLAG_GENERATE=true
 FLAG_RESET=false
 FLAG_VAGRANT=false
-
-# Script variables
-provisioning_step=0
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
@@ -36,7 +33,6 @@ process_flags() {
 
 	# If no options are provided, set FLAG_GENERATE to true
 	if [ "$#" -eq 0 ]; then
-		FLAG_GENERATE=true
 		return
 	fi
 
@@ -69,19 +65,21 @@ process_flags() {
 function evaluate_argument() {
 	local argument=$1
 
-	# Check if the argument is an integer
+	# Check the argument
 	if ! [[ $argument =~ ^[0-9]+$ ]]; then
+		# Not an integer
 		handle_error "$argument is not a valid integer"
-	fi
-
-	# Check is argument is out of range
-	if (( $argument > $VAGRANTFILES_INDEXES[-1] )); then
+	elif (( $argument < 1 )); then
+		# Less than 1
+		handle_error "<integer> argument must be greater than zero"
+	elif (( $argument > $VAGRANTFILES_INDEXES[-1] )); then
+		# Out of range
 		handle_error "$argument is out of range"
 	fi
 
 	# Now argument is valid for `-r` at minimum
 	passed_step=$argument
-	step_vagrantfile=$argument
+	vf_index=$argument
 
 	# Check whether a Vagrantfile is needed for this step
 	if ! [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${passed_step}" ]]; then
@@ -89,53 +87,21 @@ function evaluate_argument() {
 	fi
 }
 
-# Function to set up for & then run `./provision/vm/vm_generate.sh`
-# Usage: generate_action "$passed_step" "$requires_vagrantfile"
-function generate_action() {
-	local passed_step=$1
+function shift_vagrantfile_index() {
+	# This is a step that is manually provisioned,
+	# so we generate the Vagrantfile for the step before.
+	# Iterate through the array
+	for element in "${VAGRANTFILES_INDEXES[@]}"; do
+		# Check if the element is less than or equal to n
+		if ((element <= $passed_step)); then
+			# Update the result with the largest element so far
+			vf_index=$element
+			requires_vagrantfile=true
+		else
+			return
+		fi
+	done
 
-	if ! $2; then
-		handle_error "Step $passed_step does not require a Vagrantfile"
-	fi
-
-	./provision/vm/vm_generate.sh "$(pwd)" "$passed_step"
-}
-
-# Function to set up for & then run `./provision/vm/vm_reset.sh`
-# Usage: reset_action "$passed_step" "$requires_vagrantfile"
-function reset_action() {
-	local reset_step=$1
-	local requires_vagrantfile=$2
-
-
-	# `-g` is always implicit, but `$requires_vagrantfile` can change things
-	step_vagrantfile="$reset_step"
-	if ! $requires_vagrantfile; then
-		# This is a step that is manually provisioned,
-		# so we generate the Vagrantfile for the step before.
-		(( step_vagrantfile-- ))
-	fi
-}
-
-# Function to set up for & then run `./provision/vm/vm_vagrant.sh`
-# Usage: vagrant_action "$provisioning_step" "$requires_vagrantfile"
-function vagrant_action() {
-
-	./provision/vm/vm_vagrant.sh "$(pwd)" "$provisioning_step" "$requires_vagrantfile"
-}
-
-# Function to eliminate zero argument after it is no longer valid
-# Usage: eliminate_zero_argument "$passed_step"
-function eliminate_zero_argument() {
-	if (( $1 > 0 )); then
-		return
-	fi
-
-	if $FLAG_RESET; then
-		handle_error "Resetting p2vagrant requires a non-zero integer argument"
-	fi
-
-	handle_error "Generating a Vagrantfile requires a non-zero integer argument"
 }
 
 function vagrant_manager() {
@@ -143,7 +109,7 @@ function vagrant_manager() {
 
 	# Set variables up
 	declare passed_step
-	declare step_vagrantfile
+	declare vf_index
 	requires_vagrantfile=false
 	current_vagrantfile=0
 
@@ -152,35 +118,28 @@ function vagrant_manager() {
 	# Shift to the next argument after processing flags
 	shift $(( OPTIND - 1 ))
 
-	# If we have come past the previous check, we have an argument to evaluate.
+	# If we have come this far, we have an argument to evaluate.
 	evaluate_argument "$1"
 
-	./provision/vm/vm_reset.sh "$(pwd)" "$passed_step"
-
-	# if only `-v` is set
-	if $FLAG_VAGRANT && ! $FLAG_GENERATE && ! $FLAG_RESET; then
-		vagrant_action "$passed_step" "$requires_vagrantfile"
-		exit 0
-	fi
-
-	# After this `$passed_step` must be greater than zero
-	eliminate_zero_argument $passed_step
-
-	# if only `-g` is set
-	if $FLAG_GENERATE && ! $FLAG_RESET && ! $FLAG_VAGRANT; then
-		generate_action "$passed_step" "$requires_vagrantfile"
-		exit 0
-	fi
-
-	# if `-r` is set
+	# If `-r` is set, perform reset
 	if $FLAG_RESET; then
-		reset_action "$passed_step" "$requires_vagrantfile"
-		generate_action "$step_vagrantfile" "$requires_vagrantfile"
+		./provision/vm/vm_reset.sh "$(pwd)" "$passed_step"
+
+		# `-g` is always implicit, but `$requires_vagrantfile` can change things
+		if ! $requires_vagrantfile; then
+			shift_vagrantfile_index
+		fi
 	fi
 
-	# if we get this far & `-v` is set
+	if ! $requires_vagrantfile: then
+		handle_error "Step $passed_step does not require a Vagrantfile"
+	fi
+
+	local vf_title=$VAGRANTFILES[$vf_index]
+	./provision/vm/vm_generate.sh "$(pwd)" "$vf_index" "$vf_title"
+
+	# If `-v` is set
 	if $FLAG_VAGRANT; then
-		vagrant_action
-		exit 0
+		./provision/vm/vm_vagrant.sh "$(pwd)" "$passed_step" "$requires_vagrantfile"
 	fi
 }
