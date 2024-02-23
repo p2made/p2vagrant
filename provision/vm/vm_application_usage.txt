@@ -10,15 +10,14 @@ Options:
   <integer>   Step number for Vagrantfile generation.
 --
 Usage examples:
+  ./vm <integer>       # Generate Vagrantfile based on the specified integer.
   ./vm -g <integer>    # Generate Vagrantfile based on the specified integer.
-  ./vm -r              # Reset: Delete any file generated or copied in earlier Vagrant provisioning.
   ./vm -r <integer>    # Reset and generate Vagrantfile based on the specified integer.
-  ./vm -v <integer>    # Generate Vagrantfile based on the specified integer then run `vagrant up`.
   ./vm -gr <integer>   # Reset and generate Vagrantfile based on the specified integer.
+  ./vm -v <integer>    # Generate Vagrantfile based on the specified integer then run `vagrant up`.
   ./vm -gv <integer>   # Generate Vagrantfile based on the specified integer then run `vagrant up`.
   ./vm -rv <integer>   # Reset and generate Vagrantfile based on the specified integer then run `vagrant up`.
   ./vm -grv <integer>  # Reset and generate Vagrantfile based on the specified integer then run `vagrant up`.
 
-  -g is implied any time an integer argument is given, so only serves as
+  -g is implied any time a valid integer argument is given, so only serves as
      'syntactic sugar' to make the intended use of './vm' explicitly clear.
-  -g & -v are both invalid with a valid integer argument.

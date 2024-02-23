@@ -3,7 +3,7 @@
 # provision/vm/vm_vagrant.sh
 
 # Usage:
-# ./provision/vm/vm_vagrant.sh "$(pwd)" "$provisioning_step" "$requires_vagrantfile"
+# `./provision/vm/vm_vagrant.sh "$(pwd)" "$passed_step" "$requires_vagrantfile"`
 
 # Common functions
 source ./vm_common.sh

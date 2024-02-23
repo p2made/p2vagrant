@@ -24,7 +24,7 @@ FLAG_VAGRANT=false
 
 # Function to process flags
 # Usage: process_flags [$FLAGS]
-process_flags() {
+function process_flags() {
 	# Use globals
 	# FLAGS="grv"
 	# FLAG_GENERATE=false
@@ -79,7 +79,7 @@ function evaluate_argument() {
 
 	# Now argument is valid for `-r` at minimum
 	passed_step=$argument
-	vf_index=$argument
+	vagrantfile_index=$argument
 
 	# Check whether a Vagrantfile is needed for this step
 	if ! [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${passed_step}" ]]; then
@@ -87,15 +87,17 @@ function evaluate_argument() {
 	fi
 }
 
+# Function to to shift the Vagrantfile index if necessary
+# Usage: shift_vagrantfile_index
 function shift_vagrantfile_index() {
 	# This is a step that is manually provisioned,
 	# so we generate the Vagrantfile for the step before.
 	# Iterate through the array
 	for element in "${VAGRANTFILES_INDEXES[@]}"; do
-		# Check if the element is less than or equal to n
+		# Check if the element is less than or equal to `passed_step`
 		if ((element <= $passed_step)); then
 			# Update the result with the largest element so far
-			vf_index=$element
+			vagrantfile_index=$element
 			requires_vagrantfile=true
 		else
 			return
@@ -104,12 +106,14 @@ function shift_vagrantfile_index() {
 
 }
 
+# Core Vagrant Manager application function
+# Usage: vagrant_manager "$@"
 function vagrant_manager() {
 	vm_application_banner
 
 	# Set variables up
 	declare passed_step
-	declare vf_index
+	declare vagrantfile_index
 	requires_vagrantfile=false
 	current_vagrantfile=0
 
@@ -125,18 +129,19 @@ function vagrant_manager() {
 	if $FLAG_RESET; then
 		./provision/vm/vm_reset.sh "$(pwd)" "$passed_step"
 
-		# `-g` is always implicit, but `$requires_vagrantfile` can change things
+		# `-g` is always implicit, but `$requires_vagrantfile`
+		# can change things when also doing a reset
 		if ! $requires_vagrantfile; then
 			shift_vagrantfile_index
 		fi
 	fi
 
-	if ! $requires_vagrantfile: then
+	if ! $requires_vagrantfile; then
 		handle_error "Step $passed_step does not require a Vagrantfile"
 	fi
 
-	local vf_title=$VAGRANTFILES[$vf_index]
-	./provision/vm/vm_generate.sh "$(pwd)" "$vf_index" "$vf_title"
+	local vagrantfile_title=$VAGRANTFILES[$vagrantfile_index]
+	./provision/vm/vm_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"
 
 	# If `-v` is set
 	if $FLAG_VAGRANT; then
