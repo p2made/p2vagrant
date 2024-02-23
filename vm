@@ -12,7 +12,7 @@ source ./provision/vm/vm_application.sh
 # Check if there are no flags or arguments
 # If none, display usage. Otherwise run script, starting with banner
 if (( "$#" == 0 )); then
-	cat ./provision/vm/vm_application_usage.txt
+	cat "./provision/vm/txt/application_usage.txt"
 	exit 0
 fi
 

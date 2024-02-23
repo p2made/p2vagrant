@@ -85,23 +85,22 @@ function evaluate_argument() {
 	fi
 }
 
-# Function to to shift the Vagrantfile index if necessary
-# Usage: shift_vagrantfile_index
+# Function to shift the Vagrantfile index if necessary
+# Usage: vagrantfile_index=$(shift_vagrantfile_index)
 function shift_vagrantfile_index() {
 	# This is a step that is manually provisioned,
 	# so we generate the Vagrantfile for the step before.
-	# Iterate through the array
-	for element in "${VAGRANTFILES_INDEXES[@]}"; do
-		# Check if the element is less than or equal to `passed_step`
-		if ((element <= $passed_step)); then
-			# Update the result with the largest element so far
-			vagrantfile_index=$element
+	# Iterate backwards from the passed step minus 1
+	local check_index=$((passed_step - 1))
+
+	while ((check_index > 0)); do
+		if [[ " ${VAGRANTFILES_INDEXES[@]} " == *" $check_index "* ]]; then
 			requires_vagrantfile=true
-		else
+			vagrantfile_index=$check_index
 			return
 		fi
+		((check_index--))
 	done
-
 }
 
 # Core Vagrant Manager application function
@@ -125,12 +124,13 @@ function vagrant_manager() {
 
 	# If `-r` is set, perform reset
 	if $FLAG_RESET; then
-		./provision/vm/vm_reset.sh "$(pwd)" "$passed_step"
+		#./provision/vm/vm_reset.sh "$(pwd)" "$passed_step"
+		debug_message "$FUNCNAME" "$LINENO" "Reset action would be done here"
 
 		# `-g` is always implicit, but `$requires_vagrantfile`
 		# can change things when also doing a reset
 		if ! $requires_vagrantfile; then
-			shift_vagrantfile_index
+			vagrantfile_index=$(shift_vagrantfile_index)
 		fi
 	fi
 
@@ -139,10 +139,12 @@ function vagrant_manager() {
 	fi
 
 	local vagrantfile_title=$VAGRANTFILES[$vagrantfile_index]
-	./provision/vm/vm_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"
+	#./provision/vm/vm_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"
+	debug_message "$FUNCNAME" "$LINENO" "Generate action would be done here"
 
 	# If `-v` is set
 	if $FLAG_VAGRANT; then
-		./provision/vm/vm_vagrant.sh "$(pwd)" "$passed_step" "$requires_vagrantfile"
+		#./provision/vm/vm_vagrant.sh "$(pwd)" "$passed_step" "$requires_vagrantfile"
+		debug_message "$FUNCNAME" "$LINENO" "Vagrant action would be done here"
 	fi
 }

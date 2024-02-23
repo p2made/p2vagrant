@@ -53,7 +53,7 @@ function announce_no_job() {
 }
 
 # Function to give a debugging message
-# Usage: debug_message "$FUNCNAME" "$LINENO" "Message."
+# Usage: debug_message "$FUNCNAME" "$LINENO" "Message"
 function debug_message() {
 	echo "‼️‼️  Debug in $1 at line $2: $3 🚨"
 }
@@ -63,5 +63,7 @@ function debug_message() {
 # Function to write update banner
 # Usage: vm_application_banner
 function vm_application_banner() {
-	cat "./provision/vm/vm_application_banner$((1 + RANDOM % 4)).txt"
+	cat "./provision/vm/txt/application_banner_0.txt"
+	cat "./provision/vm/txt/application_banner_$(( 1 + RANDOM % 4 )).txt"
+	cat "./provision/vm/txt/application_banner_5.txt"
 }
