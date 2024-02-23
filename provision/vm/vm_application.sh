@@ -2,9 +2,7 @@
 
 # vm_application.sh
 
-# Generates Vagrantfile for the step specified by an integer argument.
-# &/or deletes previously generated & copied files
-# For usage run `./vm`
+# The main Vagrant Manager application file
 
 # Common Functions
 source ./provision/vm/vm_common.sh
