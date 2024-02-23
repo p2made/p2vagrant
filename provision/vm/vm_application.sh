@@ -28,6 +28,7 @@ function process_flags() {
 	# FLAG_GENERATE=false
 	# FLAG_RESET=false
 	# FLAG_VAGRANT=false
+	debug_message "$FUNCNAME" "$LINENO" "Reset action would be done here"
 
 	# If no options are provided, set FLAG_GENERATE to true
 	if [ "$#" -eq 0 ]; then
@@ -85,22 +86,23 @@ function evaluate_argument() {
 	fi
 }
 
-# Function to shift the Vagrantfile index if necessary
-# Usage: vagrantfile_index=$(shift_vagrantfile_index)
+# Function to to shift the Vagrantfile index if necessary
+# Usage: shift_vagrantfile_index
 function shift_vagrantfile_index() {
 	# This is a step that is manually provisioned,
 	# so we generate the Vagrantfile for the step before.
-	# Iterate backwards from the passed step minus 1
-	local check_index=$((passed_step - 1))
-
-	while ((check_index > 0)); do
-		if [[ " ${VAGRANTFILES_INDEXES[@]} " == *" $check_index "* ]]; then
+	# Iterate through the array
+	for element in "${VAGRANTFILES_INDEXES[@]}"; do
+		# Check if the element is less than or equal to `passed_step`
+		if ((element <= $passed_step)); then
+			# Update the result with the largest element so far
+			vagrantfile_index=$element
 			requires_vagrantfile=true
-			vagrantfile_index=$check_index
+		else
 			return
 		fi
-		((check_index--))
 	done
+
 }
 
 # Core Vagrant Manager application function
@@ -130,7 +132,7 @@ function vagrant_manager() {
 		# `-g` is always implicit, but `$requires_vagrantfile`
 		# can change things when also doing a reset
 		if ! $requires_vagrantfile; then
-			vagrantfile_index=$(shift_vagrantfile_index)
+			shift_vagrantfile_index
 		fi
 	fi
 
