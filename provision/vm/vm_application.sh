@@ -18,11 +18,16 @@ FLAG_GENERATE=true
 FLAG_RESET=false
 FLAG_VAGRANT=false
 
+# Set variables up
+declare passed_index
+declare vagrantfile_index
+declare requires_vagrantfile
+
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Function to evaluate the argument
 # Usage: evaluate_argument $argument
-function evaluate_argument() {
+evaluate_argument() {
 	local argument=$1
 
 	# Check the argument
@@ -42,45 +47,45 @@ function evaluate_argument() {
 	fi
 
 	# Now argument is valid for `-r` at minimum
-	passed_step=$argument
-	vagrantfile_index=$argument
-
-	# Check whether a Vagrantfile is needed for this step
-	if ! [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${passed_step}" ]]; then
-		requires_vagrantfile=false
-	fi
+	passed_index=$argument
 }
 
-# Function to shift the Vagrantfile index if necessary
-# Usage: shift_vagrantfile_index
-function shift_vagrantfile_index() {
-	# This is a step that is manually provisioned,
-	# so we generate the Vagrantfile for the step before.
-	vagrantfile_index=$((passed_step - 1))
+# Function to check whether a step requires a Vagrantfile
+# Usage: set_requires_vagrantfile "$step_index" [$shift_index]
+set_requires_vagrantfile() {
+	local local_index=$1
+	local shift_index=$2
 
-	while ((vagrantfile_index > 0)); do
-		# Check if the element is in $VAGRANTFILES_INDEXES
-		if [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${vagrantfile_index}" ]]; then
+	# Check whether a Vagrantfile is needed for this step
+	if [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${local_index}" ]]; then
+		requires_vagrantfile=true
+		return 1  # Vagrantfile needed (true)
+	fi
+
+	if ! (( $shift_index )); then
+		requires_vagrantfile=false
+		return 0  # No Vagrantfile needed (false)
+	fi
+
+	while ((local_index > 0)); do
+		(( local_index-- ))
+		if [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${local_index}" ]]; then
+			vagrantfile_index=$local_index
 			requires_vagrantfile=true
-			return
+			return 1  # Vagrantfile needed (true)
 		fi
-		((vagrantfile_index--))
 	done
+}
+
+# Function to check for, & if required, perform reset action
+# Usage: reset_action "$passed_index"
+reset_action() {
 }
 
 # Core Vagrant Manager application function
 # Usage: vm "$@"
-function vm() {
-
+vm() {
 	#vm_application_banner
-
-	# Set variables up
-	declare passed_step
-	declare vagrantfile_index
-	requires_vagrantfile=true
-	current_vagrantfile=0
-
-	#process_flags "$@"
 
 	# Process flags
 	while getopts ":$FLAGS" opt; do
@@ -111,29 +116,36 @@ function vm() {
 	# If we have come this far, we have an argument to evaluate.
 	evaluate_argument "$1"
 
+	# We start off expecting to generate a Vagrantfile for the passed index.
+	vagrantfile_index=$passed_index
+
 	# If `-r` is set, perform reset
 	if $FLAG_RESET; then
-		#./provision/vm/vm_reset.sh "$(pwd)" "$passed_step"
+		local local_index=$1
+
+		#./provision/vm/vm_reset.sh "$(pwd)" "$passed_index"
 		debug_message "$FUNCNAME" "$LINENO" "Reset action would be done here"
 
-		# `-g` is always implicit, but `$requires_vagrantfile`
+		# `-g` is always implicit, but `$set_requires_vagrantfile`
 		# can change things when also doing a reset
-		if ! $requires_vagrantfile; then
-			shift_vagrantfile_index
-		fi
+		set_requires_vagrantfile "$passed_index" true
 	fi
 
+	# `-g` is always set so generate Vagrantfile
+	set_requires_vagrantfile "$vagrantfile_index"
+
 	if ! $requires_vagrantfile; then
-		handle_error "Step $passed_step does not require a Vagrantfile"
+		handle_error "Step $vagrantfile_index does not require a Vagrantfile"
 	fi
 
 	local vagrantfile_title=$VAGRANTFILES[$vagrantfile_index]
-	#./provision/vm/vm_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"
-	debug_message "$FUNCNAME" "$LINENO" "Generate action would be done here"
+	./provision/vm/vm_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"
 
-	# If `-v` is set
+	# If `-v` is set run start or reload the VM appropriately
 	if $FLAG_VAGRANT; then
-		#./provision/vm/vm_vagrant.sh "$(pwd)" "$passed_step" "$requires_vagrantfile"
+		set_requires_vagrantfile "$passed_index"
+
+		#./provision/vm/vm_vagrant.sh "$(pwd)" "$passed_index" "$requires_vagrantfile"
 		debug_message "$FUNCNAME" "$LINENO" "Vagrant action would be done here"
 	fi
 }

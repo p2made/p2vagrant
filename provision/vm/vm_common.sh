@@ -30,7 +30,7 @@ PROVISIONING_ITEMS[9]='config.vm.provision :shell, path: "provision/scripts/conf
 # Function for error handling
 # Usage: handle_error "Message"
 function handle_error() {
-	echo "⚠️   Error: $3 💥"
+	echo "⚠️   Error: $1 💥"
 	exit 1
 }
 

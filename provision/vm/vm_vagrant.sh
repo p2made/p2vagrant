@@ -6,10 +6,10 @@
 # `./provision/vm/vm_vagrant.sh "$(pwd)" "$passed_step" "$requires_vagrantfile"`
 
 # Common functions
-source ./vm_common.sh
+source ./provision/vm/vm_common.sh
 
 # Source data
-source ../data/vm_data.sh
+source ./provision/data/vm_data.sh
 
 # Change working directory to the 'vm' directory
 cd "$1"
