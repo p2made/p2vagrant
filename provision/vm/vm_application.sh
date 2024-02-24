@@ -20,20 +20,67 @@ FLAG_VAGRANT=false
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-# Function to process flags
-# Usage: process_flags [$FLAGS]
-function process_flags() {
-	# Use globals
-	# FLAGS="grv"
-	# FLAG_GENERATE=false
-	# FLAG_RESET=false
-	# FLAG_VAGRANT=false
-	debug_message "$FUNCNAME" "$LINENO" "Reset action would be done here"
+# Function to evaluate the argument
+# Usage: evaluate_argument $argument
+function evaluate_argument() {
+	local argument=$1
 
-	# If no options are provided, set FLAG_GENERATE to true
-	if [ "$#" -eq 0 ]; then
-		return
+	# Check the argument
+	if [ -z "$argument" ]; then
+		# No argument
+		handle_error "An integer argument is required"
 	fi
+	if ! [[ $argument =~ ^[0-9]+$ ]]; then
+		# Not an integer
+		handle_error "$argument is not a valid integer"
+	elif (( $argument < 1 )); then
+		# Less than 1
+		handle_error "<integer> argument must be greater than zero"
+	elif (( $argument > $VAGRANTFILES_INDEXES[-1] )); then
+		# Out of range
+		handle_error "$argument is out of range"
+	fi
+
+	# Now argument is valid for `-r` at minimum
+	passed_step=$argument
+	vagrantfile_index=$argument
+
+	# Check whether a Vagrantfile is needed for this step
+	if ! [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${passed_step}" ]]; then
+		requires_vagrantfile=false
+	fi
+}
+
+# Function to shift the Vagrantfile index if necessary
+# Usage: shift_vagrantfile_index
+function shift_vagrantfile_index() {
+	# This is a step that is manually provisioned,
+	# so we generate the Vagrantfile for the step before.
+	vagrantfile_index=$((passed_step - 1))
+
+	while ((vagrantfile_index > 0)); do
+		# Check if the element is in $VAGRANTFILES_INDEXES
+		if [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${vagrantfile_index}" ]]; then
+			requires_vagrantfile=true
+			return
+		fi
+		((vagrantfile_index--))
+	done
+}
+
+# Core Vagrant Manager application function
+# Usage: vm "$@"
+function vm() {
+
+	#vm_application_banner
+
+	# Set variables up
+	declare passed_step
+	declare vagrantfile_index
+	requires_vagrantfile=true
+	current_vagrantfile=0
+
+	#process_flags "$@"
 
 	# Process flags
 	while getopts ":$FLAGS" opt; do
@@ -57,66 +104,6 @@ function process_flags() {
 				;;
 		esac
 	done
-}
-
-# Function to evaluate the argument
-# Usage: evaluate_argument $argument
-function evaluate_argument() {
-	local argument=$1
-
-	# Check the argument
-	if ! [[ $argument =~ ^[0-9]+$ ]]; then
-		# Not an integer
-		handle_error "$argument is not a valid integer"
-	elif (( $argument < 1 )); then
-		# Less than 1
-		handle_error "<integer> argument must be greater than zero"
-	elif (( $argument > $VAGRANTFILES_INDEXES[-1] )); then
-		# Out of range
-		handle_error "$argument is out of range"
-	fi
-
-	# Now argument is valid for `-r` at minimum
-	passed_step=$argument
-	vagrantfile_index=$argument
-
-	# Check whether a Vagrantfile is needed for this step
-	if ! [[ "${VAGRANTFILES_INDEXES[@]}" =~ "${passed_step}" ]]; then
-		requires_vagrantfile=true
-	fi
-}
-
-# Function to to shift the Vagrantfile index if necessary
-# Usage: shift_vagrantfile_index
-function shift_vagrantfile_index() {
-	# This is a step that is manually provisioned,
-	# so we generate the Vagrantfile for the step before.
-	# Iterate through the array
-	for element in "${VAGRANTFILES_INDEXES[@]}"; do
-		# Check if the element is less than or equal to `passed_step`
-		if ((element <= $passed_step)); then
-			# Update the result with the largest element so far
-			vagrantfile_index=$element
-			requires_vagrantfile=true
-		else
-			return
-		fi
-	done
-
-}
-
-# Core Vagrant Manager application function
-# Usage: vagrant_manager "$@"
-function vagrant_manager() {
-	vm_application_banner
-
-	# Set variables up
-	declare passed_step
-	declare vagrantfile_index
-	requires_vagrantfile=false
-	current_vagrantfile=0
-
-	process_flags
 
 	# Shift to the next argument after processing flags
 	shift $(( OPTIND - 1 ))
@@ -150,3 +137,4 @@ function vagrant_manager() {
 		debug_message "$FUNCNAME" "$LINENO" "Vagrant action would be done here"
 	fi
 }
+#	debug_message "$FUNCNAME" "$LINENO" "Message"
