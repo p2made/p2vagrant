@@ -45,20 +45,20 @@ VM_FOLDER           = "$VM_FOLDER"
 EOF
 
 if (( vagrantfile_index >= 4 )); then
-    cat <<EOF >> ./Vagrantfile
+	cat <<EOF >> ./Vagrantfile
 # Software Versions
 SWIFT_VERSION       = "$SWIFT_VERSION"
 EOF
 fi
 
 if (( vagrantfile_index >= 6 )); then
-    cat <<EOF >> ./Vagrantfile
+	cat <<EOF >> ./Vagrantfile
 PHP_VERSION         = "$PHP_VERSION"
 EOF
 fi
 
 if (( vagrantfile_index >= 7 )); then
-    cat <<EOF >> ./Vagrantfile
+	cat <<EOF >> ./Vagrantfile
 MYSQL_VERSION       = "$MYSQL_VERSION"
 
 # Database Variables
@@ -91,35 +91,29 @@ EOF
 
 # VM config provisioning lines
 if (( vagrantfile_index >= 2 )); then
-    cat <<EOF >> ./Vagrantfile
+	cat <<EOF >> ./Vagrantfile
 	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 EOF
 fi
 
 if (( vagrantfile_index >= 3 )); then
-    cat <<EOF >> ./Vagrantfile
-	# Provisioning...
-EOF
+	echo -e "# Provisioning...\n" >> ./Vagrantfile
 
-    # Loop through keys of the associative array in sorted order
-    for prov_step in "${provisioning_indexes[@]}"; do
-        prov_string=$provisioning_items[$prov_step]
-        if (( $vagrantfile_index <= $prov_step )); then
-            if (( $vagrantfile_index == $prov_step )); then
-                cat <<EOF >> ./Vagrantfile
-	$prov_string
-EOF
-            fi
-            break
-        fi
-        cat <<EOF >> ./Vagrantfile
-#	$prov_string
-EOF
-    done
+	# Loop through keys of the associative array in sorted order
+	for prov_step in "${provisioning_indexes[@]}"; do
+		prov_string=$provisioning_items[$prov_step]
+		if (( $vagrantfile_index <= $prov_step )); then
+			if (( $vagrantfile_index == $prov_step )); then
+				echo -e "	$prov_string\n" >> ./Vagrantfile
+			fi
+			break
+		fi
+		echo -e "#	$prov_string\n" >> ./Vagrantfile
+	done
 fi
 
 # VM config closing lines
-cat <<EOF >> ./Vagrantfile
-end
-EOF
+echo -e "end\n" >> ./Vagrantfile
+
+# debug_message "$FUNCNAME" "$LINENO" "Message"

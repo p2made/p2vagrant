@@ -13,7 +13,7 @@ source ./provision/data/vm_data.sh
 # Script constants
 FLAGS="grv"
 
-# Define flags
+# Define flags & defaults
 FLAG_GENERATE=true
 FLAG_RESET=false
 FLAG_VAGRANT=false
@@ -24,31 +24,6 @@ declare vagrantfile_index
 declare requires_vagrantfile
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-
-# Function to evaluate the argument
-# Usage: evaluate_argument $argument
-evaluate_argument() {
-	local argument=$1
-
-	# Check the argument
-	if [ -z "$argument" ]; then
-		# No argument
-		handle_error "An integer argument is required"
-	fi
-	if ! [[ $argument =~ ^[0-9]+$ ]]; then
-		# Not an integer
-		handle_error "$argument is not a valid integer"
-	elif (( $argument < 1 )); then
-		# Less than 1
-		handle_error "<integer> argument must be greater than zero"
-	elif (( $argument > $VAGRANTFILES_INDEXES[-1] )); then
-		# Out of range
-		handle_error "$argument is out of range"
-	fi
-
-	# Now argument is valid for `-r` at minimum
-	passed_index=$argument
-}
 
 # Function to check whether a step requires a Vagrantfile
 # Usage: set_requires_vagrantfile "$step_index" [$shift_index]
@@ -75,17 +50,14 @@ set_requires_vagrantfile() {
 			return 1  # Vagrantfile needed (true)
 		fi
 	done
-}
 
-# Function to check for, & if required, perform reset action
-# Usage: reset_action "$passed_index"
-reset_action() {
+	handle_error "Unable to set \$requires_vagrantfile"
 }
 
 # Core Vagrant Manager application function
 # Usage: vm "$@"
 vm() {
-	#vm_application_banner
+	vm_application_banner
 
 	# Process flags
 	while getopts ":$FLAGS" opt; do
@@ -113,8 +85,26 @@ vm() {
 	# Shift to the next argument after processing flags
 	shift $(( OPTIND - 1 ))
 
-	# If we have come this far, we have an argument to evaluate.
-	evaluate_argument "$1"
+	# If we have come this far, we might have an argument to evaluate.
+	local argument=$1
+
+	# Check the argument
+	if [ -z "$argument" ]; then
+		# No argument
+		handle_error "An integer argument is required"
+	elif ! [[ $argument =~ ^[0-9]+$ ]]; then
+		# Not an integer
+		handle_error "$argument is not a valid integer"
+	elif (( $argument < 1 )); then
+		# Less than 1
+		handle_error "<integer> argument must be greater than zero"
+	elif (( $argument > $VAGRANTFILES_INDEXES[-1] )); then
+		# Out of range
+		handle_error "$argument is out of range"
+	fi
+
+	# Now argument is valid for `-r` at minimum
+	passed_index=$argument
 
 	# We start off expecting to generate a Vagrantfile for the passed index.
 	vagrantfile_index=$passed_index
@@ -149,4 +139,3 @@ vm() {
 		debug_message "$FUNCNAME" "$LINENO" "Vagrant action would be done here"
 	fi
 }
-#	debug_message "$FUNCNAME" "$LINENO" "Message"
