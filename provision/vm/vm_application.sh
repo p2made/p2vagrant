@@ -134,6 +134,7 @@ vm() {
 	if $FLAG_VAGRANT; then
 		set_requires_vagrantfile "$passed_index"
 		./provision/vm/vm_vagrant.sh "$(pwd)" "$requires_vagrantfile"
-		#debug_message "$FUNCNAME" "$LINENO" "Vagrant action would be done here"
 	fi
 }
+
+# debug_message "$FUNCNAME" "$LINENO" "Message"
