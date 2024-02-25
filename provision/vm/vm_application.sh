@@ -116,8 +116,7 @@ vm() {
 		#./provision/vm/vm_reset.sh "$(pwd)" "$passed_index"
 		debug_message "$FUNCNAME" "$LINENO" "Reset action would be done here"
 
-		# `-g` is always implicit, but `$set_requires_vagrantfile`
-		# can change things when also doing a reset
+		# Set `requires_vagrantfile` with shift
 		set_requires_vagrantfile "$passed_index" true
 	fi
 
@@ -134,8 +133,7 @@ vm() {
 	# If `-v` is set run start or reload the VM appropriately
 	if $FLAG_VAGRANT; then
 		set_requires_vagrantfile "$passed_index"
-
-		#./provision/vm/vm_vagrant.sh "$(pwd)" "$passed_index" "$requires_vagrantfile"
-		debug_message "$FUNCNAME" "$LINENO" "Vagrant action would be done here"
+		./provision/vm/vm_vagrant.sh "$(pwd)" "$requires_vagrantfile"
+		#debug_message "$FUNCNAME" "$LINENO" "Vagrant action would be done here"
 	fi
 }

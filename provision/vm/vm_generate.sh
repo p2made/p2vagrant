@@ -92,28 +92,29 @@ EOF
 # VM config provisioning lines
 if (( vagrantfile_index >= 2 )); then
 	cat <<EOF >> ./Vagrantfile
+
 	# Upgrade check...
 	config.vm.provision :shell, path: "provision/scripts/upgrade_vm.sh", run: "always"
 EOF
 fi
 
 if (( vagrantfile_index >= 3 )); then
-	echo -e "# Provisioning...\n" >> ./Vagrantfile
+	echo -e "\n\t# Provisioning..." >> ./Vagrantfile
 
 	# Loop through keys of the associative array in sorted order
-	for prov_step in "${provisioning_indexes[@]}"; do
-		prov_string=$provisioning_items[$prov_step]
-		if (( $vagrantfile_index <= $prov_step )); then
-			if (( $vagrantfile_index == $prov_step )); then
-				echo -e "	$prov_string\n" >> ./Vagrantfile
+	for provisioning_step in "${PROVISIONING_INDEXES[@]}"; do
+		provisioning_string=$PROVISIONING_ITEMS[$provisioning_step]
+		if (( $vagrantfile_index <= $provisioning_step )); then
+			if (( $vagrantfile_index == $provisioning_step )); then
+				echo -e "\t$provisioning_string\n" >> ./Vagrantfile
 			fi
 			break
 		fi
-		echo -e "#	$prov_string\n" >> ./Vagrantfile
+		echo -e "#\t$provisioning_string" >> ./Vagrantfile
 	done
 fi
 
 # VM config closing lines
-echo -e "end\n" >> ./Vagrantfile
+echo -e "end" >> ./Vagrantfile
 
 # debug_message "$FUNCNAME" "$LINENO" "Message"
