@@ -85,7 +85,7 @@ function install_php() {
 	sudo chmod -R 755 "$SHARED_HTML"/*
 
 	a2enmod "php$PHP_VERSION" proxy_fcgi setenvif
-	a2enconf "php$PHP_VERSION-fpm"
+	a2enconf "php-fpm"
 
 	announce_success "PHP Installed Successfully! ✅"
 }
