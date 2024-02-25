@@ -123,3 +123,55 @@ function remove_unnecessary_packages() {
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/               Banners               /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+# Function to write update banner
+# Usage: upgrade_banner $active_title $script_name $updated_date
+function upgrade_banner() {
+	cat "./provision/vm/txt/art_flags.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_p2vagrant.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_p2project.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_details.txt" # "$1" "$2" "$3"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_flags.txt"
+	echo ""
+}
+
+# Function to write header banner
+# Usage: header_banner $active_title $script_name $updated_date
+function header_banner() {
+	cat "./provision/vm/txt/art_flags.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_p2vagrant.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_details.txt" # "$1" "$2" "$3"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_flags.txt"
+	echo ""
+}
+
+# Function to write footer banner
+# Usage: footer_banner $job_complete
+function footer_banner() {
+	echo ""
+	cat "./provision/vm/txt/art_flags.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_complete.txt" # $1
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_copyright.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_peace_$(( RANDOM % 4 )).txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_flags.txt"
+}
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+

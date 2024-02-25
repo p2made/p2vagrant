@@ -33,7 +33,5 @@ remove_unnecessary_packages
 echo "📄 Displaying OS information 📄"
 cat /etc/os-release
 
-announce_success "System update complete! ✅"
-
 # Footer banner
 footer_banner "$job_complete"

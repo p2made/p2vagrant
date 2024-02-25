@@ -63,7 +63,16 @@ function debug_message() {
 # Function to write update banner
 # Usage: vm_application_banner
 function vm_application_banner() {
-	cat "./provision/vm/txt/application_banner_0.txt"
-	cat "./provision/vm/txt/application_banner_$(( 1 + RANDOM % 4 )).txt"
-	cat "./provision/vm/txt/application_banner_5.txt"
+	cat "./provision/vm/txt/art_flags.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_p2vagrant.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_manager.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_copyright.txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_peace_$(( RANDOM % 4 )).txt"
+	cat "./provision/vm/txt/art_ua.txt"
+	cat "./provision/vm/txt/art_flags.txt"
+	echo ""
 }
