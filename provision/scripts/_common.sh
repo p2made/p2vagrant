@@ -130,7 +130,7 @@ function remove_unnecessary_packages() {
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-# Function to write update banner
+# Function to write upgrade banner
 # Usage: upgrade_banner $active_title $script_name $updated_date
 function upgrade_banner() {
 	cat "./provision/vm/txt/art_flags.txt"
