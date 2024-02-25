@@ -1,9 +1,29 @@
 #!/bin/zsh
 
-# vagrantfiles_data.sh
-# Updated: 2024-02-15
+# vm_data.sh
+# `source ./relative/path/to/vm_data.sh`
 
-# Data for Vagrantfil generation.
+# The variables below define your vagrant VM.
+# Make any changes BEFORE creating your VM.
+# Be very cautious about changing anything other than...
+# --
+# Strongly consider changing:
+#   VM_TLDS
+#   VM_HOSTNAME
+#   VM_IP
+#   TIMEZONE
+# --
+# Absolutely change:
+#   ROOT_PASSWORD
+#   DB_USERNAME
+#   DB_PASSWORD
+# --
+
+# Data for Vagrantfile generation.
+
+VM_TLDS=(
+	"test"                              # One line for every dev TLD to be used on your VM
+)
 
 # Machine Variables
 VM_HOSTNAME="p2vagrant"

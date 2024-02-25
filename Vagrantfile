@@ -2,7 +2,7 @@
 # vi: set ft=ruby
 
 # 05 Install Apache (with SSL & Markdown)
-# Generated: 2024-02-16
+# Generated: 2024-02-25
 
 # Machine Variables
 VM_HOSTNAME         = "p2vagrant"
@@ -14,10 +14,8 @@ CPUS                = 1
 # Synced Folders
 HOST_FOLDER         = "."
 VM_FOLDER           = "/var/www"
-
 # Software Versions
 SWIFT_VERSION       = "5.9.2"
-
 Vagrant.configure("2") do |config|
 
 	config.vm.box = "bento/ubuntu-20.04-arm64"

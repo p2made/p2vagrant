@@ -1,0 +1,26 @@
+Usage: ./vm [-g] [-r] [-v] <integer>
+Options:
+  -g    Generate Vagrantfile based on the passed integer.
+  -r    Reset: Delete any generated or copied files from earlier Vagrant provisioning.
+  -v    run `vagrant up [--provision]` as appliciable.
+  <integer>   Step number for Vagrantfile generation.
+--
+Usage examples:
+  ./vm <integer>       # Generate Vagrantfile based on the passed integer.
+  ./vm -g <integer>    # Generate Vagrantfile based on the passed integer.
+  ./vm -r <integer>    # Reset and generate Vagrantfile based on the passed integer.
+  ./vm -gr <integer>   # Reset and generate Vagrantfile based on the passed integer.
+  ./vm -v <integer>    # Do `-g` then run `vagrant up [--provision]` as appliciable.
+  ./vm -gv <integer>   # Do `-g` then run `vagrant up [--provision]` as appliciable.
+  ./vm -rv <integer>   # Do `-gr` then run `vagrant up [--provision]` as appliciable.
+  ./vm -grv <integer>  # Do `-gr` then run `vagrant up [--provision]` as appliciable.
+
+  -g is implied any time a valid integer argument is given, so only serves as
+     'syntactic sugar' to make the intended use of `./vm` explicitly clear.
+
+Order of operations:
+  - `-r` if set
+  - `-g` always
+  - `-v` if set
+
+More comprehensive documentarian can be found in `./docs/VM_App.md`.
