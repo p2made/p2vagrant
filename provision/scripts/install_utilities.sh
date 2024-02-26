@@ -9,7 +9,6 @@ active_title="Installing Utilities"
 job_complete="Utilities Installed"
 
 # Source common functions
-source /var/www/provision/scripts/_banners.sh
 source /var/www/provision/scripts/_common.sh
 
 # Arguments...
@@ -64,7 +63,7 @@ function set_fish_as_default_shell() {
 
 function provision() {
 	# Header banner
-	header_banner "$active_title" "$script_name" "$updated_date"
+	header_banner "$active_title" "$script_name" "$updated_date" false
 
 	export DEBIAN_FRONTEND=noninteractive
 

@@ -123,3 +123,54 @@ function remove_unnecessary_packages() {
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/               Banners               /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+# Function to write header banner
+# Usage: header_banner "$active_title" "$script_name" "$updated_date" $upgrade
+function header_banner() {
+	local active_title=$1
+	local script_name=$2
+	local updated_date=$3
+	local upgrade=$4
+	cat "$VM_FOLDER/provision/vm/txt/art_flags.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_ua.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_p2vagrant.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_ua.txt"
+	if $upgrade; then
+		cat "$VM_FOLDER/provision/vm/txt/art_p2project.txt"
+		cat "$VM_FOLDER/provision/vm/txt/art_ua.txt"
+	fi
+	sed -e "s|{{active_title}}|$(echo "$active_title" | sed 's|&|\\&|g')|g" \
+		-e "s|{{script_name}}|$script_name|g" \
+		-e "s|{{updated_date}}|$updated_date|g" \
+		-e "s|{{TODAYS_DATE}}|$TODAYS_DATE|g" \
+		"$VM_FOLDER/provision/vm/txt/art_details.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_ua.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_flags.txt"
+	echo ""
+}
+
+# Function to write footer banner
+# Usage: footer_banner $job_complete
+function footer_banner() {
+	local job_complete=$1
+	echo ""
+	cat "$VM_FOLDER/provision/vm/txt/art_flags.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_ua.txt"
+	sed "s|{{job_complete}}|$(echo "$job_complete" | sed 's|&|\\&|g')|g" \
+		"$VM_FOLDER/provision/vm/txt/art_complete.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_ua.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_copyright.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_ua.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_peace_$(( RANDOM % 4 )).txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_ua.txt"
+	cat "$VM_FOLDER/provision/vm/txt/art_flags.txt"
+}
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+

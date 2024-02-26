@@ -9,7 +9,6 @@ active_title="Installing Apache (with SSL 🔐 & Markdown 📄)"
 job_complete="Apache Installed (with SSL 🔐 & Markdown 📄)"
 
 # Source common functions
-source /var/www/provision/scripts/_banners.sh
 source /var/www/provision/scripts/_common.sh
 source /var/www/provision/scripts/_sites.sh
 
@@ -92,7 +91,7 @@ function configure_default_website() {
 
 function provision() {
 	# Header banner
-	header_banner "$active_title" "$script_name" "$updated_date"
+	header_banner "$active_title" "$script_name" "$updated_date" false
 
 	export DEBIAN_FRONTEND=noninteractive
 

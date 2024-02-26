@@ -46,6 +46,7 @@ EOF
 
 if (( vagrantfile_index >= 4 )); then
 	cat <<EOF >> ./Vagrantfile
+
 # Software Versions
 SWIFT_VERSION       = "$SWIFT_VERSION"
 EOF
@@ -72,6 +73,7 @@ fi
 
 # VM config opening lines
 cat <<EOF >> ./Vagrantfile
+
 Vagrant.configure("2") do |config|
 
 	config.vm.box = "bento/ubuntu-20.04-arm64"

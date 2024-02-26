@@ -1,0 +1,5 @@
+🇺🇦           🚀 {{active_title}} 🚀
+🇺🇦           📅     on {{TODAYS_DATE}}
+🇺🇦
+🇺🇦           📜 Script Name:  {{script_name}}
+🇺🇦           📅 Last Updated: {{updated_date}}
