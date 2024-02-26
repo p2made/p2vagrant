@@ -9,7 +9,6 @@ active_title="Installing Swift"
 job_complete="Swift Installed"
 
 # Source common functions
-source /var/www/provision/scripts/_banners.sh
 source /var/www/provision/scripts/_common.sh
 
 # Arguments...
@@ -73,7 +72,7 @@ function install_swift() {
 
 function provision() {
 	# Header banner
-	header_banner "$active_title" "$script_name" "$updated_date"
+	header_banner "$active_title" "$script_name" "$updated_date" false
 
 	export DEBIAN_FRONTEND=noninteractive
 

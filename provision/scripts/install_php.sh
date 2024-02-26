@@ -9,7 +9,6 @@ active_title="Installing PHP (with Composer 🙃)"
 job_complete="PHP Installed (with Composer 🙃)"
 
 # Source common functions
-source /var/www/provision/scripts/_banners.sh
 source /var/www/provision/scripts/_common.sh
 
 # Arguments...
@@ -85,7 +84,6 @@ function install_php() {
 	sudo chmod -R 755 "$SHARED_HTML"/*
 
 	a2enmod "php$PHP_VERSION" proxy_fcgi setenvif
-	a2enconf "php-fpm"
 
 	announce_success "PHP Installed Successfully! ✅"
 }
@@ -105,7 +103,7 @@ function install_composer() {
 
 function provision() {
 	# Header banner
-	header_banner "$active_title" "$script_name" "$updated_date"
+	header_banner "$active_title" "$script_name" "$updated_date" false
 
 	export DEBIAN_FRONTEND=noninteractive
 

@@ -9,7 +9,6 @@ active_title="Upgrading VM"
 job_complete="Upgrade completed successfully"
 
 # Source common functions
-source /var/www/provision/scripts/_banners.sh
 source /var/www/provision/scripts/_common.sh
 
 # Arguments...
@@ -21,7 +20,7 @@ source /var/www/provision/scripts/_common.sh
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Header banner
-upgrade_banner "$active_title" "$script_name" "$updated_date"
+header_banner "$active_title" "$script_name" "$updated_date" true
 
 export DEBIAN_FRONTEND=noninteractive
 

@@ -11,8 +11,8 @@
 # Function to setup important site variables
 # We can't return a value, so we put them in a global
 # variable that we will quickly use & then erase.
-# Usage: setup_site_variables $one_site
-#function setup_site_variables () {
+# Usage: setup_site_variables "$one_site"
+function setup_site_variables {
 	# Use the passed string $one_site to set a temporary global...
 	# $site_info_temp[1-6], where...
 	# $site_info_temp[1] is the domain
@@ -22,10 +22,31 @@
 	# $site_info_temp[5] is the vhosts filename
 	# $site_info_temp[6] is the SSL filename
 
-#}
+	IFS=' ' read -ra split_string <<< "$1"
+
+	site_info_temp[1]=${split_string[1]}                          # 1 domain name
+
+	IFS='.' read -ra parts <<< "${split_string[1]}"
+	reversed=""
+	for part in "${parts[@]}"; do
+		reversed="$part $reversed"
+	done
+
+	site_info_temp[2]=$(echo "$reversed" | sed 's/ $//')                # 2 reverse domain
+	site_info_temp[3]=$(echo "$reversed" | sed 's/ /_/g')               # 3 underscore domain
+
+	site_info_temp[4]="${split_string[2]}.conf"                         # 4 template filename
+
+	if [ -n "${split_string[3]}" ]; then
+		site_info_temp[5]="${split_string[3]}_"
+	fi
+
+	site_info_temp[5]="${site_info_temp[5]}${site_info_temp[3]}.conf"   # 5 vhosts filename
+	site_info_temp[6]="${site_info_temp[3]}_$TODAYS_DATE"               # 6 SSL base filename
+}
 
 # Function to write the vhosts file from a template
-# Usage: generate_vhosts_file $domain $underscore_domain $template_filename $vhosts_filename $ssl_base_filename
+# Usage: generate_vhosts_file "$domain" "$underscore_domain" "$template_filename" "$vhosts_filename" "$ssl_base_filename"
 function generate_vhosts_file() {
 	local domain="$1"
 	local underscore_domain="$2"
@@ -52,7 +73,7 @@ function generate_vhosts_file() {
 }
 
 # Function to generate SSL files
-# Usage: generate_ssl_files $domain $ssl_base_filename
+# Usage: generate_ssl_files "$domain" "$ssl_base_filename"
 function generate_ssl_files() {
 	local domain="$1"
 	local ssl_key="$PROVISION_SSL/$2.key"
@@ -92,7 +113,7 @@ function generate_ssl_files() {
 }
 
 # Function to configure a website with everything done so far
-# Usage: configure_website $domain $underscore_domain $vhosts_filename $ssl_base_filename
+# Usage: configure_website "$domain" "$underscore_domain" "$vhosts_filename" "$ssl_base_filename"
 function configure_website() {
 	local domain="$1"
 	local site_folder="$VM_FOLDER/$2"
