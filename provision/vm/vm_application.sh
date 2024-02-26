@@ -12,6 +12,7 @@ source ./provision/data/vm_data.sh
 
 # Script constants
 FLAGS="grv"
+#FLAGS="grvi"
 
 # Define flags & defaults
 FLAG_GENERATE=true
@@ -71,6 +72,9 @@ vm() {
 			v)
 				FLAG_VAGRANT=true
 				;;
+#			i)
+#				FLAG_INFO=true
+#				;;
 			\?)
 				echo "Invalid option: -$OPTARG" >&2
 				exit 1

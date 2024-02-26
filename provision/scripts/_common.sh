@@ -50,8 +50,11 @@ function announce_no_job() {
 	echo "👍  $1"
 }
 
+# Function to give a debugging message
+# Usage: debug_message "$LINENO" "Message"
 function debug_message() {
-	echo "‼️‼️  Debug: $1 🚨"
+	local calling_function="${FUNCNAME[1]}"
+	echo "‼️‼️  Debug in $calling_function at line $1: $2 🚨"
 }
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #

@@ -22,11 +22,17 @@ function setup_site_variables {
 	# $site_info_temp[5] is the vhosts filename
 	# $site_info_temp[6] is the SSL filename
 
-	IFS=' ' read -ra split_string <<< "$1"
+	local one_site=$1
+	debug_message "$LINENO" "\$one_site is $one_site"
+	IFS=' ' read -ra split_string <<< "$one_site"
 
-	site_info_temp[1]=${split_string[1]}                          # 1 domain name
+	debug_message "$LINENO" "\$split_string[0] is ${split_string[0]}"
+	debug_message "$LINENO" "\$split_string[1] is ${split_string[1]}"
+	debug_message "$LINENO" "\$split_string[2] is ${split_string[2]}"
 
-	IFS='.' read -ra parts <<< "${split_string[1]}"
+	site_info_temp[1]=${split_string[0]}                                # 1 domain name
+
+	IFS='.' read -ra parts <<< "${split_string[0]}"
 	reversed=""
 	for part in "${parts[@]}"; do
 		reversed="$part $reversed"
@@ -35,10 +41,10 @@ function setup_site_variables {
 	site_info_temp[2]=$(echo "$reversed" | sed 's/ $//')                # 2 reverse domain
 	site_info_temp[3]=$(echo "$reversed" | sed 's/ /_/g')               # 3 underscore domain
 
-	site_info_temp[4]="${split_string[2]}.conf"                         # 4 template filename
+	site_info_temp[4]="${split_string[1]}.conf"                         # 4 template filename
 
-	if [ -n "${split_string[3]}" ]; then
-		site_info_temp[5]="${split_string[3]}_"
+	if [ -n "${split_string[2]}" ]; then
+		site_info_temp[5]="${split_string[2]}_"
 	fi
 
 	site_info_temp[5]="${site_info_temp[5]}${site_info_temp[3]}.conf"   # 5 vhosts filename
@@ -160,3 +166,4 @@ function configure_website() {
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
+# debug_message "$LINENO" "Message"

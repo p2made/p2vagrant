@@ -26,8 +26,12 @@ site_data_file="$PROVISION_DATA/sites_data"
 # Function to loop through sites data & configure individual websites
 # Usage: configure_websites
 function configure_websites() {
-	for one_site in $(cat "$site_data_file" | grep -v '^#'); do
+	while IFS= read -r one_site; do
+		# Skip lines starting with #
+		[[ $one_site =~ ^# ]] && continue
+
 		# First get thy data in order, young coder
+		debug_message "$LINENO" "\$one_site is $one_site"
 		setup_site_variables "$one_site"
 
 		# We have the data all as we want it, but in a global variable
@@ -65,7 +69,7 @@ function configure_websites() {
 			"$underscore_domain" \
 			"$vhosts_filename" \
 			"$ssl_base_filename"
-	done
+	done < "$site_data_file"
 
 	# Restart Apache after all configurations
 	echo "Restarting apache to enable new websites."
@@ -87,3 +91,5 @@ function provision() {
 }
 
 provision
+
+# debug_message "$LINENO" "Message"
