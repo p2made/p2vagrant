@@ -1,7 +1,6 @@
 <?php
 // Define variables
 $generatedDate  = "{{TODAYS_DATE}}";
-$vmHostname     = gethostname();        // Gets the hostname of the machine
 $pageTitle      = "Shaka Bom!";
 $pageBody       = "How cool is this?";
 ?>
@@ -14,6 +13,6 @@ $pageBody       = "How cool is this?";
 	<p><?= $pageBody ?></p>
 	<hr>
 	<p>Generated: <?= $generatedDate ?></p>
-	<p>Served by: <?= $vmHostname ?></p>
+	<p>Served by: <?= gethostname() ?></p>
 </body>
 </html>

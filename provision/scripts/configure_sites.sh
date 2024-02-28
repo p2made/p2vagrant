@@ -32,16 +32,16 @@ function configure_websites() {
 
 		# First get thy data in order, young coder
 		debug_message "$LINENO" "\$one_site is $one_site"
-		setup_site_variables "$one_site"
+		setup_site_variables $one_site
 
 		# We have the data all as we want it, but in a global variable
 		# Put it in local variables, & erase the global variable
-		local domain="$site_info_temp[1]"
-		local reverse_domain="$site_info_temp[2]"
-		local underscore_domain="$site_info_temp[3]"
-		local template_filename="$site_info_temp[4]"
-		local vhosts_filename="$site_info_temp[5]"
-		local ssl_base_filename="$site_info_temp[6]"
+		local domain="${site_info_temp[1]}"
+		local reverse_domain="${site_info_temp[2]}"
+		local underscore_domain="${site_info_temp[3]}"
+		local template_filename="${site_info_temp[4]}"
+		local vhosts_filename="${site_info_temp[5]}"
+		local ssl_base_filename="${site_info_temp[6]}"
 
 		unset site_info_temp
 

@@ -2,11 +2,14 @@
 
 # _common.sh
 
+# Source vm_data.sh
+source /var/www/provision/data/vm_data.sh
+
 # Script constants...
 TODAYS_DATE=$(date "+%Y-%m-%d")
 #TODAYS_DATE=$(env TZ=Australia/Brisbane date "+%Y-%m-%d")
 VM_HOSTNAME=$(hostname)
-VM_FOLDER=/var/www
+#VM_FOLDER=/var/www         # Inherited from vm_data.sh
 SHARED_HTML=$VM_FOLDER/html
 PROVISION_FOLDER=$VM_FOLDER/provision
 PROVISION_DATA=$VM_FOLDER/provision/data
@@ -27,7 +30,7 @@ VM_LOGS_FOLDER=$VM_FOLDER/vm_logs
 # Function for error handling
 # Usage: handle_error "Error message"
 function handle_error() {
-	echo "⚠️   Error: $1 💥"
+	echo "⚠️  Error: $1 💥"
 	echo "Run 'vagrant halt' then restore the last snapshot before trying again."
 	exit 1
 }
@@ -125,11 +128,8 @@ function remove_unnecessary_packages() {
 }
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
-
-
-# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
-# -- -- /%/ -- -- /%/               Banners               /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/          Banner Functions           /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
@@ -152,7 +152,7 @@ function header_banner() {
 		-e "s|{{script_name}}|$script_name|g" \
 		-e "s|{{updated_date}}|$updated_date|g" \
 		-e "s|{{TODAYS_DATE}}|$TODAYS_DATE|g" \
-		"$VM_FOLDER/provision/vm/txt/art_details.txt"
+			"$VM_FOLDER/provision/vm/txt/art_details.txt"
 	cat "$VM_FOLDER/provision/vm/txt/art_ua.txt"
 	cat "$VM_FOLDER/provision/vm/txt/art_flags.txt"
 	echo ""

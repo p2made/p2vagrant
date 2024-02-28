@@ -19,11 +19,11 @@
 #   DB_PASSWORD
 # --
 
-# Data for Vagrantfile generation.
-
-VM_TLDS=(
-	"test"                              # One line for every dev TLD to be used on your VM
-)
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/          Vagrantfile Data           /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
 # Machine Variables
 VM_HOSTNAME="p2vagrant"
@@ -47,3 +47,21 @@ DB_USERNAME="fredspotty"
 DB_PASSWORD="Passw0rd"
 DB_NAME="example_db"
 DB_NAME_TEST="example_db_test"
+
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/           p2vagrant Data            /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/                                     /%/ -- -- /%/ -- -- #
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
+# One entry for every dev TLD to be used on your VM
+# This can be added to later, but removing items once
+# they have been used should be done with great care.
+# Items must not conflict with TLDs used anywhere that
+# is network accessible to the host.
+VM_TLDS=(
+	"test"
+)
+# Present a p2vagrant zenity options screen on VM startup.
+# ### For future implementation ###
+USE_OPTIONS=false
