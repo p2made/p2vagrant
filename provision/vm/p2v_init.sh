@@ -72,14 +72,17 @@ function install_vagrant_manager() {
 	brew install --cask vagrant-manager
 }
 
-# Main function to coordinate the installation process
-# Usage: initialize_p2v
-function initialize_p2v() {
+# Function to initialise p2v
+# Usage: initialise_p2v
+function initialise_p2v() {
+	cat ./txt/application_init.txt
+
+	# Prompt user to press any key to continue
+	read -n 1 -s -r -p "Press any key to continue..."
+	echo # Add a newline for better formatting
+
 	# Check if Homebrew is installed
 	check_homebrew
-
-	#read -qs "?$message_1: " answer
-	#echo  # Add a newline for better formatting
 
 	# Install Vagrant packages
 	install_vagrant_packages
@@ -98,6 +101,6 @@ function initialize_p2v() {
 	vagrant global-status
 }
 
-initialize_p2v
+initialise_p2v
 
 # debug_message "$LINENO" "Message"
