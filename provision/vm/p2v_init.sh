@@ -64,9 +64,8 @@ function install_extras() {
 # Function to optionally install Vagrant Manager desktop application
 # Usage: install_vagrant_manager
 function install_vagrant_manager() {
-	#read -qy "?$message_2: " answer
-
-	if ! ask_yes_no "$message_2"; then
+	local message="Do you want to install Vagrant Manager desktop application?"
+	if ! ask_yes_no "$message"; then
 		echo "Skipping the installation of Vagrant Manager."
 	fi
 
@@ -74,8 +73,8 @@ function install_vagrant_manager() {
 }
 
 # Main function to coordinate the installation process
-# Usage: install_vagrant
-function install_vagrant() {
+# Usage: initialize_p2v
+function initialize_p2v() {
 	# Check if Homebrew is installed
 	check_homebrew
 
@@ -99,6 +98,6 @@ function install_vagrant() {
 	vagrant global-status
 }
 
-install_vagrant
+initialize_p2v
 
 # debug_message "$LINENO" "Message"
