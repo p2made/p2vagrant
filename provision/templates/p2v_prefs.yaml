@@ -1,5 +1,5 @@
-# vm_prefs.yaml
-# `source ./relative/path/to/vm_data.sh`
+# p2v_prefs.yaml
+# `source ./relative/path/to/p2v_prefs.yaml`
 
 # The variables below define your vagrant VM.
 # Make any changes BEFORE creating your VM.
@@ -24,6 +24,17 @@ VM_USERNAME: Fred Spotty
 VM_HOSTNAME: p2vagrant
 VM_IP: 192.168.22.42
 TIMEZONE: Australia/Brisbane
+MEMORY: 4096
+CPUS: 1
+
+# Synced Folders
+HOST_FOLDER: "."
+VM_FOLDER: "/var/www"
+
+# Software Versions
+PHP_VERSION: "8.3"
+MYSQL_VERSION: "8.3"
+SWIFT_VERSION: "5.9.2"                   # For installing Swift (optional)
 
 # Database Variables
 ROOT_PASSWORD: RootPassw0rd
@@ -37,4 +48,10 @@ VM_TLDS:
   - test
 
 # Other Preferences
-USE_OPTIONS: false
+ZENITY_MAC: false
+ZENITY_VM: false
+HELLO_MAC: false
+HELLO_VM: false
+
+OPTIONS_MAC: false
+OPTIONS_VM: false

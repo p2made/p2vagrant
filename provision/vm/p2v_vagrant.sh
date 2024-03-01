@@ -1,12 +1,12 @@
 #!/bin/zsh
 
-# provision/vm/vm_vagrant.sh
+# provision/vm/p2v_vagrant.sh
 
 # Usage:
-# `./provision/vm/vm_vagrant.sh "$(pwd)" "$provision"`
+# `./provision/vm/p2v_vagrant.sh "$(pwd)" "$provision"`
 
 # Common functions
-source ./provision/vm/vm_common.sh
+source ./provision/vm/p2v_common.sh
 
 # Change working directory to the 'vm' directory
 cd "$1"

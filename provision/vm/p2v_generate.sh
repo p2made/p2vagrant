@@ -1,15 +1,15 @@
 #!/bin/zsh
 
-# provision/vm/vm_generate.sh
+# provision/vm/p2v_generate.sh
 
 # Usage:
-# `./provision/vm/vm_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"`
+# `./provision/vm/p2v_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"`
 
 # Common functions
-source ./provision/vm/vm_common.sh
+source ./provision/vm/p2v_common.sh
 
 # Source data
-source ./provision/data/vm_data.sh
+source ./provision/data/p2v_data.sh
 
 # Change working directory to the 'vm' directory
 cd "$1"

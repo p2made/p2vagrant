@@ -1,7 +1,7 @@
-#!/bin/zsh
+#!/bin/sh
 
-# vm_data.sh
-# `source ./relative/path/to/vm_data.sh`
+# p2v_data.sh
+# `source ./relative/path/to/p2v_data.sh`
 
 # The variables below define your vagrant VM.
 # Make any changes BEFORE creating your VM.

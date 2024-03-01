@@ -1,14 +1,11 @@
 #!/bin/zsh
 
-# vm_application.sh
+# p2v_application.sh
 
 # The main Vagrant Manager application file
 
 # Common Functions
-source ./provision/vm/vm_common.sh
-
-# Source data
-source ./provision/data/vm_data.sh
+source ./provision/vm/p2v_common.sh
 
 # Script constants
 FLAGS="grv"
@@ -26,9 +23,21 @@ declare requires_vagrantfile
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
+# Function to check if p2v_prefs.yaml exists
+# Usage: check_prefs_file
+function check_prefs_file() {
+	if [ ! -f "./provision/data/p2v_prefs.yaml" ]; then
+		local message="p2v_prefs.yaml not found. Would you like to initialize p2v?"
+		if ask_no_yes "$message"; then
+			# Call the initialization function or script
+			./provision/vm/p2v_init.sh
+		fi
+	fi
+}
+
 # Function to check whether a step requires a Vagrantfile
 # Usage: set_requires_vagrantfile "$step_index" [$shift_index]
-set_requires_vagrantfile() {
+function set_requires_vagrantfile() {
 	local local_index=$1
 	local shift_index=$2
 
@@ -56,9 +65,10 @@ set_requires_vagrantfile() {
 }
 
 # Core Vagrant Manager application function
-# Usage: vm "$@"
-vm() {
+# Usage: p2v "$@"
+function p2v() {
 	vm_application_banner
+	check_prefs_file
 
 	# Process flags
 	while getopts ":$FLAGS" opt; do
@@ -115,9 +125,7 @@ vm() {
 
 	# If `-r` is set, perform reset
 	if $FLAG_RESET; then
-		local local_index=$1
-
-		#./provision/vm/vm_reset.sh "$(pwd)" "$passed_index"
+		#./provision/vm/p2v_reset.sh "$(pwd)" "$passed_index"
 		debug_message "$FUNCNAME" "$LINENO" "Reset action would be done here"
 
 		# Set `requires_vagrantfile` with shift
@@ -132,13 +140,13 @@ vm() {
 	fi
 
 	local vagrantfile_title=$VAGRANTFILES[$vagrantfile_index]
-	./provision/vm/vm_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"
+	./provision/vm/p2v_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"
 
 	# If `-v` is set run start or reload the VM appropriately
 	if $FLAG_VAGRANT; then
 		set_requires_vagrantfile "$passed_index"
-		./provision/vm/vm_vagrant.sh "$(pwd)" "$requires_vagrantfile"
+		./provision/vm/p2v_vagrant.sh "$(pwd)" "$requires_vagrantfile"
 	fi
 }
 
-# debug_message "$FUNCNAME" "$LINENO" "Message"
+# debug_message "$LINENO" "Message"
