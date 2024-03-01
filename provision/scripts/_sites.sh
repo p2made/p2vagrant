@@ -11,9 +11,9 @@
 # Function to setup important site variables
 # We can't return a value, so we put them in a global
 # variable that we will quickly use & then erase.
-# Usage: setup_site_variables "$one_site"
+# Usage: setup_site_variables "$domain_name" "$template_index" "$vhosts_prefix"
 function setup_site_variables {
-	# Use the passed string $one_site to set a temporary global...
+	# Use the passed string $domain_name to set a temporary global...
 	# $site_info_temp[1-6], where...
 	# $site_info_temp[1] is the domain
 	# $site_info_temp[2] is the reverse domain
@@ -22,17 +22,53 @@ function setup_site_variables {
 	# $site_info_temp[5] is the vhosts filename
 	# $site_info_temp[6] is the SSL filename
 
-	local one_site=$1
-	debug_message "$LINENO" "\$one_site is $one_site"
-	IFS=' ' read -ra split_string <<< "$one_site"
+	# Reversing the domain
+	site_info_temp[2]=$(echo "$1" | awk -F'.' '{for(i=NF;i>0;i--) printf "%s.", $i; printf "\n"}' | sed 's/\.$//')
 
-	debug_message "$LINENO" "\$split_string[0] is ${split_string[0]}"
-	debug_message "$LINENO" "\$split_string[1] is ${split_string[1]}"
-	debug_message "$LINENO" "\$split_string[2] is ${split_string[2]}"
+	# Removing leading and trailing spaces from reversed domain
+	site_info_temp[2]=$(echo "${site_info_temp[2]}" | sed 's/^ *//;s/ *$//')
 
-	site_info_temp[1]=${split_string[0]}                                # 1 domain name
+	# Replacing spaces with underscores in the reversed domain
+	site_info_temp[3]=$(echo "${site_info_temp[2]}" | sed 's/ /_/g')
 
-	IFS='.' read -ra parts <<< "${split_string[0]}"
+	# Reversing the domain
+	site_info_temp[2]=$(echo "$1" | awk -F'.' '{for(i=NF;i>0;i--) printf "%s.", $i; printf "\n"}' | sed 's/\.$//')
+
+	# Replacing spaces with underscores in the reversed domain
+	site_info_temp[3]=$(echo "${site_info_temp[2]}" | sed 's/ /_/g')
+
+	site_info_temp[4]="$2.conf"                            # 4 template filename
+
+	if [ -n "$3" ]; then
+		site_info_temp[5]="${3}_${site_info_temp[3]}.conf"  # 5 vhosts filename
+	else
+		site_info_temp[5]="${site_info_temp[3]}.conf"                   # 5 vhosts filename without prefix
+	fi
+
+	site_info_temp[6]="${site_info_temp[3]}_$TODAYS_DATE"               # 6 SSL base filename
+}
+
+function setup_site_variables {
+	# Use the passed string $domain_name to set a temporary global...
+	# $site_info_temp[1-6], where...
+	# $site_info_temp[1] is the domain
+	# $site_info_temp[2] is the reverse domain
+	# $site_info_temp[3] is the underscore domain
+	# $site_info_temp[4] is the template filename
+	# $site_info_temp[5] is the vhosts filename
+	# $site_info_temp[6] is the SSL filename
+
+	local domain_name=$1
+	local template_index=$2
+	local vhosts_prefix=$3
+
+	debug_message "$LINENO" "\$domain_name is $domain_name"
+	debug_message "$LINENO" "\$template_index is $template_index"
+	debug_message "$LINENO" "\$vhosts_prefix is $vhosts_prefix"
+
+	site_info_temp[1]="$domain_name"                                    # 1 domain name
+
+	IFS='.' read -ra parts <<< "$domain_name"
 	reversed=""
 	for part in "${parts[@]}"; do
 		reversed="$part $reversed"
@@ -41,13 +77,14 @@ function setup_site_variables {
 	site_info_temp[2]=$(echo "$reversed" | sed 's/ $//')                # 2 reverse domain
 	site_info_temp[3]=$(echo "$reversed" | sed 's/ /_/g')               # 3 underscore domain
 
-	site_info_temp[4]="${split_string[1]}.conf"                         # 4 template filename
+	site_info_temp[4]="$template_index.conf"                            # 4 template filename
 
-	if [ -n "${split_string[2]}" ]; then
-		site_info_temp[5]="${split_string[2]}_"
+	if [ -n "$vhosts_prefix" ]; then
+		site_info_temp[5]="${vhosts_prefix}_${site_info_temp[3]}.conf"  # 5 vhosts filename
+	else
+		site_info_temp[5]="${site_info_temp[3]}.conf"                   # 5 vhosts filename without prefix
 	fi
 
-	site_info_temp[5]="${site_info_temp[5]}${site_info_temp[3]}.conf"   # 5 vhosts filename
 	site_info_temp[6]="${site_info_temp[3]}_$TODAYS_DATE"               # 6 SSL base filename
 }
 
@@ -112,10 +149,39 @@ function generate_ssl_files() {
 	# Output progress message
 	announce_success "Self-signed SSL certificate for $domain generated at $ssl_cert."
 
-	announce_success "SSL files for $domain generated successfully!"
-
 	# Display information about the generated certificate
 	openssl x509 -noout -text -in "$ssl_cert"
+}
+
+# Function to write index files from a template
+# Usage: generate_web_files "$target_folder" "${web_files[@]}"
+function generate_web_files() {
+	local target_folder="$1"
+	shift
+
+	# Check if the template file exists
+	if [ ! -f "$PROVISION_TEMPLATES/$template_filename" ]; then
+		handle_error "Template file $template_filename not found in $PROVISION_TEMPLATES"
+	fi
+
+	for template_filename in "$@"; do
+		# Check if the template file exists
+		if [ ! -f "$PROVISION_TEMPLATES/$template_filename" ]; then
+			handle_error "Template file $template_filename not found in $PROVISION_TEMPLATES"
+		fi
+
+		# Use sed to replace placeholders in the template and save it to the new file
+		sed \
+			-e "s|{{TODAYS_DATE}}|$TODAYS_DATE|g" \
+			-e "s|{{VM_HOSTNAME}}|$VM_HOSTNAME|g" \
+			-e "s|{{DB_USERNAME}}|$DB_USERNAME|g" \
+			-e "s|{{DB_PASSWORD}}|$DB_PASSWORD|g" \
+			-e "s|{{DB_NAME}}|$DB_NAME|g" \
+			"$PROVISION_TEMPLATES/$template_filename" > "$PROVISION_HTML/$template_filename"
+
+		mv "$PROVISION_HTML/$template_filename" "$target_folder/" ||
+			handle_error "Failed to move $template_filename file"
+	done
 }
 
 # Function to configure a website with everything done so far
@@ -133,19 +199,16 @@ function configure_website() {
 	# Create site root if it doesn't already exist
 	mkdir -p "$site_folder"
 
-	local web_files=("index.md" "index.htm" "index.html")
+	local web_files=("index.md" "index.htm")
+	generate_web_files "$site_folder" "${web_files[@]}"
+	cp -n "$PROVISION_HTML/index.html" "$site_folder/"
 
 	# Check if $2 is not "html"
 	if [ "$2" != "html" ]; then
-		web_files+=("index.php" "phpinfo.php" "db.php")
+		web_files=("db.php" "index.php")
+		generate_web_files "$site_folder" "${web_files[@]}"
+		cp "$PROVISION_HTML/phpinfo.php" "$site_folder/"
 	fi
-
-	# Copy only if a file of the same name is not present
-	for file in "${web_files[@]}"; do
-		if [ ! -e "$site_folder/$file" ]; then
-			cp "$PROVISION_HTML/$file" "$site_folder/"
-		fi
-	done
 
 	# Set permissions on web server files
 	chmod -R 755 "$site_folder"/*
@@ -154,7 +217,7 @@ function configure_website() {
 	sudo a2ensite "$vhosts_filename"
 
 	# Output progress message
-	echo "Website configured for $domain"
+	announce_success "Website configured for $domain"
 }
 
 # Example usage:

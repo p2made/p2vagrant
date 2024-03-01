@@ -32,9 +32,9 @@ package_list=(
 	"gnupg2"
 	"gzip"
 	"libapr1"
-	"libaprutil1"
 	"libaprutil1-dbd-sqlite3"
 	"libaprutil1-ldap"
+	"libaprutil1"
 	"liblua5.3-0"
 	"lsb-release"
 	"mime-support"
@@ -44,6 +44,8 @@ package_list=(
 	"software-properties-common"
 	"unzip"
 	"yarn"
+	"yq"
+	"zenity"
 )
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #

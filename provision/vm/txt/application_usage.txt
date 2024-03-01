@@ -1,4 +1,4 @@
-Usage: ./vm [-g] [-r] [-v] <integer>
+Usage: ./p2v [-g] [-r] [-v] <integer>
 Options:
   -g    Generate Vagrantfile based on the passed integer.
   -r    Reset: Delete any generated or copied files from earlier Vagrant provisioning.
@@ -6,21 +6,25 @@ Options:
   <integer>   Step number for Vagrantfile generation.
 --
 Usage examples:
-  ./vm <integer>       # Generate Vagrantfile based on the passed integer.
-  ./vm -g <integer>    # Generate Vagrantfile based on the passed integer.
-  ./vm -r <integer>    # Reset and generate Vagrantfile based on the passed integer.
-  ./vm -gr <integer>   # Reset and generate Vagrantfile based on the passed integer.
-  ./vm -v <integer>    # Do `-g` then run `vagrant up [--provision]` as appliciable.
-  ./vm -gv <integer>   # Do `-g` then run `vagrant up [--provision]` as appliciable.
-  ./vm -rv <integer>   # Do `-gr` then run `vagrant up [--provision]` as appliciable.
-  ./vm -grv <integer>  # Do `-gr` then run `vagrant up [--provision]` as appliciable.
+  ./p2v <integer>       # Generate Vagrantfile based on the passed integer.
+  ./p2v -g <integer>    # Generate Vagrantfile based on the passed integer.
+  ./p2v -r <integer>    # Reset and generate Vagrantfile based on the passed integer.
+  ./p2v -gr <integer>   # Reset and generate Vagrantfile based on the passed integer.
+  ./p2v -v <integer>    # Do `-g` then run `vagrant up [--provision]` as appliciable.
+  ./p2v -gv <integer>   # Do `-g` then run `vagrant up [--provision]` as appliciable.
+  ./p2v -rv <integer>   # Do `-gr` then run `vagrant up [--provision]` as appliciable.
+  ./p2v -grv <integer>  # Do `-gr` then run `vagrant up [--provision]` as appliciable.
 
   -g is implied any time a valid integer argument is given, so only serves as
-     'syntactic sugar' to make the intended use of `./vm` explicitly clear.
+     'syntactic sugar' to make the intended use of `./p2v` explicitly clear.
+
+  ## If ./p2v is run with any input before being initialised, the init script will be
+     triggered. When that completes successfully, the given input will be processed,
+     and ./p2v will run normally if that input is valid.
 
 Order of operations:
   - `-r` if set
   - `-g` always
   - `-v` if set
 
-More comprehensive documentarian can be found in `./docs/VM_App.md`.
+More comprehensive documentarian can be found in `./docs/p2v_App.md`.

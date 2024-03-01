@@ -19,6 +19,9 @@ provision/vhosts/*
 vm_logs/*
 !vm_logs/.p2vagrant
 
+# Exclude prefs
+provision/data/p2v_prefs.yaml
+
 # Exclude folders ending with '_'
 **_/
 

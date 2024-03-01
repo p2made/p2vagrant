@@ -1,9 +1,12 @@
 #!/bin/zsh
 
-# provision/vm/vm_common.sh
+# provision/vm/p2v_common.sh
 
 # Usage:
-# `source ./relative/path/to/vm_common.sh`
+# `source ./relative/path/to/p2v_common.sh`
+
+# Source data
+source ./provision/data/p2v_data.sh
 
 # Script constants
 
@@ -57,6 +60,33 @@ function announce_no_job() {
 function debug_message() {
 	local calling_function="${FUNCNAME[1]}"
 	echo "‼️‼️  Debug in $calling_function at line $1: $2 🚨"
+}
+
+# Helper function to ask yes or no - `y` returns true
+# Usage: `if ask_yes_no "$message"; then`
+function ask_yes_no() {
+	read -qs "?$1 Press 'y' for yes, or any other key for no. (y/N) "
+	out=$?
+	print $REPLY >&2
+	return $out
+}
+
+# Helper function to ask no or yes - `n` returns false
+# Usage: `if ask_no_yes "$message"; then`
+function ask_no_yes() {
+	read -qs "?$1 Press 'n' for no, or any other key for yes. (n/Y) "
+	out=$?
+	print $REPLY >&2
+	return $out
+}
+
+# Function to check if yq is installed
+# Usage: start_check
+function start_check() {
+	if ! command -v yq &> /dev/null; then
+		echo "Software needs to be installed."
+		./provision/vm/p2v_install.sh
+	fi
 }
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
