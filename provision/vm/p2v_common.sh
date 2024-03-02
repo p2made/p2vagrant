@@ -9,6 +9,31 @@
 source ./provision/data/p2v_data.sh
 
 # Script constants
+P2V_PREFS="./provision/data/p2v_prefs.yaml"
+
+declare VM_USERNAME
+declare VM_HOSTNAME
+declare VM_IP
+declare TIMEZONE
+declare MEMORY
+declare CPUS
+declare HOST_FOLDER
+declare VM_FOLDER
+declare PHP_VERSION
+declare MYSQL_VERSION
+declare SWIFT_VERSION
+declare ROOT_PASSWORD
+declare DB_USERNAME
+declare DB_PASSWORD
+declare DB_NAME
+declare DB_NAME_TEST
+declare VM_TLDS
+declare ZENITY_MAC
+declare ZENITY_VM
+declare HELLO_MAC
+declare HELLO_VM
+declare OPTIONS_MAC
+declare OPTIONS_VM
 
 # Sparse array of Vagrantfiles, indexed by setup step...
 VAGRANTFILES_INDEXES=(1 2 3 4 5 6 7 9)
@@ -80,20 +105,18 @@ function ask_no_yes() {
 	return $out
 }
 
-# Function to check if yq is installed
-# Usage: start_check
-function start_check() {
-	if ! command -v yq &> /dev/null; then
-		echo "Software needs to be installed."
-		./provision/vm/p2v_install.sh
-	fi
+# Function to read a value from the YAML file
+# Usage: read_yaml_value "$key"
+function read_yaml_value() {
+	local key="$1"
+	yq -r ".$key" "$P2V_PREFS"
 }
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-# Function to write update banner
-# Usage: vm_application_banner
-function vm_application_banner() {
+# Function to write p2v application banner
+# Usage: p2v_application_banner
+function p2v_application_banner() {
 	cat "./provision/vm/txt/art_flags.txt"
 	cat "./provision/vm/txt/art_ua.txt"
 	cat "./provision/vm/txt/art_p2vagrant.txt"

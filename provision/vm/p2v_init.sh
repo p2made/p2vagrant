@@ -5,24 +5,26 @@
 # Script to install packages for Vagrant and ./vm app
 
 # Usage:
-# `./provision/vm/p2v_init.sh`
+# `./provision/vm/p2v_init.sh "$(pwd)"`
 
 # Common functions
 source ./provision/vm/p2v_common.sh
 
-# Function to check that homebrew is installed
-# Usage: check_homebrew
-function check_homebrew() {
+# Function to install Homebrew
+# Usage: install_homebrew
+function install_homebrew() {
 	if ! command -v brew &> /dev/null; then
-		echo "Homebrew is not installed. Please install Homebrew before running this script."
-		exit 1
+		echo "Homebrew not found. Installing Homebrew..."
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	else
+		echo "Homebrew is already installed."
 	fi
 }
 
 # Function to install Vagrant packages
 # Usage: install_vagrant_packages
 function install_vagrant_packages() {
-	echo "Installing necessary packages..."
+	echo "Installing Vagrant packages..."
 
 	# Check if Vagrant is already installed
 	if ! command -v vagrant &> /dev/null; then
@@ -81,20 +83,15 @@ function initialise_p2v() {
 	read -n 1 -s -r -p "Press any key to continue..."
 	echo # Add a newline for better formatting
 
-	# Check if Homebrew is installed
-	check_homebrew
-
-	# Install Vagrant packages
+	install_homebrew
 	install_vagrant_packages
-
-	# Install Vagrant plugins
 	install_plugins "vagrant-share" "vagrant-vmware-desktop"
-
-	# Install yq and zenity
 	install_extras "yq" "zenity"
 
 	# Optional GUI app - Vagrant Manager
 	install_vagrant_manager
+
+	cp "./provision/txt/p2v_prefs" "./provision/data/p2v_prefs.yaml"
 
 	echo "Installation of packages necessary for Vagrant and ./vm app complete."
 
