@@ -1,8 +1,8 @@
 #!/bin/zsh
 
-# provision/vm/p2v_init.sh
+# p2v_init.sh
 
-# Script to install packages for Vagrant and ./vm app
+# Script to install packages for Vagrant and ./p2v app
 
 # Usage:
 # `./provision/vm/p2v_init.sh "$(pwd)"`

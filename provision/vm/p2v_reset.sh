@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# provision/vm/p2v_reset.sh
+# p2v_reset.sh
 
 # Usage:
 # `./provision/vm/p2v_reset.sh "$(pwd)" "$passed_step"`

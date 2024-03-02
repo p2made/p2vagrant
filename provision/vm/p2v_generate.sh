@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# provision/vm/p2v_generate.sh
+# p2v_generate.sh
 
 # Usage:
 # `./provision/vm/p2v_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"`

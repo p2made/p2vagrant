@@ -1,9 +1,9 @@
 #!/bin/zsh
 
-# provision/vm/p2v_common.sh
+# p2v_common.sh
 
 # Usage:
-# `source ./relative/path/to/p2v_common.sh`
+# `source ./provision/vm/p2v_common.sh`
 
 # Source data
 source ./provision/data/p2v_data.sh

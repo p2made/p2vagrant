@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# provision/vm/p2v_vagrant.sh
+# p2v_vagrant.sh
 
 # Usage:
 # `./provision/vm/p2v_vagrant.sh "$(pwd)" "$provision"`
