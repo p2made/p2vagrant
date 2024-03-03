@@ -2,18 +2,18 @@
 # vi: set ft=ruby
 
 # 01 Create Bare VM
-# Generated: 2024-02-29
+# Generated: 2024-03-03
 
 # Machine Variables
-VM_HOSTNAME         = "p2vagrant"
-VM_IP               = "192.168.22.42"
-TIMEZONE            = "Australia/Brisbane"
-MEMORY              = 4096
-CPUS                = 1
+VM_HOSTNAME         = ""
+VM_IP               = ""
+TIMEZONE            = ""
+MEMORY              = 
+CPUS                = 
 
 # Synced Folders
-HOST_FOLDER         = "."
-VM_FOLDER           = "/var/www"
+HOST_FOLDER         = ""
+VM_FOLDER           = ""
 
 Vagrant.configure("2") do |config|
 

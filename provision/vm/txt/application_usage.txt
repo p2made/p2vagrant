@@ -18,13 +18,13 @@ Usage examples:
   -g is implied any time a valid integer argument is given, so only serves as
      'syntactic sugar' to make the intended use of `./p2v` explicitly clear.
 
-  ## If ./p2v is run with any input before being initialised, the init script will be
-     triggered. When that completes successfully, the given input will be processed,
-     and ./p2v will run normally if that input is valid.
-
 Order of operations:
   - `-r` if set
   - `-g` always
   - `-v` if set
+
+Before using p2v you must run `./p2v -init` to ensure that all necessary software is
+installed and that there is an initial prefs file in place. Once p2v is initialised
+you can customise your VM settings by editing `./provision/data/p2v_prefs.yaml`.
 
 More comprehensive documentarian can be found in `./docs/p2v_App.md`.

@@ -1,6 +1,4 @@
-# p2v_prefs.yaml
-# `source ./relative/path/to/p2v_prefs.yaml`
-
+# ./provision/data/p2v_prefs.yaml
 # The variables below define your vagrant VM.
 # Make any changes BEFORE creating your VM.
 # Be very cautious about changing anything other than...
@@ -49,6 +47,8 @@ VM_TLDS:
   - test
 
 # Other Preferences
+LAST_VAGRANTFILE: 0
+
 ZENITY_MAC: false
 ZENITY_VM: false
 HELLO_MAC: false

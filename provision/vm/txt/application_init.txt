@@ -21,4 +21,3 @@ Optionally a small desktop app that you may find useful...
   * vagrant-manager
 
 Enjoy your p2vagrant VM.
-

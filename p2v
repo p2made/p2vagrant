@@ -6,14 +6,18 @@
 # &/or deletes previously generated & copied files
 # For usage run `./p2v`
 
+# Vagrant Manager Application
+source ./provision/vm/p2v_application.sh
+
 # Check if there are no flags or arguments
 # If none, display usage. Otherwise run script, starting with banner
 if (( "$#" == 0 )); then
-	cat "./provision/vm/txt/application_usage.txt"
+	cat "$P2V_USAGE"
 	exit 0
+elif (( "$#" == 1 )) && [ "$1" = "-init" ];then
+	# Call the initialization script
+	./provision/vm/p2v_init.sh "$(pwd)"
+	exit $?
 fi
-
-# Vagrant Manager Application
-source ./provision/vm/p2v_application.sh
 
 p2v "$@"
