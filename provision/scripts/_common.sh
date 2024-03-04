@@ -2,14 +2,11 @@
 
 # _common.sh
 
-# Source p2v_data.sh
-source /var/www/provision/data/p2v_data.sh
-
 # Script constants...
 TODAYS_DATE=$(date "+%Y-%m-%d")
 #TODAYS_DATE=$(env TZ=Australia/Brisbane date "+%Y-%m-%d")
 VM_HOSTNAME=$(hostname)
-#VM_FOLDER=/var/www         # Inherited from p2v_data.sh
+VM_FOLDER=/var/www         # Inherited from p2v_data.sh
 SHARED_HTML=$VM_FOLDER/html
 PROVISION_FOLDER=$VM_FOLDER/provision
 PROVISION_DATA=$VM_FOLDER/provision/data

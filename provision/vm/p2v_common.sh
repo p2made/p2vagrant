@@ -18,8 +18,8 @@ declare VM_USERNAME
 declare VM_HOSTNAME
 declare VM_IP
 declare TIMEZONE
-declare MEMORY
-declare CPUS
+declare -i MEMORY
+declare -i CPUS
 declare HOST_FOLDER
 declare VM_FOLDER
 declare PHP_VERSION
@@ -30,14 +30,14 @@ declare DB_USERNAME
 declare DB_PASSWORD
 declare DB_NAME
 declare DB_NAME_TEST
-declare VM_TLDS
-declare LAST_VAGRANTFILE
-declare ZENITY_MAC
-declare ZENITY_VM
-declare HELLO_MAC
-declare HELLO_VM
-declare OPTIONS_MAC
-declare OPTIONS_VM
+declare -a VM_TLDS
+declare -i LAST_VAGRANTFILE
+declare -i ZENITY_MAC
+declare -i ZENITY_VM
+declare -i HELLO_MAC
+declare -i HELLO_VM
+declare -i OPTIONS_MAC
+declare -i OPTIONS_VM
 
 # Sparse array of Vagrantfiles, indexed by setup step...
 VAGRANTFILES_INDEXES=(1 2 3 4 5 6 7 9)
@@ -78,7 +78,7 @@ function handle_error() {
 function announce_success() {
 	icon="✅"
 
-	if (( "$2" == 1 )); then
+	if $2; then
 		icon="👍"
 	fi
 
@@ -117,6 +117,19 @@ function ask_yes_no() {
 function read_yaml_value() {
 	local key="$1"
 	yq -r ".$key" "$P2V_PREFS"
+}
+
+# Function to write a value to the YAML file
+# Usage: write_yaml_value "$key" "$value"
+function write_yaml_value() {
+	local key="$1"
+	local value="$2"
+
+	# Check if the constant is already set and update it
+	[[ -n "${(P)key}" ]] && eval "$key=\"$value\""
+
+	# Use yq to update the specified key with the new value
+	yq eval -i ".$key = \"$value\"" "$P2V_PREFS"
 }
 
 # Function to check and optionally load prefs
