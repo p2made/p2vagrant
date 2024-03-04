@@ -1,14 +1,43 @@
 #!/bin/zsh
 
-# provision/vm/p2v_common.sh
+# p2v_common.sh
 
 # Usage:
-# `source ./relative/path/to/p2v_common.sh`
-
-# Source data
-source ./provision/data/p2v_data.sh
+# `source ./provision/vm/p2v_common.sh`
 
 # Script constants
+P2V_PREFS="./provision/data/p2v_prefs.yaml"
+P2V_USAGE="./provision/vm/txt/application_usage.txt"
+NO_PREFS_MESSAGES=(
+	"p2v prefs file, \`./provision/data/p2v_prefs.yaml\` is missing"
+	"Run \`./p2v init\` to ensure that all necessary software is installed,"
+	"and that there is an initial prefs file in place."
+)
+
+declare VM_USERNAME
+declare VM_HOSTNAME
+declare VM_IP
+declare TIMEZONE
+declare -i MEMORY
+declare -i CPUS
+declare HOST_FOLDER
+declare VM_FOLDER
+declare PHP_VERSION
+declare MYSQL_VERSION
+declare SWIFT_VERSION
+declare ROOT_PASSWORD
+declare DB_USERNAME
+declare DB_PASSWORD
+declare DB_NAME
+declare DB_NAME_TEST
+declare -a VM_TLDS
+declare -i LAST_VAGRANTFILE
+declare -i ZENITY_MAC
+declare -i ZENITY_VM
+declare -i HELLO_MAC
+declare -i HELLO_VM
+declare -i OPTIONS_MAC
+declare -i OPTIONS_VM
 
 # Sparse array of Vagrantfiles, indexed by setup step...
 VAGRANTFILES_INDEXES=(1 2 3 4 5 6 7 9)
@@ -30,10 +59,17 @@ PROVISIONING_ITEMS[6]='config.vm.provision :shell, path: "provision/scripts/inst
 PROVISIONING_ITEMS[7]='config.vm.provision :shell, path: "provision/scripts/install_mysql.sh", args: [MYSQL_VERSION, PHP_VERSION, ROOT_PASSWORD, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_NAME_TEST]'
 PROVISIONING_ITEMS[9]='config.vm.provision :shell, path: "provision/scripts/configure_sites.sh"'
 
-# Function for error handling
-# Usage: handle_error "Message"
+## Function for error handling
+# Usage: handle_error "Message1" "Message2"...
 function handle_error() {
-	echo "⚠️   Error: $1 💥"
+	echo "⚠️  Error: $1 💥"
+
+	# Echo additional messages without the emoji
+	shift  # Shift to skip the first message
+	for message in "$@"; do
+		echo "$message"
+	done
+
 	exit 1
 }
 
@@ -42,7 +78,7 @@ function handle_error() {
 function announce_success() {
 	icon="✅"
 
-	if [ "$2" -eq 1 ]; then
+	if $2; then
 		icon="👍"
 	fi
 
@@ -63,7 +99,12 @@ function debug_message() {
 }
 
 # Helper function to ask yes or no - `y` returns true
-# Usage: `if ask_yes_no "$message"; then`
+# Usage:
+#	if ask_yes_no "$message"; then
+#		#
+#	else
+#		#
+#	fi
 function ask_yes_no() {
 	read -qs "?$1 Press 'y' for yes, or any other key for no. (y/N) "
 	out=$?
@@ -71,29 +112,71 @@ function ask_yes_no() {
 	return $out
 }
 
-# Helper function to ask no or yes - `n` returns false
-# Usage: `if ask_no_yes "$message"; then`
-function ask_no_yes() {
-	read -qs "?$1 Press 'n' for no, or any other key for yes. (n/Y) "
-	out=$?
-	print $REPLY >&2
-	return $out
+# Function to read a value from the YAML file
+# Usage: read_yaml_value "$key"
+function read_yaml_value() {
+	local key="$1"
+	yq -r ".$key" "$P2V_PREFS"
 }
 
-# Function to check if yq is installed
-# Usage: start_check
-function start_check() {
-	if ! command -v yq &> /dev/null; then
-		echo "Software needs to be installed."
-		./provision/vm/p2v_install.sh
+# Function to write a value to the YAML file
+# Usage: write_yaml_value "$key" "$value"
+function write_yaml_value() {
+	local key="$1"
+	local value="$2"
+
+	# Check if the constant is already set and update it
+	[[ -n "${(P)key}" ]] && eval "$key=\"$value\""
+
+	# Use yq to update the specified key with the new value
+	yq eval -i ".$key = \"$value\"" "$P2V_PREFS"
+}
+
+# Function to check and optionally load prefs
+# Use argument `true` to check only
+# Usage: p2v_prefs [$check_only]
+function p2v_prefs() {
+	# Check that the prefs file exists
+	if [ ! -f "$P2V_PREFS" ]; then
+		handle_error "${NO_PREFS_MESSAGES[@]}"
 	fi
+
+	# If `$check_only` is set, our work here is done
+	if (( $1 )); then
+		return 0
+	fi
+
+	VM_USERNAME=$(read_yaml_value "VM_USERNAME")
+	VM_HOSTNAME=$(read_yaml_value "VM_HOSTNAME")
+	VM_IP=$(read_yaml_value "VM_IP")
+	TIMEZONE=$(read_yaml_value "TIMEZONE")
+	MEMORY=$(read_yaml_value "MEMORY")
+	CPUS=$(read_yaml_value "CPUS")
+	HOST_FOLDER=$(read_yaml_value "HOST_FOLDER")
+	VM_FOLDER=$(read_yaml_value "VM_FOLDER")
+	PHP_VERSION=$(read_yaml_value "PHP_VERSION")
+	MYSQL_VERSION=$(read_yaml_value "MYSQL_VERSION")
+	SWIFT_VERSION=$(read_yaml_value "SWIFT_VERSION")
+	ROOT_PASSWORD=$(read_yaml_value "ROOT_PASSWORD")
+	DB_USERNAME=$(read_yaml_value "DB_USERNAME")
+	DB_PASSWORD=$(read_yaml_value "DB_PASSWORD")
+	DB_NAME=$(read_yaml_value "DB_NAME")
+	DB_NAME_TEST=$(read_yaml_value "DB_NAME_TEST")
+	VM_TLDS=($(yq -r ".VM_TLDS[]" "$P2V_PREFS"))
+	LAST_VAGRANTFILE=$(read_yaml_value "LAST_VAGRANTFILE")
+	ZENITY_MAC=$(read_yaml_value "ZENITY_MAC")
+	ZENITY_VM=$(read_yaml_value "ZENITY_VM")
+	HELLO_MAC=$(read_yaml_value "HELLO_MAC")
+	HELLO_VM=$(read_yaml_value "HELLO_VM")
+	OPTIONS_MAC=$(read_yaml_value "OPTIONS_MAC")
+	OPTIONS_VM=$(read_yaml_value "OPTIONS_VM")
 }
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-# Function to write update banner
-# Usage: vm_application_banner
-function vm_application_banner() {
+# Function to write p2v application banner
+# Usage: p2v_application_banner
+function p2v_application_banner() {
 	cat "./provision/vm/txt/art_flags.txt"
 	cat "./provision/vm/txt/art_ua.txt"
 	cat "./provision/vm/txt/art_p2vagrant.txt"

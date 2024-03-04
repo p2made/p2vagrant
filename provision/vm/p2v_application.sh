@@ -23,19 +23,9 @@ declare requires_vagrantfile
 
 # -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
 
-# Function to check if p2v_prefs.yaml exists
-# Usage: check_prefs_file
-function check_prefs_file() {
-	if [ ! -f "./provision/data/p2v_prefs.yaml" ]; then
-		local message="p2v_prefs.yaml not found. Would you like to initialize p2v?"
-		if ask_no_yes "$message"; then
-			# Call the initialization function or script
-			./provision/vm/p2v_init.sh
-		fi
-	fi
-}
-
 # Function to check whether a step requires a Vagrantfile
+# Use true for `$shift_index` to shift `$vagrantfile_index`
+# back to the last step requiring a Vagrantfile.
 # Usage: set_requires_vagrantfile "$step_index" [$shift_index]
 function set_requires_vagrantfile() {
 	local local_index=$1
@@ -64,11 +54,16 @@ function set_requires_vagrantfile() {
 	handle_error "Unable to set \$requires_vagrantfile"
 }
 
+# -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- /%/ -- -- #
+
 # Core Vagrant Manager application function
 # Usage: p2v "$@"
-function p2v() {
-	vm_application_banner
-	check_prefs_file
+p2v() {
+	# Fly the banner
+	p2v_application_banner
+
+	# Check for prefs file
+	p2v_prefs true
 
 	# Process flags
 	while getopts ":$FLAGS" opt; do
@@ -86,23 +81,18 @@ function p2v() {
 #				FLAG_INFO=true
 #				;;
 			\?)
-				echo "Invalid option: -$OPTARG" >&2
-				exit 1
+				handle_error "Invalid option: -$OPTARG"
 				;;
 			:)
-				echo "Option -$OPTARG requires an argument." >&2
-				exit 1
+				handle_error "Option -$OPTARG requires an argument."
 				;;
 		esac
 	done
 
-	# Shift to the next argument after processing flags
 	shift $(( OPTIND - 1 ))
-
-	# If we have come this far, we might have an argument to evaluate.
 	local argument=$1
 
-	# Check the argument
+	# Evaluate argument
 	if [ -z "$argument" ]; then
 		# No argument
 		handle_error "An integer argument is required"
@@ -117,10 +107,7 @@ function p2v() {
 		handle_error "$argument is out of range"
 	fi
 
-	# Now argument is valid for `-r` at minimum
 	passed_index=$argument
-
-	# We start off expecting to generate a Vagrantfile for the passed index.
 	vagrantfile_index=$passed_index
 
 	# If `-r` is set, perform reset
@@ -131,6 +118,7 @@ function p2v() {
 		# Set `requires_vagrantfile` with shift
 		set_requires_vagrantfile "$passed_index" true
 	fi
+	# / `-r`
 
 	# `-g` is always set so generate Vagrantfile
 	set_requires_vagrantfile "$vagrantfile_index"
@@ -141,12 +129,14 @@ function p2v() {
 
 	local vagrantfile_title=$VAGRANTFILES[$vagrantfile_index]
 	./provision/vm/p2v_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"
+	# / `-g`
 
 	# If `-v` is set run start or reload the VM appropriately
 	if $FLAG_VAGRANT; then
 		set_requires_vagrantfile "$passed_index"
 		./provision/vm/p2v_vagrant.sh "$(pwd)" "$requires_vagrantfile"
 	fi
+	# / `-v`
 }
 
 # debug_message "$LINENO" "Message"

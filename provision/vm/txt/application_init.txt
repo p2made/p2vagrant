@@ -1,1 +1,23 @@
+p2v Initialisation
 
+Before using your VM, certain software needs to be installed...
+
+  * Homebrew (https://brew.sh) package manager
+  * vagrant
+  * vagrant-vmware-utility
+
+Vagrant plugins...
+
+  * vagrant-share
+  * vagrant-vmware-desktop
+
+Additional packages...
+
+  * yq      - for saving preferences and application state
+  * zenity  - for GUI functionality
+
+Optionally a small desktop app that you may find useful...
+
+  * vagrant-manager
+
+Enjoy your p2vagrant VM.

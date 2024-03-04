@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# provision/vm/p2v_generate.sh
+# p2v_generate.sh
 
 # Usage:
 # `./provision/vm/p2v_generate.sh "$(pwd)" "$vagrantfile_index" "$vagrantfile_title"`
@@ -8,11 +8,10 @@
 # Common functions
 source ./provision/vm/p2v_common.sh
 
-# Source data
-source ./provision/data/p2v_data.sh
-
 # Change working directory to the 'vm' directory
 cd "$1"
+
+p2v_prefs
 
 # Access the value of $vagrantfile_index passed as an argument
 vagrantfile_index=$2
